@@ -2,6 +2,7 @@ U2 = require 'uglify-js'
 ShexpUtils = require './shexp_utils'
 Conditions = require './conditions'
 RuleList = require './rule_list'
+BloomFilter = require './bloom_filter'
 {AttachedCache, Revision} = require './utils'
 
 # coffeelint: disable=camel_case_classes
@@ -213,6 +214,52 @@ module.exports = exports =
     handler = exports._handler(opt_profileType)
     cache.compiled = handler.compile.call(exports, profile, cache)
 
+  _extractDomainForBloom: (pattern) ->
+    if pattern.charCodeAt(0) == '.'.charCodeAt(0)
+      pattern = '*' + pattern
+    if pattern.indexOf('**.') == 0
+      domain = pattern.substring(3)
+    else if pattern.indexOf('*.') == 0
+      domain = pattern.substring(2)
+    else
+      domain = pattern
+    if domain.indexOf('*') >= 0 or domain.indexOf('?') >= 0
+      return null
+    domain
+
+  _testDomainInBloom: (host, bloomFilter) ->
+    return true if bloomFilter.test(host)
+    pos = 0
+    while (pos = host.indexOf('.', pos)) >= 0
+      pos++
+      return true if bloomFilter.test(host.substring(pos))
+    false
+
+  _buildRulesAnalysis: (rules) ->
+    hostDomains = []
+    hasNonHostRules = false
+    hasComplexPatterns = false
+    for rule in rules
+      cond = rule.condition
+      if cond.conditionType == 'HostWildcardCondition'
+        for pattern in cond.pattern.split('|') when pattern
+          domain = exports._extractDomainForBloom(pattern)
+          if domain
+            hostDomains.push(domain)
+          else
+            hasComplexPatterns = true
+      else
+        hasNonHostRules = true
+    bloomFilter = null
+    if hostDomains.length > 0
+      bloomFilter = new BloomFilter(hostDomains.length)
+      for domain in hostDomains
+        bloomFilter.add(domain)
+    rules: rules
+    bloomFilter: bloomFilter
+    hasNonHostRules: hasNonHostRules
+    hasComplexPatterns: hasComplexPatterns
+
   _profileCache: new AttachedCache (profile) -> profile.revision
 
   _handler: (profileType) ->
@@ -380,7 +427,7 @@ module.exports = exports =
         for rule in profile.rules
           refs[exports.nameAsKey(rule.profileName)] = rule.profileName
         refs
-      analyze: (profile) -> profile.rules
+      analyze: (profile) -> @_buildRulesAnalysis(profile.rules)
       replaceRef: (profile, fromName, toName) ->
         changed = false
         if profile.defaultProfileName == fromName
@@ -392,12 +439,18 @@ module.exports = exports =
             changed = true
         return changed
       match: (profile, request, cache) ->
-        for rule in cache.analyzed
+        analyzed = cache.analyzed
+        canSkipHost = analyzed.bloomFilter and not analyzed.hasComplexPatterns and
+          not @_testDomainInBloom(request.host, analyzed.bloomFilter)
+        for rule in analyzed.rules
+          if canSkipHost and
+              rule.condition.conditionType == 'HostWildcardCondition'
+            continue
           if Conditions.match(rule.condition, request)
             return rule
         return [exports.nameAsKey(profile.defaultProfileName), null]
       compile: (profile, cache) ->
-        rules = cache.analyzed
+        rules = cache.analyzed.rules
         if rules.length == 0
           return @profileResult profile.defaultProfileName
         body = [
@@ -453,8 +506,9 @@ module.exports = exports =
         ruleList = profile.ruleList?.trim() || ''
         if formatHandler.preprocess?
           ruleList = formatHandler.preprocess(ruleList)
-        return formatHandler.parse(ruleList, profile.matchProfileName,
+        rules = formatHandler.parse(ruleList, profile.matchProfileName,
           profile.defaultProfileName)
+        @_buildRulesAnalysis(rules)
       match: (profile, request) ->
         result = exports.match(profile, request, 'SwitchProfile')
       compile: (profile) ->
