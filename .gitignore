@@ -5,3 +5,4 @@ dist/
 packages/ui/dist/
 dist/
 .dev-chrome-profile/
+.env
