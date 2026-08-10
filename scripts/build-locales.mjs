@@ -18,7 +18,7 @@ import { join } from 'node:path';
  */
 const LOCALE_NAMES = {
   en_US: 'en',
-  he_IL: 'he',
+  he_IL: 'iw', // Chrome uses the legacy Java code for Hebrew
   nb_NO: 'nb',
   pt: 'pt_PT',
   ach: null, // Acholi
@@ -94,8 +94,29 @@ function toChromeMessage(message) {
   return { message: rewritten === ' ' ? '' : rewritten, placeholders };
 }
 
+/**
+ * The Web Store refuses uploads when a shipped locale has no translation for
+ * the item's name (and validates the description the same way), even though
+ * the browser itself would fall back to the default locale. These keys are
+ * backfilled from the default catalogue when a translation is missing.
+ */
+const STORE_REQUIRED_KEYS = ['manifest_app_name', 'manifest_app_description'];
+
 /** Compile every catalogue into `<outDir>/<locale>/messages.json`. */
-export async function buildLocales(localesDir, outDir) {
+export async function buildLocales(localesDir, outDir, defaultLocaleDir = 'en_US') {
+  const parse = async (dir) => {
+    const po = await readFile(join(localesDir, dir, 'LC_MESSAGES', 'omega-web.po'), 'utf8');
+    const result = {};
+    for (const [key, value] of Object.entries(parsePo(po))) {
+      // Untranslated entries are omitted so Chrome falls back to the
+      // default locale instead of showing an empty string.
+      if (!value) continue;
+      result[key] = toChromeMessage(value);
+    }
+    return result;
+  };
+  const fallback = await parse(defaultLocaleDir);
+
   const built = [];
   for (const dir of (await readdir(localesDir, { withFileTypes: true })).filter((d) =>
     d.isDirectory(),
@@ -103,13 +124,13 @@ export async function buildLocales(localesDir, outDir) {
     const locale = LOCALE_NAMES[dir.name] === undefined ? dir.name : LOCALE_NAMES[dir.name];
     if (locale === null) continue;
 
-    const po = await readFile(join(localesDir, dir.name, 'LC_MESSAGES', 'omega-web.po'), 'utf8');
-    const result = {};
-    for (const [key, value] of Object.entries(parsePo(po))) {
-      // Untranslated entries are omitted so Chrome falls back to the
-      // default locale instead of showing an empty string.
-      if (!value) continue;
-      result[key] = toChromeMessage(value);
+    const result = await parse(dir.name);
+    // A catalogue with no translations at all (e.g. he_IL) only adds an
+    // entry the store would validate; ship nothing and let Chrome fall back.
+    if (Object.keys(result).length === 0) continue;
+
+    for (const key of STORE_REQUIRED_KEYS) {
+      if (!result[key] && fallback[key]) result[key] = fallback[key];
     }
 
     const dest = join(outDir, locale);
