@@ -28,6 +28,7 @@ export { OptionsSync } from './options-sync.js';
 export { TokenBucket } from './token-bucket.js';
 export { defaultOptions } from './default-options.js';
 export { Options } from './options.js';
+export type { OmegaOptions, ProxyImpl } from './options.js';
 
 export {
   NetworkError,
