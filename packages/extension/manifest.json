@@ -40,13 +40,8 @@
     "storage",
     "unlimitedStorage",
     "alarms",
-    "tabs",
-    "webRequest",
-    "webRequestAuthProvider",
+    "activeTab",
     "sidePanel"
-  ],
-  "host_permissions": [
-    "<all_urls>"
   ],
   "commands": {
     "_execute_action": {

@@ -178,15 +178,17 @@ Two smaller judgement calls, both deliberate:
 
 The worker is deliberately reduced to what only it can do:
 
-- **proxy authentication** — `chrome.webRequest.onAuthRequired` has no other
-  host, and its listener must be registered in the worker's first turn or the
-  event that woke the worker is lost
 - **scheduled downloads** — `chrome.alarms` is the only timer that survives
   suspension
 - **applying the profile** to `chrome.proxy.settings`
 - **answering RPC** from the options page and popup
 
-Dropped from this build: external-proxy-change watching and
+Dropped from this build: proxy authentication (answering
+`webRequest.onAuthRequired` with stored credentials required the `webRequest`
+and `webRequestAuthProvider` permissions plus `<all_urls>` host access; the
+whole feature was cut to keep the permission surface minimal — profiles with
+`auth` entries still import, the credentials are just never used),
+external-proxy-change watching and
 `-revertProxyChanges`, quick-switch cycling, the badge and per-tab
 icons/titles, the request monitor, the inspect context menus, and the
 SwitchySharp / external-extension bridges. `proxy_impl_script` and
@@ -215,11 +217,8 @@ tables are not usable at ~360px. The page is still registered as
    existing suite was `omega-target/test/options_sync.coffee`, which still needs
    porting, and `Options` itself was never covered.
 2. **`packages/extension`** — the reduced worker (see above) is in progress:
-   `sw.ts`, `chrome-options.ts` and `fetch-url.ts` are written; `proxy-auth.ts`,
-   `proxy-settings.ts` and `chrome-storage.ts` are the remainder. `ProxyAuth`
-   carries the constraints that matter: register `onAuthRequired` in the
-   worker's first turn, and keep the `chrome.storage.session` +
-   `chrome.storage.local` dual-write that survives suspension.
+   `sw.ts`, `chrome-options.ts` and `fetch-url.ts` are written;
+   `proxy-settings.ts` and `chrome-storage.ts` are the remainder.
 3. **`packages/ui`** — editors for Pac, Switch, RuleList and Virtual profiles;
    the rule table with drag reorder; the modal flows (new/rename/replace/delete);
    options sync UI; the guided tours. The `switch_profile` controller was the

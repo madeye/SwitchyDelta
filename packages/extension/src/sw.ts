@@ -2,7 +2,6 @@
  * MV3 service worker entry point.
  *
  * Responsibilities in this build, and nothing more:
- *   - proxy authentication (the only context where onAuthRequired can live)
  *   - scheduled PAC / rule-list downloads, via chrome.alarms
  *   - applying the selected profile to chrome.proxy.settings
  *   - answering RPC from the options page and popup
@@ -16,17 +15,7 @@ import type { StorageItems } from '@switchydelta/target';
 
 import { ChromeOptions } from './chrome-options.js';
 import { ChromeStorage } from './chrome-storage.js';
-import { ProxyAuth } from './proxy-auth.js';
 import { ProxySettings } from './proxy-settings.js';
-
-/**
- * Registered before anything async runs.
- *
- * MV3 delivers the event that woke the worker only if its listener was
- * registered in the first turn of the event loop. Deferring this until boot()
- * resolves would drop the auth challenge that started the worker.
- */
-ProxyAuth.shared(Log).listen();
 
 /** An Error flattened for structured cloning back to the UI. */
 function encodeError(value: unknown): unknown {
