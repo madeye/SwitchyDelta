@@ -19,7 +19,13 @@ export default defineConfig({
     emptyOutDir: true,
     // Matches minimum_chrome_version in the manifest, so no needless downlevelling.
     target: 'chrome109',
-    modulePreload: { polyfill: false },
+    // Disable modulepreload entirely. Vite would inject
+    // `<link rel="modulepreload" href="./js/messaging-….js">` for the shared
+    // chunk; Chrome then warns that the preloaded resource was not used soon
+    // enough (common on extension pages / side panel). The entry still loads
+    // the chunk via a normal static import — only the speculative hint goes.
+    // Polyfill stays off so nothing is inlined (MV3 script-src 'self').
+    modulePreload: false,
     cssCodeSplit: false,
     sourcemap: true,
 
