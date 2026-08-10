@@ -48,6 +48,9 @@ entry point.
 
 Net: **743 KB -> 30 KB** (10.7 KB gzipped), with the generator included.
 
+Across the whole packaged extension, JavaScript goes from **1,730,921 bytes to
+122,174** (93% smaller), both minified.
+
 **The UI drops its framework.** 19 bower runtime packages become 44 KB of JS and
 CSS with no runtime dependency. See the commit message on the UI package for why
 Vite rather than Next.js.
@@ -113,6 +116,19 @@ Each is fixed in the rewrite and noted in a comment at the site.
   from identifiers that did not resolve: an undeclared `name` (which found the
   *global* `name`, an empty string), and `@profile.name` where `profile` is a
   method, yielding the literal string `"profile"`.
+- `ChromeStorage.parseStorageErrors` built the new `RateLimitExceededError`
+  first and then tested `err.message` on that *new* error, whose message is
+  empty. The `perHour` / `perMinute` flags were therefore never set.
+- `ChromeStorage.watch` only converted the array form of `keys` into a lookup
+  map. A single string key stayed a string, so the membership test indexed it
+  by character and never matched — watches on one key silently never fired.
+- `ChromeStorage.watch` derived its watcher id from `Date.now()` in a `while`
+  loop, busy-spinning until the clock ticked whenever two watchers registered
+  in the same millisecond.
+- `proxy_impl_settings` iterated `profile.bypassList` unguarded, though it is
+  optional on a FixedProfile, so a profile without one threw.
+- `proxy_impl.coffee` referenced a free `OmegaPac` variable it never required.
+  It worked only because the built worker happened to expose it as a global.
 - `fetch_url` compared the raw `Content-Type` header against a hint, so
   `text/html; charset=utf-8` never equalled `text/html`. Servers almost always
   send a charset, so the "response must not be HTML" guard silently never fired
