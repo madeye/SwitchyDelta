@@ -87,6 +87,14 @@ Each is fixed in the rewrite and noted in a comment at the site.
 - `OptionsSync._legacyGet` declared its parsed `value` function-scoped and only
   assigned it inside a `try`, so a key whose JSON failed to parse inherited the
   previous key's value instead of falling back to the supplied default.
+- `Options`'s constructor defaulted its storages with `@_storage ?= Storage()`,
+  calling a class without `new`. That yields `undefined`, so the fallback never
+  produced a usable storage.
+- `fetch_url` compared the raw `Content-Type` header against a hint, so
+  `text/html; charset=utf-8` never equalled `text/html`. Servers almost always
+  send a charset, so the "response must not be HTML" guard silently never fired
+  and HTML error pages were accepted as rule lists. The port compares the media
+  type without parameters.
 
 ### Needs a decision
 
