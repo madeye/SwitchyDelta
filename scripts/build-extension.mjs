@@ -58,14 +58,12 @@ await copyIfPresent(resolve(root, 'packages/extension/manifest.json'), resolve(o
 // package root next to the manifest.
 await copyIfPresent(resolve(root, 'packages/ui/dist'), out, 'ui (vite output)');
 
-// Icons and translations still come from the pre-rewrite tree. The `.po` ->
-// messages.json step (previously grunt-po2crx) has not been ported yet, so the
-// already-generated catalogues are reused.
+// Icons still come from the pre-rewrite tree.
 await copyIfPresent(resolve(root, 'omega-web/img'), resolve(out, 'img'), 'icons');
-await copyIfPresent(
-  resolve(root, 'omega-target-chromium-extension/build/_locales'),
-  resolve(out, '_locales'),
-  '_locales',
-);
+
+// Translations are compiled from the gettext catalogues on every build.
+const { buildLocales } = await import('./build-locales.mjs');
+const locales = await buildLocales(resolve(root, 'omega-locales'), resolve(out, '_locales'));
+console.log(`  built   _locales (${locales.length} locales)`);
 
 console.log(`\ndone -> ${out}`);
