@@ -12,7 +12,7 @@
 
 OmegaTargetCurrent = Object.create(OmegaTargetChromium)
 Promise = OmegaTargetCurrent.Promise
-Promise.longStackTraces()
+# Avoid Bluebird longStackTraces in production SW (extra retained frames).
 
 OmegaTargetCurrent.Log = Object.create(OmegaTargetCurrent.Log)
 Log = OmegaTargetCurrent.Log

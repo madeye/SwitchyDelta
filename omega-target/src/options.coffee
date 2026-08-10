@@ -468,12 +468,25 @@ class Options
   # @param {bool=false} compress Compress the script if true.
   # @returns {string} The compiled
   ###
+  ###*
+  # OmegaPac with PacGenerator. Chromium SW loads a match-only bundle first;
+  # subclasses may override to importScripts the full compiler on demand.
+  ###
+  _pacWithCompiler: ->
+    g = typeof globalThis != 'undefined' and globalThis or global
+    return g.OmegaPacFull if g.OmegaPacFull?.PacGenerator?
+    return OmegaPac if OmegaPac.PacGenerator?
+    return g.OmegaPac if g.OmegaPac?.PacGenerator?
+    throw new Error(
+      'PAC compiler unavailable (OmegaPac.PacGenerator missing)')
+
   pacForProfile: (profile, compress = false) ->
-    ast = OmegaPac.PacGenerator.script(@_options, profile,
+    Pac = @_pacWithCompiler()
+    ast = Pac.PacGenerator.script(@_options, profile,
       profileNotFound: @_profileNotFound.bind(this))
     if compress
-      ast = OmegaPac.PacGenerator.compress(ast)
-    Promise.resolve OmegaPac.PacGenerator.ascii(ast.print_to_string())
+      ast = Pac.PacGenerator.compress(ast)
+    Promise.resolve Pac.PacGenerator.ascii(ast.print_to_string())
 
   _setAvailableProfiles: ->
     profile = if @_currentProfileName then @currentProfile() else null

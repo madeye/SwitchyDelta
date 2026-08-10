@@ -1,4 +1,4 @@
-U2 = require 'uglify-js'
+U2 = require './u2'
 Profiles = require './profiles'
 
 # PacGenerator is used like a singleton class instance.

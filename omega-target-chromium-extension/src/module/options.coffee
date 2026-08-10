@@ -8,6 +8,20 @@ Url = require('url')
 
 class ChromeOptions extends OmegaTarget.Options
   fetchUrl: fetchUrl
+  _pacFullScriptUrl: 'js/omega_pac_full.min.js'
+
+  # Match-only SW bundle has no PacGenerator; load full compiler on demand.
+  _pacWithCompiler: ->
+    g = globalThis
+    return g.OmegaPacFull if g.OmegaPacFull?.PacGenerator?
+    return OmegaPac if OmegaPac.PacGenerator?
+    return g.OmegaPac if g.OmegaPac?.PacGenerator?
+    if typeof importScripts == 'function'
+      importScripts(@_pacFullScriptUrl)
+      return g.OmegaPacFull if g.OmegaPacFull?.PacGenerator?
+      return g.OmegaPac if g.OmegaPac?.PacGenerator?
+    throw new Error(
+      'PAC compiler unavailable (omega_pac_full.min.js not loaded)')
 
   updateProfile: (args...) ->
     super(args...).then (results) ->

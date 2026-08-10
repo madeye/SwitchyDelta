@@ -1,16 +1,22 @@
-U2 = require 'uglify-js'
+U2 = require './u2'
 ShexpUtils = require './shexp_utils'
 Conditions = require './conditions'
 RuleList = require './rule_list'
 DomainTrie = require './domain_trie'
 {AttachedCache, Revision} = require './utils'
 
-# coffeelint: disable=camel_case_classes
-class AST_Raw extends U2.AST_SymbolRef
-  # coffeelint: enable=camel_case_classes
-  constructor: (raw) ->
-    U2.AST_SymbolRef.call(this, name: raw)
-    @aborts = -> false
+# Lazy AST_Raw: avoid touching U2 at module load (match-only bundle).
+_astRawClass = null
+getAST_Raw = ->
+  return _astRawClass if _astRawClass?
+  # coffeelint: disable=camel_case_classes
+  class AST_Raw extends U2.AST_SymbolRef
+    # coffeelint: enable=camel_case_classes
+    constructor: (raw) ->
+      U2.AST_SymbolRef.call(this, name: raw)
+      @aborts = -> false
+  _astRawClass = AST_Raw
+  _astRawClass
 
 module.exports = exports =
   builtinProfiles:
@@ -214,7 +220,7 @@ module.exports = exports =
     handler = exports._handler(opt_profileType)
     cache.compiled = handler.compile.call(exports, profile, cache)
 
-  # True if domain still contains wildcards after stripping Switchy prefix forms.
+  # True if domain still has wildcards after stripping prefix forms.
   _isComplexHostDomain: (domain) ->
     domain.indexOf('*') >= 0 or domain.indexOf('?') >= 0
 
@@ -414,7 +420,10 @@ module.exports = exports =
               # Wait a moment. Do we really need to go this far? I don't know.
 
               # TODO(catus): Remove the hack needed to insert raw code.
-              new AST_Raw ';\n' + profile.pacScript + '\n\n/* End of PAC */;'
+              # Keep as a single expression — an assignment here would put the
+              # raw string into the function body array (CoffeeScript semantics).
+              new (getAST_Raw())(
+                ';\n' + profile.pacScript + '\n\n/* End of PAC */;')
               new U2.AST_Return value:
                 new U2.AST_SymbolRef name: 'FindProxyForURL'
             ]

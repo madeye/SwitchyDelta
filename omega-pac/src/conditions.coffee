@@ -1,4 +1,4 @@
-U2 = require 'uglify-js'
+U2 = require './u2'
 IP = require 'ip-address'
 Url = require 'url'
 {shExp2RegExp, escapeSlash} = require './shexp_utils'

@@ -17,6 +17,8 @@ if (typeof globalThis.global === 'undefined') {
 }
 
 // log_error.js touches localStorage; skip it in the service worker.
+// omega_pac.min.js is match-only (no uglify). PAC compile loads
+// omega_pac_full.min.js on demand via ProxyImpl._pacWithCompiler.
 importScripts(
   'js/omega_debug.js',
   'js/background_preload.js',

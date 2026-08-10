@@ -1,4 +1,5 @@
-path = require('path')
+# omega_webext_proxy_script is Firefox-only (proxy.register). Not built for
+# Chromium package — use `grunt browserify:omega_webext_proxy_script` if needed.
 module.exports =
   index:
     files:
@@ -27,6 +28,7 @@ module.exports =
       browserifyOptions:
         extensions: '.coffee'
         standalone: 'OmegaTargetChromium'
+  # Optional Firefox artifact (not part of default Chromium build/copy).
   omega_webext_proxy_script:
     files:
       'build/js/omega_webext_proxy_script.min.js':
