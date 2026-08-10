@@ -9,6 +9,8 @@
 
 import { spawn } from 'node:child_process';
 import { mkdtemp, rm } from 'node:fs/promises';
+import { createServer as createHttpServer, request as httpRequest } from 'node:http';
+import net from 'node:net';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -28,6 +30,46 @@ const PROXY = {
 };
 const GFWLIST = 'https://raw.githubusercontent.com/gfwlist/gfwlist/refs/heads/master/gfwlist.txt';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// The download deliberately goes through a local proxy, the way a user behind
+// one would fetch the list. On a dev machine that is whatever already listens
+// on the configured port; anywhere else (CI) a minimal CONNECT proxy is
+// started here so the test carries its own dependency.
+function portOpen(host, port) {
+  return new Promise((resolve) => {
+    const socket = net.connect({ host, port, timeout: 1000 });
+    socket.once('connect', () => { socket.destroy(); resolve(true); });
+    socket.once('error', () => resolve(false));
+    socket.once('timeout', () => { socket.destroy(); resolve(false); });
+  });
+}
+
+let builtinProxy = null;
+if (!(await portOpen(PROXY.host, PROXY.port))) {
+  builtinProxy = createHttpServer((req, res) => {
+    // Absolute-form plain HTTP proxying.
+    const url = new URL(req.url);
+    const upstream = httpRequest({
+      host: url.hostname, port: url.port || 80, method: req.method,
+      path: url.pathname + url.search, headers: req.headers,
+    }, (up) => { res.writeHead(up.statusCode, up.headers); up.pipe(res); });
+    upstream.on('error', () => res.destroy());
+    req.pipe(upstream);
+  });
+  builtinProxy.on('connect', (req, socket, head) => {
+    const [host, port] = req.url.split(':');
+    const up = net.connect(Number(port) || 443, host, () => {
+      socket.write('HTTP/1.1 200 Connection Established\r\n\r\n');
+      up.write(head);
+      up.pipe(socket);
+      socket.pipe(up);
+    });
+    up.on('error', () => socket.destroy());
+    socket.on('error', () => up.destroy());
+  });
+  await new Promise((r) => builtinProxy.listen(PROXY.port, PROXY.host, r));
+  console.log(`(nothing on ${PROXY.host}:${PROXY.port} — started built-in CONNECT proxy)`);
+}
 
 class Session {
   #ws; #id = 0; #pending = new Map();
@@ -198,6 +240,7 @@ for (const [url, host, expected] of [
 console.log(`\n=== RESULT: ${failures === 0 ? 'all checks passed' : failures + ' FAILURES'} ===`);
 
 sw.close(); page.close(); browser.close();
+builtinProxy?.close();
 try { process.kill(-chrome.pid, 'SIGKILL'); } catch { chrome.kill('SIGKILL'); }
 await sleep(1000);
 await rm(profile, { recursive: true, force: true });
