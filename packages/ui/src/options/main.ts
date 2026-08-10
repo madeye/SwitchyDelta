@@ -46,7 +46,14 @@ function changedKeys(): string[] {
   return [...keys].filter((key) => !deepEqual(pristine[key], options[key]));
 }
 
-async function applyChanges(): Promise<void> {
+/** Adopt a background-refreshed value for one key without marking it dirty. */
+export function adoptOptionsKey(key: string, value: unknown): void {
+  pristine[key] = structuredClone(value);
+  options[key] = structuredClone(value);
+  markDirty();
+}
+
+export async function applyChanges(): Promise<void> {
   const changes: Record<string, unknown> = {};
   for (const key of changedKeys()) {
     changes[key] = options[key];
