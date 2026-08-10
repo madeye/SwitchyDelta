@@ -9,7 +9,13 @@ import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+const CHROME =
+  process.env.CHROME_PATH ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+// The "new" headless mode supports extensions; the sandbox flags are for CI
+// runners where the Chrome sandbox cannot be used.
+const HEADLESS_FLAGS = process.env.HEADLESS
+  ? ['--headless=new', '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage']
+  : [];
 const EXT = process.argv[2];
 const PORT = 9333;
 
@@ -76,7 +82,8 @@ console.log(`extension: ${EXT}\n`);
 const chrome = spawn(
   CHROME,
   [
-    `--user-data-dir=${profile}`,
+    ...HEADLESS_FLAGS,
+  `--user-data-dir=${profile}`,
     // Chrome 137+ ignores --load-extension entirely; the extension is
     // installed below via the Extensions CDP domain, which needs this flag.
     '--enable-unsafe-extension-debugging',

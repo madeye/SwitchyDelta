@@ -9,7 +9,13 @@ import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+const CHROME =
+  process.env.CHROME_PATH ?? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+// The "new" headless mode supports extensions; the sandbox flags are for CI
+// runners where the Chrome sandbox cannot be used.
+const HEADLESS_FLAGS = process.env.HEADLESS
+  ? ['--headless=new', '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage']
+  : [];
 const EXT = process.argv[2];
 const PORT = 9336;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -50,6 +56,7 @@ try {
 
 const profile = await mkdtemp(join(tmpdir(), 'sd-sp-'));
 const chrome = spawn(CHROME, [
+  ...HEADLESS_FLAGS,
   `--user-data-dir=${profile}`, '--enable-unsafe-extension-debugging',
   `--remote-debugging-port=${PORT}`, '--no-first-run', '--no-default-browser-check', 'about:blank',
 ], { stdio: ['ignore', 'ignore', 'ignore'], detached: true });

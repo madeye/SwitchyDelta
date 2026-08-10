@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # Runs the TypeScript project build (typecheck included) and packages
+      # the extension into dist/.
+      - run: npm run build
+
+      - run: npm test
+
+      - name: Install Chrome
+        id: chrome
+        uses: browser-actions/setup-chrome@v2
+        with:
+          chrome-version: stable
+
+      # The e2e scripts drive a real browser over CDP; HEADLESS=1 adds
+      # --headless=new plus the sandbox flags CI runners need.
+      - name: End-to-end tests (headless Chrome)
+        run: npm run e2e
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          HEADLESS: '1'
