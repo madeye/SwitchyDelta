@@ -16,7 +16,8 @@
     "lint": "eslint packages --ext .ts,.tsx",
     "clean": "rm -rf packages/*/dist packages/*/tsconfig.tsbuildinfo",
     "build:ui": "npm run build -w @switchydelta/ui",
-    "build:extension": "node scripts/build-extension.mjs"
+    "build:extension": "node scripts/build-extension.mjs",
+    "e2e": "node test/e2e/smoke.mjs dist && node test/e2e/profiles.mjs dist && node test/e2e/rule-list.mjs dist"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.268",

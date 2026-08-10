@@ -7,8 +7,9 @@
  * and the SwitchySharp / external-extension bridges are not part of it.
  */
 
-import { Options, Log } from '@switchydelta/target';
+import { Options, Log, NoOptionsError } from '@switchydelta/target';
 import type { StorageItems } from '@switchydelta/target';
+import type { OmegaOptions } from '@switchydelta/target';
 import { Profiles } from '@switchydelta/pac';
 import type { Profile } from '@switchydelta/pac';
 
@@ -93,6 +94,29 @@ export class ChromeOptions extends Options {
           : profile.profileType;
         return chrome.i18n.getMessage('browserAction_profileDetails_' + type) || null;
       }
+    }
+  }
+
+  /**
+   * Treat entirely empty storage as a first run rather than a corrupt state.
+   *
+   * The base class only knows "unrecognised schemaVersion". In the previous
+   * build this translation lived in the SwitchySharp import path, which is not
+   * part of this design; without it, a fresh install took the generic error
+   * branch, so the firstRun state was never seeded and the options page never
+   * opened on install.
+   */
+  override async upgrade(
+    options: OmegaOptions | null | undefined,
+    changes?: StorageItems,
+  ): Promise<[OmegaOptions, StorageItems]> {
+    try {
+      return await super.upgrade(options, changes);
+    } catch (err) {
+      if (!options || Object.keys(options).length === 0) {
+        throw new NoOptionsError();
+      }
+      throw err;
     }
   }
 
