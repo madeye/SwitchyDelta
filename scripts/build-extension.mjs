@@ -58,8 +58,8 @@ await copyIfPresent(resolve(root, 'packages/extension/manifest.json'), resolve(o
 // package root next to the manifest.
 await copyIfPresent(resolve(root, 'packages/ui/dist'), out, 'ui (vite output)');
 
-// Icons still come from the pre-rewrite tree.
-await copyIfPresent(resolve(root, 'omega-web/img'), resolve(out, 'img'), 'icons');
+// The delta icon set; rendered from icon.svg by scripts/render-icons.mjs.
+await copyIfPresent(resolve(root, 'packages/extension/img'), resolve(out, 'img'), 'icons');
 
 // Translations are compiled from the gettext catalogues on every build.
 const { buildLocales } = await import('./build-locales.mjs');

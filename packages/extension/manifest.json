@@ -6,19 +6,19 @@
   "default_locale": "en",
   "minimum_chrome_version": "114",
   "icons": {
-    "16": "img/icons/omega-action-16.png",
-    "24": "img/icons/omega-action-24.png",
-    "32": "img/icons/omega-action-32.png",
-    "48": "img/icons/omega-48.png",
-    "64": "img/icons/omega-64.png",
-    "128": "img/icons/omega-128.png"
+    "16": "img/icons/delta-16.png",
+    "24": "img/icons/delta-24.png",
+    "32": "img/icons/delta-32.png",
+    "48": "img/icons/delta-48.png",
+    "64": "img/icons/delta-64.png",
+    "128": "img/icons/delta-128.png"
   },
   "action": {
     "default_icon": {
-      "16": "img/icons/omega-action-16.png",
-      "19": "img/icons/omega-action-19.png",
-      "24": "img/icons/omega-action-24.png",
-      "32": "img/icons/omega-action-32.png"
+      "16": "img/icons/delta-16.png",
+      "19": "img/icons/delta-19.png",
+      "24": "img/icons/delta-24.png",
+      "32": "img/icons/delta-32.png"
     },
     "default_title": "__MSG_manifest_icon_default_title__",
     "default_popup": "popup.html"
