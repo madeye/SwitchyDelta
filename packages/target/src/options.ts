@@ -257,9 +257,15 @@ export class Options {
         // storage with no schemaVersion has never been written to, so adopting
         // the local options later will not clobber anything ('pristine').
         const syncOptions = await this._stateGet('syncOptions', '');
-        if (!syncOptions) {
+        // FIX: the original dereferenced sync unconditionally. The write that
+        // would have set 'unsupported' is fire-and-forget, so with no sync
+        // available there is a window where this key is still empty and the
+        // dereference throws. That TypeError lands in the retry catch below,
+        // which treats it as a serious failure and reinstalls default options
+        // over the user's real ones.
+        if (!syncOptions && this.sync) {
           await this._state.set({ syncOptions: 'conflict' });
-          const { schemaVersion } = await this.sync!.storage.get('schemaVersion');
+          const { schemaVersion } = await this.sync.storage.get('schemaVersion');
           if (!schemaVersion) await this._state.set({ syncOptions: 'pristine' });
         }
         return options;
@@ -348,7 +354,9 @@ export class Options {
       })
       .then(() => this.getAll());
 
-    void this.ready.then(async () => {
+    // Deliberately not chained into `ready`: these are follow-up side effects,
+    // and callers must not wait on a profile download to consider us ready.
+    void this.ready.then(() => {
       if (this.sync?.enabled) this.sync.requestPush(this._options);
 
       void this._stateGet('firstRun', '').then((firstRun) => {
@@ -551,10 +559,12 @@ export class Options {
       for (const key of removed) {
         delete changes[key];
       }
-      return this._storage.set(changes).then(() => {
-        void this._storage.remove(removed);
-        return this._options;
-      });
+      // FIX: the removal was not chained, so the returned promise could resolve
+      // before the keys were actually gone from storage.
+      return this._storage
+        .set(changes)
+        .then(() => this._storage.remove(removed))
+        .then(() => this._options);
     }
     return undefined;
   }
@@ -640,7 +650,8 @@ export class Options {
 
   /** Reload the quick switch according to settings. */
   reloadQuickSwitch(): Promise<void> {
-    const configured = this._get<string[]>('-quickSwitchProfiles') as string[];
+    // FIX: this key can be absent; the original dereferenced it unguarded.
+    const configured = this._get<string[]>('-quickSwitchProfiles') ?? [];
     const profiles = configured.length < 2 ? null : configured;
     if (this._get<boolean>('-enableQuickSwitch')) {
       return this.setQuickSwitch(profiles, !!profiles);
@@ -792,7 +803,10 @@ export class Options {
           removedKeys.push(key);
           for (const rule of list) {
             rule.profileName = null;
-            temp.rules.splice(temp.rules.indexOf(rule), 1);
+            // FIX: guard the index. splice(-1, 1) would remove the last,
+            // unrelated rule when the rule is not present.
+            const index = temp.rules.indexOf(rule);
+            if (index >= 0) temp.rules.splice(index, 1);
           }
         }
       }
@@ -964,7 +978,8 @@ export class Options {
     if (this._options['-startupProfileName'] === fromName) {
       result['-startupProfileName'] = toName;
     }
-    const quickSwitch = this._get<string[]>('-quickSwitchProfiles') as string[];
+    // FIX: this key can be absent; the original dereferenced it unguarded.
+    const quickSwitch = this._get<string[]>('-quickSwitchProfiles') ?? [];
     // Change fromName to toName in Quick Switch, but only if it does not
     // contain toName already. Otherwise it may cause duplicates.
     if (quickSwitch.indexOf(toName) < 0) {
@@ -1063,8 +1078,10 @@ export class Options {
     if (rule && rule.profileName) {
       if (rule.profileName !== profileName) {
         const oldKey = Profiles.nameAsKey(rule.profileName);
-        const list = this._tempProfileRulesByProfile[oldKey] as TempRule[];
-        list.splice(list.indexOf(rule), 1);
+        const list = this._tempProfileRulesByProfile[oldKey];
+        // FIX: guard the index; splice(-1, 1) would drop an unrelated rule.
+        const index = list ? list.indexOf(rule) : -1;
+        if (list && index >= 0) list.splice(index, 1);
 
         rule.profileName = profileName;
         changed = true;
@@ -1083,13 +1100,21 @@ export class Options {
       changed = true;
     }
 
-    const key = Profiles.nameAsKey(profileName);
-    let rulesByProfile = this._tempProfileRulesByProfile[key];
-    if (rulesByProfile == null) {
-      rulesByProfile = [];
-      this._tempProfileRulesByProfile[key] = rulesByProfile;
+    // FIX: only index the rule when it is new or has just moved profile. The
+    // CoffeeScript pushed unconditionally, so calling addTempRule twice with
+    // the same domain and profile appended the same rule object again. The
+    // stale-rule cleanup in applyProfile then spliced by indexOf once per
+    // duplicate, and after the first removal indexOf returns -1 — splice(-1, 1)
+    // deletes the last, unrelated rule.
+    if (changed) {
+      const key = Profiles.nameAsKey(profileName);
+      let rulesByProfile = this._tempProfileRulesByProfile[key];
+      if (rulesByProfile == null) {
+        rulesByProfile = [];
+        this._tempProfileRulesByProfile[key] = rulesByProfile;
+      }
+      if (!rulesByProfile.includes(rule)) rulesByProfile.push(rule);
     }
-    rulesByProfile.push(rule);
 
     if (changed) {
       Profiles.updateRevision(tempProfile);
@@ -1246,8 +1271,16 @@ export class Options {
     if (this._options['-revertProxyChanges'] && !this._isSystem) {
       if (profile.name !== this._currentProfileName && this._currentProfileName) {
         if (!args?.noRevert) {
-          void this.applyProfile(this._revertToProfileName);
+          // FIX: on the first external change nothing has been remembered yet,
+          // so this passed null and rejected with ProfileNotExistError — which
+          // nothing awaited, so the revert silently never happened. Fall back
+          // to the profile currently applied, which is what we are reverting
+          // to by definition.
+          const revertTo = this._revertToProfileName ?? this._currentProfileName;
           this._revertToProfileName = null;
+          this.applyProfile(revertTo).catch((err: unknown) => {
+            this.log.error('Options#setExternalProfile::revert', err);
+          });
           return;
         }
         this._revertToProfileName ??= this._currentProfileName;

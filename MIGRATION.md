@@ -90,6 +90,29 @@ Each is fixed in the rewrite and noted in a comment at the site.
 - `Options`'s constructor defaulted its storages with `@_storage ?= Storage()`,
   calling a class without `new`. That yields `undefined`, so the fallback never
   produced a usable storage.
+- `Options.addTempRule` indexed the rule into `_tempProfileRulesByProfile`
+  unconditionally, so calling it twice for the same domain and profile appended
+  the same object again. The stale-rule cleanup in `applyProfile` then spliced
+  by `indexOf` once per duplicate, and after the first removal `indexOf` returns
+  `-1` — `splice(-1, 1)` deletes the last, unrelated rule. Both the duplicate
+  push and the two unguarded splices are fixed.
+- `Options.loadOptions` dereferenced `this.sync` unguarded while bootstrapping
+  `syncOptions`. The write that would set `'unsupported'` is fire-and-forget, so
+  with no sync available there is a window where the key is still empty and the
+  dereference throws. That `TypeError` lands in the retry `catch`, which treats
+  it as a serious failure and **reinstalls default options over the user's**.
+- `Options.setExternalProfile` called `applyProfile(this._revertToProfileName)`
+  on the first external change, when nothing had been remembered yet. It passed
+  null, rejected with `ProfileNotExistError`, and nothing awaited it — so
+  `-revertProxyChanges` silently never reverted the first change.
+- `Options._setOptions` did not chain `_storage.remove(removed)`, so the
+  returned promise could resolve before the keys were gone.
+- `reloadQuickSwitch` and `_replaceRefChanges` dereferenced
+  `-quickSwitchProfiles` with no guard against the key being absent.
+- `renameProfile`, `addCondition` and `setDefaultProfile` built error messages
+  from identifiers that did not resolve: an undeclared `name` (which found the
+  *global* `name`, an empty string), and `@profile.name` where `profile` is a
+  method, yielding the literal string `"profile"`.
 - `fetch_url` compared the raw `Content-Type` header against a hint, so
   `text/html; charset=utf-8` never equalled `text/html`. Servers almost always
   send a charset, so the "response must not be HTML" guard silently never fired
