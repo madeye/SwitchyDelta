@@ -1,0 +1,145 @@
+/* Popup styling. Replaces Bootstrap 3 + the hand-written om-*.css with one
+   small sheet using system fonts and CSS custom properties. */
+
+:root {
+  --om-bg: #ffffff;
+  --om-fg: #1a1a1a;
+  --om-muted: #6b7280;
+  --om-hover: #f1f3f5;
+  --om-active: #e7f1fb;
+  --om-border: #e4e6eb;
+  --om-accent: #1a73e8;
+  --om-danger: #c5221f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --om-bg: #202124;
+    --om-fg: #e8eaed;
+    --om-muted: #9aa0a6;
+    --om-hover: #2d2e31;
+    --om-active: #1f3a5f;
+    --om-border: #3c4043;
+    --om-accent: #8ab4f8;
+    --om-danger: #f28b82;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body.om-popup {
+  margin: 0;
+  min-width: 260px;
+  max-width: 360px;
+  padding: 6px 0;
+  background: var(--om-bg);
+  color: var(--om-fg);
+  font: 13px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.om-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.om-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  padding: 7px 12px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.om-item:hover,
+.om-item:focus-visible {
+  background: var(--om-hover);
+  outline: none;
+}
+
+.om-item[aria-current="true"] {
+  background: var(--om-active);
+  font-weight: 600;
+}
+
+/* The colour swatch stands in for the old Glyphicon-per-profile-type icon;
+   the type is conveyed by the letter inside it. */
+.om-swatch {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid rgb(0 0 0 / 0.15);
+  display: grid;
+  place-items: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: rgb(0 0 0 / 0.6);
+}
+
+.om-name {
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.om-detail {
+  color: var(--om-muted);
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.om-key {
+  flex: 0 0 auto;
+  color: var(--om-muted);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.om-icon {
+  flex: 0 0 auto;
+  width: 16px;
+  text-align: center;
+  color: var(--om-muted);
+}
+
+.om-sep {
+  margin: 6px 0;
+  border: 0;
+  border-top: 1px solid var(--om-border);
+}
+
+.om-notice {
+  margin: 0 0 6px;
+  padding: 8px 12px;
+  background: color-mix(in srgb, var(--om-danger) 12%, transparent);
+  border-bottom: 1px solid var(--om-border);
+}
+
+.om-notice-title {
+  margin: 0 0 2px;
+  font-weight: 600;
+}
+
+.om-notice-detail {
+  margin: 0;
+  color: var(--om-muted);
+  font-size: 12px;
+}
+
+.om-error {
+  margin: 6px 12px 0;
+  color: var(--om-danger);
+  font-size: 12px;
+}
