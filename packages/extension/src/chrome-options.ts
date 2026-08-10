@@ -77,7 +77,7 @@ export class ChromeOptions extends Options {
       case 'FixedProfile': {
         const lines: string[] = [];
         for (const scheme of Profiles.schemes) {
-          const proxy = (profile as Record<string, unknown>)[scheme.prop];
+          const proxy = (profile as unknown as Record<string, unknown>)[scheme.prop];
           if (!proxy) continue;
           const label = scheme.scheme || 'default';
           lines.push(`${label}: ${Profiles.pacResult(proxy as never)}`);
