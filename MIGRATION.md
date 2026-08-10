@@ -178,18 +178,18 @@ Two smaller judgement calls, both deliberate:
 
 The worker is deliberately reduced to what only it can do:
 
+- **proxy authentication** — `chrome.webRequest.onAuthRequired` has no other
+  host, and its listener must be registered in the worker's first turn or the
+  event that woke the worker is lost. Host access is an
+  `optional_host_permissions` grant in this build: the popup offers it when a
+  profile carries credentials, and until it is granted the listeners are
+  registered but never fire.
 - **scheduled downloads** — `chrome.alarms` is the only timer that survives
   suspension
 - **applying the profile** to `chrome.proxy.settings`
 - **answering RPC** from the options page and popup
 
-Dropped from this build: proxy authentication (answering
-`webRequest.onAuthRequired` with stored credentials required the `webRequest`
-and `webRequestAuthProvider` permissions plus `<all_urls>` host access; the
-whole feature was cut to keep the permission surface minimal — profiles with
-`auth` entries still import, the credentials are just never used),
-external-proxy-change watching and
-`-revertProxyChanges`, quick-switch cycling, the badge and per-tab
+Dropped from this build: quick-switch cycling, the badge and per-tab
 icons/titles, the request monitor, the inspect context menus, and the
 SwitchySharp / external-extension bridges. `proxy_impl_script` and
 `proxy_impl_listener` are Firefox-only and were already dead on Chromium.

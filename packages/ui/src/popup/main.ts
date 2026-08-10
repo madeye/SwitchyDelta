@@ -10,7 +10,14 @@
 
 import { all, h, must, on, render } from '../lib/dom.js';
 import { localizeDocument, profileDisplayName, t } from '../lib/i18n.js';
-import { api, getState, openOptions, openSidePanel, refreshActivePage } from '../lib/messaging.js';
+import {
+  api,
+  getState,
+  openOptions,
+  openSidePanel,
+  refreshActivePage,
+  requestHostAccess,
+} from '../lib/messaging.js';
 
 /** A profile as summarised by the background for display. */
 interface AvailableProfile {
@@ -82,6 +89,9 @@ async function main(): Promise<void> {
   renderProfiles();
   wireActions();
   installKeyboard();
+
+  // Fire-and-forget so the profile list never waits on the permission check.
+  void maybeOfferAuthPermission();
 
   // Focus the current profile so keyboard use starts from a sensible place.
   const current = document.querySelector<HTMLElement>('.om-item[aria-current="true"]');
@@ -219,6 +229,31 @@ function installKeyboard(): void {
     event.preventDefault();
     const next = items[(activeIndex + delta + items.length) % items.length];
     next?.focus();
+  });
+}
+
+/**
+ * Proxy credentials only take effect once the optional `<all_urls>` host
+ * permission is granted, since webRequest events are gated by host access.
+ * Offer the grant when the applied profiles carry credentials but the
+ * permission is missing.
+ */
+async function maybeOfferAuthPermission(): Promise<void> {
+  let status: { hasCredentials: boolean; hostAccess: boolean };
+  try {
+    status = await api.proxyAuthStatus();
+  } catch {
+    return;
+  }
+  if (!status.hasCredentials || status.hostAccess) return;
+
+  const notice = must('#om-auth-permission');
+  notice.hidden = false;
+  must('#om-auth-grant').addEventListener('click', () => {
+    // requestHostAccess must be called synchronously inside the click gesture.
+    void requestHostAccess().then((granted) => {
+      if (granted) notice.hidden = true;
+    });
   });
 }
 

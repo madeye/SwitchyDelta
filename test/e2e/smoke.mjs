@@ -146,11 +146,26 @@ if (!sw) {
   await s.send('Log.enable');
   await sleep(2500);
 
+  // Chrome logs this when webRequest listeners are registered while the
+  // optional <all_urls> grant is still ungranted. That is the intended state
+  // of a fresh profile: proxy-auth listeners must be registered in the
+  // worker's first turn, and stay silent until the user grants host access.
+  const expectedPreGrant =
+    'You need to request host permissions in the manifest file in order to' +
+    ' be notified about requests from the webRequest API.';
+
+  const errorText = (e) =>
+    e.params?.exceptionDetails?.exception?.description ??
+    e.params?.exceptionDetails?.text ??
+    e.params?.entry?.text ??
+    (e.params?.args?.map((a) => a.value ?? a.description).join(' ') || '');
+
   const errors = s.events.filter(
     (e) =>
-      e.method === 'Runtime.exceptionThrown' ||
-      (e.method === 'Log.entryAdded' && e.params?.entry?.level === 'error') ||
-      (e.method === 'Runtime.consoleAPICalled' && e.params?.type === 'error'),
+      (e.method === 'Runtime.exceptionThrown' ||
+        (e.method === 'Log.entryAdded' && e.params?.entry?.level === 'error') ||
+        (e.method === 'Runtime.consoleAPICalled' && e.params?.type === 'error')) &&
+      !errorText(e).includes(expectedPreGrant),
   );
 
   console.log(`\n=== service worker errors: ${errors.length} ===`);

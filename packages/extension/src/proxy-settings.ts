@@ -18,6 +18,8 @@ import type {
 import { Log } from '@switchydelta/target';
 import type { Logger } from '@switchydelta/target';
 
+import { ProxyAuth } from './proxy-auth.js';
+
 const PROTOCOLS = ['proxyForHttp', 'proxyForHttps', 'proxyForFtp'] as const;
 
 /**
@@ -72,7 +74,10 @@ export class ProxySettings {
     const opts = options ?? {};
 
     if (profile.profileType === 'SystemProfile') {
-      // Clear proxy settings, returning proxy control to Chromium.
+      // Drop any stored credentials so the popup no longer offers the host
+      // permission for a profile that is no longer applied, then hand proxy
+      // control back to Chromium.
+      await this.setProxyAuth(profile, opts);
       await settingsClear();
       return;
     }
@@ -97,6 +102,7 @@ export class ProxySettings {
       };
     }
 
+    await this.setProxyAuth(profile, opts);
     await settingsSet({ value: config });
   }
 
@@ -158,6 +164,25 @@ export class ProxySettings {
       profileType: 'VirtualProfile',
       defaultProfileName: 'direct',
     } as Profile);
+  }
+
+  /**
+   * Hand the credentials of every profile this one depends on to the auth
+   * singleton, which the service worker has already attached its listener to.
+   */
+  async setProxyAuth(profile: Profile, options: OptionsBag): Promise<void> {
+    const proxyAuth = ProxyAuth.shared(this.log);
+    proxyAuth.listen();
+
+    const referenced: Profile[] = [];
+    const refSet = Profiles.allReferenceSet(profile, options, {
+      profileNotFound: (name) => this._profileNotFound(name),
+    });
+    for (const name of Object.values(refSet)) {
+      const referencedProfile = Profiles.byName(name, options);
+      if (referencedProfile) referenced.push(referencedProfile);
+    }
+    proxyAuth.setProxies(referenced);
   }
 
   getProfilePacScript(profile: Profile, options: OptionsBag): string {

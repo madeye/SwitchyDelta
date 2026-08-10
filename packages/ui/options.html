@@ -25,14 +25,16 @@
 
     <main class="om-main">
       <header class="om-toolbar">
-        <button type="button" id="om-apply" class="om-btn om-btn-primary" disabled>
-          <span data-i18n="options_apply">Apply changes</span>
-        </button>
-        <button type="button" id="om-revert" class="om-btn" disabled>
-          <span data-i18n="options_discard">Discard</span>
-        </button>
-        <span id="om-status" class="om-status" role="status"></span>
-        <!-- No catalogue string exists for this (side-panel-only feature). -->
+        <div class="om-toolbar-start">
+          <button type="button" id="om-apply" class="om-btn om-btn-primary" disabled>
+            <span data-i18n="options_apply">Apply changes</span>
+          </button>
+          <button type="button" id="om-revert" class="om-btn" disabled>
+            <span data-i18n="options_discard">Discard</span>
+          </button>
+          <span id="om-status" class="om-status" role="status"></span>
+        </div>
+        <!-- Side-panel escape hatch; hidden in wide/tab layouts via CSS. -->
         <button type="button" id="om-open-tab" class="om-btn">Open in tab</button>
       </header>
 

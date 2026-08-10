@@ -136,7 +136,18 @@ export const api = {
   setOptionsSync: (enabled: boolean, args?: { force?: boolean }) =>
     callBackground('setOptionsSync', enabled, args),
   resetOptionsSync: () => callBackground('resetOptionsSync'),
+
+  proxyAuthStatus: () =>
+    callBackground<{ hasCredentials: boolean; hostAccess: boolean }>('proxyAuthStatus'),
 };
+
+/**
+ * Ask for the optional `<all_urls>` host permission that proxy authentication
+ * needs. Must be called synchronously from a user gesture.
+ */
+export function requestHostAccess(): Promise<boolean> {
+  return chrome.permissions.request({ origins: ['<all_urls>'] });
+}
 
 // --- Tabs -------------------------------------------------------------------
 

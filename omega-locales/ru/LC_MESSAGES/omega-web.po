@@ -1321,7 +1321,7 @@ msgstr ""
 "<a href='https://github.com/madeye/SwitchyDelta/wiki/FAQ'>ЧаВО</a>."
 
 msgid "about_copyright"
-msgstr ""
+msgstr "Авторское право 2026 <a href='https://github.com/madeye'>Max Lv</a>.<br>Авторское право 2012-2017 <a href='https://github.com/FelisCatus/SwitchyOmega/blob/master/AUTHORS'>Авторы SwitchyOmega</a>."
 "Авторское право 2012-2017 <a href='https://github.com/madeye/"
 "SwitchyDelta/blob/master/AUTHORS'>Авторы SwitchyDelta</a>. Все права "
 "защищены."

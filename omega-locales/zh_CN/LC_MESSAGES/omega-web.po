@@ -1140,10 +1140,16 @@ msgstr ""
 "SwitchyDelta/wiki/FAQ'>常见问题</a>。"
 
 msgid "about_copyright"
-msgstr "版权所有 2012-2017 <a href='https://github.com/madeye/SwitchyDelta/blob/master/AUTHORS'>The SwitchyDelta Authors</a>. 保留所有权利。"
+msgstr "版权所有 2026 <a href='https://github.com/madeye'>Max Lv</a>。<br>版权所有 2012-2017 <a href='https://github.com/FelisCatus/SwitchyOmega/blob/master/AUTHORS'>SwitchyOmega 作者</a>。"
 
 msgid "about_credits"
 msgstr "SwitchyDelta 的诞生离不开 <a href='https://github.com/madeye/SwitchyDelta'>SwitchyDelta</a> 开源项目和其他<a href='https://github.com/madeye/SwitchyDelta/blob/master/AUTHORS'>开源软件</a>。"
 
 msgid "about_license"
 msgstr "SwitchyDelta 是<a href='https://www.gnu.org/philosophy/free-sw.zh-cn.html'>自由软件</a>，使用<a href='https://www.gnu.org/licenses/gpl.html'>GNU General Public License</a> 版本 3 及以上授权。"
+
+msgid "popup_proxyAuthPermission"
+msgstr "自动登录需要认证的代理服务器需要“访问所有网站”权限。"
+
+msgid "popup_proxyAuthPermissionGrant"
+msgstr "授予权限"

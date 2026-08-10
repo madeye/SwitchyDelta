@@ -1127,10 +1127,16 @@ msgstr ""
 "%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98'>常見問題</a>。"
 
 msgid "about_copyright"
-msgstr "版權所有 2012-2017 <a href='https://github.com/madeye/SwitchyDelta/blob/master/AUTHORS'>The SwitchyDelta Authors</a>. 保留所有權利。"
+msgstr "版權所有 2026 <a href='https://github.com/madeye'>Max Lv</a>。<br>版權所有 2012-2017 <a href='https://github.com/FelisCatus/SwitchyOmega/blob/master/AUTHORS'>SwitchyOmega 作者</a>。"
 
 msgid "about_credits"
 msgstr "SwitchyDelta 的誕生離不開 <a href='https://github.com/madeye/SwitchyDelta'>SwitchyDelta</a> 開源項目和其他<a href='https://github.com/madeye/SwitchyDelta/blob/master/AUTHORS'>開源軟體</a>。"
 
 msgid "about_license"
 msgstr "SwitchyDelta 是<a href='https://www.gnu.org/philosophy/free-sw.zh-tw.html'>自由軟體</a>，使用<a href='https://www.gnu.org/licenses/gpl.html'>GNU General Public License</a> 版本 3 及以上授權。"
+
+msgid "popup_proxyAuthPermission"
+msgstr "自動登入需要驗證的代理伺服器需要「存取所有網站」權限。"
+
+msgid "popup_proxyAuthPermissionGrant"
+msgstr "授予權限"

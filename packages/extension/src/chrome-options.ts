@@ -15,11 +15,26 @@ import type { Profile } from '@switchydelta/pac';
 
 import { clearBadge, setActionIcon, setControlLostBadge } from './action-icon.js';
 import { fetchUrl } from './fetch-url.js';
+import { ProxyAuth } from './proxy-auth.js';
 
 export class ChromeOptions extends Options {
   /** Alarm callbacks, keyed by the name passed to {@link schedule}. */
   readonly #alarms = new Map<string, () => void>();
   #alarmListenerInstalled = false;
+
+  /**
+   * Whether any applied profile carries proxy credentials, and whether the
+   * optional `<all_urls>` host permission that auth interception depends on
+   * has been granted. The popup offers the grant when credentials exist
+   * without host access.
+   */
+  async proxyAuthStatus(): Promise<{ hasCredentials: boolean; hostAccess: boolean }> {
+    const [hasCredentials, hostAccess] = await Promise.all([
+      ProxyAuth.shared(Log).hasCredentials(),
+      chrome.permissions.contains({ origins: ['<all_urls>'] }),
+    ]);
+    return { hasCredentials, hostAccess };
+  }
 
   override fetchUrl(
     url: string,

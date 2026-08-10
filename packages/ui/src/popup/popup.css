@@ -138,6 +138,22 @@ body.om-popup {
   font-size: 12px;
 }
 
+.om-notice-action {
+  margin-top: 6px;
+  padding: 3px 10px;
+  font: inherit;
+  font-size: 12px;
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--om-border);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.om-notice-action:hover {
+  background: color-mix(in srgb, currentcolor 8%, transparent);
+}
+
 .om-error {
   margin: 6px 12px 0;
   color: var(--om-danger);

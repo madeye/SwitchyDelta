@@ -45,6 +45,16 @@ body.om-options {
 /* Only useful when the page is cramped; in a full tab it is redundant. */
 #om-open-tab {
   display: none;
+  flex-shrink: 0;
+}
+
+.om-toolbar-start {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
 }
 
 .om-sidebar {
@@ -118,6 +128,7 @@ body.om-options {
   display: flex;
   gap: 8px;
   align-items: center;
+  justify-content: space-between;
   padding: 12px 24px;
   background: var(--om-bg);
   border-bottom: 1px solid var(--om-border);
@@ -403,6 +414,66 @@ body.om-options {
   gap: 8px;
 }
 
+/* Username / password for the single fixed proxy.
+   Stacked full-width so the side panel (~360px) never crushes fields. */
+.om-auth-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Password field with the eye toggle inside the input (Bitwarden-style). */
+.om-auth-password {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.om-auth-password input {
+  width: 100%;
+  min-width: 0;
+  /* Room for the in-field eye button. */
+  padding-right: 2.5em;
+}
+
+.om-password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2em;
+  height: 2em;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--om-muted);
+  cursor: pointer;
+}
+
+.om-password-toggle:hover {
+  color: var(--om-fg);
+  background: color-mix(in srgb, currentcolor 8%, transparent);
+}
+
+.om-password-toggle:focus-visible {
+  outline: 2px solid var(--om-accent);
+  outline-offset: 1px;
+}
+
+.om-password-toggle svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+
+.om-auth-warning {
+  color: var(--om-danger);
+}
+
 .om-item-new {
   color: var(--om-accent);
 }
@@ -474,11 +545,24 @@ body.om-options {
     border-radius: 999px;
   }
 
-  /* Buttons wrap rather than forcing the toolbar wider than the panel. */
+  /* One compact row: [Apply] [Discard] … [Open in tab]. Avoids the old
+     flex-wrap + margin-left:auto layout that left Open in tab alone on a
+     second row, right-aligned under empty space. */
   .om-toolbar {
-    flex-wrap: wrap;
     top: 47px;
-    padding: 10px 14px;
+    padding: 8px 10px;
+    gap: 4px;
+  }
+
+  .om-toolbar-start {
+    gap: 4px;
+  }
+
+  .om-toolbar .om-btn {
+    padding: 3px 8px;
+    font-size: 12px;
+    border-radius: 5px;
+    white-space: nowrap;
   }
 
   .om-view {
@@ -486,8 +570,8 @@ body.om-options {
   }
 
   #om-open-tab {
-    display: inline-block;
-    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
   }
 }
 
@@ -506,6 +590,7 @@ body.om-options {
 .om-field input[type="text"],
 .om-field input[type="url"],
 .om-field input[type="number"],
+.om-field input[type="password"],
 .om-field select,
 .om-field textarea {
   width: 100%;
