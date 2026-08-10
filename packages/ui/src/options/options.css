@@ -236,6 +236,86 @@ body.om-options {
   background: var(--om-hover);
 }
 
+/* Switch rules: one card per rule so the editor works at panel width. */
+.om-rule {
+  margin: 0 0 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--om-border);
+  border-radius: 6px;
+}
+
+.om-rule-condition,
+.om-rule-result {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.om-rule-condition {
+  margin-bottom: 8px;
+}
+
+.om-rule select,
+.om-rule input[type="text"] {
+  flex: 1 1 50%;
+  min-width: 0;
+  padding: 5px 8px;
+  border: 1px solid var(--om-border);
+  border-radius: 6px;
+  background: var(--om-bg);
+  color: inherit;
+  font: inherit;
+}
+
+.om-rule input[type="number"] {
+  width: 4.5em;
+  padding: 5px 8px;
+  border: 1px solid var(--om-border);
+  border-radius: 6px;
+  background: var(--om-bg);
+  color: inherit;
+  font: inherit;
+}
+
+.om-condition-details {
+  display: flex;
+  flex: 1 1 50%;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.om-between {
+  color: var(--om-muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.om-day {
+  display: inline-flex;
+  gap: 3px;
+  align-items: center;
+  font-size: 12px;
+}
+
+.om-invalid {
+  border-color: var(--om-danger) !important;
+}
+
+.om-rule-default {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  background: var(--om-panel);
+}
+
+.om-rule-default select {
+  flex: 0 1 60%;
+}
+
 .om-btn-danger:not(:disabled) {
   border-color: var(--om-danger);
   color: var(--om-danger);

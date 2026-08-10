@@ -11,7 +11,18 @@ import { profileDisplayName, t } from '../lib/i18n.js';
 import { api, callBackground, getState } from '../lib/messaging.js';
 import { colorFor, listProfiles, profileColors } from '../lib/profile-view.js';
 import { isDirty, markDirty, options } from './main.js';
-import { Profiles, type FixedProfile, type Profile, type ProxyServer } from '@switchydelta/pac';
+import {
+  Conditions,
+  parseIp,
+  Profiles,
+  type Condition,
+  type ConditionType,
+  type FixedProfile,
+  type Profile,
+  type ProxyServer,
+  type Rule,
+  type SwitchProfile,
+} from '@switchydelta/pac';
 
 /** Option keys whose absence means "on" (mirrors the background's defaults). */
 const DEFAULT_ON = new Set([
@@ -575,6 +586,8 @@ export function renderProfile(container: HTMLElement, name: string): void {
 
   if (profile.profileType === 'FixedProfile') {
     renderFixedProfile(container, profile as FixedProfile);
+  } else if (profile.profileType === 'SwitchProfile') {
+    renderSwitchProfile(container, profile as SwitchProfile);
   } else {
     // Editors for the remaining profile types are not ported yet; the profile
     // itself still works, it just cannot be edited from this screen.
@@ -585,6 +598,311 @@ export function renderProfile(container: HTMLElement, name: string): void {
       }),
     );
   }
+}
+
+// --- Switch profile editor --------------------------------------------------
+
+/** Grouped condition types, mirroring the original's basic/advanced split. */
+const BASIC_CONDITION_TYPES: Array<[string, ConditionType[]]> = [
+  [
+    'condition_group_default',
+    ['HostWildcardCondition', 'UrlWildcardCondition', 'UrlRegexCondition', 'FalseCondition'],
+  ],
+];
+const ADVANCED_CONDITION_TYPES: Array<[string, ConditionType[]]> = [
+  [
+    'condition_group_host',
+    ['HostWildcardCondition', 'HostRegexCondition', 'HostLevelsCondition', 'IpCondition'],
+  ],
+  ['condition_group_url', ['UrlWildcardCondition', 'UrlRegexCondition', 'KeywordCondition']],
+  ['condition_group_special', ['WeekdayCondition', 'TimeCondition', 'FalseCondition']],
+];
+
+/** A fresh condition of `type`, carrying the pattern over when both use one. */
+function conditionOfType(type: ConditionType, previous: Condition): Condition {
+  const pattern = 'pattern' in previous ? (previous.pattern ?? '') : '';
+  switch (type) {
+    case 'HostLevelsCondition':
+      return { conditionType: type, minValue: 1, maxValue: 1 };
+    case 'TimeCondition':
+      return { conditionType: type, startHour: 0, endHour: 0 };
+    case 'WeekdayCondition':
+      return { conditionType: type, days: '-------' };
+    case 'IpCondition':
+      return { conditionType: type, ip: '0.0.0.0', prefixLength: 0 };
+    default:
+      return { conditionType: type, pattern } as Condition;
+  }
+}
+
+/** The editing control(s) for one condition, wired straight to the object. */
+function conditionDetails(condition: Condition, touch: () => void): HTMLElement {
+  const wrap = h('span', { class: 'om-condition-details' });
+
+  const number = (get: () => number, set: (v: number) => void, min: number, max: number) =>
+    h('input', {
+      type: 'number',
+      min: String(min),
+      max: String(max),
+      value: String(get()),
+      oninput: (event: Event) => {
+        set(Number((event.target as HTMLInputElement).value));
+        touch();
+      },
+    });
+
+  switch (condition.conditionType) {
+    case 'HostLevelsCondition':
+      wrap.append(
+        number(() => condition.minValue, (v) => (condition.minValue = v), 1, 99),
+        h('span', { class: 'om-between', text: t('options_hostLevelsBetween') }),
+        number(() => condition.maxValue, (v) => (condition.maxValue = v), 1, 99),
+      );
+      break;
+    case 'TimeCondition':
+      wrap.append(
+        number(() => condition.startHour, (v) => (condition.startHour = v), 0, 23),
+        h('span', { class: 'om-between', text: t('options_hourBetween') }),
+        number(() => condition.endHour, (v) => (condition.endHour = v), 0, 23),
+      );
+      break;
+    case 'WeekdayCondition': {
+      const flags = Conditions.getWeekdayList(condition);
+      wrap.append(
+        ...flags.map((enabled, day) => {
+          const box = h('input', {
+            type: 'checkbox',
+            checked: enabled,
+            onchange: () => {
+              flags[day] = box.checked;
+              condition.days = flags.map((on, i) => (on ? 'SMTWTFS'[i] : '-')).join('');
+              delete condition.startDay;
+              delete condition.endDay;
+              touch();
+            },
+          });
+          return h(
+            'label',
+            { class: 'om-day' },
+            box,
+            h('span', { text: t('options_weekDayShort_' + day) }),
+          );
+        }),
+      );
+      break;
+    }
+    case 'IpCondition': {
+      const input = h('input', {
+        type: 'text',
+        placeholder: '127.0.0.1/8',
+        value: `${condition.ip}/${condition.prefixLength}`,
+        oninput: () => {
+          const m = /^\s*(.*?)\/(\d{1,3})\s*$/.exec(input.value);
+          const parsed = m && m[1] ? parseIp(m[1]) : null;
+          input.classList.toggle('om-invalid', !parsed);
+          if (!parsed) return;
+          condition.ip = m![1]!;
+          condition.prefixLength = Number(m![2]);
+          touch();
+        },
+      });
+      wrap.append(input);
+      break;
+    }
+    case 'FalseCondition':
+      wrap.append(
+        h('input', {
+          type: 'text',
+          value: condition.pattern ?? '',
+          placeholder: t('condition_details_FalseCondition'),
+          oninput: (event: Event) => {
+            condition.pattern = (event.target as HTMLInputElement).value;
+            touch();
+          },
+        }),
+      );
+      break;
+    default:
+      wrap.append(
+        h('input', {
+          type: 'text',
+          value: 'pattern' in condition ? (condition.pattern ?? '') : '',
+          oninput: (event: Event) => {
+            (condition as { pattern: string }).pattern = (event.target as HTMLInputElement).value;
+            touch();
+          },
+        }),
+      );
+  }
+  return wrap;
+}
+
+function renderSwitchProfile(container: HTMLElement, profile: SwitchProfile): void {
+  const wrap = h('div');
+  const groups =
+    Number(options['-showConditionTypes'] ?? 0) > 0
+      ? ADVANCED_CONDITION_TYPES
+      : BASIC_CONDITION_TYPES;
+
+  const touch = () => {
+    Profiles.updateRevision(profile);
+    markDirty();
+  };
+  const resultNames = () =>
+    listProfiles(options, { resultFor: profile.name }).map((other) => other.name);
+
+  const profileSelect = (get: () => string | null, set: (name: string) => void) =>
+    h(
+      'select',
+      {
+        onchange: (event: Event) => {
+          set((event.target as HTMLSelectElement).value);
+          touch();
+        },
+      },
+      ...resultNames().map((name) =>
+        h('option', { value: name, text: profileDisplayName(name), selected: get() === name }),
+      ),
+    );
+
+  const typeSelect = (rule: Rule) =>
+    h(
+      'select',
+      {
+        onchange: (event: Event) => {
+          rule.condition = conditionOfType(
+            (event.target as HTMLSelectElement).value as ConditionType,
+            rule.condition,
+          );
+          touch();
+          rerender();
+        },
+      },
+      ...groups.map(([groupKey, types]) => {
+        const opts = types.map((type) =>
+          h('option', {
+            value: type,
+            text: t('condition_' + type),
+            selected: rule.condition.conditionType === type,
+          }),
+        );
+        const label = t(groupKey);
+        // condition_group_default is deliberately empty in the catalogue.
+        return label && label !== groupKey
+          ? h('optgroup', { label }, ...opts)
+          : (opts as unknown as HTMLElement);
+      }).flat(),
+    );
+
+  const rerender = () => {
+    render(wrap, [
+      h('h3', { text: t('options_group_switchRules') }),
+      ...profile.rules.map((rule, index) =>
+        h(
+          'div',
+          { class: 'om-rule' },
+          h(
+            'div',
+            { class: 'om-rule-condition' },
+            typeSelect(rule),
+            conditionDetails(rule.condition, touch),
+          ),
+          h(
+            'div',
+            { class: 'om-rule-result' },
+            profileSelect(
+              () => rule.profileName,
+              (name) => (rule.profileName = name),
+            ),
+            h(
+              'span',
+              { class: 'om-cycle-buttons' },
+              index > 0 &&
+                h('button', {
+                  type: 'button',
+                  class: 'om-mini',
+                  title: t('options_sort'),
+                  text: '↑',
+                  onclick: () => {
+                    const rules = profile.rules;
+                    [rules[index - 1], rules[index]] = [rules[index]!, rules[index - 1]!];
+                    touch();
+                    rerender();
+                  },
+                }),
+              index < profile.rules.length - 1 &&
+                h('button', {
+                  type: 'button',
+                  class: 'om-mini',
+                  title: t('options_sort'),
+                  text: '↓',
+                  onclick: () => {
+                    const rules = profile.rules;
+                    [rules[index], rules[index + 1]] = [rules[index + 1]!, rules[index]!];
+                    touch();
+                    rerender();
+                  },
+                }),
+              h('button', {
+                type: 'button',
+                class: 'om-mini',
+                title: t('options_cloneRule'),
+                text: '⧉',
+                onclick: () => {
+                  profile.rules.splice(index + 1, 0, structuredClone(rule));
+                  touch();
+                  rerender();
+                },
+              }),
+              h('button', {
+                type: 'button',
+                class: 'om-mini',
+                title: t('options_deleteRule'),
+                text: '✕',
+                onclick: () => {
+                  profile.rules.splice(index, 1);
+                  touch();
+                  rerender();
+                },
+              }),
+            ),
+          ),
+        ),
+      ),
+      h('button', {
+        type: 'button',
+        class: 'om-btn',
+        text: t('options_addCondition'),
+        onclick: () => {
+          // Like the original: clone the last rule with a cleared pattern so
+          // consecutive rules keep the same type and target.
+          const last = profile.rules[profile.rules.length - 1];
+          const rule: Rule = last
+            ? structuredClone(last)
+            : {
+                condition: { conditionType: 'HostWildcardCondition', pattern: '' },
+                profileName: profile.defaultProfileName,
+              };
+          if ('pattern' in rule.condition) rule.condition.pattern = '';
+          profile.rules.push(rule);
+          touch();
+          rerender();
+        },
+      }),
+      h(
+        'div',
+        { class: 'om-rule om-rule-default' },
+        h('span', { text: t('options_switchDefaultProfile') }),
+        profileSelect(
+          () => profile.defaultProfileName,
+          (name) => (profile.defaultProfileName = name),
+        ),
+      ),
+    ]);
+  };
+
+  rerender();
+  container.append(wrap);
 }
 
 /** Why `name` cannot be used as a (new) profile name, or null if it can. */
