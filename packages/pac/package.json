@@ -1,0 +1,29 @@
+{
+  "name": "@switchydelta/pac",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Profile, condition and PAC-script logic for SwitchyDelta",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./psl": {
+      "types": "./dist/psl.d.ts",
+      "default": "./dist/psl.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo"
+  },
+  "dependencies": {
+    "tldts": "^6.1.47"
+  }
+}

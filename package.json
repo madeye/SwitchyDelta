@@ -1,0 +1,28 @@
+{
+  "name": "switchydelta",
+  "version": "3.0.0",
+  "private": true,
+  "description": "SwitchyDelta - proxy switching browser extension",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "tsc --build --force",
+    "test": "TZ=Europe/London vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint packages --ext .ts,.tsx",
+    "clean": "rm -rf packages/*/dist packages/*/tsconfig.tsbuildinfo"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.268",
+    "@types/node": "^20.14.0",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
