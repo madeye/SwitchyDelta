@@ -4,8 +4,7 @@
   "version": "3.0.0",
   "description": "__MSG_manifest_app_description__",
   "default_locale": "en",
-  "minimum_chrome_version": "109",
-
+  "minimum_chrome_version": "114",
   "icons": {
     "16": "img/icons/omega-action-16.png",
     "24": "img/icons/omega-action-24.png",
@@ -14,7 +13,6 @@
     "64": "img/icons/omega-64.png",
     "128": "img/icons/omega-128.png"
   },
-
   "action": {
     "default_icon": {
       "16": "img/icons/omega-action-16.png",
@@ -25,18 +23,18 @@
     "default_title": "__MSG_manifest_icon_default_title__",
     "default_popup": "popup.html"
   },
-
   "background": {
     "service_worker": "js/sw.js",
     "type": "module"
   },
-
+  "side_panel": {
+    "default_path": "options.html"
+  },
   "options_page": "options.html",
   "options_ui": {
     "page": "options.html",
     "open_in_tab": true
   },
-
   "permissions": [
     "proxy",
     "storage",
@@ -44,11 +42,12 @@
     "alarms",
     "tabs",
     "webRequest",
-    "webRequestAuthProvider"
+    "webRequestAuthProvider",
+    "sidePanel"
   ],
-
-  "host_permissions": ["<all_urls>"],
-
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "commands": {
     "_execute_action": {
       "suggested_key": {
@@ -56,7 +55,6 @@
       }
     }
   },
-
   "browser_specific_settings": {
     "gecko": {
       "id": "switchydelta@madeye.github.io",

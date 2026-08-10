@@ -158,6 +158,24 @@ export async function refreshActivePage(): Promise<void> {
   await chrome.tabs.reload(tab.id, { bypassCache: true });
 }
 
+/**
+ * Show the settings in Chrome's side panel.
+ *
+ * Must be called synchronously from a user gesture — the API rejects
+ * otherwise, and awaiting anything first loses the gesture. Returns false when
+ * the panel is unavailable so the caller can fall back to a tab.
+ */
+export function openSidePanel(): boolean {
+  if (!chrome.sidePanel?.open) return false;
+  try {
+    // windowId is resolved by Chrome from the calling context.
+    void chrome.sidePanel.open({ windowId: chrome.windows.WINDOW_ID_CURRENT });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 /** Focus the existing options tab if there is one, otherwise open it. */
 export async function openOptions(hash = ''): Promise<void> {
   const url = chrome.runtime.getURL('options.html');

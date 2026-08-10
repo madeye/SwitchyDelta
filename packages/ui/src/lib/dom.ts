@@ -14,7 +14,10 @@ type Attrs<K extends keyof HTMLElementTagNameMap> = {
   html?: string;
   dataset?: Record<string, string>;
   style?: Partial<CSSStyleDeclaration>;
-} & Partial<Omit<HTMLElementTagNameMap[K], 'style' | 'dataset' | 'children'>>;
+} & Partial<Omit<HTMLElementTagNameMap[K], 'style' | 'dataset' | 'children'>> & {
+    // Hyphenated names are attributes, not properties; see the note in h().
+    [key: `aria-${string}`]: string | undefined;
+  } & { role?: string };
 
 /**
  * Create an element.
@@ -50,6 +53,11 @@ export function h<K extends keyof HTMLElementTagNameMap>(
       default:
         if (key.startsWith('on') && typeof value === 'function') {
           el.addEventListener(key.slice(2).toLowerCase(), value as EventListener);
+        } else if (key.includes('-')) {
+          // aria-* / data-* have no matching IDL property, so assigning them
+          // would silently create a plain JS property and the attribute
+          // selectors that style them would never match.
+          el.setAttribute(key, String(value));
         } else {
           (el as unknown as Record<string, unknown>)[key] = value;
         }

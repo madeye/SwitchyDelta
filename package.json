@@ -10,14 +10,14 @@
   ],
   "scripts": {
     "build": "npm run typecheck && npm run build:ui && npm run build:extension",
-    "typecheck": "tsc --build --force",
+    "typecheck": "tsc --build --force && tsc --noEmit -p packages/ui",
     "test": "TZ=Europe/London vitest run",
     "test:watch": "vitest",
     "lint": "eslint packages --ext .ts,.tsx",
     "clean": "rm -rf packages/*/dist packages/*/tsconfig.tsbuildinfo",
     "build:ui": "npm run build -w @switchydelta/ui",
     "build:extension": "node scripts/build-extension.mjs",
-    "e2e": "node test/e2e/smoke.mjs dist && node test/e2e/profiles.mjs dist && node test/e2e/rule-list.mjs dist"
+    "e2e": "node test/e2e/smoke.mjs dist && node test/e2e/side-panel.mjs dist && node test/e2e/profiles.mjs dist && node test/e2e/rule-list.mjs dist"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.268",

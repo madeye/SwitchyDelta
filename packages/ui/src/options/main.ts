@@ -131,6 +131,12 @@ async function main(): Promise<void> {
   must('#om-apply').addEventListener('click', () => void applyChanges());
   must('#om-revert').addEventListener('click', () => location.reload());
 
+  // Escape hatch out of the side panel for the wider screens (rule tables in
+  // particular are unusable at panel width).
+  must('#om-open-tab').addEventListener('click', () => {
+    void chrome.tabs.create({ url: chrome.runtime.getURL('options.html') + location.hash });
+  });
+
   // Any control carrying data-option writes straight into the working copy.
   on(document, 'change', '[data-option]', (_event, target) => {
     const key = target.dataset['option'];
