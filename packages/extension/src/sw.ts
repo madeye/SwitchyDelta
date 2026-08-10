@@ -42,6 +42,7 @@ function encodeError(value: unknown): unknown {
 
 let options: ChromeOptions | undefined;
 const state = new BrowserStorage('omega.local.');
+const proxySettings = new ProxySettings();
 
 async function boot(): Promise<Options> {
   const storage = new ChromeStorage('local');
@@ -57,7 +58,7 @@ async function boot(): Promise<Options> {
     sync.enabled = syncOptions === 'sync';
   }
 
-  options = new ChromeOptions(null, storage, state, Log, sync, new ProxySettings());
+  options = new ChromeOptions(null, storage, state, Log, sync, proxySettings);
   await options.ready;
   return options;
 }
@@ -66,6 +67,56 @@ const ready = boot().catch((err: unknown) => {
   Log.error('Service worker boot failed', err);
   throw err;
 });
+
+// Paint the action icon for the restored profile on every worker start.
+void ready.then(() => options?.currentProfileChanged('boot'));
+
+/**
+ * Track who controls the proxy setting.
+ *
+ * Another extension or an enterprise policy can take the setting away, in
+ * which case our writes succeed silently but change nothing — the popup
+ * notice and the red "=" badge are the only way the user learns why nothing
+ * happens. Registered at the top level so the event can wake the worker.
+ */
+let externalProfileTimer: ReturnType<typeof setTimeout> | undefined;
+function handleProxyChange(details: chrome.types.ChromeSettingGetResultDetails): void {
+  void (async () => {
+    await ready;
+    const target = options;
+    if (!target || !details) return;
+
+    const notControllableBefore = target.proxyNotControllable();
+    let internal = false;
+    let noRevert = false;
+    switch (details.levelOfControl) {
+      case 'controlled_by_other_extensions':
+      case 'not_controllable':
+        target.setProxyNotControllable(
+          details.levelOfControl === 'not_controllable' ? 'policy' : 'app',
+        );
+        noRevert = true;
+        break;
+      default:
+        target.setProxyNotControllable(null);
+    }
+
+    if (details.levelOfControl === 'controlled_by_this_extension') {
+      internal = true;
+      // Our own writes are only interesting when control was just regained.
+      if (!notControllableBefore) return;
+    }
+    Log.log('external proxy change', details.levelOfControl);
+
+    const parsed = proxySettings.parseExternalProfile(details, await target.getAll());
+    clearTimeout(externalProfileTimer);
+    externalProfileTimer = setTimeout(() => {
+      if (parsed) target.setExternalProfile(parsed, { noRevert, internal });
+    }, 500);
+  })();
+}
+chrome.proxy.settings.onChange.addListener(handleProxyChange);
+void ready.then(() => chrome.proxy.settings.get({}, handleProxyChange));
 
 /**
  * RPC dispatcher.
