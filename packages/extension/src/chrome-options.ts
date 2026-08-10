@@ -13,6 +13,7 @@ import type { OmegaOptions } from '@switchydelta/target';
 import { Profiles } from '@switchydelta/pac';
 import type { Profile } from '@switchydelta/pac';
 
+import { clearBadge, setActionIcon, setControlLostBadge } from './action-icon.js';
 import { fetchUrl } from './fetch-url.js';
 
 export class ChromeOptions extends Options {
@@ -133,6 +134,47 @@ export class ChromeOptions extends Options {
 
   override currentProfileChanged(reason?: string): void {
     Log.log('Options#currentProfileChanged', reason ?? '');
+
+    const profile = this._currentProfileName ? this.currentProfile() : null;
+    // Virtual profiles take the colour of their target, like the popup does.
+    let display = profile;
+    if (display?.profileType === 'VirtualProfile') {
+      const target = Profiles.byName(
+        (display as Profile & { defaultProfileName: string }).defaultProfileName,
+        this._options,
+      );
+      if (target) display = target;
+    }
+    void setActionIcon(display?.color ?? '#1a73e8');
+
+    if (profile) {
+      const name = chrome.i18n.getMessage('profile_' + profile.name) || profile.name;
+      void chrome.action.setTitle({ title: name });
+    }
+  }
+
+  // --- Proxy control loss ---------------------------------------------------
+
+  private _proxyNotControllable: string | null = null;
+
+  proxyNotControllable(): string | null {
+    return this._proxyNotControllable;
+  }
+
+  /**
+   * Record why the proxy setting cannot be controlled ('app' or 'policy'),
+   * or null when control is (back) in our hands. Drives the popup notice via
+   * state and the red "=" badge, matching the original.
+   */
+  setProxyNotControllable(reason: string | null): void {
+    this._proxyNotControllable = reason;
+    if (reason) {
+      void this._state.set({ proxyNotControllable: reason });
+      setControlLostBadge();
+    } else {
+      void this._state.remove(['proxyNotControllable']);
+      clearBadge();
+    }
   }
 }
 

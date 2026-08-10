@@ -187,6 +187,95 @@ export class ProxySettings {
       profileNotFound: (name) => this._profileNotFound(name),
     });
   }
+
+  /**
+   * Observe proxy setting changes, including the initial state. The callback
+   * receives the ChromeSetting details ({value, levelOfControl}).
+   */
+  watchProxyChange(callback: (details: chrome.types.ChromeSettingGetResultDetails) => void): void {
+    chrome.proxy.settings.onChange.addListener(callback);
+    chrome.proxy.settings.get({}, callback);
+  }
+
+  /**
+   * Identify the profile equivalent to an externally set proxy config: a
+   * builtin, an existing profile with the same effect, or an unnamed snapshot
+   * profile the popup can offer to import. Ported from the original
+   * `proxy_impl_settings.coffee` (minus the PAC magic-comment probe — this
+   * build's PAC scripts no longer carry one).
+   */
+  parseExternalProfile(
+    details: chrome.types.ChromeSettingGetResultDetails,
+    options: OptionsBag,
+  ): Profile | null {
+    const value = details.value as chrome.proxy.ProxyConfig | undefined;
+    switch (value?.mode) {
+      case 'system':
+        return Profiles.byName('system', options) ?? null;
+      case 'direct':
+        return Profiles.byName('direct', options) ?? null;
+      case 'auto_detect':
+        return {
+          profileType: 'PacProfile',
+          name: '',
+          pacUrl: 'http://wpad/wpad.dat',
+        } as Profile;
+      case 'pac_script': {
+        const url = value.pacScript?.url;
+        const data = value.pacScript?.data;
+        let found: Profile | null = null;
+        Profiles.each(options, (_key, p) => {
+          const pac = p as Profile & { pacUrl?: string; pacScript?: string };
+          if (p.profileType !== 'PacProfile') return;
+          if ((url && pac.pacUrl === url) || (!url && data && pac.pacScript === data)) found = p;
+        });
+        if (found) return found;
+        return (
+          url
+            ? { profileType: 'PacProfile', name: '', pacUrl: url }
+            : { profileType: 'PacProfile', name: '', pacScript: data ?? '' }
+        ) as Profile;
+      }
+      case 'fixed_servers': {
+        const rules = value.rules ?? {};
+        // Compare against each fixed profile's own generated config; matching
+        // the effect beats matching the representation.
+        const normalize = (config: chrome.proxy.ProxyRules) => {
+          const copy: Record<string, unknown> = { ...config };
+          if (copy['singleProxy']) {
+            copy['fallbackProxy'] = copy['singleProxy'];
+            delete copy['singleProxy'];
+          }
+          (copy['bypassList'] as string[] | undefined)?.sort();
+          return JSON.stringify(copy);
+        };
+        const wanted = normalize(rules);
+        let found: Profile | null = null;
+        Profiles.each(options, (_key, p) => {
+          if (p.profileType !== 'FixedProfile') return;
+          const config = this._fixedProfileConfig(p as FixedProfile);
+          if (config.mode === 'fixed_servers' && normalize(config.rules ?? {}) === wanted) {
+            found = p;
+          }
+        });
+        if (found) return found;
+        return {
+          profileType: 'FixedProfile',
+          name: '',
+          fallbackProxy: rules.singleProxy ?? rules.fallbackProxy,
+          proxyForHttp: rules.proxyForHttp,
+          proxyForHttps: rules.proxyForHttps,
+          proxyForFtp: rules.proxyForFtp,
+          bypassList: (rules.bypassList ?? []).map((pattern) => ({
+            conditionType: 'BypassCondition',
+            pattern,
+          })),
+        } as Profile;
+      }
+      default:
+        return null;
+    }
+  }
 }
 
 export default ProxySettings;
