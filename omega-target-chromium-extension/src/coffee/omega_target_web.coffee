@@ -49,23 +49,33 @@ angular.module('omegaTarget', []).factory 'omegaTarget', ($q) ->
   urlParser = document.createElement('a')
   omegaTarget =
     options: null
+    # State lives in the service worker; do not read extension-page localStorage
+    # (it is not shared with the MV3 background service worker).
     state: (name, value) ->
       if arguments.length == 1
-        getValue = (key) -> try JSON.parse(localStorage[prefix + key])
         if Array.isArray(name)
-          return $q.when(name.map(getValue))
+          return callBackground('getState', name).then (values) ->
+            name.map (key) -> values[key]
         else
-          value = getValue(name)
+          return callBackground('getState', [name]).then (values) ->
+            values[name]
       else
-        localStorage[prefix + name] = JSON.stringify(value)
-      return $q.when(value)
+        items = {}
+        items[name] = value
+        return callBackground('setState', items).then -> value
     lastUrl: (url) ->
+      # Page-local only; not shared with the service worker.
       name = 'web.last_url'
       if url
-        omegaTarget.state(name, url)
+        try
+          localStorage[prefix + name] = JSON.stringify(url)
+        catch _
+          # ignore
         url
       else
         try JSON.parse(localStorage[prefix + name])
+        catch _
+          undefined
     addOptionsChangeCallback: (callback) ->
       optionsChangeCallback.push(callback)
     refresh: (args) ->
@@ -91,7 +101,7 @@ angular.module('omegaTarget', []).factory 'omegaTarget', ($q) ->
     getMessage: chrome.i18n.getMessage.bind(chrome.i18n)
     openOptions: (hash) ->
       d = $q['defer']()
-      options_url = chrome.extension.getURL('options.html')
+      options_url = chrome.runtime.getURL('options.html')
       chrome.tabs.query url: options_url, (tabs) ->
         url = if hash
           urlParser.href = tabs[0]?.url || options_url

@@ -22,12 +22,14 @@ module.exports = class Inspect
       "ftp://*/*"
     ]
 
+    # Note: `onclick` is not supported in MV3 service workers.
+    # Handlers are registered via chrome.contextMenus.onClicked in background.
+
     ### Not so useful...
     chrome.contextMenus.create({
       id: 'inspectPage'
       title: chrome.i18n.getMessage('contextMenu_inspectPage')
       contexts: ['page']
-      onclick: @inspect.bind(this)
       documentUrlPatterns: webResource
     })
     ###
@@ -36,7 +38,6 @@ module.exports = class Inspect
       id: 'inspectFrame'
       title: chrome.i18n.getMessage('contextMenu_inspectFrame')
       contexts: ['frame']
-      onclick: @inspect.bind(this)
       documentUrlPatterns: webResource
     })
 
@@ -44,7 +45,6 @@ module.exports = class Inspect
       id: 'inspectLink'
       title: chrome.i18n.getMessage('contextMenu_inspectLink')
       contexts: ['link']
-      onclick: @inspect.bind(this)
       targetUrlPatterns: webResource
     })
 
@@ -56,7 +56,6 @@ module.exports = class Inspect
         'video'
         'audio'
       ]
-      onclick: @inspect.bind(this)
       targetUrlPatterns: webResource
     })
 

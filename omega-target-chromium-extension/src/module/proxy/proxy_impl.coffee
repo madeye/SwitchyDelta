@@ -18,7 +18,8 @@ class ProxyImpl
     })
   setProxyAuth: (profile, options) ->
     return Promise.try(=>
-      @_proxyAuth ?= new ProxyAuth(@log)
+      # Share the singleton registered at SW startup (see background.coffee).
+      @_proxyAuth = ProxyAuth.shared(@log)
       @_proxyAuth.listen()
       referenced_profiles = []
       ref_set = OmegaPac.Profiles.allReferenceSet(profile,

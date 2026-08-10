@@ -1,23 +1,23 @@
-window.OmegaDebug =
+globalThis.OmegaDebug =
   getProjectVersion: ->
     chrome.runtime.getManifest().version
   getExtensionVersion: ->
     chrome.runtime.getManifest().version
   downloadLog: ->
-    blob = new Blob [localStorage['log']], {type: "text/plain;charset=utf-8"}
-    filename = "OmegaLog_#{Date.now()}.txt"
-
-    if browser?.downloads?.download?
-      url = URL.createObjectURL(blob)
-      browser.downloads.download({url: url, filename: filename})
-    else
-      saveAs(blob, filename)
+    # Minimal build: no in-memory log buffer. Open the issue reporter instead.
+    OmegaDebug.reportIssue()
   resetOptions: ->
-    localStorage.clear()
-    # Prevent options loading from sync storage after reload.
-    localStorage['omega.local.syncOptions'] = '"conflict"'
-    chrome.storage.local.clear()
-    chrome.runtime.reload()
+    # Clear options + state, then reload so the SW re-inits defaults.
+    done = -> chrome.runtime.reload()
+    try
+      chrome.storage.local.clear ->
+        try
+          chrome.storage.sync?.clear?()
+        catch _
+          # ignore
+        done()
+    catch _
+      done()
   reportIssue: ->
     url = 'https://github.com/FelisCatus/SwitchyOmega/issues/new?title=&body='
     finalUrl = url
@@ -38,9 +38,4 @@ window.OmegaDebug =
         #{env.userAgent}
       """
       finalUrl = url + encodeURIComponent(body)
-      err = localStorage['logLastError']
-      if err
-        body += "\n```\n#{err}\n```"
-        finalUrl = (url + encodeURIComponent(body)).substr(0, 2000)
-
     chrome.tabs.create(url: finalUrl)
