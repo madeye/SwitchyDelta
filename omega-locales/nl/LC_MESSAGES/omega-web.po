@@ -1078,7 +1078,7 @@ msgstr "Other questions? Need help with using SwitchyDelta? Please see our "
 "<a href='https://github.com/madeye/SwitchyDelta/wiki/FAQ'>FAQ</a>."
 
 msgid "about_copyright"
-msgstr "Copyright 2012-2017 <a href='https://github.com/madeye/SwitchyDelta/blob/master/AUTHORS'>The SwitchyDelta Authors</a>. All rights reserved."
+msgstr "Copyright 2026 <a href='https://github.com/madeye'>Max Lv</a>.<br>Copyright 2012-2017 <a href='https://github.com/FelisCatus/SwitchyOmega/blob/master/AUTHORS'>The SwitchyOmega Authors</a>."
 
 msgid "about_credits"
 msgstr "SwitchyDelta is made possible by the <a href='https://github.com/madeye/SwitchyDelta'>SwitchyDelta</a> open source project and other <a href='https://github.com/madeye/SwitchyDelta/blob/master/AUTHORS'>open source software</a>."

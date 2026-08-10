@@ -426,8 +426,14 @@ export function renderAbout(container: HTMLElement): void {
   const version = chrome.runtime.getManifest().version;
   container.append(
     h('h2', { text: t('about_title') }),
-    h('p', { text: `${t('appNameShort')} ${version}` }),
-    h('p', {}, h('a', { href: 'https://github.com/madeye/SwitchyDelta', text: 'GitHub' })),
+    h('p', { text: t('about_app_description') }),
+    h('p', { text: t('about_version', [version]) }),
+    help('about_disclaimer_networkService'),
+    help('about_disclaimer_privacy'),
+    help('about_help'),
+    help('about_copyright'),
+    help('about_license'),
+    help('about_credits'),
   );
 }
 
@@ -1243,6 +1249,9 @@ export function renderNewProfile(container: HTMLElement): void {
   );
 }
 
+/** Chromium can answer HTTP(S) proxy 407 challenges via webRequestAuthProvider. */
+const AUTH_SUPPORTED = new Set(['http', 'https']);
+
 function renderFixedProfile(container: HTMLElement, profile: FixedProfile): void {
   const proxy: ProxyServer = profile.fallbackProxy ?? { scheme: 'http', host: '', port: 80 };
   profile.fallbackProxy = proxy;
@@ -1252,12 +1261,39 @@ function renderFixedProfile(container: HTMLElement, profile: FixedProfile): void
     markDirty();
   };
 
+  /** Keep `auth.fallbackProxy` in sync with the single proxy this editor owns. */
+  const writeAuth = (username: string, password: string) => {
+    if (!username) {
+      if (profile.auth) {
+        delete profile.auth.fallbackProxy;
+        if (Object.keys(profile.auth).length === 0) delete profile.auth;
+      }
+      return;
+    }
+    profile.auth ??= {};
+    profile.auth.fallbackProxy = { username, password };
+  };
+
   const scheme = h(
     'select',
     {
       onchange: (event: Event) => {
         proxy.scheme = (event.target as HTMLSelectElement).value;
         if (!port.value) proxy.port = DEFAULT_PORTS[proxy.scheme] ?? 80;
+        // Drop credentials when the protocol cannot carry them.
+        if (!AUTH_SUPPORTED.has(proxy.scheme)) {
+          writeAuth('', '');
+          username.value = '';
+          password.value = '';
+          password.disabled = true;
+          authWarning.hidden = false;
+          authWarning.innerHTML = t('options_proxy_authNotSupported', [
+            proxy.scheme.toUpperCase(),
+          ]);
+        } else {
+          authWarning.hidden = true;
+          password.disabled = !username.value;
+        }
         touch();
       },
     },
@@ -1286,6 +1322,73 @@ function renderFixedProfile(container: HTMLElement, profile: FixedProfile): void
     },
   });
 
+  const existing = profile.auth?.fallbackProxy;
+  const username = h('input', {
+    type: 'text',
+    value: existing?.username ?? '',
+    autocomplete: 'username',
+    placeholder: t('options_proxyAuthUsername'),
+    oninput: (event: Event) => {
+      const value = (event.target as HTMLInputElement).value;
+      password.disabled = !value;
+      if (!value) {
+        password.value = '';
+        password.placeholder = t('options_proxyAuthNone');
+      } else {
+        password.placeholder = t('options_proxyAuthPassword');
+      }
+      writeAuth(value, password.value);
+      touch();
+    },
+  });
+
+  const password = h('input', {
+    type: 'password',
+    value: existing?.password ?? '',
+    autocomplete: 'current-password',
+    placeholder: t(existing?.username ? 'options_proxyAuthPassword' : 'options_proxyAuthNone'),
+    disabled: !existing?.username,
+    oninput: (event: Event) => {
+      writeAuth(username.value, (event.target as HTMLInputElement).value);
+      touch();
+    },
+  });
+
+  // Bitwarden-style: simple eye outline + pupil; slashed when the password is visible.
+  const icon = (paths: string) =>
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
+  const eyeShape =
+    '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>';
+  // Password hidden → click to show.
+  const eyeIcon = icon(eyeShape);
+  // Password visible → click to hide.
+  const eyeSlashIcon = icon(`${eyeShape}<line x1="3" y1="3" x2="21" y2="21"/>`);
+
+  const setPasswordVisible = (visible: boolean) => {
+    password.type = visible ? 'text' : 'password';
+    const label = t(visible ? 'options_proxyAuthHidePassword' : 'options_proxyAuthShowPassword');
+    showPassword.title = label;
+    showPassword.setAttribute('aria-label', label);
+    showPassword.setAttribute('aria-pressed', visible ? 'true' : 'false');
+    showPassword.innerHTML = visible ? eyeSlashIcon : eyeIcon;
+  };
+
+  const showPassword = h('button', {
+    type: 'button',
+    class: 'om-password-toggle',
+    title: t('options_proxyAuthShowPassword'),
+    'aria-label': t('options_proxyAuthShowPassword'),
+    'aria-pressed': 'false',
+    onclick: () => setPasswordVisible(password.type === 'password'),
+  });
+  showPassword.innerHTML = eyeIcon;
+
+  const authWarning = h('p', {
+    class: 'om-help om-auth-warning',
+    html: t('options_proxy_authNotSupported', [proxy.scheme.toUpperCase()]),
+    hidden: AUTH_SUPPORTED.has(proxy.scheme),
+  });
+
   const bypass = h('textarea', {
     value: (profile.bypassList ?? []).map((c) => c.pattern).join('\n'),
     oninput: (event: Event) => {
@@ -1306,6 +1409,18 @@ function renderFixedProfile(container: HTMLElement, profile: FixedProfile): void
       field('options_proxy_server', host),
       field('options_proxy_port', port),
     ),
+    h(
+      'div',
+      { class: 'om-auth-row' },
+      field('options_proxyAuthUsername', username),
+      h(
+        'label',
+        { class: 'om-field' },
+        h('span', { text: t('options_proxyAuthPassword') }),
+        h('div', { class: 'om-auth-password' }, password, showPassword),
+      ),
+    ),
+    authWarning,
     field('options_group_bypassList', bypass),
   );
 }

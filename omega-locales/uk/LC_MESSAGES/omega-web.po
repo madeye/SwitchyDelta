@@ -1439,7 +1439,7 @@ msgstr ""
 
 #, fuzzy
 msgid "about_copyright"
-msgstr ""
+msgstr "Авторське право 2026 <a href='https://github.com/madeye'>Max Lv</a>.<br>Авторське право 2012-2017 <a href='https://github.com/FelisCatus/SwitchyOmega/blob/master/AUTHORS'>Автори SwitchyOmega</a>."
 "Авторське право 2012-2017 <ahref='https://github.com/madeye/SwitchyDelta/"
 "blob/master/AUTHORS'>Автори SwitchyDelta</a>. Всі права захищені."
 

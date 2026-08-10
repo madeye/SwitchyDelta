@@ -1298,7 +1298,7 @@ msgstr ""
 "madeye/SwitchyDelta/wiki/FAQ'>FAQ</a> مراجعه بفرمایید."
 
 msgid "about_copyright"
-msgstr ""
+msgstr "کپی رایت 2026 <a href='https://github.com/madeye'>Max Lv</a>.<br>کپی رایت 2012-2017 <a href='https://github.com/FelisCatus/SwitchyOmega/blob/master/AUTHORS'>نویسندگان SwitchyOmega</a>."
 "کپی رایت 2012-2017 <a "
 "href='https://github.com/madeye/SwitchyDelta/blob/master/AUTHORS'>"
 "نویسندگان The SwitchyDelta </a>. کلیه حقوق محفوظ است، ترجمه شده به فارسی "
