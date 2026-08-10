@@ -9,7 +9,7 @@
 import { append, downloadFile, h, must, render } from '../lib/dom.js';
 import { profileDisplayName, t } from '../lib/i18n.js';
 import { api, callBackground, getState } from '../lib/messaging.js';
-import { colorFor, listProfiles, profileColors } from '../lib/profile-view.js';
+import { colorFor, getAttachedName, listProfiles, profileColors } from '../lib/profile-view.js';
 import { isDirty, markDirty, options } from './main.js';
 import {
   Conditions,
@@ -21,6 +21,7 @@ import {
   type Profile,
   type ProxyServer,
   type Rule,
+  type RuleListProfile,
   type SwitchProfile,
 } from '@switchydelta/pac';
 
@@ -748,6 +749,34 @@ function renderSwitchProfile(container: HTMLElement, profile: SwitchProfile): vo
     Profiles.updateRevision(profile);
     markDirty();
   };
+
+  // --- Attached rule list (gfwlist / AutoProxy import) ----------------------
+  // When enabled, the switch's defaultProfileName points at the attached
+  // RuleListProfile, whose own defaultProfileName holds the user's real
+  // default — same indirection as the original.
+  const attachedName = getAttachedName(profile.name);
+  const attachedKey = '+' + attachedName;
+  const attached = () => options[attachedKey] as RuleListProfile | undefined;
+  const attachedEnabled = () => profile.defaultProfileName === attachedName;
+  const feedback = h('p', { class: 'om-error' });
+
+  const touchAttached = () => {
+    const list = attached();
+    if (list) Profiles.updateRevision(list);
+    markDirty();
+  };
+
+  const effectiveDefault = () =>
+    attachedEnabled() && attached() ? attached()!.defaultProfileName : profile.defaultProfileName;
+  const setEffectiveDefault = (name: string) => {
+    if (attachedEnabled() && attached()) {
+      attached()!.defaultProfileName = name;
+      touchAttached();
+    } else {
+      profile.defaultProfileName = name;
+      touch();
+    }
+  };
   const resultNames = () =>
     listProfiles(options, { resultFor: profile.name }).map((other) => other.name);
 
@@ -889,17 +918,212 @@ function renderSwitchProfile(container: HTMLElement, profile: SwitchProfile): vo
           rerender();
         },
       }),
+      attachedRow(),
       h(
         'div',
         { class: 'om-rule om-rule-default' },
         h('span', { text: t('options_switchDefaultProfile') }),
-        profileSelect(
-          () => profile.defaultProfileName,
-          (name) => (profile.defaultProfileName = name),
-        ),
+        profileSelect(effectiveDefault, setEffectiveDefault),
       ),
+      feedback,
+      ...ruleListSections(),
     ]);
   };
+
+  // The attached rule list as a pseudo-rule between the rules and the default.
+  function attachedRow(): HTMLElement | false {
+    const list = attached();
+    if (!list) return false;
+    const enabled = attachedEnabled();
+
+    const box = h('input', {
+      type: 'checkbox',
+      checked: enabled,
+      onchange: () => {
+        profile.defaultProfileName = box.checked ? attachedName : list.defaultProfileName;
+        touch();
+        rerender();
+      },
+    });
+
+    return h(
+      'div',
+      { class: 'om-rule om-rule-attached' },
+      h(
+        'label',
+        { class: 'om-check' },
+        box,
+        h('span', {}, h('span', { text: t('options_switchAttachedProfileInCondition') })),
+      ),
+      h('p', {
+        class: 'om-help',
+        text: t(
+          enabled
+            ? 'options_switchAttachedProfileInConditionDetails'
+            : 'options_switchAttachedProfileInConditionDisabled',
+        ),
+      }),
+      h(
+        'div',
+        { class: 'om-rule-result' },
+        (() => {
+          const select = profileSelect(
+            () => list.matchProfileName,
+            (name) => {
+              list.matchProfileName = name;
+              touchAttached();
+            },
+          );
+          select.disabled = !enabled;
+          return select;
+        })(),
+        h('button', {
+          type: 'button',
+          class: 'om-mini',
+          title: t('options_deleteAttached'),
+          text: '✕',
+          onclick: removeAttached,
+        }),
+      ),
+    );
+  }
+
+  function removeAttached(): void {
+    const list = attached();
+    if (!list) return;
+    if (isDirty()) {
+      feedback.textContent = t('options_applyOptionsRequired');
+      return;
+    }
+    if (options['-confirmDeletion'] !== false && feedback.textContent !== t('options_deleteAttachedConfirm')) {
+      feedback.textContent = t('options_deleteAttachedConfirm');
+      setTimeout(() => {
+        if (feedback.textContent === t('options_deleteAttachedConfirm')) feedback.textContent = '';
+      }, 5000);
+      return;
+    }
+    // Point the switch back at the real default, save it, then drop the
+    // attached profile through patch's removal delta (undefined would be
+    // lost in message serialization).
+    profile.defaultProfileName = list.defaultProfileName;
+    void callBackground('applyChanges', { ['+' + profile.name]: profile })
+      .then(() => api.patch({ [attachedKey]: [list, 0, 0] }))
+      .then(
+        () => location.reload(),
+        (err: unknown) => {
+          feedback.textContent = err instanceof Error ? err.message : String(err);
+        },
+      );
+  }
+
+  // The attach button, or the rule list's format/url/text configuration.
+  function ruleListSections(): Array<HTMLElement | false> {
+    const list = attached();
+    if (!list) {
+      return [
+        h('h3', { text: t('options_group_attachProfile') }),
+        help('options_attachProfileHelp'),
+        h('button', {
+          type: 'button',
+          class: 'om-btn',
+          text: t('options_attachProfile'),
+          onclick: () => {
+            const created = Profiles.create({
+              name: attachedName,
+              profileType: 'RuleListProfile',
+              color: profile.color,
+              defaultProfileName: profile.defaultProfileName,
+            } as Profile) as RuleListProfile;
+            Profiles.updateRevision(created);
+            options[attachedKey] = created;
+            profile.defaultProfileName = attachedName;
+            touch();
+            rerender();
+          },
+        }),
+      ];
+    }
+
+    const urlInput = h('input', {
+      type: 'url',
+      value: list.sourceUrl ?? '',
+      placeholder: 'https://',
+      onchange: () => {
+        list.sourceUrl = urlInput.value.trim();
+        // A different source invalidates the downloaded copy.
+        delete (list as { lastUpdate?: unknown }).lastUpdate;
+        touchAttached();
+        rerender();
+      },
+    });
+
+    const text = h('textarea', {
+      value: list.ruleList ?? '',
+      disabled: !!list.sourceUrl,
+      oninput: () => {
+        list.ruleList = text.value;
+        touchAttached();
+      },
+    });
+
+    const lastUpdate = (list as { lastUpdate?: string | number }).lastUpdate;
+
+    return [
+      h('h3', { text: t('options_group_ruleListConfig') }),
+      h(
+        'div',
+        { class: 'om-radio-row' },
+        h('span', { class: 'om-between', text: t('options_ruleListFormat') }),
+        ...Profiles.ruleListFormats.map((format) => {
+          const radio = h('input', {
+            type: 'radio',
+            name: 'om-rule-list-format',
+            checked: list.format === format,
+            onchange: () => {
+              list.format = format;
+              touchAttached();
+            },
+          });
+          return h(
+            'label',
+            { class: 'om-day' },
+            radio,
+            h('span', { text: t('ruleListFormat_' + format) }),
+          );
+        }),
+      ),
+      field('options_group_ruleListUrl', urlInput),
+      help('options_ruleListUrlHelp'),
+      h('button', {
+        type: 'button',
+        class: 'om-btn',
+        text: t('options_downloadProfileNow'),
+        disabled: !list.sourceUrl,
+        onclick: () => {
+          if (isDirty()) {
+            feedback.textContent = t('options_applyOptionsRequired');
+            return;
+          }
+          void api.updateProfile(attachedName).then(
+            () => location.reload(),
+            (err: unknown) => {
+              feedback.textContent = err instanceof Error ? err.message : String(err);
+            },
+          );
+        },
+      }),
+
+      h('h3', { text: t('options_group_ruleListText') }),
+      !!list.sourceUrl &&
+        (lastUpdate
+          ? h('p', {
+              class: 'om-help',
+              text: t('options_ruleListLastUpdate', [new Date(lastUpdate).toLocaleString()]),
+            })
+          : h('p', { class: 'om-error', text: t('options_ruleListObsolete') })),
+      text,
+    ];
+  }
 
   rerender();
   container.append(wrap);
