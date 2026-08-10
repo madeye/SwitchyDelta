@@ -28,6 +28,22 @@ let pristine: OptionsBag = {};
 /** The live, edited copy bound to the form controls. */
 export let options: OptionsBag = {};
 
+/**
+ * Clone the options bag for dirty tracking. Unlike structuredClone this
+ * shares strings between the copies — rule-list texts are the bulk of the bag
+ * and every edit path assigns a new string rather than mutating — while
+ * object and array nodes still get distinct identities, which the in-place
+ * edits and deepEqual comparisons rely on. The bag is JSON-shaped by
+ * construction (it round-trips chrome.storage), so no other types occur.
+ */
+function snapshot<T>(value: T): T {
+  if (value === null || typeof value !== 'object') return value;
+  if (Array.isArray(value)) return value.map(snapshot) as unknown as T;
+  const out: Record<string, unknown> = {};
+  for (const [key, entry] of Object.entries(value as object)) out[key] = snapshot(entry);
+  return out as T;
+}
+
 export function isDirty(): boolean {
   return changedKeys().length > 0;
 }
@@ -48,8 +64,8 @@ function changedKeys(): string[] {
 
 /** Adopt a background-refreshed value for one key without marking it dirty. */
 export function adoptOptionsKey(key: string, value: unknown): void {
-  pristine[key] = structuredClone(value);
-  options[key] = structuredClone(value);
+  pristine[key] = snapshot(value);
+  options[key] = snapshot(value);
   markDirty();
 }
 
@@ -81,7 +97,7 @@ export async function applyChanges(): Promise<void> {
   try {
     // `undefined` marks a removed key, matching the storage layer's convention.
     await callBackground('applyChanges', changes);
-    pristine = structuredClone(options);
+    pristine = snapshot(options);
     markDirty();
     must('#om-status').textContent = t('options_saveSuccess');
     // Settle the permission prompt after the save so a denial does not block it.
@@ -172,7 +188,7 @@ async function main(): Promise<void> {
     must('#om-view').textContent = err instanceof Error ? err.message : String(err);
     return;
   }
-  options = structuredClone(pristine);
+  options = snapshot(pristine);
 
   renderProfileNav();
 

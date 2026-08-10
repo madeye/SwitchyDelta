@@ -9,7 +9,7 @@ import { defineConfig } from 'vite';
  * inline script) and `cssCodeSplit` off (avoids the inline style injector).
  * Everything Vite emits is then an external file the manifest can load.
  */
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   // The extension loads pages from its own package root, so asset URLs must be
   // relative rather than server-absolute.
   base: './',
@@ -27,7 +27,9 @@ export default defineConfig({
     // Polyfill stays off so nothing is inlined (MV3 script-src 'self').
     modulePreload: false,
     cssCodeSplit: false,
-    sourcemap: true,
+    // Maps are dev-only: build-extension.mjs copies this output into the
+    // release zip verbatim, and shipped maps are pure package weight.
+    sourcemap: mode === 'development',
 
     rollupOptions: {
       input: {
@@ -41,4 +43,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));

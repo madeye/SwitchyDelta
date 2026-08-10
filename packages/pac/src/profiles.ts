@@ -322,6 +322,14 @@ export interface RulesAnalysis {
   /** Per-rule: true when every pattern of the rule went into the trie. */
   simpleHost: boolean[];
   hasNonHostRules: boolean;
+  /** True once the trie has been materialised. Exposed for tests. */
+  readonly hostAnalysisBuilt: boolean;
+}
+
+interface HostRulesAnalysis {
+  domainTrie: DomainTrie<number>;
+  simpleHost: boolean[];
+  hasNonHostRules: boolean;
 }
 
 /** True when a domain still has wildcards after prefix forms are stripped. */
@@ -361,7 +369,33 @@ export function hostPatternToTrieKeys(pattern: string): string[] | null {
   return [source];
 }
 
+/**
+ * The trie only serves the in-process match() path; compile() never reads it.
+ * Deferring its construction keeps PAC generation — the sole consumer in the
+ * service worker — from paying its cost, which is several MB for a large
+ * rule list.
+ */
 export function buildRulesAnalysis(rules: Rule[]): RulesAnalysis {
+  let host: HostRulesAnalysis | null = null;
+  const analyzed = () => (host ??= buildHostRulesAnalysis(rules));
+  return {
+    rules,
+    get domainTrie() {
+      return analyzed().domainTrie;
+    },
+    get simpleHost() {
+      return analyzed().simpleHost;
+    },
+    get hasNonHostRules() {
+      return analyzed().hasNonHostRules;
+    },
+    get hostAnalysisBuilt() {
+      return host !== null;
+    },
+  };
+}
+
+function buildHostRulesAnalysis(rules: Rule[]): HostRulesAnalysis {
   const domainTrie = new DomainTrie<number>();
   const simpleHost = new Array<boolean>(rules.length).fill(false);
   let hasNonHostRules = false;
@@ -393,7 +427,7 @@ export function buildRulesAnalysis(rules: Rule[]): RulesAnalysis {
     }
   });
 
-  return { rules, domainTrie, simpleHost, hasNonHostRules };
+  return { domainTrie, simpleHost, hasNonHostRules };
 }
 
 // --- Handlers ---------------------------------------------------------------
@@ -659,10 +693,14 @@ const profileTypes: Record<string, AnyProfileHandler | string> = {
       if (formatHandler.preprocess) {
         ruleList = formatHandler.preprocess(ruleList);
       }
+      // The source line is only useful to rule-list editors, which parse the
+      // text themselves; dropping it here keeps a copy of every line out of
+      // the analysis retained by the profile cache.
       const rules = formatHandler.parse(
         ruleList,
         profile.matchProfileName,
         profile.defaultProfileName,
+        { source: false },
       );
       return buildRulesAnalysis(rules);
     },

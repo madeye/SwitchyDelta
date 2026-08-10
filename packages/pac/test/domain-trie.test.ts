@@ -252,6 +252,20 @@ describe('DomainTrie integration with profiles', () => {
       return Conditions.requestFromUrl(url);
     }
 
+    it('should not materialise the trie for compile(), only for match()', () => {
+      const profile = makeProfile([
+        {
+          condition: { conditionType: 'HostWildcardCondition', pattern: '*.example.com' },
+          profileName: 'proxy1',
+        },
+      ]);
+      Profiles.compile(profile);
+      const analysis = Profiles.analyze(profile) as Profiles.RulesAnalysis;
+      expect(analysis.hostAnalysisBuilt).toBe(false);
+      Profiles.match(profile, makeRequest('http://www.example.com/'));
+      expect(analysis.hostAnalysisBuilt).toBe(true);
+    });
+
     it('should match domains via the trie', () => {
       const profile = makeProfile([
         {

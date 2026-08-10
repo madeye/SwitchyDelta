@@ -15,6 +15,11 @@ import { fileURLToPath } from 'node:url';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const out = resolve(root, 'dist');
 
+// Minified is the default: publish-chrome.mjs zips dist/ as-is, so an ambient
+// env var must not be able to leak a debug build (or its sourcemaps) into a
+// release. `--dev` opts into readable output.
+const dev = process.argv.includes('--dev');
+
 async function exists(path) {
   try {
     await stat(path);
@@ -46,8 +51,8 @@ await build({
   format: 'esm',
   // Matches minimum_chrome_version in the manifest.
   target: 'chrome109',
-  minify: process.env['NODE_ENV'] === 'production',
-  sourcemap: true,
+  minify: !dev,
+  sourcemap: dev,
   logLevel: 'warning',
 });
 
