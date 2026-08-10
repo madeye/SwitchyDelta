@@ -303,6 +303,38 @@ body.om-options {
   border-color: var(--om-danger) !important;
 }
 
+.om-radio-row {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin: 0 0 12px;
+}
+
+.om-rule-attached {
+  background: var(--om-panel);
+}
+
+.om-rule-attached .om-check {
+  margin-bottom: 4px;
+}
+
+.om-rule textarea,
+.om-view > div > textarea {
+  width: 100%;
+  min-height: 180px;
+  padding: 6px 8px;
+  border: 1px solid var(--om-border);
+  border-radius: 6px;
+  background: var(--om-bg);
+  color: inherit;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+}
+
+.om-view textarea:disabled {
+  opacity: 0.7;
+}
+
 .om-rule-default {
   display: flex;
   gap: 8px;
