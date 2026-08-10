@@ -1,0 +1,66 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_manifest_app_name__",
+  "version": "3.0.0",
+  "description": "__MSG_manifest_app_description__",
+  "default_locale": "en",
+  "minimum_chrome_version": "109",
+
+  "icons": {
+    "16": "img/icons/omega-action-16.png",
+    "24": "img/icons/omega-action-24.png",
+    "32": "img/icons/omega-action-32.png",
+    "48": "img/icons/omega-48.png",
+    "64": "img/icons/omega-64.png",
+    "128": "img/icons/omega-128.png"
+  },
+
+  "action": {
+    "default_icon": {
+      "16": "img/icons/omega-action-16.png",
+      "19": "img/icons/omega-action-19.png",
+      "24": "img/icons/omega-action-24.png",
+      "32": "img/icons/omega-action-32.png"
+    },
+    "default_title": "__MSG_manifest_icon_default_title__",
+    "default_popup": "popup.html"
+  },
+
+  "background": {
+    "service_worker": "js/sw.js",
+    "type": "module"
+  },
+
+  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+
+  "permissions": [
+    "proxy",
+    "storage",
+    "unlimitedStorage",
+    "alarms",
+    "tabs",
+    "webRequest",
+    "webRequestAuthProvider"
+  ],
+
+  "host_permissions": ["<all_urls>"],
+
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+O"
+      }
+    }
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "switchydelta@madeye.github.io",
+      "strict_min_version": "109.0"
+    }
+  }
+}
