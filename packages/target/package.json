@@ -1,0 +1,26 @@
+{
+  "name": "@switchydelta/target",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Platform-independent core logic for SwitchyDelta",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo"
+  },
+  "dependencies": {
+    "@switchydelta/pac": "*",
+    "jsondiffpatch": "^0.6.0"
+  }
+}
