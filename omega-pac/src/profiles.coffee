@@ -2,7 +2,7 @@ U2 = require 'uglify-js'
 ShexpUtils = require './shexp_utils'
 Conditions = require './conditions'
 RuleList = require './rule_list'
-BloomFilter = require './bloom_filter'
+DomainTrie = require './domain_trie'
 {AttachedCache, Revision} = require './utils'
 
 # coffeelint: disable=camel_case_classes
@@ -214,51 +214,72 @@ module.exports = exports =
     handler = exports._handler(opt_profileType)
     cache.compiled = handler.compile.call(exports, profile, cache)
 
-  _extractDomainForBloom: (pattern) ->
+  # True if domain still contains wildcards after stripping Switchy prefix forms.
+  _isComplexHostDomain: (domain) ->
+    domain.indexOf('*') >= 0 or domain.indexOf('?') >= 0
+
+  # Map a HostWildcardCondition pattern to DomainTrie keys (meow-rs style).
+  # Mirrors HostWildcardCondition.analyze magic in conditions.coffee:
+  #   *.example.com / .example.com → apex + any subdomain depth
+  #   **.example.com → any subdomain depth, not apex
+  #   example.com → exact only
+  # Returns null when the pattern is too complex for the trie.
+  _hostPatternToTrieKeys: (pattern) ->
     if pattern.charCodeAt(0) == '.'.charCodeAt(0)
       pattern = '*' + pattern
+
     if pattern.indexOf('**.') == 0
       domain = pattern.substring(3)
-    else if pattern.indexOf('*.') == 0
-      domain = pattern.substring(2)
-    else
-      domain = pattern
-    if domain.indexOf('*') >= 0 or domain.indexOf('?') >= 0
-      return null
-    domain
+      return null if domain.length == 0 or exports._isComplexHostDomain(domain)
+      # Any subdomain depth, not apex — meow-rs `.suffix`.
+      return ['.' + domain]
 
-  _testDomainInBloom: (host, bloomFilter) ->
-    return true if bloomFilter.test(host)
-    pos = 0
-    while (pos = host.indexOf('.', pos)) >= 0
-      pos++
-      return true if bloomFilter.test(host.substring(pos))
-    false
+    if pattern.indexOf('*.') == 0
+      domain = pattern.substring(2)
+      return null if domain.length == 0 or exports._isComplexHostDomain(domain)
+      # Magical `*.domain`: apex + any subdomain (wiki Host-wildcard-condition).
+      return [domain, '.' + domain]
+
+    return null if pattern.length == 0 or exports._isComplexHostDomain(pattern)
+    [pattern]
 
   _buildRulesAnalysis: (rules) ->
-    hostDomains = []
+    domainTrie = new DomainTrie()
+    # Parallel flags: true when every pattern of a HostWildcardCondition was
+    # inserted into the trie (match can trust searchMin for that rule).
+    simpleHost = new Array(rules.length)
     hasNonHostRules = false
-    hasComplexPatterns = false
-    for rule in rules
+
+    for rule, i in rules
       cond = rule.condition
       if cond.conditionType == 'HostWildcardCondition'
-        for pattern in cond.pattern.split('|') when pattern
-          domain = exports._extractDomainForBloom(pattern)
-          if domain
-            hostDomains.push(domain)
+        patterns = (p for p in cond.pattern.split('|') when p)
+        keysPerPattern = []
+        allSimple = patterns.length > 0
+        for pattern in patterns
+          keys = exports._hostPatternToTrieKeys(pattern)
+          if keys?
+            keysPerPattern.push(keys)
           else
-            hasComplexPatterns = true
+            allSimple = false
+            break
+        if allSimple
+          for keys in keysPerPattern
+            for key in keys
+              domainTrie.insert(key, i)
+          simpleHost[i] = true
+        else
+          # Keep complex host rules on the linear Conditions.match path.
+          simpleHost[i] = false
+          hasNonHostRules = true
       else
+        simpleHost[i] = false
         hasNonHostRules = true
-    bloomFilter = null
-    if hostDomains.length > 0
-      bloomFilter = new BloomFilter(hostDomains.length)
-      for domain in hostDomains
-        bloomFilter.add(domain)
+
     rules: rules
-    bloomFilter: bloomFilter
+    domainTrie: domainTrie
+    simpleHost: simpleHost
     hasNonHostRules: hasNonHostRules
-    hasComplexPatterns: hasComplexPatterns
 
   _profileCache: new AttachedCache (profile) -> profile.revision
 
@@ -440,11 +461,20 @@ module.exports = exports =
         return changed
       match: (profile, request, cache) ->
         analyzed = cache.analyzed
-        canSkipHost = analyzed.bloomFilter and not analyzed.hasComplexPatterns and
-          not @_testDomainInBloom(request.host, analyzed.bloomFilter)
-        for rule in analyzed.rules
-          if canSkipHost and
-              rule.condition.conditionType == 'HostWildcardCondition'
+        rules = analyzed.rules
+        simpleHost = analyzed.simpleHost
+        # Earliest simple HostWildcard rule index whose domain pattern matches.
+        # Undefined when no simple host rule matches this host.
+        hostRuleIndex = if analyzed.domainTrie?.isEmpty()
+          undefined
+        else
+          analyzed.domainTrie.searchMin(request.host)
+
+        for rule, i in rules
+          if simpleHost[i]
+            # DomainTrie already decided first-match among simple host rules.
+            if hostRuleIndex == i
+              return rule
             continue
           if Conditions.match(rule.condition, request)
             return rule
