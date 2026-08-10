@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- White capital delta on the UI accent blue. -->
+  <rect width="128" height="128" rx="26" fill="#1a73e8"/>
+  <path d="M64 31 L99 95 L29 95 Z" fill="none" stroke="#ffffff" stroke-width="13"
+    stroke-linejoin="round"/>
+</svg>
