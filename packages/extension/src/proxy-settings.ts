@@ -18,8 +18,6 @@ import type {
 import { Log } from '@switchydelta/target';
 import type { Logger } from '@switchydelta/target';
 
-import { ProxyAuth } from './proxy-auth.js';
-
 const PROTOCOLS = ['proxyForHttp', 'proxyForHttps', 'proxyForFtp'] as const;
 
 /**
@@ -99,7 +97,6 @@ export class ProxySettings {
       };
     }
 
-    await this.setProxyAuth(profile, opts);
     await settingsSet({ value: config });
   }
 
@@ -161,25 +158,6 @@ export class ProxySettings {
       profileType: 'VirtualProfile',
       defaultProfileName: 'direct',
     } as Profile);
-  }
-
-  /**
-   * Hand the credentials of every profile this one depends on to the auth
-   * singleton, which the service worker has already attached its listener to.
-   */
-  async setProxyAuth(profile: Profile, options: OptionsBag): Promise<void> {
-    const proxyAuth = ProxyAuth.shared(this.log);
-    proxyAuth.listen();
-
-    const referenced: Profile[] = [];
-    const refSet = Profiles.allReferenceSet(profile, options, {
-      profileNotFound: (name) => this._profileNotFound(name),
-    });
-    for (const name of Object.values(refSet)) {
-      const referencedProfile = Profiles.byName(name, options);
-      if (referencedProfile) referenced.push(referencedProfile);
-    }
-    proxyAuth.setProxies(referenced);
   }
 
   getProfilePacScript(profile: Profile, options: OptionsBag): string {
