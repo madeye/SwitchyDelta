@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: SwitchyOmega 2.3.3\n"
+"Project-Id-Version: SwitchyDelta 2.3.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-13 10:29+0000\n"
 "PO-Revision-Date: 2019-05-10 11:34+0000\n"
@@ -15,10 +15,10 @@ msgstr ""
 "X-Generator: Weblate 3.7-dev\n"
 
 msgid "appNameShort"
-msgstr "SwitchyOmega"
+msgstr "SwitchyDelta"
 
 msgid "manifest_app_name"
-msgstr "Proxy SwitchyOmega"
+msgstr "Proxy SwitchyDelta"
 
 msgid "manifest_app_description"
 msgstr "Organizza e scegli fra proxy multipli in maniera facile e veloce."
@@ -103,7 +103,7 @@ msgstr ""
 
 msgid "condition_alert_fullUrlLimitationLink"
 msgstr ""
-"https://github.com/FelisCatus/SwitchyOmega/wiki/Chromium-Full-URL-Limitation"
+"https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation"
 
 msgid "condition_group_default"
 msgstr ""
@@ -124,7 +124,7 @@ msgid "ruleListFormat_AutoProxy"
 msgstr "AutoProxy"
 
 msgid "ruleList_usageUrl"
-msgstr "https://github.com/FelisCatus/SwitchyOmega/wiki/RuleListUsage"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/RuleListUsage"
 
 msgid "ruleList_error_resultNotEnabled"
 msgstr ""
@@ -160,7 +160,7 @@ msgid "inputClear_restore"
 msgstr "Ripristina"
 
 msgid "options_title"
-msgstr "Opzioni di SwitchyOmega"
+msgstr "Opzioni di SwitchyDelta"
 
 msgid "options_experimental_badge"
 msgstr "α"

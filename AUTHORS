@@ -1,14 +1,14 @@
-# SwitchyOmega authors:
+# SwitchyDelta authors:
 
 FelisCatus <catusx@gmail.com>
 
-# SwitchyOmega translators:
+# SwitchyDelta translators:
 
 Filip <filip@havlin.cz>
 Michal Čihař <michal@cihar.com>
 masoud Rahmani <mrem71@gmail.com>
 
-# SwitchyOmega includes or links to (unchanged):
+# SwitchyDelta includes or links to (unchanged):
 # * jQuery UI (custom build)
 #     => omega-web/lib/jquery-ui-*.js
 #     => Copyright 2014 jQuery Foundation and other contributors; Licensed MIT

@@ -1,5 +1,5 @@
 /**
- * Minimal Manifest V3 service worker for SwitchyOmega (Option B).
+ * Minimal Manifest V3 service worker for SwitchyDelta (Option B).
  *
  * Responsibilities only:
  *  - Load options and re-apply the active proxy profile (startup / wake)

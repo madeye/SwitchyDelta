@@ -87,7 +87,7 @@ angular.module('omega').factory 'omegaDebug', ($window, $rootScope,
 
   omegaDebug.reportIssue ?= ->
     $window.open(
-      'https://github.com/FelisCatus/SwitchyOmega/issues/new?title=&body=')
+      'https://github.com/madeye/SwitchyDelta/issues/new?title=&body=')
     return
 
   omegaDebug.resetOptions ?= ->

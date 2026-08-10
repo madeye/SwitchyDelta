@@ -19,7 +19,7 @@ globalThis.OmegaDebug =
     catch _
       done()
   reportIssue: ->
-    url = 'https://github.com/FelisCatus/SwitchyOmega/issues/new?title=&body='
+    url = 'https://github.com/madeye/SwitchyDelta/issues/new?title=&body='
     finalUrl = url
     try
       projectVersion = OmegaDebug.getProjectVersion()
@@ -34,7 +34,7 @@ globalThis.OmegaDebug =
       body ||= """
         \n\n
         <!-- Please write your comment ABOVE this line. -->
-        SwitchyOmega #{env.projectVersion}
+        SwitchyDelta #{env.projectVersion}
         #{env.userAgent}
       """
       finalUrl = url + encodeURIComponent(body)

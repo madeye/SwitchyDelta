@@ -1,5 +1,5 @@
 {
-  "name": "switchyomega",
+  "name": "switchydelta",
   "version": "0.0.1",
   "authors": [
     "FelisCatus <felis.catus@example.com>"
@@ -11,7 +11,7 @@
     "extension"
   ],
   "license": "GPL",
-  "homepage": "https://github.com/FelisCatus/SwitchyOmega",
+  "homepage": "https://github.com/madeye/SwitchyDelta",
   "private": true,
   "ignore": [
     "**/.*",

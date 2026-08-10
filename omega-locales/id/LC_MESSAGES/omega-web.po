@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: SwitchyOmega 2.3.3\n"
+"Project-Id-Version: SwitchyDelta 2.3.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-13 10:29+0000\n"
 "PO-Revision-Date: 2024-12-27 12:00+0000\n"
@@ -15,10 +15,10 @@ msgstr ""
 "X-Generator: Weblate 5.10-dev\n"
 
 msgid "appNameShort"
-msgstr "SwitchyOmega"
+msgstr "SwitchyDelta"
 
 msgid "manifest_app_name"
-msgstr "Proxsi SwitchyOmega"
+msgstr "Proxsi SwitchyDelta"
 
 msgid "manifest_app_description"
 msgstr "Kelola dan beralih di antara beberapa proxy dengan cepat & mudah."

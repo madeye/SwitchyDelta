@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: SwitchyOmega 2.3.3\n"
+"Project-Id-Version: SwitchyDelta 2.3.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-13 10:29+0000\n"
 "PO-Revision-Date: 2022-04-22 05:07+0000\n"
 "Last-Translator: Still Hsu <dev@stillu.cc>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
-"switchyomega/main/zh_Hant/>\n"
+"switchydelta/main/zh_Hant/>\n"
 "Language: zh_Hant\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,10 +15,10 @@ msgstr ""
 "X-Generator: Weblate 4.12-dev\n"
 
 msgid "appNameShort"
-msgstr "SwitchyOmega"
+msgstr "SwitchyDelta"
 
 msgid "manifest_app_name"
-msgstr "Proxy SwitchyOmega"
+msgstr "Proxy SwitchyDelta"
 
 msgid "manifest_app_description"
 msgstr "輕鬆快速地管理及切換多個 Proxy 設定。"
@@ -108,13 +108,13 @@ msgstr ""
 msgid "condition_alert_fullUrlLimitation"
 msgstr ""
 "自 Chrome 52 起，<code>https://</code>下的完整網址將無法正常匹配。<a "
-"href='https://github.com/FelisCatus/SwitchyOmega/wiki/Chromium-%E5%AE%8C%E6%9"
+"href='https://github.com/madeye/SwitchyDelta/wiki/Chromium-%E5%AE%8C%E6%9"
 "5%B4%E7%BD%91%E5%9D%80%E9%99%90%E5%88%B6'>更多訊息...</a>"
 
 #, fuzzy
 msgid "condition_alert_fullUrlLimitationLink"
 msgstr ""
-"https://github.com/FelisCatus/SwitchyOmega/wiki/Chromium-Full-URL-Limitation"
+"https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation"
 
 #, fuzzy
 msgid "condition_group_default"
@@ -139,7 +139,7 @@ msgstr "AutoProxy"
 
 #, fuzzy
 msgid "ruleList_usageUrl"
-msgstr "https://github.com/FelisCatus/SwitchyOmega/wiki/RuleListUsage"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/RuleListUsage"
 
 msgid "ruleList_error_resultNotEnabled"
 msgstr "缺少 '@with result' 指令！"
@@ -175,7 +175,7 @@ msgid "inputClear_restore"
 msgstr "還原"
 
 msgid "options_title"
-msgstr "SwitchyOmega 選項"
+msgstr "SwitchyDelta 選項"
 
 msgid "options_experimental_badge"
 msgstr "α"

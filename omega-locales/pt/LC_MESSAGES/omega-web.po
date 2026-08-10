@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: SwitchyOmega 2.3.3\n"
+"Project-Id-Version: SwitchyDelta 2.3.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-13 10:29+0000\n"
 "PO-Revision-Date: 2024-10-08 09:16+0000\n"
@@ -15,10 +15,10 @@ msgstr ""
 "X-Generator: Weblate 5.8-dev\n"
 
 msgid "appNameShort"
-msgstr "SwitchyOmega"
+msgstr "SwitchyDelta"
 
 msgid "manifest_app_name"
-msgstr "Proxy SwitchyOmega"
+msgstr "Proxy SwitchyDelta"
 
 msgid "manifest_app_description"
 msgstr "Gira e troque entre vários proxies rápida e facilmente."
@@ -116,7 +116,7 @@ msgstr ""
 
 msgid "condition_alert_fullUrlLimitationLink"
 msgstr ""
-"https://github.com/FelisCatus/SwitchyOmega/wiki/Chromium-Full-URL-Limitation"
+"https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation"
 
 msgid "condition_group_default"
 msgstr " "
@@ -137,7 +137,7 @@ msgid "ruleListFormat_AutoProxy"
 msgstr ""
 
 msgid "ruleList_usageUrl"
-msgstr "https://github.com/FelisCatus/SwitchyOmega/wiki/RuleListUsage"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/RuleListUsage"
 
 msgid "ruleList_error_resultNotEnabled"
 msgstr ""
@@ -173,7 +173,7 @@ msgid "inputClear_restore"
 msgstr ""
 
 msgid "options_title"
-msgstr "SwitchyOmega Options"
+msgstr "SwitchyDelta Options"
 
 msgid "options_experimental_badge"
 msgstr "α"
@@ -444,7 +444,7 @@ msgstr ""
 
 msgid "options_profileEditSourceHelpUrl"
 msgstr ""
-"https://github.com/FelisCatus/SwitchyOmega/wiki/SwitchyOmega-conditions-"
+"https://github.com/madeye/SwitchyDelta/wiki/SwitchyDelta-conditions-"
 "format#result-profile"
 
 msgid "options_group_proxyServers"
@@ -1082,6 +1082,6 @@ msgstr ""
 
 msgid "about_license"
 msgstr ""
-"SwitchyOmega é um <a href='https://www.gnu.org/philosophy/free-"
+"SwitchyDelta é um <a href='https://www.gnu.org/philosophy/free-"
 "sw.en.html'>software gratuito</a> licenciado sob <a href='https://www.gnu."
 "org/licenses/gpl.html'>Licença Pública Geral GNU</a> Versão 3 ou posterior."

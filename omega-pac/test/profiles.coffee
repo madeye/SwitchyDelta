@@ -245,6 +245,24 @@ describe 'Profiles', ->
         matchProfileName: 'ignored'
         defaultProfileName: 'alsoIgnored'
         ruleList: '''
+          [SwitchyDelta Conditions]
+          @with result
+          !*.example.org
+          *.example.com +ABC
+          * +DEF
+        '''
+      })
+      set.should.eql(
+        '+ABC': 'ABC'
+        '+DEF': 'DEF'
+      )
+    it 'should accept legacy SwitchyOmega rule list headers', ->
+      set = Profiles.directReferenceSet({
+        profileType: 'RuleListProfile'
+        format: 'Switchy'
+        matchProfileName: 'ignored'
+        defaultProfileName: 'alsoIgnored'
+        ruleList: '''
           [SwitchyOmega Conditions]
           @with result
           !*.example.org

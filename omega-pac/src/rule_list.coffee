@@ -52,11 +52,16 @@ module.exports = exports =
       return exclusive_rules.concat normal_rules
 
   'Switchy':
-    omegaPrefix: '[SwitchyOmega Conditions'
+    omegaPrefix: '[SwitchyDelta Conditions'
+    # Accept legacy SwitchyOmega rule lists after the project rename.
+    legacyOmegaPrefix: '[SwitchyOmega Conditions'
     specialLineStart: "[;#@!"
 
     detect: (text) ->
-      if strStartsWith(text, exports['Switchy'].omegaPrefix)
+      switchy = exports['Switchy']
+      if strStartsWith(text, switchy.omegaPrefix)
+        return true
+      if strStartsWith(text, switchy.legacyOmegaPrefix)
         return true
       return
 
@@ -87,7 +92,7 @@ module.exports = exports =
     # https://github.com/FelisCatus/SwitchyOmega/wiki/SwitchyOmega-conditions-format
     compose: ({rules, defaultProfileName}, {withResult, useExclusive} = {}) ->
       eol = '\r\n'
-      ruleList = '[SwitchyOmega Conditions]' + eol
+      ruleList = '[SwitchyDelta Conditions]' + eol
       useExclusive ?= not withResult
       if withResult
         ruleList += '@with result' + eol + eol
@@ -115,7 +120,9 @@ module.exports = exports =
     getParser: (text) ->
       switchy = exports['Switchy']
       parser = 'parseOmega'
-      if not strStartsWith(text, switchy.omegaPrefix)
+      hasOmegaHeader = strStartsWith(text, switchy.omegaPrefix) or
+        strStartsWith(text, switchy.legacyOmegaPrefix)
+      if not hasOmegaHeader
         if text[0] == '#' or text.indexOf('\n#') >= 0
           parser = 'parseLegacy'
       return parser
