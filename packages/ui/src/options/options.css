@@ -1,0 +1,211 @@
+/* Options page. Replaces Bootstrap 3 + Less with a small system-font sheet. */
+
+:root {
+  --om-bg: #ffffff;
+  --om-panel: #f8f9fa;
+  --om-fg: #1a1a1a;
+  --om-muted: #6b7280;
+  --om-hover: #eef0f3;
+  --om-active: #e7f1fb;
+  --om-border: #e4e6eb;
+  --om-accent: #1a73e8;
+  --om-accent-fg: #ffffff;
+  --om-danger: #c5221f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --om-bg: #202124;
+    --om-panel: #292a2d;
+    --om-fg: #e8eaed;
+    --om-muted: #9aa0a6;
+    --om-hover: #35363a;
+    --om-active: #1f3a5f;
+    --om-border: #3c4043;
+    --om-accent: #8ab4f8;
+    --om-accent-fg: #202124;
+    --om-danger: #f28b82;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body.om-options {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--om-bg);
+  color: var(--om-fg);
+  font: 14px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+@media (max-width: 720px) {
+  body.om-options {
+    grid-template-columns: 1fr;
+  }
+  .om-sidebar {
+    position: static !important;
+    height: auto !important;
+  }
+}
+
+.om-sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 16px 0;
+  background: var(--om-panel);
+  border-right: 1px solid var(--om-border);
+}
+
+.om-brand {
+  margin: 0 16px 16px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.om-group-label {
+  margin: 16px 16px 4px;
+  color: var(--om-muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.om-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.om-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 7px 16px;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.om-item:hover {
+  background: var(--om-hover);
+}
+
+.om-item[aria-current="page"] {
+  background: var(--om-active);
+  font-weight: 600;
+}
+
+.om-swatch {
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 1px solid rgb(0 0 0 / 0.15);
+}
+
+.om-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.om-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 12px 24px;
+  background: var(--om-bg);
+  border-bottom: 1px solid var(--om-border);
+}
+
+.om-btn {
+  padding: 6px 14px;
+  border: 1px solid var(--om-border);
+  border-radius: 6px;
+  background: var(--om-bg);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.om-btn:hover:not(:disabled) {
+  background: var(--om-hover);
+}
+
+.om-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.om-btn-primary:not(:disabled) {
+  background: var(--om-accent);
+  border-color: var(--om-accent);
+  color: var(--om-accent-fg);
+}
+
+.om-status {
+  color: var(--om-muted);
+  font-size: 12px;
+}
+
+.om-view {
+  padding: 24px;
+  max-width: 860px;
+}
+
+.om-view h2 {
+  margin-top: 0;
+  font-size: 18px;
+}
+
+.om-field {
+  display: block;
+  margin: 0 0 14px;
+}
+
+.om-field > span {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--om-muted);
+  font-size: 12px;
+}
+
+.om-field input[type="text"],
+.om-field input[type="url"],
+.om-field input[type="number"],
+.om-field select,
+.om-field textarea {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--om-border);
+  border-radius: 6px;
+  background: var(--om-bg);
+  color: inherit;
+  font: inherit;
+}
+
+.om-field textarea {
+  min-height: 160px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.om-check {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin: 0 0 10px;
+}
+
+.om-error {
+  color: var(--om-danger);
+}

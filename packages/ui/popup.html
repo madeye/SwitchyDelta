@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title data-i18n="appNameShort">SwitchyDelta</title>
+    <link rel="stylesheet" href="./src/popup/popup.css" />
+  </head>
+  <body class="om-popup">
+    <div id="om-not-controllable" class="om-notice" hidden>
+      <p class="om-notice-title" id="om-not-controllable-title"></p>
+      <p class="om-notice-detail" id="om-not-controllable-detail"></p>
+    </div>
+
+    <nav id="om-root" aria-label="Profiles">
+      <ul id="om-profiles" class="om-list"></ul>
+
+      <hr class="om-sep" />
+
+      <ul class="om-list om-actions">
+        <li>
+          <button type="button" class="om-item" id="om-add-rule" hidden>
+            <span class="om-icon" aria-hidden="true">+</span>
+            <span data-i18n="popup_addCondition">Add condition</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="om-item" id="om-options">
+            <span class="om-icon" aria-hidden="true">⚙</span>
+            <span data-i18n="popup_options">Options</span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <p id="om-error" class="om-error" hidden></p>
+
+    <script type="module" src="./src/popup/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title data-i18n="options_title">SwitchyDelta Options</title>
+    <link rel="stylesheet" href="./src/options/options.css" />
+  </head>
+  <body class="om-options">
+    <aside class="om-sidebar">
+      <h1 class="om-brand" data-i18n="appNameShort">SwitchyDelta</h1>
+
+      <nav aria-label="Sections">
+        <p class="om-group-label" data-i18n="options_group_setting">Settings</p>
+        <ul class="om-list" id="om-nav-settings">
+          <li><a class="om-item" href="#/ui" data-i18n="options_navInterface">Interface</a></li>
+          <li><a class="om-item" href="#/general" data-i18n="options_navGeneral">General</a></li>
+          <li><a class="om-item" href="#/io" data-i18n="options_navImportExport">Import / Export</a></li>
+        </ul>
+
+        <p class="om-group-label" data-i18n="options_group_profiles">Profiles</p>
+        <ul class="om-list" id="om-nav-profiles"></ul>
+
+        <ul class="om-list">
+          <li><a class="om-item" href="#/about" data-i18n="options_navAbout">About</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="om-main">
+      <header class="om-toolbar">
+        <button type="button" id="om-apply" class="om-btn om-btn-primary" disabled>
+          <span data-i18n="options_apply">Apply changes</span>
+        </button>
+        <button type="button" id="om-revert" class="om-btn" disabled>
+          <span data-i18n="options_discard">Discard</span>
+        </button>
+        <span id="om-status" class="om-status" role="status"></span>
+      </header>
+
+      <section id="om-view" class="om-view"></section>
+    </main>
+
+    <script type="module" src="./src/options/main.ts"></script>
+  </body>
+</html>
