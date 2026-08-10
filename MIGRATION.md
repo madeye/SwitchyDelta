@@ -9,7 +9,7 @@ AngularJS onto TypeScript + npm workspaces + Vite/esbuild + Vitest.
 | --- | --- | --- |
 | `packages/pac` (`@switchydelta/pac`) | `omega-pac` | Done, 174 tests |
 | `packages/target` (`@switchydelta/target`) | `omega-target` | In progress |
-| `packages/extension` | `omega-target-chromium-extension` | Not started |
+| `packages/extension` | `omega-target-chromium-extension` | Minimal worker, in progress |
 | `packages/ui` (`@switchydelta/ui`) | `omega-web` | Foundation done |
 
 The old directories are still present and untouched. Nothing is deleted until
@@ -153,28 +153,40 @@ Two smaller judgement calls, both deliberate:
   keys stay in lockstep with the regexes `Conditions` builds for the same
   pattern.
 
+## Scope of the service worker
+
+The worker is deliberately reduced to what only it can do:
+
+- **proxy authentication** — `chrome.webRequest.onAuthRequired` has no other
+  host, and its listener must be registered in the worker's first turn or the
+  event that woke the worker is lost
+- **scheduled downloads** — `chrome.alarms` is the only timer that survives
+  suspension
+- **applying the profile** to `chrome.proxy.settings`
+- **answering RPC** from the options page and popup
+
+Dropped from this build: external-proxy-change watching and
+`-revertProxyChanges`, quick-switch cycling, the badge and per-tab
+icons/titles, the request monitor, the inspect context menus, and the
+SwitchySharp / external-extension bridges. `proxy_impl_script` and
+`proxy_impl_listener` are Firefox-only and were already dead on Chromium.
+
+Note that this does not reduce idle memory: MV3 workers are already
+event-driven and terminate when idle. The 743 KB -> 30 KB PAC reduction is what
+actually addresses the cost that motivated the previous `af4efbe` work.
+
 ## Remaining work
 
 1. **`packages/target`** — `options.ts` (the 1059-line controller) is the last
    file; the rest is ported and typechecks. It has no tests yet: the only
    existing suite was `omega-target/test/options_sync.coffee`, which still needs
    porting, and `Options` itself was never covered.
-2. **`packages/extension`** — not started. Port `src/module/*` and the service
-   worker. Notes from the survey worth keeping:
-   - `ProxyAuth` must keep registering `onAuthRequired` synchronously in the
-     worker's first turn, or the wake-up event that started the worker is lost.
-     Its `chrome.storage.session` + `chrome.storage.local` dual-write is what
-     survives worker suspension; do not "simplify" it away.
-   - `_pacWithCompiler` and its `importScripts` hack should disappear with the
-     single-bundle PAC package.
-   - `proxy_impl.coffee` calls a bare global `OmegaPac`, relying on
-     `importScripts` ordering. Give it a real import.
-   - `tabs.coffee`, `web_request_monitor.coffee` and `inspect.coffee` are not
-     wired into the current build. Decide whether to revive or drop them rather
-     than porting them by reflex.
-   - The Firefox-only `proxy_impl_script` / `proxy_impl_listener` paths are dead
-     on Chromium; the comment forbidding bluebird in `onRequest` becomes moot
-     with native promises.
+2. **`packages/extension`** — the reduced worker (see above) is in progress:
+   `sw.ts`, `chrome-options.ts` and `fetch-url.ts` are written; `proxy-auth.ts`,
+   `proxy-settings.ts` and `chrome-storage.ts` are the remainder. `ProxyAuth`
+   carries the constraints that matter: register `onAuthRequired` in the
+   worker's first turn, and keep the `chrome.storage.session` +
+   `chrome.storage.local` dual-write that survives suspension.
 3. **`packages/ui`** — editors for Pac, Switch, RuleList and Virtual profiles;
    the rule table with drag reorder; the modal flows (new/rename/replace/delete);
    options sync UI; the guided tours. The `switch_profile` controller was the

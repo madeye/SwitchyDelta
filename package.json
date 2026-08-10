@@ -9,18 +9,21 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build --workspaces --if-present",
+    "build": "npm run typecheck && npm run build:ui && npm run build:extension",
     "typecheck": "tsc --build --force",
     "test": "TZ=Europe/London vitest run",
     "test:watch": "vitest",
     "lint": "eslint packages --ext .ts,.tsx",
-    "clean": "rm -rf packages/*/dist packages/*/tsconfig.tsbuildinfo"
+    "clean": "rm -rf packages/*/dist packages/*/tsconfig.tsbuildinfo",
+    "build:ui": "npm run build -w @switchydelta/ui",
+    "build:extension": "node scripts/build-extension.mjs"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.268",
     "@types/node": "^20.14.0",
     "typescript": "^5.5.4",
-    "vitest": "^2.0.5"
+    "vitest": "^2.0.5",
+    "esbuild": "^0.23.0"
   },
   "engines": {
     "node": ">=18"
