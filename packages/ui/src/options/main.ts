@@ -13,7 +13,14 @@ import { localizeDocument, profileDisplayName, t } from '../lib/i18n.js';
 import { api, callBackground, localState } from '../lib/messaging.js';
 import { colorFor, listProfiles } from '../lib/profile-view.js';
 import { deepEqual } from '../lib/equal.js';
-import { renderAbout, renderGeneral, renderIo, renderProfile, renderUi } from './views.js';
+import {
+  renderAbout,
+  renderGeneral,
+  renderIo,
+  renderNewProfile,
+  renderProfile,
+  renderUi,
+} from './views.js';
 import type { OptionsBag } from '@switchydelta/pac';
 
 /** The saved state, used to decide what actually changed. */
@@ -21,11 +28,17 @@ let pristine: OptionsBag = {};
 /** The live, edited copy bound to the form controls. */
 export let options: OptionsBag = {};
 
+export function isDirty(): boolean {
+  return changedKeys().length > 0;
+}
+
 export function markDirty(): void {
-  const dirty = changedKeys().length > 0;
+  const dirty = isDirty();
   must<HTMLButtonElement>('#om-apply').disabled = !dirty;
   must<HTMLButtonElement>('#om-revert').disabled = !dirty;
-  must('#om-status').textContent = dirty ? t('options_unsavedChanges') : '';
+  // As in the original, the enabled Apply/Discard buttons are the unsaved-
+  // changes indicator; there is no catalogue string for a status line.
+  must('#om-status').textContent = '';
 }
 
 function changedKeys(): string[] {
@@ -40,13 +53,12 @@ async function applyChanges(): Promise<void> {
   }
   if (Object.keys(changes).length === 0) return;
 
-  must('#om-status').textContent = t('options_saving');
   try {
     // `undefined` marks a removed key, matching the storage layer's convention.
     await callBackground('applyChanges', changes);
     pristine = structuredClone(options);
     markDirty();
-    must('#om-status').textContent = t('options_saved');
+    must('#om-status').textContent = t('options_saveSuccess');
   } catch (err) {
     must('#om-status').textContent = err instanceof Error ? err.message : String(err);
   }
@@ -61,6 +73,7 @@ const routes: Array<[RegExp, View]> = [
   [/^#\/general$/, renderGeneral],
   [/^#\/io$/, renderIo],
   [/^#\/about$/, renderAbout],
+  [/^#\/new$/, renderNewProfile],
   [/^#\/profile\/(.*)$/, renderProfile],
 ];
 
@@ -111,6 +124,14 @@ function renderProfileNav(): void {
       return li;
     }),
   );
+
+  const newLink = document.createElement('a');
+  newLink.className = 'om-item om-item-new';
+  newLink.href = '#/new';
+  newLink.textContent = t('options_newProfile');
+  const li = document.createElement('li');
+  li.append(newLink);
+  nav.append(li);
 }
 
 // --- Boot -------------------------------------------------------------------

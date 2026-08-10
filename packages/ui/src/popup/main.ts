@@ -226,9 +226,11 @@ function showNotControllable(reason: string): void {
   const notice = must('#om-not-controllable');
   notice.hidden = false;
   must('#om-not-controllable-title').textContent = t('popup_proxyNotControllable_' + reason);
-  must('#om-not-controllable-detail').textContent = t(
-    'popup_proxyNotControllableDetails_' + reason,
-  );
+  // Only some reasons have a specific detail string; fall back to the generic
+  // one like the original template did.
+  must('#om-not-controllable-detail').textContent =
+    chrome.i18n.getMessage('popup_proxyNotControllableDetails_' + reason) ||
+    t('popup_proxyNotControllableDetails');
 }
 
 function showError(err: unknown): void {

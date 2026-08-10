@@ -106,15 +106,15 @@ const layout = JSON.parse(await op.evalGesture(`JSON.stringify({
   clientW: document.documentElement.clientWidth,
   overflowsX: document.body.scrollWidth > document.documentElement.clientWidth + 1,
   sidebarDisplay: getComputedStyle(document.querySelector('.om-sidebar nav')).display,
-  navScrollable: (() => { const n = document.querySelector('.om-sidebar nav');
-    return n.scrollWidth > n.clientWidth; })(),
+  navScrollable: (() => { const lists = [...document.querySelectorAll('.om-sidebar .om-list')];
+    return lists.length > 0 && lists.every((l) => getComputedStyle(l).overflowX === 'auto'); })(),
   openInTabVisible: getComputedStyle(document.querySelector('#om-open-tab')).display !== 'none',
   navItems: document.querySelectorAll('.om-sidebar .om-item').length,
 })`));
 check('no horizontal overflow of the page', layout.overflowsX, false);
 check('body fits the panel width', layout.bodyScrollW, layout.clientW);
 check('nav collapsed to a scrollable strip', layout.sidebarDisplay, 'flex');
-check('nav scrolls internally instead of widening the page', layout.navScrollable, true);
+check('nav rows scroll internally instead of widening the page', layout.navScrollable, true);
 check('open-in-tab escape hatch is visible', layout.openInTabVisible, true);
 if (failures) console.log('\n=== elements exceeding 360px ===');
 if (failures) console.log(await op.evalGesture(`(() => {

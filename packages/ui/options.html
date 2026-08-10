@@ -10,19 +10,16 @@
       <h1 class="om-brand" data-i18n="appNameShort">SwitchyDelta</h1>
 
       <nav aria-label="Sections">
-        <p class="om-group-label" data-i18n="options_group_setting">Settings</p>
+        <p class="om-group-label" data-i18n="options_navHeader_setting">Settings</p>
         <ul class="om-list" id="om-nav-settings">
-          <li><a class="om-item" href="#/ui" data-i18n="options_navInterface">Interface</a></li>
-          <li><a class="om-item" href="#/general" data-i18n="options_navGeneral">General</a></li>
-          <li><a class="om-item" href="#/io" data-i18n="options_navImportExport">Import / Export</a></li>
+          <li><a class="om-item" href="#/ui" data-i18n="options_tab_ui">Interface</a></li>
+          <li><a class="om-item" href="#/general" data-i18n="options_tab_general">General</a></li>
+          <li><a class="om-item" href="#/io" data-i18n="options_tab_importExport">Import / Export</a></li>
+          <li><a class="om-item" href="#/about" data-i18n="about_title">About</a></li>
         </ul>
 
-        <p class="om-group-label" data-i18n="options_group_profiles">Profiles</p>
+        <p class="om-group-label" data-i18n="options_navHeader_profiles">Profiles</p>
         <ul class="om-list" id="om-nav-profiles"></ul>
-
-        <ul class="om-list">
-          <li><a class="om-item" href="#/about" data-i18n="options_navAbout">About</a></li>
-        </ul>
       </nav>
     </aside>
 
@@ -35,9 +32,8 @@
           <span data-i18n="options_discard">Discard</span>
         </button>
         <span id="om-status" class="om-status" role="status"></span>
-        <button type="button" id="om-open-tab" class="om-btn" data-i18n="options_openInTab">
-          Open in tab
-        </button>
+        <!-- No catalogue string exists for this (side-panel-only feature). -->
+        <button type="button" id="om-open-tab" class="om-btn">Open in tab</button>
       </header>
 
       <section id="om-view" class="om-view"></section>

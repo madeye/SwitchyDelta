@@ -6,11 +6,22 @@
  * listeners.
  */
 
-import { downloadFile, h, must } from '../lib/dom.js';
-import { t } from '../lib/i18n.js';
-import { api, callBackground } from '../lib/messaging.js';
-import { markDirty, options } from './main.js';
+import { append, downloadFile, h, must, render } from '../lib/dom.js';
+import { profileDisplayName, t } from '../lib/i18n.js';
+import { api, callBackground, getState } from '../lib/messaging.js';
+import { colorFor, listProfiles, profileColors } from '../lib/profile-view.js';
+import { isDirty, markDirty, options } from './main.js';
 import { Profiles, type FixedProfile, type Profile, type ProxyServer } from '@switchydelta/pac';
+
+/** Option keys whose absence means "on" (mirrors the background's defaults). */
+const DEFAULT_ON = new Set([
+  '-confirmDeletion',
+  '-refreshOnProfileChange',
+  '-showInspectMenu',
+  '-showExternalProfile',
+  '-monitorWebRequests',
+  '-revertProxyChanges',
+]);
 
 /** A labelled checkbox bound to a top-level option key. */
 function check(key: string, labelKey: string, hint?: string) {
@@ -20,7 +31,7 @@ function check(key: string, labelKey: string, hint?: string) {
     dataset: { option: key },
   });
   // Defaults differ per key; only a strict false counts as off.
-  input.checked = options[key] === true || (options[key] !== false && defaultsOn(key));
+  input.checked = options[key] === true || (options[key] !== false && DEFAULT_ON.has(key));
 
   return h(
     'label',
@@ -30,23 +41,199 @@ function check(key: string, labelKey: string, hint?: string) {
   );
 }
 
-function defaultsOn(key: string): boolean {
-  return key === '-confirmDeletion' || key === '-showExternalProfile';
-}
-
 function field(labelKey: string, control: HTMLElement) {
   return h('label', { class: 'om-field' }, h('span', { text: t(labelKey) }), control);
 }
 
+/** A section heading inside a tab, like the original's `.settings-group h3`. */
+function group(labelKey: string) {
+  return h('h3', { text: t(labelKey) });
+}
+
+/**
+ * A help paragraph. Rendered as HTML because several catalogue strings carry
+ * inline markup (`<br>`, `<b>`, …); they are our own translations, so this is
+ * as trusted as the original's `omega-html` binding was.
+ */
+function help(labelKey: string, substitutions?: string[]) {
+  return h('p', { class: 'om-help', html: t(labelKey, substitutions) });
+}
+
+/** Names offered by profile pickers: the builtins plus every user profile. */
+function selectableProfileNames(): string[] {
+  return ['direct', 'system', ...listProfiles(options).map((profile) => profile.name)];
+}
+
 export function renderUi(container: HTMLElement): void {
   container.append(
-    h('h2', { text: t('options_navInterface') }),
+    h('h2', { text: t('options_tab_ui') }),
+
+    group('options_group_miscOptions'),
     check('-confirmDeletion', 'options_confirmDeletion'),
     check('-refreshOnProfileChange', 'options_refreshOnProfileChange'),
+    check('-showInspectMenu', 'options_showInspectMenu'),
     check('-addConditionsToBottom', 'options_addConditionsToBottom'),
-    check('-showExternalProfile', 'options_showExternalProfile'),
-    check('-enableQuickSwitch', 'options_enableQuickSwitch'),
+
+    group('options_group_keyboardShortcut'),
+    h(
+      'p',
+      {},
+      h('button', {
+        type: 'button',
+        class: 'om-btn',
+        text: t('options_menuShortcutConfigure'),
+        // chrome:// pages cannot be linked, only opened through the tabs API.
+        onclick: () => void chrome.tabs.create({ url: 'chrome://extensions/shortcuts' }),
+      }),
+      ' ',
+      t('options_menuShortcutHelp'),
+    ),
+    help('options_menuShortcutMore'),
+
+    group('options_group_switchOptions'),
+    field('options_startupProfile', startupProfileSelect()),
+    advancedConditionTypesCheck(),
+    quickSwitchSection(),
   );
+}
+
+function startupProfileSelect(): HTMLSelectElement {
+  const current = (options['-startupProfileName'] as string | undefined) ?? '';
+  return h(
+    'select',
+    { dataset: { option: '-startupProfileName' } },
+    h('option', { value: '', text: t('options_startupProfile_none'), selected: current === '' }),
+    ...selectableProfileNames().map((name) =>
+      h('option', { value: name, text: profileDisplayName(name), selected: current === name }),
+    ),
+  );
+}
+
+/** Stored as 1/0 rather than a boolean; kept that way for backup compatibility. */
+function advancedConditionTypesCheck(): DocumentFragment {
+  const fragment = document.createDocumentFragment();
+  const input = h('input', {
+    type: 'checkbox',
+    checked: Number(options['-showConditionTypes'] ?? 0) > 0,
+    onchange: () => {
+      options['-showConditionTypes'] = input.checked ? 1 : 0;
+      markDirty();
+    },
+  });
+  fragment.append(
+    h(
+      'label',
+      { class: 'om-check' },
+      input,
+      h('span', {}, h('span', { text: t('options_showConditionTypesAdvanced') })),
+    ),
+    help('options_showConditionTypesAdvancedHelp'),
+  );
+  return fragment;
+}
+
+/**
+ * Quick Switch: the enable toggle plus the cycle editor — which profiles the
+ * toolbar icon cycles through, in order. The original used drag-and-drop
+ * lists; buttons do the same job at side-panel width.
+ */
+function quickSwitchSection(): DocumentFragment {
+  const fragment = document.createDocumentFragment();
+  const editor = h('div', { class: 'om-quick-switch' });
+
+  const enable = h('input', {
+    type: 'checkbox',
+    checked: options['-enableQuickSwitch'] === true,
+    onchange: () => {
+      options['-enableQuickSwitch'] = enable.checked;
+      markDirty();
+      rerender();
+    },
+  });
+
+  const rerender = () => {
+    editor.hidden = options['-enableQuickSwitch'] !== true;
+    if (editor.hidden) {
+      render(editor, []);
+      return;
+    }
+
+    const cycled = ((options['-quickSwitchProfiles'] as string[] | undefined) ?? []).slice();
+    const notCycled = selectableProfileNames().filter((name) => !cycled.includes(name));
+    const setCycled = (next: string[]) => {
+      options['-quickSwitchProfiles'] = next;
+      markDirty();
+      rerender();
+    };
+
+    render(editor, [
+      h('h4', { text: t('options_cycledProfiles') }),
+      h('p', { class: 'om-help', text: t('options_cycledProfilesHelp') }),
+      cycled.length < 2 && h('p', { class: 'om-error', text: t('options_cycledProfilesTooFew') }),
+      h(
+        'ul',
+        { class: 'om-cycle' },
+        ...cycled.map((name, index) =>
+          h(
+            'li',
+            {},
+            h('span', { text: profileDisplayName(name) }),
+            h(
+              'span',
+              { class: 'om-cycle-buttons' },
+              index > 0 &&
+                h('button', {
+                  type: 'button',
+                  class: 'om-mini',
+                  text: '↑',
+                  onclick: () => {
+                    const next = cycled.slice();
+                    [next[index - 1], next[index]] = [next[index]!, next[index - 1]!];
+                    setCycled(next);
+                  },
+                }),
+              h('button', {
+                type: 'button',
+                class: 'om-mini',
+                text: '✕',
+                onclick: () => setCycled(cycled.filter((other) => other !== name)),
+              }),
+            ),
+          ),
+        ),
+      ),
+      h('h4', { text: t('options_notCycledProfiles') }),
+      h(
+        'ul',
+        { class: 'om-cycle' },
+        ...notCycled.map((name) =>
+          h(
+            'li',
+            {},
+            h('span', { text: profileDisplayName(name) }),
+            h('button', {
+              type: 'button',
+              class: 'om-mini',
+              text: '+',
+              onclick: () => setCycled([...cycled, name]),
+            }),
+          ),
+        ),
+      ),
+    ]);
+  };
+
+  rerender();
+  fragment.append(
+    h(
+      'label',
+      { class: 'om-check' },
+      enable,
+      h('span', {}, h('span', { text: t('options_quickSwitch') })),
+    ),
+    editor,
+  );
+  return fragment;
 }
 
 /** Download interval choices, in minutes; -1 means never. */
@@ -59,16 +246,38 @@ export function renderGeneral(container: HTMLElement): void {
     ...DOWNLOAD_INTERVALS.map((minutes) =>
       h('option', {
         value: String(minutes),
-        text: minutes < 0 ? t('options_updateInterval_never') : String(minutes),
+        text: t(
+          minutes < 0 ? 'options_downloadInterval_never' : 'options_downloadInterval_' + minutes,
+        ),
         selected: options['-downloadInterval'] === minutes,
       }),
     ),
   );
+  const systemName = profileDisplayName('system');
 
   container.append(
-    h('h2', { text: t('options_navGeneral') }),
-    field('options_downloadInterval', select),
+    h('h2', { text: t('options_tab_general') }),
+
+    group('options_group_networkRequests'),
     check('-monitorWebRequests', 'options_monitorWebRequests'),
+    help('options_monitorWebRequestsHelp'),
+
+    group('options_downloadOptions'),
+    help('options_downloadOptionsHelp'),
+    field('options_downloadInterval', select),
+
+    group('options_group_conflicts'),
+    h('p', { text: t('options_conflicts_introduction') }),
+    h(
+      'p',
+      { class: 'om-help' },
+      h('span', { class: 'om-badge-conflict', text: '=' }),
+      ' ',
+      t('options_conflicts_lowerPriority'),
+    ),
+    help('options_conflicts_higherPriority', [systemName]),
+    check('-showExternalProfile', 'options_showExternalProfile'),
+    help('options_showExternalProfileHelp', [systemName, t('popup_externalProfile')]),
   );
 }
 
@@ -95,25 +304,34 @@ export function renderIo(container: HTMLElement): void {
     },
   });
 
-  container.append(
-    h('h2', { text: t('options_navImportExport') }),
+  append(container, [
+    h('h2', { text: t('options_tab_importExport') }),
 
-    h('h3', { text: t('options_exportOptions') }),
+    group('options_group_importExportProfile'),
+    help('options_exportProfileHelp'),
+    // The legacy format only matters for basic condition types, so the
+    // original hides this once advanced types are on. Same here.
+    Number(options['-showConditionTypes'] ?? 0) <= 0 &&
+      check('-exportLegacyRuleList', 'options_exportLegacyRuleList'),
+    Number(options['-showConditionTypes'] ?? 0) <= 0 && help('options_exportLegacyRuleListHelp'),
+
+    group('options_group_importExportSettings'),
     h('button', {
       type: 'button',
       class: 'om-btn',
-      text: t('options_exportOptions'),
+      text: t('options_makeBackup'),
       onclick: () =>
         downloadFile('OmegaOptions.bak', JSON.stringify(options, null, 2), 'application/json'),
     }),
+    help('options_makeBackupHelp'),
 
-    h('h3', { text: t('options_importOptions') }),
     field('options_restoreLocal', fileInput),
+    help('options_restoreLocalHelp'),
     field('options_restoreOnline', urlInput),
     h('button', {
       type: 'button',
       class: 'om-btn',
-      text: t('options_restoreOnline'),
+      text: t('options_restoreOnlineSubmit'),
       onclick: async () => {
         try {
           const response = await fetch(urlInput.value);
@@ -126,13 +344,76 @@ export function renderIo(container: HTMLElement): void {
       },
     }),
     status,
-  );
+
+    group('options_group_syncing'),
+    syncSection(),
+  ]);
+}
+
+/**
+ * Options syncing. The state machine lives in the background; this renders
+ * the same four states the original page had and calls the same RPCs. Sync
+ * actions can replace the whole options bag, so the page reloads after each.
+ */
+function syncSection(): HTMLElement {
+  const wrap = h('div');
+
+  const act = (action: () => Promise<unknown>) => {
+    void action().then(
+      () => location.reload(),
+      (err: unknown) => {
+        wrap.append(
+          h('p', { class: 'om-error', text: err instanceof Error ? err.message : String(err) }),
+        );
+      },
+    );
+  };
+  const button = (labelKey: string, action: () => Promise<unknown>) =>
+    h('button', {
+      type: 'button',
+      class: 'om-btn',
+      text: t(labelKey),
+      onclick: () => act(action),
+    });
+
+  void getState('syncOptions').then(({ syncOptions }) => {
+    const mode = (syncOptions as string) || 'pristine';
+    if (mode === 'unsupported') {
+      render(wrap, [help('options_syncUnsupportedHelp')]);
+    } else if (mode === 'sync') {
+      render(wrap, [
+        h('p', { text: t('options_syncSyncAlert') }),
+        help('options_syncSyncHelp'),
+        h('p', {}, button('options_syncDisable', () => api.setOptionsSync(false))),
+      ]);
+    } else if (mode === 'conflict') {
+      render(wrap, [
+        h('p', { text: t('options_syncConflictAlert') }),
+        help('options_syncConflictHelp'),
+        h(
+          'p',
+          {},
+          button('options_syncEnableForce', () => api.setOptionsSync(true, { force: true })),
+          ' ',
+          button('options_syncReset', () => api.resetOptionsSync()),
+        ),
+      ]);
+    } else {
+      // pristine / disabled
+      render(wrap, [
+        help('options_syncPristineHelp'),
+        h('p', {}, button('options_syncEnable', () => api.setOptionsSync(true))),
+      ]);
+    }
+  });
+
+  return wrap;
 }
 
 export function renderAbout(container: HTMLElement): void {
   const version = chrome.runtime.getManifest().version;
   container.append(
-    h('h2', { text: t('options_navAbout') }),
+    h('h2', { text: t('about_title') }),
     h('p', { text: `${t('appNameShort')} ${version}` }),
     h('p', {}, h('a', { href: 'https://github.com/madeye/SwitchyDelta', text: 'GitHub' })),
   );
@@ -149,8 +430,148 @@ export function renderProfile(container: HTMLElement, name: string): void {
     container.append(h('p', { class: 'om-error', text: t('options_profileNotFound') }));
     return;
   }
+  const typeName =
+    chrome.i18n.getMessage('options_profileType' + profile.profileType) || profile.profileType;
 
-  container.append(h('h2', { text: profile.name }));
+  const feedback = h('p', { class: 'om-error' });
+
+  // Rename / delete talk to the background directly, so pending edits would be
+  // silently dropped by the reload that follows. Same rule as the original:
+  // apply first.
+  const requireClean = (): boolean => {
+    if (!isDirty()) return true;
+    feedback.textContent = t('options_applyOptionsRequired');
+    return false;
+  };
+
+  // --- Rename: an inline row instead of the original's modal. ---------------
+  const renameInput = h('input', { type: 'text', value: profile.name });
+  const renameRow = h(
+    'div',
+    { class: 'om-inline-form', hidden: true },
+    field('options_renameProfileName', renameInput),
+    h('button', {
+      type: 'button',
+      class: 'om-btn om-btn-primary',
+      text: t('dialog_ok'),
+      onclick: () => {
+        const next = renameInput.value.trim();
+        const problem = profileNameProblem(next, profile.name);
+        if (problem) {
+          feedback.textContent = problem;
+          return;
+        }
+        if (next === profile.name) {
+          renameRow.hidden = true;
+          return;
+        }
+        void api.renameProfile(profile.name, next).then(
+          () => {
+            location.hash = '#/profile/' + encodeURIComponent(next);
+            location.reload();
+          },
+          (err: unknown) => {
+            feedback.textContent = err instanceof Error ? err.message : String(err);
+          },
+        );
+      },
+    }),
+    ' ',
+    h('button', {
+      type: 'button',
+      class: 'om-btn',
+      text: t('dialog_cancel'),
+      onclick: () => (renameRow.hidden = true),
+    }),
+  );
+
+  // --- Delete: inline confirm, honouring the confirm-deletion option. -------
+  const doDelete = () => {
+    if (profileReferencedBy(profile.name)) {
+      feedback.textContent = t('options_modalHeader_cannotDeleteProfile');
+      return;
+    }
+    // replaceRef points the applied profile elsewhere if this one is active;
+    // with no references left it is otherwise a no-op. The removal itself
+    // goes through patch's `[old, 0, 0]` delta — an `undefined` value would
+    // be dropped by the message JSON serialization and delete nothing.
+    void api
+      .replaceRef(profile.name, 'direct')
+      .then(() => api.patch({ ['+' + profile.name]: [profile, 0, 0] }))
+      .then(
+        () => {
+          location.hash = '#/ui';
+          location.reload();
+        },
+        (err: unknown) => {
+          feedback.textContent = err instanceof Error ? err.message : String(err);
+        },
+      );
+  };
+  const deleteRow = h(
+    'div',
+    { class: 'om-inline-form', hidden: true },
+    h('span', { text: t('options_deleteProfileConfirm') + ' ' + profile.name }),
+    ' ',
+    h('button', {
+      type: 'button',
+      class: 'om-btn om-btn-danger',
+      text: t('dialog_ok'),
+      onclick: doDelete,
+    }),
+    ' ',
+    h('button', {
+      type: 'button',
+      class: 'om-btn',
+      text: t('dialog_cancel'),
+      onclick: () => (deleteRow.hidden = true),
+    }),
+  );
+
+  container.append(
+    h(
+      'div',
+      { class: 'om-profile-head' },
+      h('span', { class: 'om-swatch', style: { background: colorFor(profile, options) } }),
+      h('h2', { text: profile.name }),
+    ),
+    h('p', { class: 'om-help', text: typeName }),
+    h(
+      'div',
+      { class: 'om-actions-row' },
+      h('button', {
+        type: 'button',
+        class: 'om-btn',
+        text: t('options_renameProfile'),
+        onclick: () => {
+          if (!requireClean()) return;
+          deleteRow.hidden = true;
+          renameRow.hidden = false;
+          renameInput.focus();
+        },
+      }),
+      h('button', {
+        type: 'button',
+        class: 'om-btn',
+        text: t('options_deleteProfile'),
+        onclick: () => {
+          if (!requireClean()) return;
+          renameRow.hidden = true;
+          if (options['-confirmDeletion'] === false) doDelete();
+          else deleteRow.hidden = false;
+        },
+      }),
+      h('button', {
+        type: 'button',
+        class: 'om-btn',
+        text: t('options_profileExportPac'),
+        onclick: () => exportPac(profile),
+      }),
+    ),
+    renameRow,
+    deleteRow,
+    feedback,
+  );
 
   if (profile.profileType === 'FixedProfile') {
     renderFixedProfile(container, profile as FixedProfile);
@@ -159,21 +580,91 @@ export function renderProfile(container: HTMLElement, name: string): void {
     // itself still works, it just cannot be edited from this screen.
     container.append(
       h('p', {
-        text: `${t('options_profileType')}: ${profile.profileType}`,
-      }),
-      h('p', {
         class: 'om-error',
-        text: `Editing ${profile.profileType} is not available in this build yet.`,
+        text: `Editing ${typeName} is not available in this build yet.`,
       }),
     );
   }
+}
+
+/** Why `name` cannot be used as a (new) profile name, or null if it can. */
+function profileNameProblem(name: string, allowCurrent?: string): string | null {
+  if (!name) return t('options_profileNameEmpty');
+  if (name.startsWith('__')) return t('options_profileNameReserved');
+  if (name !== allowCurrent && Profiles.byName(name, options)) {
+    return t('options_profileNameConflict');
+  }
+  return null;
+}
+
+/** Whether other profiles or options still point at `name`. */
+function profileReferencedBy(name: string): boolean {
+  let referenced = options['-startupProfileName'] === name;
+  Profiles.each(options, (_key, other) => {
+    const record = other as Profile & {
+      defaultProfileName?: string;
+      rules?: Array<{ profileName?: string }>;
+    };
+    if (record.defaultProfileName === name) referenced = true;
+    for (const rule of record.rules ?? []) {
+      if (rule.profileName === name) referenced = true;
+    }
+  });
+  return referenced;
+}
+
+export function renderNewProfile(container: HTMLElement): void {
+  const nameInput = h('input', { type: 'text', placeholder: t('options_newProfileName') });
+  const error = h('p', { class: 'om-error' });
+
+  const create = () => {
+    if (isDirty()) {
+      error.textContent = t('options_applyOptionsRequired');
+      return;
+    }
+    const name = nameInput.value.trim();
+    const problem = profileNameProblem(name);
+    if (problem) {
+      error.textContent = problem;
+      return;
+    }
+    const used = listProfiles(options).length;
+    const profile: FixedProfile = {
+      profileType: 'FixedProfile',
+      name,
+      color: profileColors[used % profileColors.length]!,
+      fallbackProxy: { scheme: 'http', host: 'example.com', port: 80 },
+      bypassList: [
+        { pattern: '127.0.0.1', conditionType: 'BypassCondition' },
+        { pattern: '::1', conditionType: 'BypassCondition' },
+        { pattern: 'localhost', conditionType: 'BypassCondition' },
+      ],
+    };
+    void api.addProfile(profile).then(
+      () => {
+        location.hash = '#/profile/' + encodeURIComponent(name);
+        location.reload();
+      },
+      (err: unknown) => {
+        error.textContent = err instanceof Error ? err.message : String(err);
+      },
+    );
+  };
+  nameInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') create();
+  });
 
   container.append(
+    h('h2', { text: t('options_modalHeader_newProfile') }),
+    // Only the proxy profile editor is ported, so that is the type created.
+    h('p', { class: 'om-help', text: t('options_profileTypeFixedProfile') }),
+    field('options_newProfileName', nameInput),
+    error,
     h('button', {
       type: 'button',
-      class: 'om-btn',
-      text: t('options_exportPacFile'),
-      onclick: () => exportPac(profile),
+      class: 'om-btn om-btn-primary',
+      text: t('options_createProfile'),
+      onclick: create,
     }),
   );
 }
@@ -234,10 +725,14 @@ function renderFixedProfile(container: HTMLElement, profile: FixedProfile): void
   });
 
   container.append(
-    field('options_proxyProtocol', scheme),
-    field('options_proxyServer', host),
-    field('options_proxyPort', port),
-    field('options_bypassList', bypass),
+    h(
+      'div',
+      { class: 'om-proxy-row' },
+      field('options_proxy_protocol', scheme),
+      field('options_proxy_server', host),
+      field('options_proxy_port', port),
+    ),
+    field('options_group_bypassList', bypass),
   );
 }
 
