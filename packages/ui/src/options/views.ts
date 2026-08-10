@@ -10,7 +10,7 @@ import { append, downloadFile, h, must, render } from '../lib/dom.js';
 import { profileDisplayName, t } from '../lib/i18n.js';
 import { api, callBackground, getState } from '../lib/messaging.js';
 import { colorFor, getAttachedName, listProfiles, profileColors } from '../lib/profile-view.js';
-import { isDirty, markDirty, options } from './main.js';
+import { adoptOptionsKey, applyChanges, isDirty, markDirty, options } from './main.js';
 import {
   Conditions,
   parseIp,
@@ -1044,19 +1044,6 @@ function renderSwitchProfile(container: HTMLElement, profile: SwitchProfile): vo
       ];
     }
 
-    const urlInput = h('input', {
-      type: 'url',
-      value: list.sourceUrl ?? '',
-      placeholder: 'https://',
-      onchange: () => {
-        list.sourceUrl = urlInput.value.trim();
-        // A different source invalidates the downloaded copy.
-        delete (list as { lastUpdate?: unknown }).lastUpdate;
-        touchAttached();
-        rerender();
-      },
-    });
-
     const text = h('textarea', {
       value: list.ruleList ?? '',
       disabled: !!list.sourceUrl,
@@ -1066,7 +1053,75 @@ function renderSwitchProfile(container: HTMLElement, profile: SwitchProfile): vo
       },
     });
 
-    const lastUpdate = (list as { lastUpdate?: string | number }).lastUpdate;
+    // Last-update line, refreshed in place so URL edits and downloads do not
+    // need a full re-render (which would swallow the click that caused them).
+    const status = h('div');
+    const renderStatus = () => {
+      const current = attached();
+      const lastUpdate = (current as { lastUpdate?: string | number } | undefined)?.lastUpdate;
+      render(status, [
+        !!current?.sourceUrl &&
+          (lastUpdate
+            ? h('p', {
+                class: 'om-help',
+                text: t('options_ruleListLastUpdate', [new Date(lastUpdate).toLocaleString()]),
+              })
+            : h('p', { class: 'om-error', text: t('options_ruleListObsolete') })),
+      ]);
+    };
+    renderStatus();
+
+    const downloadButton = h('button', {
+      type: 'button',
+      class: 'om-btn',
+      text: t('options_downloadProfileNow'),
+      disabled: !list.sourceUrl,
+      onclick: () => void download(),
+    });
+
+    // Pending edits are applied automatically: a freshly pasted URL should
+    // download on the first click, not demand a manual Apply first.
+    const download = async () => {
+      feedback.textContent = '';
+      downloadButton.disabled = true;
+      const spinner = h('span', { class: 'om-spinner', 'aria-hidden': 'true' });
+      downloadButton.append(spinner);
+      try {
+        if (isDirty()) await applyChanges();
+        const result = await api.updateProfile(attachedName);
+        const failed = Object.values(result ?? {}).find(
+          (value) => (value as { _error?: string } | null)?._error,
+        );
+        if (failed) {
+          throw new Error((failed as { message?: string }).message ?? 'Download failed');
+        }
+        // Pull the downloaded list back in without dirtying the page.
+        adoptOptionsKey(attachedKey, (await api.getAll())[attachedKey]);
+        const fresh = attached();
+        text.value = fresh?.ruleList ?? '';
+        renderStatus();
+      } catch (err) {
+        feedback.textContent = err instanceof Error ? err.message : String(err);
+      } finally {
+        spinner.remove();
+        downloadButton.disabled = !attached()?.sourceUrl;
+      }
+    };
+
+    const urlInput = h('input', {
+      type: 'url',
+      value: list.sourceUrl ?? '',
+      placeholder: 'https://',
+      onchange: () => {
+        list.sourceUrl = urlInput.value.trim();
+        // A different source invalidates the downloaded copy.
+        delete (list as { lastUpdate?: unknown }).lastUpdate;
+        touchAttached();
+        downloadButton.disabled = !list.sourceUrl;
+        text.disabled = !!list.sourceUrl;
+        renderStatus();
+      },
+    });
 
     return [
       h('h3', { text: t('options_group_ruleListConfig') }),
@@ -1094,33 +1149,10 @@ function renderSwitchProfile(container: HTMLElement, profile: SwitchProfile): vo
       ),
       field('options_group_ruleListUrl', urlInput),
       help('options_ruleListUrlHelp'),
-      h('button', {
-        type: 'button',
-        class: 'om-btn',
-        text: t('options_downloadProfileNow'),
-        disabled: !list.sourceUrl,
-        onclick: () => {
-          if (isDirty()) {
-            feedback.textContent = t('options_applyOptionsRequired');
-            return;
-          }
-          void api.updateProfile(attachedName).then(
-            () => location.reload(),
-            (err: unknown) => {
-              feedback.textContent = err instanceof Error ? err.message : String(err);
-            },
-          );
-        },
-      }),
+      downloadButton,
 
       h('h3', { text: t('options_group_ruleListText') }),
-      !!list.sourceUrl &&
-        (lastUpdate
-          ? h('p', {
-              class: 'om-help',
-              text: t('options_ruleListLastUpdate', [new Date(lastUpdate).toLocaleString()]),
-            })
-          : h('p', { class: 'om-error', text: t('options_ruleListObsolete') })),
+      status,
       text,
     ];
   }
