@@ -129,6 +129,11 @@ Each is fixed in the rewrite and noted in a comment at the site.
   optional on a FixedProfile, so a profile without one threw.
 - `proxy_impl.coffee` referenced a free `OmegaPac` variable it never required.
   It worked only because the built worker happened to expose it as a global.
+- The `h()` DOM helper assigned every unrecognised key as a JS property, so
+  `aria-current` created a plain property instead of the attribute and the
+  `[aria-current="true"]` rule that highlights the active profile in the popup
+  never matched. Found only once the UI was added to the typecheck, which it
+  had never been in.
 - `fetch_url` compared the raw `Content-Type` header against a hint, so
   `text/html; charset=utf-8` never equalled `text/html`. Servers almost always
   send a charset, so the "response must not be HTML" guard silently never fired
@@ -190,6 +195,18 @@ SwitchySharp / external-extension bridges. `proxy_impl_script` and
 Note that this does not reduce idle memory: MV3 workers are already
 event-driven and terminate when idle. The 743 KB -> 30 KB PAC reduction is what
 actually addresses the cost that motivated the previous `af4efbe` work.
+
+## Surfaces
+
+The settings page is registered as a Chrome side panel
+(`side_panel.default_path`), and the popup's settings button opens it via
+`chrome.sidePanel.open`. `sidePanel` landed in Chrome 114, so
+`minimum_chrome_version` moved from 109 to 114.
+
+At panel width the sidebar collapses from a column into a horizontally
+scrollable strip of chips, and an "open in tab" button appears, since the rule
+tables are not usable at ~360px. The page is still registered as
+`options_page`/`options_ui`, so the full-tab route is unchanged.
 
 ## Remaining work
 

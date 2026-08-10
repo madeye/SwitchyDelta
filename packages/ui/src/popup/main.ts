@@ -10,7 +10,7 @@
 
 import { all, h, must, on, render } from '../lib/dom.js';
 import { localizeDocument, profileDisplayName, t } from '../lib/i18n.js';
-import { api, getState, openOptions, refreshActivePage } from '../lib/messaging.js';
+import { api, getState, openOptions, openSidePanel, refreshActivePage } from '../lib/messaging.js';
 
 /** A profile as summarised by the background for display. */
 interface AvailableProfile {
@@ -159,8 +159,13 @@ function wireActions(): void {
     });
   }
 
+  // Settings open in the side panel, falling back to a tab where the panel is
+  // unavailable. openSidePanel must run before any await, or the user gesture
+  // that authorises it is gone.
   must('#om-options').addEventListener('click', () => {
-    void openOptions();
+    if (!openSidePanel()) {
+      void openOptions();
+    }
     window.close();
   });
 }

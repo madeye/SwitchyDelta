@@ -205,6 +205,9 @@ if (extId) {
     const dom = await p.send('Runtime.evaluate', {
       expression: `JSON.stringify({
         profiles: [...document.querySelectorAll('#om-profiles .om-item')].map(e => e.textContent.trim()),
+        // aria-current must be a real attribute or the highlight rule cannot match.
+        current: [...document.querySelectorAll('#om-profiles .om-item[aria-current="true"]')]
+          .map(e => e.textContent.trim()),
         error: document.querySelector('#om-error')?.hidden === false
           ? document.querySelector('#om-error').textContent : null,
       })`,

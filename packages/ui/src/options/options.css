@@ -42,13 +42,87 @@ body.om-options {
   font: 14px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
+/* Narrow layout, which is what the Chrome side panel always is (~320-400px).
+   The sidebar collapses from a column into a horizontally scrollable strip of
+   chips so it costs one row instead of a screenful. */
 @media (max-width: 720px) {
   body.om-options {
     grid-template-columns: 1fr;
   }
+
+  /* Grid items default to min-width:auto, which lets wide content push the
+     track open instead of scrolling inside it. clip rather than hidden so the
+     sticky sidebar and toolbar keep working. */
+  body.om-options {
+    overflow-x: clip;
+  }
+
+  .om-sidebar,
+  .om-main {
+    min-width: 0;
+  }
+
   .om-sidebar {
-    position: static !important;
-    height: auto !important;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    height: auto;
+    overflow: clip;
+    padding: 8px 0 6px;
+    border-right: 0;
+    border-bottom: 1px solid var(--om-border);
+  }
+
+  /* Buttons wrap rather than forcing the toolbar wider than the panel. */
+  .om-toolbar {
+    flex-wrap: wrap;
+  }
+
+  /* The window/panel title already identifies the extension. */
+  .om-brand,
+  .om-group-label {
+    display: none;
+  }
+
+  .om-sidebar nav {
+    display: flex;
+    gap: 6px;
+    padding: 0 10px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  .om-sidebar .om-list {
+    display: flex;
+    gap: 6px;
+  }
+
+  .om-sidebar .om-item {
+    white-space: nowrap;
+    padding: 5px 10px;
+    border: 1px solid var(--om-border);
+    border-radius: 999px;
+  }
+
+  .om-toolbar {
+    top: 47px;
+    padding: 10px 14px;
+  }
+
+  .om-view {
+    padding: 14px;
+  }
+}
+
+/* Only useful when the page is cramped; in a full tab it is redundant. */
+#om-open-tab {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  #om-open-tab {
+    display: inline-block;
+    margin-left: auto;
   }
 }
 
