@@ -1246,15 +1246,22 @@ export class Options {
       const result = Profiles.match(profile, request);
       if (result == null) break;
       results.push(result);
-      let next: string;
+      let next: string | undefined;
       if (Array.isArray(result)) {
         next = result[0];
+        // Only profile keys (leading '+') continue the chain. A PAC result
+        // string such as "PROXY host:port" means this profile is the leaf.
+        if (typeof next !== 'string' || next.charCodeAt(0) !== 43 /* + */) break;
       } else if (result.profileName) {
-        next = Profiles.nameAsKey(result.profileName);
+        // Rules may carry a plain name or an already-keyed "+name".
+        const pn = result.profileName;
+        next = pn.charCodeAt(0) === 43 /* + */ ? pn : Profiles.nameAsKey(pn);
       } else {
         break;
       }
-      profile = Profiles.byKey(next, this._options);
+      const nextProfile = Profiles.byKey(next, this._options);
+      if (!nextProfile) break;
+      profile = nextProfile;
     }
     return Promise.resolve({ profile: lastProfile, results });
   }
