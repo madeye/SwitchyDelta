@@ -163,9 +163,12 @@ function wireActions(): void {
   if (state.currentProfileCanAddRule) {
     addRule.hidden = false;
     addRule.addEventListener('click', () => {
-      // The full condition editor lives on the options page.
-      void openOptions('#/profile/' + encodeURIComponent(state.currentProfileName ?? ''));
-      window.close();
+      // The full condition editor lives on the options page. Close only once
+      // openOptions has settled: window.close() tears down this context, and
+      // the tab query/create still pending inside openOptions dies with it.
+      void openOptions('#/profile/' + encodeURIComponent(state.currentProfileName ?? '')).finally(
+        () => window.close(),
+      );
     });
   }
 
@@ -173,10 +176,11 @@ function wireActions(): void {
   // unavailable. openSidePanel must run before any await, or the user gesture
   // that authorises it is gone.
   must('#om-options').addEventListener('click', () => {
-    if (!openSidePanel()) {
-      void openOptions();
+    if (openSidePanel()) {
+      window.close();
+    } else {
+      void openOptions().finally(() => window.close());
     }
-    window.close();
   });
 }
 
