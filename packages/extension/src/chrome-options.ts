@@ -7,7 +7,7 @@
  * and the SwitchySharp / external-extension bridges are not part of it.
  */
 
-import { Options, Log, NoOptionsError } from '@switchydelta/target';
+import { Options, Log, NoOptionsError, upgradeLegacyOptions } from '@switchydelta/target';
 import type { StorageItems } from '@switchydelta/target';
 import type { OmegaOptions } from '@switchydelta/target';
 import { Profiles } from '@switchydelta/pac';
@@ -114,13 +114,15 @@ export class ChromeOptions extends Options {
   }
 
   /**
-   * Treat entirely empty storage as a first run rather than a corrupt state.
+   * Handle the two legacy shapes the base class cannot: a SwitchySharp-era
+   * `config` bag already sitting in local storage, which is imported via
+   * {@link upgradeLegacyOptions}, and anything else without a schemaVersion
+   * (including entirely empty storage), which is a first run rather than a
+   * corrupt state.
    *
-   * The base class only knows "unrecognised schemaVersion". In the previous
-   * build this translation lived in the SwitchySharp import path, which is not
-   * part of this design; without it, a fresh install took the generic error
-   * branch, so the firstRun state was never seeded and the options page never
-   * opened on install.
+   * The original also queried a legacy SwitchySharp extension over external
+   * messaging before falling back to the `config` key; that bridge is not part
+   * of this build, so only the local-storage path remains.
    */
   override async upgrade(
     options: OmegaOptions | null | undefined,
@@ -129,10 +131,27 @@ export class ChromeOptions extends Options {
     try {
       return await super.upgrade(options, changes);
     } catch (err) {
-      if (!options || Object.keys(options).length === 0) {
-        throw new NoOptionsError();
+      if (options?.['schemaVersion']) throw err;
+      if (options?.['config']) {
+        let upgraded: OmegaOptions | null;
+        try {
+          upgraded = upgradeLegacyOptions(options, {
+            upgrade_profile_auto: chrome.i18n.getMessage('upgrade_profile_auto'),
+          });
+        } catch (ex) {
+          Log.error(ex);
+          throw ex;
+        }
+        if (upgraded) {
+          void this._state.set({ firstRun: 'upgrade' });
+          // The upgraded bag doubles as the change set so it all gets written.
+          return super.upgrade(upgraded, upgraded);
+        }
+        // A `config` key that fails to parse: the original still pushed the
+        // undefined result into super() and failed with the generic
+        // "Invalid schemaVersion" error. Treat it as having no options.
       }
-      throw err;
+      throw new NoOptionsError();
     }
   }
 

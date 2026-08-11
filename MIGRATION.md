@@ -8,12 +8,13 @@ AngularJS onto TypeScript + npm workspaces + Vite/esbuild + Vitest.
 | New package | Replaces | State |
 | --- | --- | --- |
 | `packages/pac` (`@switchydelta/pac`) | `omega-pac` | Done, 174 tests |
-| `packages/target` (`@switchydelta/target`) | `omega-target` | In progress |
-| `packages/extension` | `omega-target-chromium-extension` | Minimal worker, in progress |
-| `packages/ui` (`@switchydelta/ui`) | `omega-web` | Foundation done |
+| `packages/target` (`@switchydelta/target`) | `omega-target` | Done, 46 tests |
+| `packages/extension` | `omega-target-chromium-extension` | Done (reduced worker, see below) |
+| `packages/ui` (`@switchydelta/ui`) | `omega-web` | Done |
 
-The old directories are still present and untouched. Nothing is deleted until
-the replacement is verified, so the two can be diffed against each other.
+The old CoffeeScript directories were kept until every replacement was verified
+and v3.0.1 had shipped, then deleted. `omega-locales` (the gettext catalogues)
+is data, not code, and stays: the build compiles it into `_locales/`.
 
 ## Commands
 
@@ -194,6 +195,13 @@ icons/titles, the request monitor, the inspect context menus, and the
 SwitchySharp / external-extension bridges. `proxy_impl_script` and
 `proxy_impl_listener` are Firefox-only and were already dead on Chromium.
 
+Also dropped, UI-side only: the popup's temp-rule dropdown (and its `t`
+shortcut), which let the user route the current domain through another profile
+without saving a permanent rule. Unlike the drops above, the backend capability
+survives — `Options.addTempRule` was ported and is still exposed over RPC
+(`addTempRule` in the UI messaging layer) — so a future popup or side-panel
+surface can reattach to it without worker changes.
+
 Note that this does not reduce idle memory: MV3 workers are already
 event-driven and terminate when idle. The 743 KB -> 30 KB PAC reduction is what
 actually addresses the cost that motivated the previous `af4efbe` work.
@@ -242,23 +250,34 @@ scrollable strip of chips, and an "open in tab" button appears, since the rule
 tables are not usable at ~360px. The page is still registered as
 `options_page`/`options_ui`, so the full-tab route is unchanged.
 
-## Remaining work
+## The final porting round
 
-1. **`packages/target`** — `options.ts` (the 1059-line controller) is the last
-   file; the rest is ported and typechecks. It has no tests yet: the only
-   existing suite was `omega-target/test/options_sync.coffee`, which still needs
-   porting, and `Options` itself was never covered.
-2. **`packages/extension`** — the reduced worker (see above) is in progress:
-   `sw.ts`, `chrome-options.ts` and `fetch-url.ts` are written;
-   `proxy-settings.ts` and `chrome-storage.ts` are the remainder.
-3. **`packages/ui`** — editors for Pac, Switch, RuleList and Virtual profiles;
-   the rule table with drag reorder; the modal flows (new/rename/replace/delete);
-   options sync UI; the guided tours. The `switch_profile` controller was the
-   largest piece of the old UI (460 lines) and carries the attached-rule-list
-   logic, which is the subtlest part.
-4. **Build glue** — a manifest generator and a step to compile the `omega-locales`
-   `.po` catalogues into `_locales/*/messages.json`, replacing `grunt-po2crx`.
-5. **Delete the old packages** once the extension loads and is exercised.
+Everything on the old remaining-work list is done. An audit of all 138 leftover
+`.coffee` files classified each as already ported, deliberately dropped, or
+build glue replaced by `scripts/*.mjs` — except seven that still carried real
+behaviour or coverage, which were ported last:
+
+- `omega-target/test/options_sync.coffee` → `packages/target/test/options-sync.test.ts`
+  (17 tests, the first coverage of `OptionsSync`).
+- `omega-target-chromium-extension/src/module/upgrade.coffee` →
+  `packages/target/src/upgrade-legacy.ts` (29 tests) — the SwitchyOmega 2.x /
+  SwitchySharp options upgrader, called from `chrome-options.ts` on first run.
+- `omega-web/src/omega/controllers/pac_profile.coffee` → the PAC profile editor
+  in `packages/ui/src/options/views.ts`, plus the profile-type choice on the
+  new-profile screen (previously every profile type could be displayed but only
+  Fixed/Switch/RuleList could be created).
+- `omega-web/src/omega/controllers/switch_profile.coffee` — the remaining
+  parity gaps in the Switch editor: the navigation guard for unparsed source
+  edits, attached-rule-list validation on apply, `-confirmDeletion` on rule
+  delete, the `TrueCondition` → `HostWildcardCondition('*')` legacy-import
+  migration, and the effective-default fallback for new rules.
+- `omega-web/src/coffee/options_guide.coffee` and `switch_profile_guide.coffee`
+  → `packages/ui/src/options/guide.ts` (the guided tours, without Shepherd).
+- `omega-web/src/coffee/popup.coffee` → `packages/ui/src/popup/shortcuts.ts`
+  (the popup keyboard bindings; `?` shows the overlay).
+
+Each port was adversarially reviewed against the CoffeeScript line by line;
+the confirmed findings are fixed and commented at the site.
 
 ## Verification
 
@@ -267,4 +286,6 @@ is in `conditions.test.ts`: for every fixture, `match()` evaluated in-process an
 the compiled PAC expression evaluated as real JavaScript must agree. That is what
 makes replacing the code generator safe.
 
-Nothing has been loaded in a browser yet.
+The built extension is exercised by the Puppeteer e2e suite (`npm run e2e`:
+smoke, side panel, profiles, rule list against a real CONNECT proxy) and has
+shipped to the Chrome Web Store as v3.0.x.

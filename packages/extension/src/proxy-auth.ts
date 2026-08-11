@@ -250,8 +250,9 @@ export class ProxyAuth {
     this._fallbacks = [];
 
     for (const profile of profiles) {
-      // Only FixedProfile carries `auth`, but the check stays value-based so
-      // that an unexpected profile type with credentials is still honoured.
+      // FixedProfile and PacProfile carry `auth`, but the check stays
+      // value-based so that an unexpected profile type with credentials is
+      // still honoured.
       const profileAuth = (profile as FixedProfile).auth;
       if (!profileAuth) continue;
 

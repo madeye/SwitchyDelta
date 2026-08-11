@@ -107,6 +107,13 @@ body.om-popup {
   font-variant-numeric: tabular-nums;
 }
 
+/* Key hints injected by the `?` help overlay (shortcuts.ts). They reuse the
+   .om-key look; the action rows have no flexible middle span, so the hint
+   pushes itself to the right edge. */
+.shortcut-help {
+  margin-left: auto;
+}
+
 .om-icon {
   flex: 0 0 auto;
   width: 16px;
