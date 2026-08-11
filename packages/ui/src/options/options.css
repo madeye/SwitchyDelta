@@ -523,12 +523,27 @@ body.om-options {
 
   /* Two chip rows: settings pages on top, profiles below. Each row scrolls
      sideways on its own, so profiles are always visible instead of being
-     buried at the end of one long strip. */
+     buried at the end of one long strip. The Open-in-tab escape hatch shares
+     the first row, pinned after the scrolling settings chips. */
   .om-sidebar nav {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: 6px;
     padding: 0 10px;
+    align-items: center;
+  }
+
+  #om-nav-profiles {
+    grid-column: 1 / -1;
+  }
+
+  #om-open-tab {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    font-size: 12px;
+    border-radius: 999px;
+    white-space: nowrap;
   }
 
   .om-sidebar .om-list {
@@ -545,9 +560,7 @@ body.om-options {
     border-radius: 999px;
   }
 
-  /* One compact row: [Apply] [Discard] … [Open in tab]. Avoids the old
-     flex-wrap + margin-left:auto layout that left Open in tab alone on a
-     second row, right-aligned under empty space. */
+  /* One compact row: [Apply] [Discard] [status]. */
   .om-toolbar {
     top: 47px;
     padding: 8px 10px;
@@ -567,11 +580,6 @@ body.om-options {
 
   .om-view {
     padding: 14px;
-  }
-
-  #om-open-tab {
-    display: inline-flex;
-    align-items: center;
   }
 }
 

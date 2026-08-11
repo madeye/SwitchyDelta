@@ -120,7 +120,9 @@ const layout = JSON.parse(await op.evalGesture(`JSON.stringify({
 })`));
 check('no horizontal overflow of the page', layout.overflowsX, false);
 check('body fits the panel width', layout.bodyScrollW, layout.clientW);
-check('nav collapsed to a scrollable strip', layout.sidebarDisplay, 'flex');
+// Grid since the Open-in-tab button moved into the nav's first row; the
+// rows-scroll check below is what actually guards against page widening.
+check('nav collapsed to a scrollable strip', layout.sidebarDisplay, 'grid');
 check('nav rows scroll internally instead of widening the page', layout.navScrollable, true);
 check('open-in-tab escape hatch is visible', layout.openInTabVisible, true);
 if (failures) console.log('\n=== elements exceeding 360px ===');
