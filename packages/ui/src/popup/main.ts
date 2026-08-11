@@ -8,8 +8,9 @@
  * worker, renders it, and closes as soon as the user picks something.
  */
 
-import { all, h, must, on, render } from '../lib/dom.js';
+import { h, must, on, render } from '../lib/dom.js';
 import { localizeDocument, profileDisplayName, t } from '../lib/i18n.js';
+import { installShortcuts } from './shortcuts.js';
 import {
   api,
   getState,
@@ -88,7 +89,7 @@ async function main(): Promise<void> {
 
   renderProfiles();
   wireActions();
-  installKeyboard();
+  installShortcuts();
 
   // Fire-and-forget so the profile list never waits on the permission check.
   void maybeOfferHostPermission();
@@ -116,13 +117,10 @@ function renderProfiles(): void {
 
   render(
     list,
-    profiles.map((profile, index) => {
+    profiles.map((profile) => {
       const isCurrent =
         profile.name === state.currentProfileName ||
         (state.isSystemProfile && profile.profileType === 'SystemProfile');
-
-      // Digits 1-9 select the first nine profiles.
-      const shortcut = index < 9 ? String(index + 1) : '';
 
       return h(
         'li',
@@ -131,7 +129,10 @@ function renderProfiles(): void {
           'button',
           {
             type: 'button',
-            class: 'om-item',
+            // `om-custom` marks the digit-shortcut targets — the old
+            // template's `.custom-profile`. Digits 1-9 pick the first nine;
+            // the `?` help overlay reveals the bindings (shortcuts.ts).
+            class: profile.builtin ? 'om-item' : 'om-item om-custom',
             dataset: { profile: profile.name },
             'aria-current': isCurrent ? 'true' : 'false',
             title: profile.desc ?? '',
@@ -146,7 +147,6 @@ function renderProfiles(): void {
             TYPE_INITIAL[profile.profileType] ?? '?',
           ),
           h('span', { class: 'om-name', text: profileDisplayName(profile.name) }),
-          shortcut && h('span', { class: 'om-key', text: shortcut }),
         ),
       );
     }),
@@ -195,45 +195,6 @@ async function applyProfile(name: string): Promise<void> {
     return;
   }
   window.close();
-}
-
-/**
- * Keyboard navigation, matching the shortcuts the previous popup taught users:
- * digits jump to a profile, j/k and arrows move, Enter activates.
- */
-function installKeyboard(): void {
-  document.addEventListener('keydown', (event) => {
-    if (event.ctrlKey || event.metaKey || event.altKey) return;
-
-    const items = all<HTMLButtonElement>('.om-item:not([hidden])');
-    if (items.length === 0) return;
-
-    const activeIndex = items.indexOf(document.activeElement as HTMLButtonElement);
-
-    if (event.key >= '1' && event.key <= '9') {
-      const target = items[Number(event.key) - 1];
-      if (target) {
-        event.preventDefault();
-        target.click();
-      }
-      return;
-    }
-
-    let delta = 0;
-    if (event.key === 'ArrowDown' || event.key === 'j') delta = 1;
-    else if (event.key === 'ArrowUp' || event.key === 'k') delta = -1;
-    else if (event.key === 'o') {
-      event.preventDefault();
-      must<HTMLButtonElement>('#om-options').click();
-      return;
-    } else {
-      return;
-    }
-
-    event.preventDefault();
-    const next = items[(activeIndex + delta + items.length) % items.length];
-    next?.focus();
-  });
 }
 
 /**

@@ -158,6 +158,8 @@ export interface PacProfile extends ProfileBase {
   profileType: 'PacProfile' | 'AutoDetectProfile';
   pacUrl?: string;
   pacScript?: string;
+  /** A PAC script names arbitrary proxies, so credentials use the `all` scope. */
+  auth?: Record<string, ProxyAuth | undefined>;
 }
 
 export interface SwitchProfile extends ProfileBase {

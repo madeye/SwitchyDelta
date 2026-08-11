@@ -21,6 +21,7 @@ import {
   renderProfile,
   renderUi,
 } from './views.js';
+import { maybeShowFirstRunGuide } from './guide.js';
 import type { OptionsBag } from '@switchydelta/pac';
 
 /** The saved state, used to decide what actually changed. */
@@ -99,6 +100,24 @@ export async function applyChanges(): Promise<void> {
 
 type View = (container: HTMLElement, param: string) => void;
 
+/**
+ * A view-installed veto on leaving the current route. The switch profile's
+ * source editor registers one so touched, unparseable text blocks navigation
+ * instead of being silently discarded — the ported form of the original
+ * controller's `$stateChangeStart` + `event.preventDefault()` guard. The
+ * router clears it whenever a new view renders.
+ */
+let navigationGuard: (() => boolean) | null = null;
+
+export function setNavigationGuard(guard: (() => boolean) | null): void {
+  navigationGuard = guard;
+}
+
+/** The hash of the view currently on screen, for reverting vetoed navigation. */
+let currentHash = '';
+/** Set while the router restores the hash itself, so route() skips one event. */
+let revertingHash = false;
+
 const routes: Array<[RegExp, View]> = [
   [/^#\/ui$/, renderUi],
   [/^#\/general$/, renderGeneral],
@@ -109,12 +128,25 @@ const routes: Array<[RegExp, View]> = [
 ];
 
 function route(): void {
+  if (revertingHash) {
+    // This event is the router undoing a vetoed navigation; the view on
+    // screen (including any editor state) must stay untouched.
+    revertingHash = false;
+    return;
+  }
   const hash = location.hash || '#/about';
+  if (currentHash && hash !== currentHash && navigationGuard && !navigationGuard()) {
+    revertingHash = true;
+    location.hash = currentHash;
+    return;
+  }
+  navigationGuard = null;
   const container = must('#om-view');
 
   for (const [pattern, view] of routes) {
     const match = pattern.exec(hash);
     if (match) {
+      currentHash = hash;
       container.replaceChildren();
       view(container, decodeURIComponent(match[1] ?? ''));
       localizeDocument(container);
@@ -141,6 +173,9 @@ function renderProfileNav(): void {
       const link = document.createElement('a');
       link.className = 'om-item';
       link.href = '#/profile/' + encodeURIComponent(profile.name);
+      // The first-run guide points at profiles by type, as the original's
+      // `.nav-profile[data-profile-type=...]` markup allowed.
+      link.dataset['profileType'] = profile.profileType;
 
       const swatch = document.createElement('span');
       swatch.className = 'om-swatch';
@@ -224,6 +259,10 @@ async function main(): Promise<void> {
   }
   route();
   markDirty();
+
+  // First-run welcome + walkthrough (the original ran this once from the
+  // first options-change callback).
+  void maybeShowFirstRunGuide();
 }
 
 void main();

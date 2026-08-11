@@ -669,3 +669,65 @@ body.om-options {
 .om-error {
   color: var(--om-danger);
 }
+
+/* First-run welcome dialog and guide popover (guide.ts). */
+.om-dialog {
+  max-width: 420px;
+  padding: 18px 20px;
+  border: 1px solid var(--om-border);
+  border-radius: 8px;
+  background: var(--om-bg);
+  color: var(--om-fg);
+}
+
+/* The original used backdropClass 'opacity-half'. */
+.om-dialog::backdrop {
+  background: rgb(0 0 0 / 0.5);
+}
+
+.om-dialog-title {
+  margin: 0 0 10px;
+  font-size: 16px;
+}
+
+.om-dialog-close {
+  float: right;
+  margin: -6px -8px 0 8px;
+  padding: 0 6px;
+  border: 0;
+  background: transparent;
+  color: var(--om-muted);
+  font: inherit;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.om-dialog-close:hover {
+  color: var(--om-fg);
+}
+
+.om-dialog-footer {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+.om-guide-popover {
+  position: fixed;
+  z-index: 10;
+  max-width: 320px;
+  padding: 12px 14px;
+  border: 1px solid var(--om-border);
+  border-radius: 8px;
+  background: var(--om-bg);
+  color: var(--om-fg);
+  font-size: 13px;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.25);
+}
+
+/* Replaces the Shepherd arrows theme's pointer at the attached element. */
+.om-guide-target {
+  outline: 2px solid var(--om-accent);
+  outline-offset: 2px;
+}
