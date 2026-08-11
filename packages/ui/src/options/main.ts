@@ -21,7 +21,7 @@ import {
   renderProfile,
   renderUi,
 } from './views.js';
-import type { FixedProfile, OptionsBag } from '@switchydelta/pac';
+import type { OptionsBag } from '@switchydelta/pac';
 
 /** The saved state, used to decide what actually changed. */
 let pristine: OptionsBag = {};
@@ -69,18 +69,6 @@ export function adoptOptionsKey(key: string, value: unknown): void {
   markDirty();
 }
 
-/** True when any fixed profile carries proxy credentials. */
-function profilesNeedAuth(bag: OptionsBag): boolean {
-  for (const profile of listProfiles(bag)) {
-    const auth = (profile as FixedProfile).auth;
-    if (!auth) continue;
-    for (const entry of Object.values(auth)) {
-      if (entry?.username) return true;
-    }
-  }
-  return false;
-}
-
 export async function applyChanges(): Promise<void> {
   const changes: Record<string, unknown> = {};
   for (const key of changedKeys()) {
@@ -89,10 +77,10 @@ export async function applyChanges(): Promise<void> {
   if (Object.keys(changes).length === 0) return;
 
   // Start the optional host grant before any await so the call stays inside
-  // the Apply click gesture. Without `<all_urls>`, onAuthRequired never fires.
-  const hostAccess = profilesNeedAuth(options)
-    ? requestHostAccess()
-    : Promise.resolve(true);
+  // the Apply click gesture. Without `<all_urls>`, onAuthRequired never
+  // fires; asked even with no credentials configured yet, so auth works the
+  // moment one is added. Resolves silently when already granted.
+  const hostAccess = requestHostAccess();
 
   try {
     // `undefined` marks a removed key, matching the storage layer's convention.
