@@ -165,6 +165,11 @@ const pollTitle = async (expected) => {
 };
 await fetch(`http://127.0.0.1:${PORT}/json/new?http://www.example.com/`, { method: 'PUT' });
 check('title shows the rule match', await pollTitle('auto switch → proxy'), 'auto switch → proxy');
+// A page matching no rule must resolve through defaultProfileName — the icon
+// paints the default profile, not the switch's own colour. The CDP endpoint
+// commits reliably, exercising the pendingUrl -> url handoff either way.
+await fetch(`http://127.0.0.1:${PORT}/json/new?http://127.0.0.1:${PORT}/json/version`, { method: 'PUT' });
+check('title shows the default match', await pollTitle('auto switch → [Direct]'), 'auto switch → [Direct]');
 
 // --- Add-condition prefill --------------------------------------------------
 console.log('\n=== ?addRuleHost pre-fills a rule in the switch editor ===');
