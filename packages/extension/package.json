@@ -1,6 +1,6 @@
 {
   "name": "@switchydelta/extension",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "private": true,
   "type": "module",
   "description": "Chromium MV3 service worker and platform bindings for SwitchyDelta",
