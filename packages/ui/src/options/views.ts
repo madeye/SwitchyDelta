@@ -1630,27 +1630,29 @@ function renderSwitchProfile(
 
   // The popup's "Add condition" button routes here with the current tab's
   // host, and expects a rule for it pre-filled as a pending edit — the user
-  // still picks the target profile and applies. The pattern mirrors what the
-  // original popup suggested: the bare host for IP literals (the URL parser
-  // brackets IPv6), `*.host` otherwise, which the wildcard magic makes match
-  // the apex as well as subdomains.
+  // still picks the target profile and applies. The original suggested the
+  // wildcard for the *registrable* domain (www.google.com -> *.google.com,
+  // tldjs in the old background); the ported helper sits behind the separate
+  // psl entry point because it carries the public suffix list, so it loads
+  // only when this path actually runs. IP literals stay exact.
   const addRuleHost = query?.get('addRuleHost');
   if (addRuleHost) {
-    const looksLikeIp = addRuleHost.startsWith('[') || /\d$/.test(addRuleHost);
-    const pattern = looksLikeIp ? addRuleHost : '*.' + addRuleHost;
-    const exists = profile.rules.some(
-      (rule) =>
-        rule.condition.conditionType === 'HostWildcardCondition' &&
-        'pattern' in rule.condition &&
-        rule.condition.pattern === pattern,
-    );
-    if (!exists) {
+    void import('@switchydelta/pac/psl').then(({ wildcardForDomain }) => {
+      const pattern = wildcardForDomain(addRuleHost);
+      const exists = profile.rules.some(
+        (rule) =>
+          rule.condition.conditionType === 'HostWildcardCondition' &&
+          'pattern' in rule.condition &&
+          rule.condition.pattern === pattern,
+      );
+      if (exists) return;
       profile.rules.push({
         condition: { conditionType: 'HostWildcardCondition', pattern },
         profileName: effectiveDefault(),
       });
       touch();
-    }
+      rerender();
+    });
   }
 
   rerender();
