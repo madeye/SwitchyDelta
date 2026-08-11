@@ -216,9 +216,14 @@ export class ChromeOptions extends Options {
 
     let matched: Profile | undefined;
     const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
-    if (tab?.url && /^(https?|ftp|ws|wss):/i.test(tab.url)) {
+    // While a navigation is uncommitted (slow site, DNS failure, error page)
+    // `tab.url` is empty and the destination sits in `pendingUrl` — and a
+    // failed navigation never fires an onUpdated `url` change afterwards, so
+    // reading only `tab.url` left the icon stuck on the fallback paint.
+    const url = tab?.pendingUrl || tab?.url;
+    if (url && /^(https?|ftp|ws|wss):/i.test(url)) {
       try {
-        matched = (await this.matchProfile(Conditions.requestFromUrl(tab.url))).profile ?? undefined;
+        matched = (await this.matchProfile(Conditions.requestFromUrl(url))).profile ?? undefined;
       } catch {
         // Unparsable URL: keep the profile's own colour.
       }

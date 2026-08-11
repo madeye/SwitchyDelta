@@ -38,7 +38,13 @@ export function watchActiveTab(repaint: () => void): void {
   };
   chrome.tabs.onActivated.addListener(() => maybeRepaint());
   chrome.tabs.onUpdated.addListener((_tabId, changeInfo, tab) => {
-    if (!tab.active || changeInfo.url === undefined) return;
+    if (!tab.active) return;
+    // Repaint on URL changes and on load-state changes. The status events
+    // matter: a navigation that fails (error page) commits without ever
+    // firing a `url` change, and the activation-time paint may have run
+    // while the URL was still pending — the 'complete'/'loading' events are
+    // what correct it.
+    if (changeInfo.url === undefined && changeInfo.status === undefined) return;
     maybeRepaint();
   });
   chrome.windows.onFocusChanged.addListener((windowId) => {
