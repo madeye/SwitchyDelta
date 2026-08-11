@@ -1,6 +1,6 @@
 {
   "name": "switchydelta",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "private": true,
   "description": "SwitchyDelta - proxy switching browser extension",
   "license": "GPL-3.0-or-later",
