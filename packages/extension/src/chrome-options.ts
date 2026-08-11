@@ -227,18 +227,21 @@ export class ChromeOptions extends Options {
     // currentProfileChanged repaint wins.
     if (profile.name !== this._currentProfileName) return;
 
+    // The matched profile fills the icon; the switch profile's own colour
+    // becomes its boundary ring, so both stay visible at once.
     const color = matched?.color ?? profile.color ?? '#1a73e8';
+    const border = matched ? profile.color : undefined;
     const currentName = chrome.i18n.getMessage('profile_' + profile.name) || profile.name;
     const title =
       matched && matched.name !== profile.name
         ? `${currentName} → ${chrome.i18n.getMessage('profile_' + matched.name) || matched.name}`
         : currentName;
 
-    const key = `${color}\n${title}`;
+    const key = `${color}\n${border ?? ''}\n${title}`;
     if (key === this.#lastActiveTabPaint) return;
     this.#lastActiveTabPaint = key;
     void chrome.action.setTitle({ title });
-    await setActionIcon(color);
+    await setActionIcon(color, border);
   }
 
   // --- Proxy control loss ---------------------------------------------------
