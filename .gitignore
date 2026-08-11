@@ -6,3 +6,4 @@ packages/ui/dist/
 dist/
 .dev-chrome-profile/
 .env
+.DS_Store
