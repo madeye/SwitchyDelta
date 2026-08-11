@@ -442,6 +442,20 @@ export function renderAbout(container: HTMLElement): void {
 const PROXY_SCHEMES = ['http', 'https', 'socks4', 'socks5'];
 const DEFAULT_PORTS: Record<string, number> = { http: 80, https: 443, socks4: 1080, socks5: 1080 };
 
+/** Expand `#rgb` to `#rrggbb` so `<input type="color">` accepts the value. */
+function normalizeHex(color: string): string {
+  const raw = color.trim();
+  const short = /^#([0-9a-fA-F]{3})$/.exec(raw);
+  if (short) {
+    const [r, g, b] = short[1]!;
+    return `#${r}${r}${g}${g}${b}${b}`.toLowerCase();
+  }
+  const full = /^#([0-9a-fA-F]{6})$/.exec(raw);
+  if (full) return `#${full[1]!}`.toLowerCase();
+  // Fall back to a palette colour when the stored value is not a hex string.
+  return profileColors[0]!;
+}
+
 export function renderProfile(container: HTMLElement, name: string): void {
   const profile = Profiles.byName(name, options);
   if (!profile) {
@@ -546,12 +560,70 @@ export function renderProfile(container: HTMLElement, name: string): void {
     }),
   );
 
+  // Virtual profiles inherit colour from their target; only concrete profiles
+  // store an editable colour of their own (matches the original spectrum picker).
+  const colorEditable = profile.profileType !== 'VirtualProfile';
+  const headSwatch = h('span', {
+    class: 'om-swatch om-swatch-lg',
+    style: { background: colorFor(profile, options) },
+    title: colorEditable ? undefined : colorFor(profile, options),
+  });
+
+  const setProfileColor = (hex: string) => {
+    if (!colorEditable) return;
+    profile.color = normalizeHex(hex);
+    headSwatch.style.background = profile.color;
+    // Keep the sidebar chip in step with the working copy.
+    const href = '#/profile/' + encodeURIComponent(profile.name);
+    const navLink = document.querySelector<HTMLElement>(
+      `.om-sidebar a[href=${JSON.stringify(href)}]`,
+    );
+    const navSwatch = navLink?.querySelector<HTMLElement>('.om-swatch');
+    if (navSwatch) navSwatch.style.background = profile.color;
+    for (const chip of colorPalette.querySelectorAll<HTMLButtonElement>('.om-color-chip')) {
+      chip.setAttribute('aria-current', chip.dataset['color'] === profile.color ? 'true' : 'false');
+    }
+    if (colorInput) colorInput.value = profile.color;
+    Profiles.updateRevision(profile);
+    markDirty();
+  };
+
+  const colorPalette = h(
+    'div',
+    { class: 'om-color-palette', hidden: !colorEditable, role: 'group', 'aria-label': 'Profile color' },
+    ...profileColors.map((hex) =>
+      h('button', {
+        type: 'button',
+        class: 'om-color-chip',
+        title: hex,
+        dataset: { color: hex },
+        style: { background: hex },
+        'aria-label': hex,
+        'aria-current':
+          normalizeHex(profile.color ?? '') === normalizeHex(hex) ? 'true' : 'false',
+        onclick: () => setProfileColor(hex),
+      }),
+    ),
+  );
+
+  const colorInput = colorEditable
+    ? h('input', {
+        type: 'color',
+        class: 'om-color-input',
+        value: normalizeHex(profile.color ?? profileColors[0]!),
+        title: profile.color ?? '',
+        oninput: (event: Event) => setProfileColor((event.target as HTMLInputElement).value),
+      })
+    : null;
+
   container.append(
     h(
       'div',
       { class: 'om-profile-head' },
-      h('span', { class: 'om-swatch', style: { background: colorFor(profile, options) } }),
+      headSwatch,
       h('h2', { text: profile.name }),
+      colorPalette,
+      colorInput,
     ),
     h('p', { class: 'om-help', text: typeName }),
     h(

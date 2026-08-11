@@ -115,6 +115,12 @@ body.om-options {
   border: 1px solid rgb(0 0 0 / 0.15);
 }
 
+.om-swatch-lg {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+}
+
 .om-main {
   display: flex;
   flex-direction: column;
@@ -384,12 +390,50 @@ body.om-options {
 
 .om-profile-head {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   align-items: center;
 }
 
 .om-profile-head h2 {
   margin: 0;
+}
+
+/* Compact palette next to the profile title (replaces the spectrum picker). */
+.om-color-palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-left: 4px;
+}
+
+.om-color-chip {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 1px solid rgb(0 0 0 / 0.2);
+  border-radius: 4px;
+  cursor: pointer;
+  background-clip: padding-box;
+}
+
+.om-color-chip:hover {
+  transform: scale(1.1);
+}
+
+.om-color-chip[aria-current="true"] {
+  outline: 2px solid var(--om-accent);
+  outline-offset: 1px;
+}
+
+.om-color-input {
+  width: 28px;
+  height: 22px;
+  padding: 0;
+  border: 1px solid var(--om-border);
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
 }
 
 .om-actions-row {
