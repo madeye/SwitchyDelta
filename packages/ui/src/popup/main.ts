@@ -163,12 +163,28 @@ function wireActions(): void {
   if (state.currentProfileCanAddRule) {
     addRule.hidden = false;
     addRule.addEventListener('click', () => {
-      // The full condition editor lives on the options page. Close only once
-      // openOptions has settled: window.close() tears down this context, and
-      // the tab query/create still pending inside openOptions dies with it.
-      void openOptions('#/profile/' + encodeURIComponent(state.currentProfileName ?? '')).finally(
-        () => window.close(),
-      );
+      // The full condition editor lives on the options page; the current
+      // tab's host rides along so the editor pre-fills the new rule with it.
+      // Close only once openOptions has settled: window.close() tears down
+      // this context, and the tab query/create still pending inside
+      // openOptions dies with it.
+      void (async () => {
+        let suffix = '';
+        try {
+          const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+          const url = tab?.url ?? '';
+          // Only schemes a PAC script would see; hostname is '' for the rest.
+          if (/^(https?|ftp|ws|wss):/i.test(url)) {
+            const host = new URL(url).hostname;
+            if (host) suffix = '?addRuleHost=' + encodeURIComponent(host);
+          }
+        } catch {
+          // No readable tab URL: open the editor without a prefill.
+        }
+        await openOptions(
+          '#/profile/' + encodeURIComponent(state.currentProfileName ?? '') + suffix,
+        );
+      })().finally(() => window.close());
     });
   }
 

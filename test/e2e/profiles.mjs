@@ -166,6 +166,24 @@ const pollTitle = async (expected) => {
 await fetch(`http://127.0.0.1:${PORT}/json/new?http://www.example.com/`, { method: 'PUT' });
 check('title shows the rule match', await pollTitle('auto switch → proxy'), 'auto switch → proxy');
 
+// --- Add-condition prefill --------------------------------------------------
+console.log('\n=== ?addRuleHost pre-fills a rule in the switch editor ===');
+// The popup's "Add condition" button opens the editor with the active tab's
+// host in the fragment query; the editor must add a pending `*.host` rule and
+// strip the one-shot query from the address bar.
+const editorTab = await (await fetch(
+  `http://127.0.0.1:${PORT}/json/new?chrome-extension://${extId}/options.html%23/profile/auto%2520switch?addRuleHost=foo.example.com`,
+  { method: 'PUT' })).json();
+const editor = await Session.open(editorTab.webSocketDebuggerUrl);
+await sleep(1500);
+const prefill = JSON.parse(await editor.eval(`JSON.stringify({
+  hash: location.hash,
+  patterns: [...document.querySelectorAll('input')].map(i => i.value)
+    .filter(v => v === '*.foo.example.com'),
+})`));
+check('rule pre-filled with the tab host', prefill.patterns, ['*.foo.example.com']);
+check('one-shot query stripped from the hash', prefill.hash, '#/profile/auto%20switch');
+
 // --- DirectProfile ---------------------------------------------------------
 console.log('\n=== apply "direct" ===');
 console.log('  rpc reply: ' + (await applyProfile('direct')));

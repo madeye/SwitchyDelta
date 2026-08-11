@@ -466,7 +466,11 @@ function normalizeHex(color: string): string {
   return profileColors[0]!;
 }
 
-export function renderProfile(container: HTMLElement, name: string): void {
+export function renderProfile(
+  container: HTMLElement,
+  name: string,
+  query?: URLSearchParams,
+): void {
   const profile = Profiles.byName(name, options);
   if (!profile) {
     container.append(h('p', { class: 'om-error', text: t('options_profileNotFound') }));
@@ -678,7 +682,7 @@ export function renderProfile(container: HTMLElement, name: string): void {
   if (profile.profileType === 'FixedProfile') {
     renderFixedProfile(container, profile as FixedProfile);
   } else if (profile.profileType === 'SwitchProfile') {
-    renderSwitchProfile(container, profile as SwitchProfile, actionsRow);
+    renderSwitchProfile(container, profile as SwitchProfile, actionsRow, query);
   } else if (profile.profileType === 'PacProfile') {
     renderPacProfile(container, profile as PacProfile);
   } else {
@@ -844,6 +848,7 @@ function renderSwitchProfile(
   container: HTMLElement,
   profile: SwitchProfile,
   actions?: HTMLElement,
+  query?: URLSearchParams,
 ): void {
   const wrap = h('div');
 
@@ -1621,6 +1626,31 @@ function renderSwitchProfile(
       attachedListError,
       text,
     ];
+  }
+
+  // The popup's "Add condition" button routes here with the current tab's
+  // host, and expects a rule for it pre-filled as a pending edit — the user
+  // still picks the target profile and applies. The pattern mirrors what the
+  // original popup suggested: the bare host for IP literals (the URL parser
+  // brackets IPv6), `*.host` otherwise, which the wildcard magic makes match
+  // the apex as well as subdomains.
+  const addRuleHost = query?.get('addRuleHost');
+  if (addRuleHost) {
+    const looksLikeIp = addRuleHost.startsWith('[') || /\d$/.test(addRuleHost);
+    const pattern = looksLikeIp ? addRuleHost : '*.' + addRuleHost;
+    const exists = profile.rules.some(
+      (rule) =>
+        rule.condition.conditionType === 'HostWildcardCondition' &&
+        'pattern' in rule.condition &&
+        rule.condition.pattern === pattern,
+    );
+    if (!exists) {
+      profile.rules.push({
+        condition: { conditionType: 'HostWildcardCondition', pattern },
+        profileName: effectiveDefault(),
+      });
+      touch();
+    }
   }
 
   rerender();
