@@ -198,6 +198,38 @@ Note that this does not reduce idle memory: MV3 workers are already
 event-driven and terminate when idle. The 743 KB -> 30 KB PAC reduction is what
 actually addresses the cost that motivated the previous `af4efbe` work.
 
+## Measured memory footprint
+
+Measured 2026-08-11 on Chrome 151 (macOS) against the running v3.0.0 build,
+using a `disabled-by-default-memory-infra` tracing dump taken over the DevTools
+protocol — the same attribution Chrome's own Task Manager uses. Only the
+service worker was alive (no popup, options page or side panel open).
+
+Private memory footprint of the extension's process: **41.7 MB**. The largest
+allocators inside it:
+
+| Allocator | Effective size |
+| --- | --- |
+| `malloc` | 22.2 MB |
+| `v8` (2.0 MB of which is the shared read-only space) | 3.9 MB |
+| `gpu` | 3.1 MB |
+| `partition_alloc` | 1.4 MB |
+| `blink_gc` | 0.9 MB |
+
+The service worker's own JS heap is **0.7 MB after GC** (1.5 MB reserved;
+`v8/workers/heap` = 1.1 MB in the dump). Everything else is the baseline cost
+of an empty Chromium extension renderer — i.e. this build sits at the floor
+for what a Manifest V3 extension can cost while its worker is running.
+
+Extension processes in the same browser session, for scale (private footprint
+from the same dump): MetaMask 389.3 MB, Claude in Chrome 108.6 MB, Bitwarden
+89.8 MB, **SwitchyDelta 41.7 MB**, ChatGPT 37.7 MB.
+
+Two caveats. `ps` RSS (~170 MB for the same process) overstates the cost on
+macOS because it counts Chromium framework pages shared by every process —
+private footprint is the honest number. And the process exists only while the
+worker is awake: as noted above, at idle the extension costs no memory at all.
+
 ## Surfaces
 
 The settings page is registered as a Chrome side panel

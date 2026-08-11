@@ -36,6 +36,20 @@ Build number AND build date should be mentioned somewhere in the issue.
 
 NOTE: PAC Profiles DO NOT work on Firefox due to AMO review policies. We will see what we can do.
 
+Memory footprint
+----------------
+
+Measured live via a Chrome DevTools Protocol memory-infra dump (Chrome 151 on
+macOS, v3.0.0, 2026-08-11): the extension's whole process has a **private
+memory footprint of ~42 MB**, of which the service worker's JavaScript heap is
+under 1 MB after GC. The rest is the fixed baseline of an empty Chromium
+extension renderer (malloc/V8/GPU), which puts SwitchyDelta at the practical
+floor for a Manifest V3 extension. The process only exists while the service
+worker is awake; at idle the extension costs no memory at all.
+
+For the detailed breakdown, methodology and a comparison against other popular
+extensions, see [MIGRATION.md](MIGRATION.md#measured-memory-footprint).
+
 Development status
 ------------------
 
