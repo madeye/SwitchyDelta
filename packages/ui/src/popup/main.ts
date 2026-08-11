@@ -91,7 +91,7 @@ async function main(): Promise<void> {
   installKeyboard();
 
   // Fire-and-forget so the profile list never waits on the permission check.
-  void maybeOfferAuthPermission();
+  void maybeOfferHostPermission();
 
   // Focus the current profile so keyboard use starts from a sensible place.
   const current = document.querySelector<HTMLElement>('.om-item[aria-current="true"]');
@@ -239,17 +239,17 @@ function installKeyboard(): void {
 /**
  * Proxy credentials only take effect once the optional `<all_urls>` host
  * permission is granted, since webRequest events are gated by host access.
- * Offer the grant when the applied profiles carry credentials but the
- * permission is missing.
+ * Offer the grant whenever the permission is missing — even with no
+ * credentials configured yet, so auth works the moment one is added.
  */
-async function maybeOfferAuthPermission(): Promise<void> {
-  let status: { hasCredentials: boolean; hostAccess: boolean };
+async function maybeOfferHostPermission(): Promise<void> {
+  let hostAccess: boolean;
   try {
-    status = await api.proxyAuthStatus();
+    hostAccess = await chrome.permissions.contains({ origins: ['<all_urls>'] });
   } catch {
     return;
   }
-  if (!status.hasCredentials || status.hostAccess) return;
+  if (hostAccess) return;
 
   const notice = must('#om-auth-permission');
   notice.hidden = false;
