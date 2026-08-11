@@ -98,7 +98,7 @@ export async function applyChanges(): Promise<void> {
 
 // --- Routing ----------------------------------------------------------------
 
-type View = (container: HTMLElement, param: string) => void;
+type View = (container: HTMLElement, param: string, query?: URLSearchParams) => void;
 
 /**
  * A view-installed veto on leaving the current route. The switch profile's
@@ -134,13 +134,20 @@ function route(): void {
     revertingHash = false;
     return;
   }
-  const hash = location.hash || '#/about';
+  const rawHash = location.hash || '#/about';
+  // One-shot query parameters (e.g. the popup's `?addRuleHost=…`) ride on the
+  // fragment. Routes match on the path alone, and the query is stripped from
+  // the address bar so a reload or revisit does not repeat the action.
+  const queryAt = rawHash.indexOf('?');
+  const hash = queryAt < 0 ? rawHash : rawHash.slice(0, queryAt);
+  const query = queryAt < 0 ? undefined : new URLSearchParams(rawHash.slice(queryAt + 1));
   if (currentHash && hash !== currentHash && navigationGuard && !navigationGuard()) {
     revertingHash = true;
     location.hash = currentHash;
     return;
   }
   navigationGuard = null;
+  if (queryAt >= 0) history.replaceState(null, '', location.pathname + location.search + hash);
   const container = must('#om-view');
 
   for (const [pattern, view] of routes) {
@@ -148,7 +155,7 @@ function route(): void {
     if (match) {
       currentHash = hash;
       container.replaceChildren();
-      view(container, decodeURIComponent(match[1] ?? ''));
+      view(container, decodeURIComponent(match[1] ?? ''), query);
       localizeDocument(container);
       highlightNav(hash);
       localState.set('lastUrl', hash);
