@@ -1,6 +1,6 @@
 {
   "name": "switchydelta",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "private": true,
   "description": "SwitchyDelta - proxy switching browser extension",
   "license": "GPL-3.0-or-later",
@@ -17,7 +17,7 @@
     "clean": "rm -rf packages/*/dist packages/*/tsconfig.tsbuildinfo",
     "build:ui": "npm run build -w @switchydelta/ui",
     "build:extension": "node scripts/build-extension.mjs",
-    "e2e": "node test/e2e/smoke.mjs dist && node test/e2e/side-panel.mjs dist && node test/e2e/profiles.mjs dist && node test/e2e/rule-list.mjs dist"
+    "e2e": "node test/e2e/smoke.mjs dist && node test/e2e/side-panel.mjs dist && node test/e2e/profiles.mjs dist && node test/e2e/action-icon.mjs dist && node test/e2e/rule-list.mjs dist && node test/e2e/rule-list-icon.mjs dist"
   },
   "devDependencies": {
     "@types/chrome": "^0.0.268",

@@ -13,9 +13,16 @@ import { Options, Log, NoOptionsError, upgradeLegacyOptions } from '@switchydelt
 import type { StorageItems } from '@switchydelta/target';
 import type { OmegaOptions } from '@switchydelta/target';
 import { Conditions, Profiles } from '@switchydelta/pac';
-import type { Profile } from '@switchydelta/pac';
+import type { MatchResult, OptionsBag, Profile } from '@switchydelta/pac';
 
-import { clearBadge, setActionIcon, setControlLostBadge } from './action-icon.js';
+import {
+  clearBadge,
+  getLastActionIconPaint,
+  sampleActionIconColors,
+  setActionIcon,
+  setControlLostBadge,
+  type ActionIconPaint,
+} from './action-icon.js';
 import { setActiveTabIconTracking } from './active-tab-icon.js';
 import { fetchUrl } from './fetch-url.js';
 import { ProxyAuth } from './proxy-auth.js';
@@ -173,6 +180,17 @@ export class ChromeOptions extends Options {
     Log.log('Options#currentProfileChanged', reason ?? '');
 
     const profile = this._currentProfileName ? this.currentProfile() : null;
+    this.#lastActiveTabPaint = '';
+
+    // An inclusive profile's colour depends on the active tab URL. Skip the
+    // solid fallback paint so it cannot race past the dual-colour repaint.
+    const inclusive = profile != null && Profiles.isInclusive(profile);
+    setActiveTabIconTracking(inclusive);
+    if (inclusive) {
+      void this.updateIconForActiveTab();
+      return;
+    }
+
     // Virtual profiles take the colour of their target, like the popup does.
     let display = profile;
     if (display?.profileType === 'VirtualProfile') {
@@ -182,19 +200,12 @@ export class ChromeOptions extends Options {
       );
       if (target) display = target;
     }
-    this.#lastActiveTabPaint = '';
     void setActionIcon(display?.color ?? '#1a73e8');
 
     if (profile) {
       const name = chrome.i18n.getMessage('profile_' + profile.name) || profile.name;
       void chrome.action.setTitle({ title: name });
     }
-
-    // An inclusive profile's effective colour depends on the tab URL: refine
-    // the paint above from the active tab, and arm the tab-event listeners.
-    const inclusive = profile != null && Profiles.isInclusive(profile);
-    setActiveTabIconTracking(inclusive);
-    if (inclusive) void this.updateIconForActiveTab();
   }
 
   /** Dedupe key of the last active-tab paint, so tab events that resolve to
@@ -209,12 +220,15 @@ export class ChromeOptions extends Options {
    * original were dropped (see MIGRATION.md); this is the reduced,
    * active-tab-only successor. URLs a PAC script would never see
    * (chrome://, about:, the new tab page) keep the profile's own colour.
+   *
+   * Fill = the result profile the URL resolves to (walking through nested
+   * rule lists). Border = the inclusive (auto switch) profile's own colour.
    */
   async updateIconForActiveTab(): Promise<void> {
     const profile = this._currentProfileName ? this.currentProfile() : null;
     if (!profile || !Profiles.isInclusive(profile)) return;
 
-    let matched: Profile | undefined;
+    let match: { profile: Profile | null | undefined; results: MatchResult[] } | undefined;
     const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
     // While a navigation is uncommitted (slow site, DNS failure, error page)
     // `tab.url` is empty and the destination sits in `pendingUrl` — and a
@@ -223,30 +237,59 @@ export class ChromeOptions extends Options {
     const url = tab?.pendingUrl || tab?.url;
     if (url && /^(https?|ftp|ws|wss):/i.test(url)) {
       try {
-        matched = (await this.matchProfile(Conditions.requestFromUrl(url))).profile ?? undefined;
-      } catch {
-        // Unparsable URL: keep the profile's own colour.
+        match = await this.matchProfile(Conditions.requestFromUrl(url));
+      } catch (err) {
+        // Bad URL or a broken rule list: fall through to the switch colour.
+        Log.error('updateIconForActiveTab: match failed', err);
       }
     }
     // The profile may have been switched while we awaited; that switch's own
     // currentProfileChanged repaint wins.
     if (profile.name !== this._currentProfileName) return;
 
-    // The matched profile fills the icon; the switch profile's own colour
-    // becomes its boundary ring, so both stay visible at once.
-    const color = matched?.color ?? profile.color ?? '#1a73e8';
-    const border = matched ? profile.color : undefined;
+    // Fill with the result profile (walking past nested rule lists); ring
+    // with the inclusive switch colour so both stay visible at once.
+    const result = iconResultProfile(profile, match, this._options);
+    const color = colorOf(result ?? profile, this._options) ?? profile.color ?? '#1a73e8';
+    const ring =
+      result && result.name !== profile.name ? (profile.color ?? undefined) : undefined;
+
     const currentName = chrome.i18n.getMessage('profile_' + profile.name) || profile.name;
+    const resultName = result
+      ? chrome.i18n.getMessage('profile_' + result.name) || result.name
+      : null;
     const title =
-      matched && matched.name !== profile.name
-        ? `${currentName} → ${chrome.i18n.getMessage('profile_' + matched.name) || matched.name}`
+      resultName && result!.name !== profile.name
+        ? `${currentName} → ${resultName}`
         : currentName;
 
-    const key = `${color}\n${border ?? ''}\n${title}`;
+    const key = `${color}\n${ring ?? ''}\n${title}`;
     if (key === this.#lastActiveTabPaint) return;
     this.#lastActiveTabPaint = key;
     void chrome.action.setTitle({ title });
-    await setActionIcon(color, border);
+    await setActionIcon(color, ring);
+  }
+
+  // --- Action-icon introspection (e2e) --------------------------------------
+
+  /**
+   * Arguments of the most recent {@link setActionIcon} call.
+   *
+   * The toolbar image itself is not readable over CDP; the e2e suite uses
+   * this together with {@link sampleActionIcon} to assert the dual-colour
+   * ring without a visible browser window.
+   */
+  lastActionIconPaint(): ActionIconPaint | null {
+    return getLastActionIconPaint();
+  }
+
+  /** Sample fill/edge pixels of an icon painted with the given colours. */
+  sampleActionIcon(
+    color: string,
+    borderColor?: string,
+    size = 32,
+  ): { fill: number[]; edge: number[] } {
+    return sampleActionIconColors(color, borderColor, size);
   }
 
   // --- Proxy control loss ---------------------------------------------------
@@ -275,3 +318,68 @@ export class ChromeOptions extends Options {
 }
 
 export default ChromeOptions;
+
+// --- Icon colour helpers ----------------------------------------------------
+
+/** Follow a virtual profile to the profile it currently points at. */
+function colorOf(profile: Profile, options: OptionsBag): string | undefined {
+  let current = profile;
+  const seen = new Set<string>();
+  while (current.profileType === 'VirtualProfile') {
+    if (seen.has(current.name)) break;
+    seen.add(current.name);
+    const next = Profiles.byName(
+      (current as Profile & { defaultProfileName: string }).defaultProfileName,
+      options,
+    );
+    if (!next) break;
+    current = next;
+  }
+  return current.color ?? profile.color;
+}
+
+/**
+ * Profile whose colour should fill the action icon.
+ *
+ * Walks the match chain and prefers the last non-inclusive result (proxy,
+ * direct, …). Nested rule lists are intermediate: attached lists often share
+ * the switch profile's colour, so using the rule list itself as the fill made
+ * the icon look unchanged when a rule matched.
+ */
+function iconResultProfile(
+  current: Profile,
+  match: { profile: Profile | null | undefined; results: MatchResult[] } | undefined,
+  options: OptionsBag,
+): Profile | undefined {
+  if (!match) return undefined;
+
+  // Prefer the leaf when it is a distinct non-inclusive profile.
+  const leaf = match.profile ?? undefined;
+  if (leaf && leaf.name !== current.name && !Profiles.isInclusive(leaf)) {
+    return leaf;
+  }
+
+  // Walk results from the end for a profile reference. Array entries that are
+  // profile keys start with '+'; Rules carry profileName.
+  for (let i = match.results.length - 1; i >= 0; i--) {
+    const r = match.results[i]!;
+    let key: string | undefined;
+    if (Array.isArray(r)) {
+      if (typeof r[0] === 'string' && r[0].charCodeAt(0) === 43 /* + */) key = r[0];
+    } else if (r && typeof r === 'object' && r.profileName) {
+      const pn = r.profileName;
+      key = pn.charCodeAt(0) === 43 /* + */ ? pn : Profiles.nameAsKey(pn);
+    }
+    if (!key) continue;
+    const target = Profiles.byKey(key, options);
+    if (!target || target.name === current.name) continue;
+    // Skip inclusive intermediates (nested switch / rule list) when a deeper
+    // result exists; fall back to them only if nothing better was found.
+    if (!Profiles.isInclusive(target)) return target;
+  }
+
+  // Leaf may be a nested rule list (match profile missing). Still distinct
+  // from the switch — show it so the title/path is not a lie.
+  if (leaf && leaf.name !== current.name) return leaf;
+  return undefined;
+}
