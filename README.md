@@ -59,7 +59,8 @@ Supporting directories:
 - [`scripts/`](scripts) — the build pipeline: `build-extension.mjs` (esbuild
   worker bundle + asset assembly into `dist/`), `build-locales.mjs`,
   `render-icons.mjs`, `dev-chrome.mjs` (launch Chrome with the build loaded),
-  and `publish-chrome.mjs` (Chrome Web Store upload; see `env.example`).
+  and `upload-chrome.mjs` (uploads a draft to the Chrome Web Store — see
+  `env.example`; submitting for review stays a manual dashboard step).
 - [`test/e2e/`](test/e2e) — Puppeteer suites that exercise the built extension
   in a real headless Chrome, including PAC generation from a ~4.5k-rule list
   and traffic through a real CONNECT proxy.

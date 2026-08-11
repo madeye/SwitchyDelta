@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 /**
- * Upload dist/ to the Chrome Web Store and submit it for publishing.
+ * Upload dist/ to the Chrome Web Store as a draft.
+ *
+ * Deliberately upload-only: publishing (submitting for review) is a manual
+ * step in the developer dashboard, where the permission justifications and
+ * review state are visible.
  *
  * Credentials come from a Google Cloud service account key referenced by
  * CWS_KEY_PATH in .env (the key itself must live outside the repo). The
@@ -15,7 +19,7 @@
  *                     (the V1.1 API works without it until 2026-10-15)
  *   HTTPS_PROXY       optional proxy for reaching googleapis.com
  *
- * Usage: node scripts/publish-chrome.mjs [--no-publish]
+ * Usage: node scripts/upload-chrome.mjs
  */
 
 import { spawnSync } from 'node:child_process';
@@ -29,7 +33,6 @@ import { fileURLToPath } from 'node:url';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = resolve(root, 'dist');
 const SCOPE = 'https://www.googleapis.com/auth/chromewebstore';
-const publish = !process.argv.includes('--no-publish');
 
 // --- .env -------------------------------------------------------------------
 
@@ -184,27 +187,5 @@ if (!itemId && uploadedItemId) {
   console.log(`\nNEW ITEM CREATED — add this to .env:\n  CWS_ITEM_ID=${uploadedItemId}\n`);
 }
 
-if (!publish) {
-  console.log('upload done (--no-publish).');
-  process.exit(0);
-}
-
-let result;
-if (publisherId && uploadedItemId) {
-  const name = `publishers/${publisherId}/items/${uploadedItemId}`;
-  result = await call(
-    'POST',
-    `https://chromewebstore.googleapis.com/v2/${name}:publish`,
-    token,
-    JSON.stringify({}),
-    'application/json',
-  );
-} else {
-  result = await call(
-    'POST',
-    `https://www.googleapis.com/chromewebstore/v1.1/items/${uploadedItemId}/publish`,
-    token,
-  );
-}
-console.log('publish:', result.status, JSON.stringify(result.body, null, 2));
-process.exit(result.ok ? 0 : 1);
+console.log('upload done — the draft is on the dashboard; submit it for review there.');
+process.exit(0);
