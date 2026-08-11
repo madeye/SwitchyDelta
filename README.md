@@ -58,9 +58,10 @@ Supporting directories:
   into `_locales/*/messages.json` at build time.
 - [`scripts/`](scripts) — the build pipeline: `build-extension.mjs` (esbuild
   worker bundle + asset assembly into `dist/`), `build-locales.mjs`,
-  `render-icons.mjs`, `dev-chrome.mjs` (launch Chrome with the build loaded),
-  and `upload-chrome.mjs` (uploads a draft to the Chrome Web Store — see
-  `env.example`; submitting for review stays a manual dashboard step).
+  `render-icons.mjs`, and `dev-chrome.mjs` (launch Chrome with the build
+  loaded). Web Store releases are uploaded manually in the developer
+  dashboard: zip the `dist/` contents (`cd dist && zip -r -X ../release.zip .`)
+  and upload it on the Package tab.
 - [`test/e2e/`](test/e2e) — Puppeteer suites that exercise the built extension
   in a real headless Chrome, including PAC generation from a ~4.5k-rule list
   and traffic through a real CONNECT proxy.
