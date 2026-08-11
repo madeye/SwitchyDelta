@@ -14,6 +14,7 @@
 import { BrowserStorage, OptionsSync, Options, Log } from '@switchydelta/target';
 import type { StorageItems } from '@switchydelta/target';
 
+import { watchActiveTab } from './active-tab-icon.js';
 import { ChromeOptions } from './chrome-options.js';
 import { ChromeStorage } from './chrome-storage.js';
 import { ProxyAuth } from './proxy-auth.js';
@@ -70,6 +71,16 @@ const ready = boot().catch((err: unknown) => {
 
 // Paint the action icon for the restored profile on every worker start.
 void ready.then(() => options?.currentProfileChanged('boot'));
+
+/**
+ * Still the first turn (module evaluation is synchronous), so these events
+ * can wake the worker: tab switches and navigations retint the icon when the
+ * current profile is an auto switch. The callback boots the options first;
+ * for static profiles a session-storage flag short-circuits before boot.
+ */
+watchActiveTab(() => {
+  void ready.then(() => options?.updateIconForActiveTab());
+});
 
 /**
  * Track who controls the proxy setting.
