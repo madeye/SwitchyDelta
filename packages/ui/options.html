@@ -17,6 +17,8 @@
           <li><a class="om-item" href="#/io" data-i18n="options_tab_importExport">Import / Export</a></li>
           <li><a class="om-item" href="#/about" data-i18n="about_title">About</a></li>
         </ul>
+        <!-- Side-panel escape hatch; hidden in wide/tab layouts via CSS. -->
+        <button type="button" id="om-open-tab" class="om-btn">Open in tab</button>
 
         <p class="om-group-label" data-i18n="options_navHeader_profiles">Profiles</p>
         <ul class="om-list" id="om-nav-profiles"></ul>
@@ -34,8 +36,6 @@
           </button>
           <span id="om-status" class="om-status" role="status"></span>
         </div>
-        <!-- Side-panel escape hatch; hidden in wide/tab layouts via CSS. -->
-        <button type="button" id="om-open-tab" class="om-btn">Open in tab</button>
       </header>
 
       <section id="om-view" class="om-view"></section>
