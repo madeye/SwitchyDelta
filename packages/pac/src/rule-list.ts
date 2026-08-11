@@ -20,7 +20,12 @@ export interface FormatHandler {
   /** True/false when the format is certain, undefined when unknown. */
   detect?(text: string): boolean | undefined;
   preprocess?(text: string): string;
-  parse(text: string, matchProfileName: string, defaultProfileName: string): Rule[];
+  parse(
+    text: string,
+    matchProfileName: string,
+    defaultProfileName: string,
+    args?: ParseArgs,
+  ): Rule[];
   directReferenceSet?(profile: RuleListProfile): Record<string, string> | undefined;
 }
 
@@ -45,7 +50,8 @@ export const AutoProxy: FormatHandler = {
     return text.startsWith(AUTOPROXY_MAGIC_PREFIX) ? decodeBase64Utf8(text) : text;
   },
 
-  parse(text, matchProfileName, defaultProfileName) {
+  parse(text, matchProfileName, defaultProfileName, args) {
+    const includeSource = args?.source ?? true;
     const normalRules: Rule[] = [];
     const exclusiveRules: Rule[] = [];
 
@@ -80,7 +86,9 @@ export const AutoProxy: FormatHandler = {
         condition = { conditionType: 'UrlWildcardCondition', pattern: 'http://*' + line + '*' };
       }
 
-      list.push({ condition, profileName: profile, source });
+      const rule: Rule = { condition, profileName: profile };
+      if (includeSource) rule.source = source;
+      list.push(rule);
     }
 
     // Exclusive rules take priority, so they are evaluated first.
@@ -171,7 +179,9 @@ function parseLegacy(
   text: string,
   matchProfileName: string,
   defaultProfileName: string,
+  args: ParseArgs = {},
 ): Rule[] {
+  const includeSource = args.source ?? true;
   const normalRules: Rule[] = [];
   const exclusiveRules: Rule[] = [];
   let begin = false;
@@ -209,7 +219,9 @@ function parseLegacy(
     }
 
     if (condition) {
-      list.push({ condition, profileName: profile, source });
+      const rule: Rule = { condition, profileName: profile };
+      if (includeSource) rule.source = source;
+      list.push(rule);
     }
   }
 
@@ -346,11 +358,11 @@ export const Switchy: FormatHandler & {
     return undefined;
   },
 
-  parse(text, matchProfileName, defaultProfileName) {
+  parse(text, matchProfileName, defaultProfileName, args) {
     const parser = getParser(text);
     return parser === 'parseOmega'
-      ? parseOmega(text, matchProfileName, defaultProfileName)
-      : parseLegacy(text, matchProfileName, defaultProfileName);
+      ? parseOmega(text, matchProfileName, defaultProfileName, args)
+      : parseLegacy(text, matchProfileName, defaultProfileName, args);
   },
 
   directReferenceSet({ ruleList, defaultProfileName }) {

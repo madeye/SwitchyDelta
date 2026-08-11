@@ -83,6 +83,7 @@ export class ProxySettings {
     }
 
     let config: chrome.proxy.ProxyConfig;
+    let releaseCaches = false;
     if (profile.profileType === 'DirectProfile') {
       config = { mode: 'direct' };
     } else if (profile.profileType === 'PacProfile') {
@@ -100,10 +101,26 @@ export class ProxySettings {
         mode: 'pac_script',
         pacScript: { mandatory: true, data: this.getProfilePacScript(profile, opts) },
       };
+      releaseCaches = true;
     }
 
     await this.setProxyAuth(profile, opts);
     await settingsSet({ value: config });
+    if (releaseCaches) this._dropProfileCaches(profile, opts);
+  }
+
+  /**
+   * Once the compiled PAC string is in Chrome's settings, the analysis and
+   * codegen caches that produced it (parsed rules, regexes, code strings —
+   * megabytes for a large rule list) have no consumer left in the worker.
+   * They are rebuilt on demand, which the re-boot-on-wake model assumes.
+   */
+  private _dropProfileCaches(profile: Profile, options: OptionsBag): void {
+    const refSet = Profiles.allReferenceSet(profile, options, { profileNotFound: 'ignore' });
+    for (const name of Object.values(refSet)) {
+      const referenced = Profiles.byName(name, options);
+      if (referenced) Profiles.dropCache(referenced);
+    }
   }
 
   private _fixedProfileConfig(profile: FixedProfile): chrome.proxy.ProxyConfig {

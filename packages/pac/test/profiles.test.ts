@@ -11,8 +11,8 @@ import type {
   SwitchProfile,
 } from '../src/types.js';
 
-function ruleListResult(profileName: string, source: string): { profileName: string; source: string } {
-  return { profileName, source };
+function ruleListResult(profileName: string): { profileName: string; ruleList: true } {
+  return { profileName, ruleList: true };
 }
 
 /**
@@ -57,9 +57,11 @@ function testProfile(
 
   if (expected !== null && expected !== undefined) {
     const matchResult = Profiles.match(profile, req);
-    if (expected.source !== undefined) {
+    if (expected.ruleList) {
       expect((matchResult as Rule | undefined)?.profileName).toBe(expected.profileName);
-      expect((matchResult as Rule | undefined)?.source).toBe(expected.source);
+      // The analyze path parses with `source: false` to keep a second copy of
+      // every rule line off the heap.
+      expect((matchResult as Rule | undefined)?.source).toBeUndefined();
     } else {
       expect(matchResult).toEqual(expected);
     }
@@ -394,7 +396,7 @@ describe('Profiles', () => {
       testProfile(
         profile,
         'http://localhost/example.com',
-        ruleListResult('example', 'example.com'),
+        ruleListResult('example'),
       );
       testProfile(profile, 'http://localhost/example.org', ['+default', null]);
     });
@@ -406,7 +408,7 @@ describe('Profiles', () => {
       testProfile(
         profile,
         'http://localhost/example.org',
-        ruleListResult('example', 'example.org'),
+        ruleListResult('example'),
       );
     });
 
@@ -435,7 +437,7 @@ describe('Profiles', () => {
       testProfile(
         profile,
         'http://localhost/example.org',
-        ruleListResult('example', 'example.org'),
+        ruleListResult('example'),
       );
     });
   });
