@@ -18,7 +18,8 @@ Please describe any possible breaking changes (or surprising UX differences).
 
 After creating the PR:
 
-- Please make sure the CircleCI test passes. Feel free to add more commits for
+- Please make sure the CI (GitHub Actions: typecheck, unit tests and the
+headless-Chrome e2e suite) passes. Feel free to add more commits for
 bug or style fixes.
 - Any merge conflicts should be fixed on *your* side. Prefer rebasing to merging.
 - Allow some time for project maintainers to review and merge the change.
