@@ -195,6 +195,14 @@ icons/titles, the request monitor, the inspect context menus, and the
 SwitchySharp / external-extension bridges. `proxy_impl_script` and
 `proxy_impl_listener` are Firefox-only and were already dead on Chromium.
 
+The per-tab icon later returned in reduced form: with an auto-switch (or
+rule-list) profile active, the single global icon is tinted with the profile
+that the *active tab's* URL matches (`active-tab-icon.ts`). Unlike the
+original, no per-tab state is kept and only active-tab changes wake the
+worker — and with a static profile a session-storage flag short-circuits the
+event before the options controller boots. This is what brought the `tabs`
+permission back.
+
 Also dropped, UI-side only: the popup's temp-rule dropdown (and its `t`
 shortcut), which let the user route the current domain through another profile
 without saving a permanent rule. Unlike the drops above, the backend capability

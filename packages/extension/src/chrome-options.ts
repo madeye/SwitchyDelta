@@ -3,17 +3,20 @@
  *
  * This build is deliberately minimal: the service worker exists to handle proxy
  * authentication, to run scheduled downloads, and to apply the proxy. The
- * per-tab icons, request monitor, context menus, quick-switch cycling, badge
- * and the SwitchySharp / external-extension bridges are not part of it.
+ * request monitor, context menus, quick-switch cycling, badge and the
+ * SwitchySharp / external-extension bridges are not part of it. The original's
+ * per-tab icons survive only as the reduced active-tab-only variant
+ * (updateIconForActiveTab).
  */
 
 import { Options, Log, NoOptionsError, upgradeLegacyOptions } from '@switchydelta/target';
 import type { StorageItems } from '@switchydelta/target';
 import type { OmegaOptions } from '@switchydelta/target';
-import { Profiles } from '@switchydelta/pac';
+import { Conditions, Profiles } from '@switchydelta/pac';
 import type { Profile } from '@switchydelta/pac';
 
 import { clearBadge, setActionIcon, setControlLostBadge } from './action-icon.js';
+import { setActiveTabIconTracking } from './active-tab-icon.js';
 import { fetchUrl } from './fetch-url.js';
 import { ProxyAuth } from './proxy-auth.js';
 
@@ -179,12 +182,63 @@ export class ChromeOptions extends Options {
       );
       if (target) display = target;
     }
+    this.#lastActiveTabPaint = '';
     void setActionIcon(display?.color ?? '#1a73e8');
 
     if (profile) {
       const name = chrome.i18n.getMessage('profile_' + profile.name) || profile.name;
       void chrome.action.setTitle({ title: name });
     }
+
+    // An inclusive profile's effective colour depends on the tab URL: refine
+    // the paint above from the active tab, and arm the tab-event listeners.
+    const inclusive = profile != null && Profiles.isInclusive(profile);
+    setActiveTabIconTracking(inclusive);
+    if (inclusive) void this.updateIconForActiveTab();
+  }
+
+  /** Dedupe key of the last active-tab paint, so tab events that resolve to
+   *  the same colour and title do not redraw the canvas. Reset whenever the
+   *  current profile changes, because that path repaints unconditionally. */
+  #lastActiveTabPaint = '';
+
+  /**
+   * Tint the action icon with the profile that the active tab's URL matches.
+   *
+   * Only the single global icon is painted — the per-tab icons of the
+   * original were dropped (see MIGRATION.md); this is the reduced,
+   * active-tab-only successor. URLs a PAC script would never see
+   * (chrome://, about:, the new tab page) keep the profile's own colour.
+   */
+  async updateIconForActiveTab(): Promise<void> {
+    const profile = this._currentProfileName ? this.currentProfile() : null;
+    if (!profile || !Profiles.isInclusive(profile)) return;
+
+    let matched: Profile | undefined;
+    const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+    if (tab?.url && /^(https?|ftp|ws|wss):/i.test(tab.url)) {
+      try {
+        matched = (await this.matchProfile(Conditions.requestFromUrl(tab.url))).profile ?? undefined;
+      } catch {
+        // Unparsable URL: keep the profile's own colour.
+      }
+    }
+    // The profile may have been switched while we awaited; that switch's own
+    // currentProfileChanged repaint wins.
+    if (profile.name !== this._currentProfileName) return;
+
+    const color = matched?.color ?? profile.color ?? '#1a73e8';
+    const currentName = chrome.i18n.getMessage('profile_' + profile.name) || profile.name;
+    const title =
+      matched && matched.name !== profile.name
+        ? `${currentName} → ${chrome.i18n.getMessage('profile_' + matched.name) || matched.name}`
+        : currentName;
+
+    const key = `${color}\n${title}`;
+    if (key === this.#lastActiveTabPaint) return;
+    this.#lastActiveTabPaint = key;
+    void chrome.action.setTitle({ title });
+    await setActionIcon(color);
   }
 
   // --- Proxy control loss ---------------------------------------------------

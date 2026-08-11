@@ -148,12 +148,32 @@ check('other.org -> DIRECT (default)',
 check('127.0.0.1 -> DIRECT (bypass inside proxy profile)',
   await resolve('http://127.0.0.1/', '127.0.0.1'), 'DIRECT');
 
+// --- Active-tab icon tracking ----------------------------------------------
+console.log('\n=== active-tab icon follows the matched profile ===');
+// Navigating a tab wakes the worker's tab listeners, which retint the icon
+// with the matched profile's colour. The icon canvas is not readable over
+// CDP, but the same repaint writes the "current → matched" action title.
+// Both names here are custom, so i18n falls through to the raw names.
+const actionTitle = () => sw.eval(`new Promise(r => chrome.action.getTitle({}, r))`);
+const pollTitle = async (expected) => {
+  for (let i = 0; i < 25; i++) {
+    const title = await actionTitle();
+    if (title === expected) return title;
+    await sleep(200);
+  }
+  return actionTitle();
+};
+await fetch(`http://127.0.0.1:${PORT}/json/new?http://www.example.com/`, { method: 'PUT' });
+check('title shows the rule match', await pollTitle('auto switch → proxy'), 'auto switch → proxy');
+
 // --- DirectProfile ---------------------------------------------------------
 console.log('\n=== apply "direct" ===');
 console.log('  rpc reply: ' + (await applyProfile('direct')));
 await sleep(800);
 cfg = await proxyConfig();
 check('mode is direct', cfg.mode, 'direct');
+// A static profile paints its own identity; no match arrow.
+check('title reverts to the static profile', await pollTitle('[Direct]'), '[Direct]');
 
 console.log(`\n=== RESULT: ${failures === 0 ? 'all checks passed' : failures + ' FAILURES'} ===`);
 
