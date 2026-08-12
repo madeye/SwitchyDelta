@@ -1,0 +1,1116 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SwitchyDelta 2.3.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-13 10:29+0000\n"
+"PO-Revision-Date: 2021-03-05 14:50+0000\n"
+"Last-Translator: Patrik Kollár <nefray.pk@gmail.com>\n"
+"Language-Team: Slovak <https://hosted.weblate.org/projects/switchyomega/main/"
+"sk/>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 4.5.1-dev\n"
+
+#, fuzzy
+msgid "appNameShort"
+msgstr "SwitchyDelta"
+
+#, fuzzy
+msgid "manifest_app_name"
+msgstr "Proxy SwitchyDelta"
+
+msgid "manifest_app_description"
+msgstr "Spravuj a prepínaj medzi viacerými proxy rýchlo a jednoducho."
+
+msgid "manifest_icon_default_title"
+msgstr "Načítavanie…"
+
+msgid "upgrade_profile_auto"
+msgstr "Automatické prepínanie"
+
+msgid "profile_direct"
+msgstr "[Priame]"
+
+msgid "profile_system"
+msgstr "[Systémový proxy]"
+
+msgid "condition_HostWildcardCondition"
+msgstr "Hostiteľ (joker)"
+
+msgid "condition_help_HostWildcardCondition"
+msgstr "Porovnáva hostiteľov (doménové mená) podľa jokerov.<br><b>Hviezdička <code>*</code></b> zodpovedá nule alebo viacerým znakom.<br><b>Otáznik <code>?</code></b> zodpovedá presne jednému znaku.<br><br>Pravidlá začínajúce na <code>*.</code> sa špeciálne spracúvajú iba pri podmienkach Hostiteľ (joker).<br>Príklad: <code>*.example.com</code> zodpovedá www.example.com <b>AJ example.com.</b><br>Na zhodu <b>iba</b> subdomén použite <b>dve</b> hviezdičky ako <code>**.example.com</code>."
+
+msgid "condition_HostRegexCondition"
+msgstr "Hostiteľ (regex)"
+
+msgid "condition_help_HostRegexCondition"
+msgstr "Ako podmienka Hostiteľ (joker), ale porovnáva hostiteľov (doménové mená) podľa <a href='https://www.google.com/search?q=regular%20expression'>regulárneho výrazu</a>.<br>Regulárne výrazy môžu byť ťažké na zostavenie (a čítanie).<br>Vo väčšine prípadov sa odporúčajú jokery; regex používajte len pri podmienkach, ktoré inak nedosiahnete."
+
+msgid "condition_HostLevelsCondition"
+msgstr "Úrovne hostiteľa"
+
+msgid "condition_help_HostLevelsCondition"
+msgstr "Zhoda nastane práve vtedy, keď je úroveň hostiteľa v danom rozsahu.<br>Úroveň hostiteľa je <b>počet segmentov oddelených bodkou</b> v mene hostiteľa (doméne).<br>Príklad: <code>www.example.com</code> má úroveň 3, zatiaľ čo <code>internal</code> má úroveň 1."
+
+msgid "condition_IpCondition"
+msgstr "IP Literals"
+
+msgid "condition_help_IpCondition"
+msgstr ""
+"Matches the request if and only if the host is a <b>literal</b> IP address and"
+" in the subnet as specified by <a href='"
+"https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation'>"
+"CIDR notation</a>.<br>For example, given the rule <code>127.0.0.1/16</code>, "
+"it matches all IP addresses like <code>127.0.*.*</code>.<br>"
+"So <code>127.0.0.1</code> matches while <code>127.1.0.0</code> does not. "
+"Host names like <code>localhost</code> will never match because they are "
+"<b>not</b> IP literals."
+
+msgid "condition_UrlWildcardCondition"
+msgstr "URL (joker)"
+
+msgid "condition_help_UrlWildcardCondition"
+msgstr "Porovnáva URL požiadavky podľa jokerov.<br>Rýchly prehľad jokerov nájdete v časti Hostiteľ (joker) vyššie.<br>URL jokery sa nijako špeciálne nespracúvajú (žiadna mágia subdomén ako pri Hostiteľ (joker)).<br>Takže <code>*://*.example.com/*</code> zodpovedá http://www.example.com/, ale <b>nezodpovedá</b> http://example.com/."
+
+msgid "condition_UrlRegexCondition"
+msgstr "URL (regex)"
+
+msgid "condition_help_UrlRegexCondition"
+msgstr "Porovnáva URL veľmi silným <a href='https://www.google.com/search?q=regular%20expression'>regulárnym výrazom</a>.<br>Regulárne výrazy však môžu byť ťažké na zostavenie (a čítanie).<br>Vo väčšine prípadov sa odporúčajú jokery; regex používajte len pri podmienkach, ktoré inak nedosiahnete."
+
+msgid "condition_KeywordCondition"
+msgstr "Kľúčové slovo"
+
+msgid "condition_help_KeywordCondition"
+msgstr "Podmienka kľúčového slova sa zhoduje, ak je protokol URL HTTP a vzor je presný podreťazec URL.<br>Správa sa ako URL joker <code>http://*<b>pattern</b>*</code>, kde <b>pattern</b> je vzor kľúčového slova.<br>Podmienky kľúčových slov sú užitočné, ak chcete obísť firewall blokujúci niektoré slová v URL tým, že také URL idú cez proxy."
+
+msgid "condition_FalseCondition"
+msgstr "(Vypnuté)"
+
+msgid "condition_details_FalseCondition"
+msgstr "(Podmienka sa pri porovnávaní ignoruje)"
+
+msgid "condition_help_FalseCondition"
+msgstr "Podmienku vypnete nastavením typu na <code>(Disabled)</code>. Vypnutá podmienka sa správa, akoby neexistovala.<br>Túto funkciu môžete použiť na dočasné vypnutie podmienok.<br>Vypnuté podmienky si ponechajú predchádzajúce údaje (napr. vzory) a dajú sa znova zapnúť vrátením typu podmienky."
+
+msgid "condition_TimeCondition"
+msgstr "Aktuálny čas"
+
+msgid "condition_help_TimeCondition"
+msgstr "Zhoda, ak je aktuálny miestny čas v rozsahu <b>počiatočnej hodiny</b> a <b>koncovej hodiny</b> (vrátane oboch).<br>Miestny čas, počiatočná a koncová hodina sa počítajú v <b>24-hodinovom</b> formáte (od <b>0 do 23</b>).<br>Výpočet prebieha približne v momente odoslania požiadavky."
+
+msgid "condition_WeekdayCondition"
+msgstr "Deň v týždni"
+
+msgid "condition_help_WeekdayCondition"
+msgstr "Zhoda, ak je v detailoch podmienky vybraný <b>aktuálny deň v týždni</b>. Deň sa počíta podľa miestneho časového pásma.<br>Požiadavka a jej URL pre túto podmienku nerozhodujú. Výsledok závisí len od dňa v týždni v čase odoslania požiadavky."
+
+msgid "condition_alert_fullUrlLimitation"
+msgstr ""
+"Full URL matching is no longer possible for <code>https://</code> "
+"URLs as of Chrome 52. "
+"<a href='https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation'>"
+"Learn more...</a>"
+
+msgid "condition_alert_fullUrlLimitationLink"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation"
+
+msgid "condition_group_default"
+msgstr " "
+
+msgid "condition_group_host"
+msgstr "Hostiteľ"
+
+msgid "condition_group_url"
+msgstr "URL"
+
+msgid "condition_group_special"
+msgstr "Špeciálne"
+
+msgid "ruleListFormat_Switchy"
+msgstr "Switchy"
+
+msgid "ruleListFormat_AutoProxy"
+msgstr "AutoProxy"
+
+msgid "ruleList_usageUrl"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/RuleListUsage"
+
+msgid "ruleList_error_resultNotEnabled"
+msgstr "Chýba direktíva '@with result'!"
+
+msgid "ruleList_error_unknownProfile"
+msgstr "Neznámy profil: $PROFILE$"
+
+msgid "ruleList_error_missingResultProfile"
+msgstr "Chýba názov výsledného profilu na riadku $LNO$: $SOURCE$"
+
+msgid "ruleList_error_invalidRule"
+msgstr "Neplatné pravidlo na riadku $LNO$: $SOURCE$"
+
+msgid "ruleList_error_noDefaultRule"
+msgstr "Chýba predvolené pravidlo s podmienkou catch-all '*'!"
+
+msgid "dialog_close"
+msgstr "Zavrieť"
+
+msgid "dialog_save"
+msgstr "Uložiť zmeny"
+
+msgid "dialog_ok"
+msgstr "OK"
+
+msgid "dialog_cancel"
+msgstr "Zrušiť"
+
+msgid "inputClear_clear"
+msgstr "Vymazať"
+
+msgid "inputClear_restore"
+msgstr "Obnoviť"
+
+msgid "options_title"
+msgstr "Možnosti SwitchyDelta"
+
+msgid "options_experimental_badge"
+msgstr "α"
+
+msgid "options_navHeader_setting"
+msgstr "Nastavenia"
+
+msgid "options_navHeader_profiles"
+msgstr "Profily"
+
+msgid "options_navHeader_actions"
+msgstr "Akcie"
+
+msgid "options_tab_ui"
+msgstr "Rozhranie"
+
+msgid "options_tab_general"
+msgstr "Všeobecné"
+
+msgid "options_tab_importExport"
+msgstr "Import/Export"
+
+msgid "options_newProfile"
+msgstr "Nový profil…"
+
+msgid "options_apply"
+msgstr "Použiť zmeny"
+
+msgid "options_discard"
+msgstr "Zahodiť zmeny"
+
+msgid "options_reset"
+msgstr "Obnoviť možnosti"
+
+msgid "options_group_miscOptions"
+msgstr "Rôzne možnosti"
+
+msgid "options_confirmDeletion"
+msgstr "Potvrdiť pri odstránení podmienky."
+
+msgid "options_refreshOnProfileChange"
+msgstr "Obnoviť aktuálnu kartu pri zmene profilu."
+
+msgid "options_showInspectMenu"
+msgstr "Povoliť kontrolu proxy pre prvky stránky cez kontextovú ponuku."
+
+msgid "options_addConditionsToBottom"
+msgstr "Put new conditions added using the popup to the bottom of the list."
+
+msgid "options_group_keyboardShortcut"
+msgstr "Klávesová skratka"
+
+msgid "options_menuShortcutHelp"
+msgstr "Stlačením skratky sa otvorí prepínacia kontextová ponuka. (Predvolene Alt+Shift+O)."
+
+msgid "options_menuShortcutMore"
+msgstr "Položky v kontextovej ponuke sú dostupné aj klávesnicou. Stlačte ? (alebo /) v ponuke pre viac informácií."
+
+msgid "options_menuShortcutConfigure"
+msgstr "Nastaviť skratku"
+
+msgid "options_group_switchOptions"
+msgstr "Možnosti prepínania"
+
+msgid "options_startupProfile"
+msgstr "Profil pri spustení"
+
+msgid "options_startupProfile_none"
+msgstr "(Aktuálny profil)"
+
+msgid "options_showConditionTypesAdvanced"
+msgstr "Zobraziť pokročilé typy podmienok"
+
+msgid "options_showConditionTypesAdvancedHelp"
+msgstr "Odomkne nové typy pokročilých, ale zložitejších prepínacích podmienok. Vo väčšine situácií stačia základné typy, preto sa táto možnosť neodporúča."
+
+msgid "options_quickSwitch"
+msgstr "Rýchle prepínanie"
+
+msgid "options_cycledProfiles"
+msgstr "Cyklické profily"
+
+msgid "options_cycledProfilesHelp"
+msgstr "Po kliknutí na ikonu (alebo skratke vyššie) sa nasledujúce profily aplikujú v danom poradí."
+
+msgid "options_cycledProfilesTooFew"
+msgstr "Na zapnutie tejto funkcie treba vybrať aspoň 2 profily! Môžete ich pretiahnuť z poľa nižšie."
+
+msgid "options_notCycledProfiles"
+msgstr "Necyklické profily"
+
+msgid "options_group_proxyChanges"
+msgstr "Zmeny proxy"
+
+msgid "options_revertProxyChanges"
+msgstr "Vrátiť zmeny proxy vykonané inými aplikáciami."
+
+msgid "options_group_conflicts"
+msgstr "Conflicts"
+
+msgid "options_conflicts_introduction"
+msgstr ""
+"Sometimes, other apps will also try to control the proxy settings, resulting "
+"in conflicts. Note that ad blockers and other extensions may also use proxy "
+"settings under the hood. Such conflicts cannot be avoided due to how the "
+"browser works."
+
+msgid "options_conflicts_lowerPriority"
+msgstr ""
+"A red badge like this on the SwitchyDelta icon indicates that another app has "
+"higher priority so SwitchyDelta cannot control the settings. Please try to "
+"uninstall SwitchyDelta and reinstall, which should raise SwitchyDelta's "
+"priority. If you still see conflicts after reinstallation, please consider "
+"removing the other app causing the conflict."
+
+msgid "options_conflicts_higherPriority"
+msgstr ""
+"If SwitchyDelta has higher priority, you can give the control back to other "
+"apps or system settings by selecting $SYSTEMPROFILE$ in the popup menu."
+
+msgid "options_showExternalProfile"
+msgstr "Show popup menu item to import proxy settings from other apps."
+
+msgid "options_showExternalProfileHelp"
+msgstr ""
+"When $SYSTEMPROFILE$ is selected, you can import the effective proxy settings "
+"from other apps by selecting $EXTERNALPROFILE$ on the popup menu. "
+"The settings will be imported as a profile using the name you provide. "
+"Please note that the imported profile is a snapshot and will not reflect "
+"any changes from the source app thereafter."
+
+msgid "options_group_networkRequests"
+msgstr "Sieťové požiadavky"
+
+msgid "options_monitorWebRequests"
+msgstr "Zobraziť počet zlyhaných webových požiadaviek pre zdroje na aktuálnej karte."
+
+msgid "options_monitorWebRequestsHelp"
+msgstr "Ak sa niektoré zdroje nepodarí načítať, na ikone sa zobrazí žltý odznak<br>a profil pre tieto zdroje môžete pohodlne nastaviť v kontextovej ponuke."
+
+msgid "options_downloadOptions"
+msgstr "Možnosti sťahovania"
+
+msgid "options_downloadOptionsHelp"
+msgstr "Nastavte frekvenciu aktualizácie online zoznamov pravidiel a PAC skriptov."
+
+msgid "options_downloadInterval"
+msgstr "Interval sťahovania"
+
+msgid "options_downloadInterval_15"
+msgstr "15 minút"
+
+msgid "options_downloadInterval_60"
+msgstr "1 hodina"
+
+msgid "options_downloadInterval_180"
+msgstr "3 hodiny"
+
+msgid "options_downloadInterval_360"
+msgstr "6 hodín"
+
+msgid "options_downloadInterval_720"
+msgstr "12 hodín"
+
+msgid "options_downloadInterval_1440"
+msgstr "Každý deň"
+
+msgid "options_downloadInterval_never"
+msgstr "Nikdy"
+
+msgid "options_group_importExportProfile"
+msgstr "Profil"
+
+msgid "options_exportPacFile"
+msgstr "Exportovať ako súbor PAC"
+
+msgid "options_exportPacFileHelp"
+msgstr "Exportujte aktuálny profil ako súbor PAC, aby ste ho mohli použiť v iných prehliadačoch."
+
+msgid "options_exportProfileHelp"
+msgstr "Na export profilu použite akčný panel vpravo hore na stránke profilu."
+
+msgid "options_exportLegacyRuleList"
+msgstr "Ak je to možné, exportovať zoznamy pravidiel v formáte kompatibilnom s Proxy Switchy!/SwitchyPlus/SwitchySharp."
+
+msgid "options_exportLegacyRuleListHelp"
+msgstr "Túto možnosť zapnite len ak zverejňujete zoznamy pravidiel pre používateľov týchto projektov.<br>Zvážte odporúčanie prejsť na SwitchyDelta kvôli vylepšeniam."
+
+msgid "options_group_importExportSettings"
+msgstr "Nastavenia"
+
+msgid "options_makeBackup"
+msgstr "Vytvoriť zálohu"
+
+msgid "options_makeBackupHelp"
+msgstr "Vytvorí úplnú zálohu vašich možností (vrátane profilov a všetkých ostatných nastavení)."
+
+msgid "options_restoreLocal"
+msgstr "Obnoviť zo súboru"
+
+msgid "options_restoreLocalHelp"
+msgstr "Obnoví možnosti SwitchyDelta z lokálneho súboru."
+
+msgid "options_restoreOnline"
+msgstr "Obnoviť z online"
+
+msgid "options_restoreOnlinePlaceholder"
+msgstr "URL súboru s možnosťami (napr. 'http://example.com/switchy.bak')"
+
+msgid "options_restoreOnlineSubmit"
+msgstr "Obnoviť"
+
+msgid "options_group_syncing"
+msgstr "Synchronizácia (experimentálne)"
+
+msgid "options_syncEnable"
+msgstr "Zapnúť synchronizáciu"
+
+msgid "options_syncEnableForce"
+msgstr "Stiahnuť zo synchronizácie"
+
+msgid "options_syncDisable"
+msgstr "Vypnúť synchronizáciu"
+
+msgid "options_syncReset"
+msgstr "Vymazať vzdialenú kópiu"
+
+msgid "options_syncPristineHelp"
+msgstr "Teraz môžete automaticky synchronizovať nastavenia a profily na všetkých stolných zariadeniach s prehliadačom Chrome."
+
+msgid "options_syncSyncAlert"
+msgstr "Vaše možnosti sa automaticky synchronizujú s ostatnými zariadeniami."
+
+msgid "options_syncSyncHelp"
+msgstr "Na skutočnú funkčnosť synchronizácie musíte byť prihlásení do Chrome na každom zariadení (vrátane tohto). <br> Túto sekciu môžete skontrolovať aj na iných zariadeniach."
+
+msgid "options_syncConflictAlert"
+msgstr "Na inom zariadení ste cez synchronizáciu nahrali kópiu svojich možností."
+
+msgid "options_syncConflictHelp"
+msgstr "Ak chcete, môžete stiahnuť vzdialenú kópiu do tohto zariadenia. <br>Tým však <b>prepíšete existujúce nastavenia a profily</b> na tomto zariadení."
+
+msgid "options_syncUnsupportedHelp"
+msgstr "Synchronizácia možností nie je na vašej platforme alebo prehliadači podporovaná. Zatiaľ je podporovaný len Chrome na počítači."
+
+msgid "options_profileSyncDisabled"
+msgstr "Synchronizácia je pre tento profil vypnutá."
+
+msgid "options_profileSyncDisabled_quotaPerItem"
+msgstr "Synchronizácia je pre tento profil vypnutá, pretože využíva príliš veľa úložiska."
+
+msgid "options_profileTabPrefix"
+msgstr "Profil :: "
+
+msgid "options_renameProfile"
+msgstr "Premenovať"
+
+msgid "options_deleteProfile"
+msgstr "Odstrániť"
+
+msgid "options_profileExportRuleList"
+msgstr "Zverejniť zoznam pravidiel"
+
+msgid "options_profileExportRuleListHelp"
+msgstr "Exportovať prepínacie pravidlá v textovom formáte na zverejnenie."
+
+msgid "options_profileExportPac"
+msgstr "Exportovať PAC"
+
+msgid "options_profileUnsupported"
+msgstr "Nepodporovaný typ profilu $TYPE$!"
+
+msgid "options_profileUnsupportedHelp"
+msgstr "Možnosti môžu byť poškodené alebo z novšej verzie tohto programu."
+
+msgid "options_profileEditSource"
+msgstr "Upraviť zdrojový kód"
+
+msgid "options_profileEditSourceHelp"
+msgstr "Zobraziť nápovedu k formátu zdrojového kódu"
+
+msgid "options_profileEditSourceHelpUrl"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/SwitchyDelta-conditions-format#result-profile"
+
+msgid "options_group_proxyServers"
+msgstr "Proxy servery"
+
+msgid "options_proxy_scheme"
+msgstr "Schéma"
+
+msgid "options_proxy_protocol"
+msgstr "Protokol"
+
+msgid "options_proxy_server"
+msgstr "Server"
+
+msgid "options_proxy_port"
+msgstr "Port"
+
+msgid "options_proxy_auth"
+msgstr "Overenie"
+
+msgid "options_proxy_authNotSupported"
+msgstr "Your browser DOES NOT support $PROTOCOLDISP$ proxy authentication! "
+"Please do not report this issue to SwitchyDelta. Contact the support for "
+"your browser instead."
+
+msgid "options_proxy_authAllWarningPac"
+msgstr "Upozornenie: Meno a heslo môžu byť odoslané neočakávaným serverom vráteným PAC skriptom."
+
+msgid "options_proxy_authAllWarningPacUrl"
+msgstr "Pred zadaním citlivých údajov sa uistite, že skriptu z vyššie uvedenej URL dôverujete."
+
+msgid "options_proxy_authAllWarningPacScript"
+msgstr "Pred zadaním citlivých údajov sa uistite, že skriptu nižšie dôverujete."
+
+msgid "options_proxy_authReferencedWarning"
+msgstr "Navyše použitie tohto profilu v iných profiloch (napr. Switch Profile) môže spôsobiť odoslanie mena a hesla na proxy servery nastavené v iných profiloch."
+
+msgid "options_scheme_default"
+msgstr "(predvolené)"
+
+msgid "options_protocol_direct"
+msgstr "DIRECT"
+
+msgid "options_protocol_useDefault"
+msgstr "(použiť predvolené)"
+
+msgid "options_proxy_single"
+msgstr "Použiť proxy vyššie pre všetky protokoly."
+
+msgid "options_proxy_expand"
+msgstr "Zobraziť pokročilé"
+
+msgid "options_group_bypassList"
+msgstr "Zoznam výnimiek"
+
+msgid "options_bypassListHelp"
+msgstr "Servery, pre ktoré nechcete používať žiadny proxy: (Jeden server na riadok.)"
+
+msgid "options_bypassListHelpLinkText"
+msgstr "(Dostupné jokery a ďalšie…)"
+
+msgid "options_group_pacUrl"
+msgstr "PAC URL"
+
+msgid "options_pacUrlHelp"
+msgstr "PAC skript sa aktualizuje z tejto URL. Ak je prázdna, použije sa priamo skript nižšie."
+
+msgid "options_pacUrlFile"
+msgstr "PAC profily s file: URL možno použiť len priamo. Nemôžu byť výslednými profilmi, lebo lokálne súbory prehliadač nedokáže sprístupniť."
+
+msgid "options_pacUrlFileDisabled"
+msgstr "Preto pre tento profil nemôžete použiť lokálny súbor PAC. Ak to naozaj potrebujete, vytvorte nový PAC profil."
+
+msgid "options_group_pacScript"
+msgstr "PAC skript"
+
+msgid "options_pacScriptLastUpdate"
+msgstr "PAC skript stiahnutý o $TIME$:"
+
+msgid "options_pacScriptObsolete"
+msgstr "PAC skript je zastaraný kvôli zmene URL. Aktualizujte stlačením tlačidla sťahovania vyššie."
+
+msgid "options_group_virtualProfile"
+msgstr "Virtuálny profil"
+
+msgid "options_virtualProfileTarget"
+msgstr "Cieľ"
+
+msgid "options_virtualProfileTargetHelp"
+msgstr "Keď je tento profil aktívny, správa sa presne ako profil vybraný nižšie."
+
+msgid "options_group_virtualProfileReplace"
+msgstr "Migrácia na virtuálny profil"
+
+msgid "options_virtualProfileReplace"
+msgstr "Nahradiť cieľový profil"
+
+msgid "options_virtualProfileReplaceHelp"
+msgstr "Existujúce možnosti môžete migrovať tak, aby namiesto $PROFILE$ používali tento virtuálny profil. Tým sa aktualizujú všetky pravidlá týkajúce sa $PROFILE$ a budú ukazovať na tento virtuálny profil, aby sa ich výsledný profil dal ovládať tu."
+
+msgid "options_group_ruleListConfig"
+msgstr "Konfigurácia zoznamu pravidiel"
+
+msgid "options_ruleListFormat"
+msgstr "Formát zoznamu pravidiel"
+
+msgid "options_group_ruleListResult"
+msgstr "Výsledné profily zoznamu pravidiel"
+
+msgid "options_ruleListMatchProfile"
+msgstr "Profil pri zhode"
+
+msgid "options_ruleListDefaultProfile"
+msgstr "Predvolený profil"
+
+msgid "options_group_ruleListUrl"
+msgstr "URL zoznamu pravidiel"
+
+msgid "options_ruleListUrlHelp"
+msgstr "Zoznam pravidiel sa aktualizuje z tejto URL. Ak je prázdna, spracuje sa text nižšie."
+
+msgid "options_group_ruleListText"
+msgstr "Text zoznamu pravidiel"
+
+msgid "options_ruleListLastUpdate"
+msgstr "Zoznam pravidiel stiahnutý o $TIME$:"
+
+msgid "options_ruleListObsolete"
+msgstr "Zoznam pravidiel je zastaraný kvôli zmene URL. Aktualizujte stlačením tlačidla sťahovania vyššie."
+
+msgid "options_group_switchRules"
+msgstr "Prepínacie pravidlá"
+
+msgid "options_sort"
+msgstr "Zoradiť"
+
+msgid "options_conditionType"
+msgstr "Typ podmienky"
+
+msgid "options_showConditionTypeHelp"
+msgstr "Zobraziť nápovedu"
+
+msgid "options_conditionDetails"
+msgstr "Detaily podmienky"
+
+msgid "options_resultProfile"
+msgstr "Profil"
+
+msgid "options_conditionActions"
+msgstr "Akcie"
+
+msgid "options_addCondition"
+msgstr "Pridať podmienku"
+
+msgid "options_cloneRule"
+msgstr "Klonovať"
+
+msgid "options_ruleNote"
+msgstr "Note"
+
+msgid "options_switchAttachedProfileInCondition"
+msgstr "Pravidlá zo zoznamu"
+
+msgid "options_switchAttachedProfileInConditionDetails"
+msgstr "(Ľubovoľná požiadavka zodpovedajúca zoznamu pravidiel nižšie)"
+
+msgid "options_switchAttachedProfileInConditionDisabled"
+msgstr "(Pravidlá zo zoznamu sú VYPNUTÉ)"
+
+msgid "options_switchDefaultProfile"
+msgstr "Predvolené"
+
+msgid "options_hostLevelsBetween"
+msgstr "≤ úrovne hostiteľa ≤"
+
+msgid "options_hourBetween"
+msgstr "≤ aktuálna hodina ≤"
+
+msgid "options_weekDayShort_0"
+msgstr "Ne"
+
+msgid "options_weekDayShort_1"
+msgstr "Po"
+
+msgid "options_weekDayShort_2"
+msgstr "Ut"
+
+msgid "options_weekDayShort_3"
+msgstr "St"
+
+msgid "options_weekDayShort_4"
+msgstr "Št"
+
+msgid "options_weekDayShort_5"
+msgstr "Pi"
+
+msgid "options_weekDayShort_6"
+msgstr "So"
+
+msgid "options_group_conditionHelp"
+msgstr "O typoch podmienok"
+
+msgid "options_group_attachProfile"
+msgstr "Importovať online zoznamy pravidiel"
+
+msgid "options_attachProfile"
+msgstr "Pridať zoznam pravidiel"
+
+msgid "options_attachProfileHelp"
+msgstr "Pridaním zoznamu pravidiel môžete znova použiť online zbierku podmienok od iných."
+
+msgid "options_modalHeader_welcome"
+msgstr "Vitajte v SwitchyDelta"
+
+msgid "options_welcomeNormal"
+msgstr "Úspešne ste nainštalovali SwitchyDelta, dokonalý prepínač proxy."
+
+msgid "options_welcomeNormalGuide"
+msgstr "Povedzte SwitchyDelta o svojich proxy na stránke možností. Pozrime sa ako."
+
+msgid "options_welcomeUpgrade"
+msgstr "Úspešne ste prešli na SwitchyDelta. Žiadna panika, existujúce možnosti sú plne zachované."
+
+msgid "options_welcomeUpgradeGuide"
+msgstr "Teraz si rýchlo prejdime novú stránku možností."
+
+msgid "options_guideNext"
+msgstr "Ďalej"
+
+msgid "options_guideDone"
+msgstr "Hotovo"
+
+msgid "options_guideSkip"
+msgstr "Preskočiť sprievodcu"
+
+msgid "options_modalHeader_applyOptions"
+msgstr "Použiť možnosti"
+
+msgid "options_optionsNotSaved"
+msgstr "Úpravy možností neboli uložené a pri pokračovaní sa stratia!"
+
+msgid "options_applyOptionsRequired"
+msgstr "Pred pokračovaním musíte použiť zmeny možností."
+
+msgid "options_applyOptionsConfirm"
+msgstr "Chcete uložiť a použiť možnosti?"
+
+msgid "options_modalHeader_renameProfile"
+msgstr "Premenovať profil"
+
+msgid "options_renameProfileName"
+msgstr "Nový názov profilu"
+
+msgid "options_profileNameConflict"
+msgstr "Profil s týmto názvom už existuje."
+
+msgid "options_profileNameReserved"
+msgstr "Názvy profilov začínajúce dvojitým podčiarkovníkom sú vyhradené."
+
+msgid "options_profileNameHidden"
+msgstr "Profily s názvami začínajúcimi podčiarkovníkom sa v kontextovej ponuke skryjú. Stále ich však môžete použiť napr. ako výsledky prepínacieho profilu."
+
+msgid "options_modalHeader_replaceProfile"
+msgstr "Nahradiť profil"
+
+msgid "options_replaceProfile"
+msgstr "Nahradiť profil"
+
+msgid "options_replaceProfileConfirm"
+msgstr "Naozaj chcete nahradiť $FromProfile$ profilom $ToProfile$?"
+
+msgid "options_replaceProfileHelp"
+msgstr "Ak budete pokračovať, všetky pravidlá ukazujúce na $FromProfile$ sa aktualizujú na $ToProfile$. Upravia sa aj ďalšie možnosti, napr. profil pri spustení a Rýchle prepínanie. Samotné dva profily sa však NEZMENIA ani neodstránia."
+
+msgid "options_replaceProfileSuccess"
+msgstr "Možnosti aktualizované."
+
+msgid "options_modalHeader_deleteProfile"
+msgstr "Odstrániť profil"
+
+msgid "options_deleteProfileConfirm"
+msgstr "Naozaj chcete odstrániť nasledujúci profil?"
+
+msgid "options_modalHeader_cannotDeleteProfile"
+msgstr "Profil nie je možné odstrániť"
+
+msgid "options_profileReferredBy"
+msgstr "Tento profil nie je možné odstrániť, pretože naň odkazujú nasledujúce profily:"
+
+msgid "options_modifyReferringProfiles"
+msgstr "Pred odstránením musíte tieto profily upraviť tak, aby na tento profil už neodkazovali."
+
+msgid "options_profileNameEmpty"
+msgstr "Názov profilu nesmie byť prázdny."
+
+msgid "popup_title"
+msgstr "Ponuka SwitchyDelta"
+
+msgid "options_modalHeader_proxyAuth"
+msgstr "Overenie proxy"
+
+msgid "options_proxyAuthUsername"
+msgstr "Používateľské meno"
+
+msgid "options_proxyAuthPassword"
+msgstr "Heslo"
+
+msgid "options_proxyAuthShowPassword"
+msgstr "Show password"
+
+msgid "options_proxyAuthHidePassword"
+msgstr "Hide password"
+
+msgid "options_proxyAuthNone"
+msgstr "Bez overenia"
+
+msgid "options_modalHeader_deleteRule"
+msgstr "Odstrániť pravidlo"
+
+msgid "options_deleteRuleConfirm"
+msgstr "Naozaj chcete odstrániť nasledujúce pravidlo?"
+
+msgid "options_deleteRule"
+msgstr "Odstrániť"
+
+msgid "options_modalHeader_resetRules"
+msgstr "Obnoviť pravidlá"
+
+msgid "options_resetRulesConfirm"
+msgstr "Naozaj nastaviť výsledný profil VŠETKÝCH pravidiel na nasledujúci profil?"
+
+msgid "options_resetRules"
+msgstr "Obnoviť pravidlá"
+
+msgid "options_resetRules_help"
+msgstr "Nastaviť profil pre všetky pravidlá"
+
+msgid "options_modalHeader_deleteAttached"
+msgstr "Odstrániť zoznam pravidiel"
+
+msgid "options_deleteAttachedConfirm"
+msgstr "Naozaj chcete odstrániť zoznam pravidiel z aktuálneho profilu?"
+
+msgid "options_ruleListLineCount"
+msgstr "$COUNT$ riadkov pravidiel"
+
+msgid "options_deleteAttached"
+msgstr "Odstrániť zoznam pravidiel"
+
+msgid "options_modalHeader_newProfile"
+msgstr "Nový profil"
+
+msgid "options_newProfileName"
+msgstr "Názov profilu"
+
+msgid "options_profileType"
+msgstr "Vyberte typ profilu:"
+
+msgid "options_profileTypeFixedProfile"
+msgstr "Proxy profil"
+
+msgid "options_profileDescFixedProfile"
+msgstr "Tunelovanie premávky cez proxy servery."
+
+msgid "options_profileTypePacProfile"
+msgstr "PAC profil"
+
+msgid "options_profileDescPacProfile"
+msgstr "Výber proxy pomocou online/lokálneho PAC skriptu."
+
+msgid "options_profileDescMorePacProfile"
+msgstr "Toto potrebujete len ak máte PAC skript alebo URL k nemu. Nevytvárajte ho, ak o PAC neviete."
+
+msgid "options_profileTypeSwitchProfile"
+msgstr "Prepínací profil"
+
+msgid "options_profileDescSwitchProfile"
+msgstr ""
+"Automatické použitie rôznych profilov podľa podmienok ako domény alebo vzory.\n"
+" Môžete tiež importovať pravidlá zverejnené online pre jednoduchšie prepínanie. (Nahrádza režim AutoSwitch + zoznam pravidiel.)"
+
+msgid "options_profileTypeRuleListProfile"
+msgstr "Profil zoznamu pravidiel"
+
+msgid "options_profileDescRuleListProfile"
+msgstr "Opätovné použitie online zbierky podmienok od iných."
+
+msgid "options_profileTypeVirtualProfile"
+msgstr "Virtuálny profil"
+
+msgid "options_profileDescVirtualProfile"
+msgstr "Virtuálny profil môže podľa potreby fungovať ako ktorýkoľvek iný profil. Dobre funguje so SwitchProfile a umožňuje jedným kliknutím zmeniť výsledok viacerých podmienok."
+
+msgid "options_createProfile"
+msgstr "Vytvoriť"
+
+msgid "options_modalHeader_resetOptions"
+msgstr "Obnoviť možnosti"
+
+msgid "options_resetOptionsConfirm"
+msgstr "Naozaj chcete obnoviť možnosti? Všetky profily a nastavenia budú STRATENÉ!"
+
+msgid "options_formInvalid"
+msgstr "Opravte chyby na tejto stránke."
+
+msgid "options_profileNotFound"
+msgstr "Profil $PROFILE$ neexistuje! Možnosti môžu byť poškodené."
+
+msgid "options_resetSuccess"
+msgstr "Možnosti obnovené."
+
+msgid "options_saveSuccess"
+msgstr "Možnosti uložené."
+
+msgid "options_importSuccess"
+msgstr "Možnosti importované."
+
+msgid "options_importFormatError"
+msgstr "Neplatný súbor zálohy!"
+
+msgid "options_importDownloadError"
+msgstr "Chyba pri sťahovaní súboru zálohy!"
+
+msgid "options_profileDownloadSuccess"
+msgstr "Profil bol úspešne aktualizovaný."
+
+msgid "options_profileDownloadError"
+msgstr "Chyba pri sťahovaní údajov profilu!"
+
+msgid "options_profileDownloadError_NetworkError"
+msgstr "A network error occurred when updating."
+
+msgid "options_profileDownloadError_HttpError"
+msgstr "An HTTP error ($STATUS$) occurred when updating."
+
+msgid "options_profileDownloadError_HttpNotFoundError"
+msgstr "The Profile URL was not found on the server. Please double-check."
+
+msgid "options_profileDownloadError_HttpServerError"
+msgstr "The remote server responded with error ($STATUS$) when updating."
+
+msgid "options_profileDownloadError_ContentTypeRejectedError"
+msgstr "The downloaded data is invalid! "
+"You may open the Profile URL in your browser to inspect it."
+
+msgid "options_downloadProfileNow"
+msgstr "Stiahnuť profil teraz"
+
+msgid "options_guide_fixedProfileStep"
+msgstr "<b>Proxy profil</b> obsahuje nastavenia ako IP servera a port proxy.<br>Profily sú základné konfiguračné jednotky v SwitchyDelta.<br>Už sme pre vás vytvorili ukážkový profil. Skúste ho otvoriť."
+
+msgid "options_guide_fixedServersStep"
+msgstr "Tu môžete vyplniť proxy server a port podľa potreby.<br>SwitchyDelta <b>neobsahuje žiadne proxy servery</b>.<br>Ak neviete, čo vyplniť, obráťte sa na poskytovateľa siete alebo manuál k proxy softvéru."
+
+msgid "options_guide_autoSwitchProfileStep"
+msgstr "Cez výkonný <b>Prepínací profil</b> môžete SwitchyDelta nechať automaticky prepínať proxy.<br>Jeho funkcie však táto rýchla príručka nepokryje.<br>Neskôr môžete tento profil otvoriť a odomknúť jeho možnosti."
+
+msgid "options_guide_addMoreProfilesStep"
+msgstr "Potrebujete viac profilov? Vždy môžete pridať ďalšie <b>Proxy, prepínacie a iné profily</b><br>pre všetky vaše potreby proxy.<br>Užite si proxy!"
+
+msgid "options_guide_conditionStep"
+msgstr "SwitchyDelta môže na požiadavky aplikovať rôzne profily podľa <b>podmienok</b>.<br> Napríklad podmienka <b>Hostiteľ (joker)</b> umožňuje nastaviť profil pre všetky URL v doméne."
+
+msgid "options_guide_conditionTypeStep"
+msgstr "Na zhodu hostiteľa alebo celej URL môžete použiť rôzne typy podmienok. <br> Kliknutím na otáznik otvoríte referenciu typov."
+
+msgid "options_guide_conditionProfileStep"
+msgstr "SwitchyDelta tu aplikuje vybraný profil na <b>každú požiadavku zodpovedajúcu podmienke.</b> <br> Špeciálny profil <b>\"[Direct]\"</b> odošle požiadavku bez akéhokoľvek proxy."
+
+msgid "options_guide_switchDefaultStep"
+msgstr "Ak sa na požiadavku nevzťahuje žiadna podmienka, použije sa profil „Default“. <br>Podmienky sa vždy posudzujú <b>zhora nadol</b>.<br>Poradie zmeníte pretiahnutím ikony zoradenia."
+
+msgid "options_guide_applySwitchProfileStep"
+msgstr "Keď dokončíte nastavenie prepínacieho profilu, nezabudnite naň <b>prepnúť v kontextovej ponuke.</b><br/> Ikona ukáže <b>konečný výsledný</b> profil pre aktuálnu kartu. <br/> <b>Ukazovateľom myši</b> na ikone zobrazíte podrobnosti v tipoch."
+
+msgid "popup_externalProfile"
+msgstr "(Externý profil)"
+
+msgid "popup_externalProfileName"
+msgstr "názov profilu"
+
+msgid "popup_proxyNotControllable_app"
+msgstr "Nastavenia proxy ovládajú iné aplikácie alebo rozšírenia. Zakážte alebo odinštalujte konfliktné aplikácie či rozšírenia."
+
+msgid "popup_proxyNotControllable_policy"
+msgstr "Nastavenia proxy prepisujú politiky. Kontaktujte správcu."
+
+msgid "popup_proxyNotControllable_unknown"
+msgstr "Nastavenia proxy nie je možné ovládať. Skontrolujte systém a prehliadač."
+
+msgid "popup_proxyNotControllable_disabled"
+msgstr "Nastavenia proxy sú vypnuté na výslovnú žiadosť iných aplikácií alebo rozšírení."
+
+msgid "popup_proxyNotControllable_upgrade"
+msgstr "Nastavenia proxy teraz ovláda novšia verzia SwitchyDelta."
+
+msgid "popup_proxyNotControllableDetails"
+msgstr "Bez vyriešenia problému vyššie nemôžete v SwitchyDelta prepínať profily."
+
+msgid "popup_proxyNotControllableDetails_upgrade"
+msgstr "Nemôžete mať zapnuté dve (alebo viac) verzií SwitchyDelta naraz. Jednu vypnite."
+
+msgid "popup_proxyNotControllableManage"
+msgstr "Spravovať rozšírenia"
+
+msgid "popup_addConditionTo"
+msgstr "Pridať podmienku do"
+
+msgid "popup_addCondition"
+msgstr "Pridať podmienku"
+
+msgid "popup_showOptions"
+msgstr "Možnosti"
+
+msgid "popup_reportIssues"
+msgstr "Nahlásiť problémy"
+
+msgid "popup_errorLog"
+msgstr "Uložiť denník chýb"
+
+msgid "popup_requestErrorCount"
+msgstr "$COUNT$ zlyhaných zdrojov"
+
+msgid "popup_requestErrorHeading"
+msgstr "Zdroje, ktoré sa nepodarilo načítať"
+
+msgid "popup_requestErrorWarning"
+msgstr "Niekoľko zdrojov sa nepodarilo načítať kvôli problémom so sieťou, proxy serverom alebo webovou stránkou."
+
+msgid "popup_requestErrorWarningHelp"
+msgstr "SwitchyDelta tieto problémy len oznamuje, nie je ich príčinou."
+
+msgid "popup_requestErrorAddCondition"
+msgstr "Môžete skontrolovať nasledujúce domény a podľa potreby pre ne použiť proxy."
+
+msgid "popup_requestErrorCannotAddCondition"
+msgstr "Prepínacie podmienky pre ne môžete pridať len pri použití Prepínacieho profilu."
+
+msgid "popup_configureMonitorWebRequests"
+msgstr "Nastaviť monitor siete"
+
+msgid "options_resultProfileForSelectedDomains"
+msgstr "Použiť tento profil pre všetky vybrané domény"
+
+msgid "options_pac_profile_unsupported_moz"
+msgstr "PAC Profiles WILL NOT work in Mozilla Firefox due to technical limitations!"
+
+msgid "popup_issueTemplate"
+msgstr ""
+"\n"
+"\n"
+"\n"
+"<!-- Please write your comment ABOVE this line. -->\n"
+"SwitchyDelta $projectVersion$\n"
+"$userAgent$"
+
+msgid "browserAction_profileDetails_PacProfile"
+msgstr "(PAC skript)"
+
+msgid "browserAction_profileDetails_SystemProfile"
+msgstr "(riadené inými rozšíreniami alebo prostredím)"
+
+msgid "browserAction_profileDetails_DirectProfile"
+msgstr "(bez proxy)"
+
+msgid "browserAction_profileDetails_SwitchProfile"
+msgstr "(prepínanie podľa podmienok)"
+
+msgid "browserAction_profileDetails_RuleListProfile"
+msgstr "(prepínanie podľa zoznamu pravidiel)"
+
+msgid "browserAction_titleNormal"
+msgstr "SwitchyDelta:: $PROFILE$"
+
+msgid "browserAction_titleWithResult"
+msgstr ""
+"SwitchyDelta:: $1:PROFILE$\n"
+"$3:DETAILS$"
+
+msgid "browserAction_titleNewerOptions"
+msgstr "CHYBA: Na načítanie uložených možností je potrebná novšia verzia SwitchyDelta."
+
+msgid "browserAction_titleOptionError"
+msgstr "CHYBA: Uložené možnosti sú poškodené. Kliknutím tu OBNOVÍTE MOŽNOSTI."
+
+msgid "browserAction_titleDownloadFail"
+msgstr "Upozornenie: Nepodarilo sa stiahnuť PAC skripty a/alebo zoznamy pravidiel."
+
+msgid "browserAction_titleExternalProxy"
+msgstr "Poznámka: Nastavenia proxy momentálne ovládajú iné aplikácie."
+
+msgid "browserAction_titleInspect"
+msgstr "[Skontrolovať] $URL$"
+
+msgid "browserAction_defaultRuleDetails"
+msgstr "(predvolené)"
+
+msgid "browserAction_directResult"
+msgstr "DIRECT"
+
+msgid "browserAction_attachedPrefix"
+msgstr "(RL) "
+
+msgid "browserAction_tempRulePrefix"
+msgstr "(TEMP) "
+
+msgid "contextMenu_inspectPage"
+msgstr "Skontrolovať proxy pre túto stránku"
+
+msgid "contextMenu_inspectFrame"
+msgstr "Skontrolovať proxy pre tento rámec"
+
+msgid "contextMenu_inspectLink"
+msgstr "Skontrolovať proxy, ak sa otvorí tento odkaz"
+
+msgid "contextMenu_inspectElement"
+msgstr "Skontrolovať proxy pre tento prvok"
+
+msgid "contextMenu_enableQuickSwitch"
+msgstr "Zapnúť rýchle prepínanie"
+
+msgid "about_title"
+msgstr "About"
+
+msgid "about_app_description"
+msgstr "A proxy configuration tool"
+
+msgid "about_version"
+msgstr "Version $VERSION$"
+
+msgid "about_experimental_warning_moz"
+msgstr "Mozilla Firefox support is highly experimental! If you encounter issues, please report using the buttons below."
+
+msgid "about_disclaimer_networkService"
+msgstr "SwitchyDelta does not provide proxies, VPNs, or other network services."
+
+msgid "about_disclaimer_privacy"
+msgstr "SwitchyDelta does not track you or insert ads into webpages. Please see"
+" our <a href='https://github.com/madeye/SwitchyDelta/wiki/Privacy#english'>privacy policy</a>."
+
+msgid "about_help"
+msgstr "Other questions? Need help with using SwitchyDelta? Please see our "
+"<a href='https://github.com/madeye/SwitchyDelta/wiki/FAQ'>FAQ</a>."
+
+msgid "about_copyright"
+msgstr "Copyright 2026 <a href='https://github.com/madeye'>Max Lv</a>.<br>Copyright 2012-2017 <a href='https://github.com/FelisCatus/SwitchyOmega/blob/master/AUTHORS'>The SwitchyOmega Authors</a>."
+
+msgid "about_credits"
+msgstr "SwitchyDelta is made possible by the <a href='https://github.com/madeye/SwitchyDelta'>SwitchyDelta</a> open source project and other <a href='https://github.com/madeye/SwitchyDelta/blob/master/AUTHORS'>open source software</a>."
+
+msgid "about_license"
+msgstr "SwitchyDelta is <a href='https://www.gnu.org/philosophy/free-sw.en.html'>free software</a> licensed under <a href='https://www.gnu.org/licenses/gpl.html'>GNU General Public License</a> Version 3 or later."
+
+msgid "popup_proxyAuthPermission"
+msgstr "Prihlásenie k overeným proxy vyžaduje prístup ku všetkým webom."
+
+msgid "popup_proxyAuthPermissionGrant"
+msgstr "Udeliť prístup"

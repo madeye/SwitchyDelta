@@ -1,5 +1,5 @@
 /**
- * Ported from omega-target/test/options_sync.coffee.
+ * Ported from the SwitchyOmega `omega-target` options_sync CoffeeScript suite.
  *
  * The chai/sinon `hookPost` + `done()` plumbing becomes `vi.spyOn` +
  * `vi.waitFor` + async tests. Extra cases pin the behaviours MIGRATION.md

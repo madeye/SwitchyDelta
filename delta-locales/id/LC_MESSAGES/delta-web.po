@@ -1,0 +1,1113 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SwitchyDelta 2.3.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-13 10:29+0000\n"
+"PO-Revision-Date: 2024-12-27 12:00+0000\n"
+"Last-Translator: Doctorredits_here <alkaf.alkaf2018@tutamail.com>\n"
+"Language-Team: Indonesian <https://hosted.weblate.org/projects/switchyomega/"
+"main/id/>\n"
+"Language: id\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.10-dev\n"
+
+msgid "appNameShort"
+msgstr "SwitchyDelta"
+
+msgid "manifest_app_name"
+msgstr "Proxsi SwitchyDelta"
+
+msgid "manifest_app_description"
+msgstr "Kelola dan beralih di antara beberapa proxy dengan cepat & mudah."
+
+msgid "manifest_icon_default_title"
+msgstr "Memuat…"
+
+msgid "upgrade_profile_auto"
+msgstr "Saklar Otomatis"
+
+msgid "profile_direct"
+msgstr "[Langsung]"
+
+msgid "profile_system"
+msgstr "[System Proxsi]"
+
+msgid "condition_HostWildcardCondition"
+msgstr "Tuan rumah wildcard"
+
+msgid "condition_help_HostWildcardCondition"
+msgstr ""
+"Mencocokkan host (nama domain) dengan karakter pengganti.<br><b>Tanda "
+"bintang <code>*<code><b> cocok dengan nol karakter atau lebih.<br><b>Tanda "
+"tanya <code>?<code><b> cocok dengan tepat satu karakter.<br><br>Perlu "
+"diketahui bahwa aturan yang dimulai dengan <code>*.<code> diperlakukan "
+"secara khusus hanya dalam kondisi karakter pengganti Host.<br>Contoh: <code>*"
+".example.com<code> akan cocok dengan www.example.com <b>DAN example.com "
+"juga.<b><br>Untuk mencocokkan subdomain <b>saja<b>, gunakan <b>dua<b> tanda "
+"bintang seperti <code>**.example.com<code>."
+
+msgid "condition_HostRegexCondition"
+msgstr "Tuan rumah regex"
+
+msgid "condition_help_HostRegexCondition"
+msgstr ""
+"Seperti kondisi wildcard Host, tetapi cocok dengan host (nama domain) dengan "
+"<a href='https:www.google.comsearch?q=regular%20expression'>ekspresi "
+"reguler<a>.<br>Ekspresi reguler sulit dibuat (dan dibaca).<br>Disarankan "
+"untuk menggunakan wildcard untuk sebagian besar kasus dan hanya menggunakan "
+"regex untuk kondisi yang tidak dapat dicapai oleh jenis kondisi lainnya."
+
+msgid "condition_HostLevelsCondition"
+msgstr "Tingkat tuan rumah"
+
+msgid "condition_help_HostLevelsCondition"
+msgstr ""
+"Mencocokkan permintaan jika dan hanya jika level host berada dalam rentang "
+"yang diberikan.<br>Level host didefinisikan sebagai <b>jumlah segmen yang "
+"dipisahkan titik<b> dari host (nama domain).<br>Contoh: "
+"<code>www.example.com<code> memiliki level host 3, sedangkan "
+"<code>internal<code> memiliki level host 1."
+
+msgid "condition_IpCondition"
+msgstr "Literal IP"
+
+msgid "condition_help_IpCondition"
+msgstr ""
+"Mencocokkan permintaan jika dan hanya jika host adalah alamat IP "
+"<b>literal<b> dan dalam subnet sebagaimana ditetapkan oleh <a "
+"href='https:en.wikipedia.orgwikiClassless_Inter-Domain_Routing#"
+"CIDR_notation'>notasi CIDR<a>.<br>Misalnya, dengan aturan "
+"<code>127.0.0.116<code>, maka ia akan mencocokkan semua alamat IP seperti "
+"<code>127.0.*.*<code>.<br>Jadi <code>127.0.0.1<code> cocok sedangkan "
+"<code>127.1.0.0<code> tidak. Nama host seperti <code>localhost<code> tidak "
+"akan pernah cocok karena keduanya <b>bukan<b> IP literal."
+
+msgid "condition_UrlWildcardCondition"
+msgstr "URL wildcard"
+
+msgid "condition_help_UrlWildcardCondition"
+msgstr ""
+"Mencocokkan URL permintaan dengan karakter pengganti.<br>Lihat bagian "
+"karakter pengganti Host di atas untuk referensi karakter pengganti "
+"cepat.<br>Perhatikan bahwa karakter pengganti URL tidak diperlakukan secara "
+"khusus (tidak ada keajaiban subdomain seperti pada karakter pengganti Host)"
+".<br>Jadi <code>*:*.example.com*<code> cocok dengan http:www.example.com "
+"tetapi <b>tidak<b> cocok dengan http:example.com."
+
+msgid "condition_UrlRegexCondition"
+msgstr "URL regex"
+
+msgid "condition_help_UrlRegexCondition"
+msgstr "Mencocokkan URL dengan <a href='https://www.google.com/search?q=regular%20expression'>ekspresi reguler</a> yang sangat kuat.<br>Namun, ekspresi reguler bisa sulit dibuat (dan dibaca).<br>Disarankan menggunakan wildcard untuk sebagian besar kasus dan hanya menggunakan regex untuk kondisi yang tidak dapat dicapai oleh jenis kondisi lain."
+
+msgid "condition_KeywordCondition"
+msgstr "Kata kunci"
+
+msgid "condition_help_KeywordCondition"
+msgstr "Kondisi kata kunci cocok jika protokol URL adalah HTTP, dan pola adalah sub-string persis dari URL.<br>Berperilaku seperti pola wildcard URL <code>http://*<b>pattern</b>*</code>, di mana <b>pattern</b> adalah pola kata kunci.<br>Kondisi kata kunci berguna jika Anda ingin melewati firewall yang memblokir beberapa kata kunci di URL, dengan meminta URL tersebut melalui proksi."
+
+msgid "condition_FalseCondition"
+msgstr "(Dinonaktifkan)"
+
+msgid "condition_details_FalseCondition"
+msgstr "(Kondisi diabaikan saat pencocokan)"
+
+msgid "condition_help_FalseCondition"
+msgstr "Anda dapat menonaktifkan kondisi dengan mengatur tipenya ke <code>(Dinonaktifkan)</code>. Kondisi yang dinonaktifkan seolah-olah tidak ada.<br>Fitur ini dapat digunakan untuk menonaktifkan kondisi sementara.<br>Kondisi yang dinonaktifkan tetap menyimpan informasi sebelumnya (seperti pola) dan dapat diaktifkan kembali dengan mengatur tipe kondisi ke tipe sebelumnya."
+
+msgid "condition_TimeCondition"
+msgstr "Waktu Saat Ini"
+
+msgid "condition_help_TimeCondition"
+msgstr "Cocok jika waktu lokal saat ini berada dalam rentang yang ditentukan oleh <b>jam mulai</b> dan <b>jam selesai</b>, keduanya inklusif.<br>Waktu lokal, jam mulai, dan jam selesai semuanya dihitung dalam format <b>24 jam</b> (dari <b>0 hingga 23</b>). <br>Perhitungan terjadi kurang lebih pada saat permintaan dikirim."
+
+msgid "condition_WeekdayCondition"
+msgstr "Hari dalam Minggu"
+
+msgid "condition_help_WeekdayCondition"
+msgstr "Cocok jika <b>hari dalam minggu saat ini</b> dipilih di detail kondisi. Hari dihitung menurut zona waktu lokal.<br>Permintaan dan URL-nya tidak relevan bagi kondisi ini. Hasilnya semata-mata berdasarkan hari dalam minggu saat permintaan dikirim."
+
+msgid "condition_alert_fullUrlLimitation"
+msgstr "Pencocokan URL lengkap tidak lagi dimungkinkan untuk URL <code>https://</code> sejak Chrome 52. <a href='https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation'>Pelajari lebih lanjut...</a>"
+
+msgid "condition_alert_fullUrlLimitationLink"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation"
+
+msgid "condition_group_default"
+msgstr " "
+
+msgid "condition_group_host"
+msgstr "Host"
+
+msgid "condition_group_url"
+msgstr "URL"
+
+msgid "condition_group_special"
+msgstr "Khusus"
+
+msgid "ruleListFormat_Switchy"
+msgstr "Switchy"
+
+msgid "ruleListFormat_AutoProxy"
+msgstr "AutoProxy"
+
+msgid "ruleList_usageUrl"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/RuleListUsage"
+
+msgid "ruleList_error_resultNotEnabled"
+msgstr "Direktif '@with result' hilang!"
+
+msgid "ruleList_error_unknownProfile"
+msgstr "Profil tidak dikenal: $PROFILE$"
+
+msgid "ruleList_error_missingResultProfile"
+msgstr "Nama profil hasil hilang di Baris $LNO$: $SOURCE$"
+
+msgid "ruleList_error_invalidRule"
+msgstr "Aturan tidak valid di Baris $LNO$: $SOURCE$"
+
+msgid "ruleList_error_noDefaultRule"
+msgstr "Aturan bawaan dengan kondisi catch-all '*' hilang!"
+
+msgid "dialog_close"
+msgstr "Tutup"
+
+msgid "dialog_save"
+msgstr "Simpan perubahan"
+
+msgid "dialog_ok"
+msgstr "OK"
+
+msgid "dialog_cancel"
+msgstr "Batal"
+
+msgid "inputClear_clear"
+msgstr "Hapus"
+
+msgid "inputClear_restore"
+msgstr "Pulihkan"
+
+msgid "options_title"
+msgstr "Opsi SwitchyDelta"
+
+msgid "options_experimental_badge"
+msgstr "α"
+
+msgid "options_navHeader_setting"
+msgstr "Pengaturan"
+
+msgid "options_navHeader_profiles"
+msgstr "Profil"
+
+msgid "options_navHeader_actions"
+msgstr "Tindakan"
+
+msgid "options_tab_ui"
+msgstr "Antarmuka"
+
+msgid "options_tab_general"
+msgstr "Umum"
+
+msgid "options_tab_importExport"
+msgstr "Impor/Ekspor"
+
+msgid "options_newProfile"
+msgstr "Profil baru…"
+
+msgid "options_apply"
+msgstr "Terapkan perubahan"
+
+msgid "options_discard"
+msgstr "Buang perubahan"
+
+msgid "options_reset"
+msgstr "Atur ulang opsi"
+
+msgid "options_group_miscOptions"
+msgstr "Opsi Lain-lain"
+
+msgid "options_confirmDeletion"
+msgstr "Konfirmasi saat menghapus kondisi."
+
+msgid "options_refreshOnProfileChange"
+msgstr "Muat ulang tab saat ini saat profil berubah."
+
+msgid "options_showInspectMenu"
+msgstr "Izinkan memeriksa proksi yang digunakan elemen halaman lewat menu konteks."
+
+msgid "options_addConditionsToBottom"
+msgstr "Tempatkan kondisi baru yang ditambahkan lewat popup di bagian bawah daftar."
+
+msgid "options_group_keyboardShortcut"
+msgstr "Pintasan Keyboard"
+
+msgid "options_menuShortcutHelp"
+msgstr "Menekan pintasan akan membuka menu popup peralihan. (Bawaan: Alt+Shift+O)."
+
+msgid "options_menuShortcutMore"
+msgstr "Item di menu popup juga dapat diakses dengan keyboard. Tekan ? (atau /) di menu untuk mempelajari lebih lanjut."
+
+msgid "options_menuShortcutConfigure"
+msgstr "Konfigurasi pintasan"
+
+msgid "options_group_switchOptions"
+msgstr "Opsi Peralihan"
+
+msgid "options_startupProfile"
+msgstr "Profil Startup"
+
+msgid "options_startupProfile_none"
+msgstr "(Profil saat ini)"
+
+msgid "options_showConditionTypesAdvanced"
+msgstr "Tampilkan jenis kondisi lanjutan"
+
+msgid "options_showConditionTypesAdvancedHelp"
+msgstr "Membuka jenis kondisi peralihan lanjutan yang rumit. Untuk sebagian besar skenario, jenis kondisi dasar sudah cukup, jadi opsi ini tidak disarankan."
+
+msgid "options_quickSwitch"
+msgstr "Peralihan Cepat"
+
+msgid "options_cycledProfiles"
+msgstr "Profil Bergilir"
+
+msgid "options_cycledProfilesHelp"
+msgstr "Saat Anda mengeklik ikon (atau menggunakan pintasan di atas), profil berikut akan diterapkan secara berurutan."
+
+msgid "options_cycledProfilesTooFew"
+msgstr "Anda perlu memilih setidaknya 2 profil untuk mengaktifkan fungsi ini! Anda dapat menyeretnya dari kotak di bawah."
+
+msgid "options_notCycledProfiles"
+msgstr "Profil Tidak Bergilir"
+
+msgid "options_group_proxyChanges"
+msgstr "Perubahan Proksi"
+
+msgid "options_revertProxyChanges"
+msgstr "Batalkan perubahan proksi yang dilakukan aplikasi lain."
+
+msgid "options_group_conflicts"
+msgstr "Konflik"
+
+msgid "options_conflicts_introduction"
+msgstr "Terkadang, aplikasi lain juga mencoba mengontrol pengaturan proksi, sehingga menimbulkan konflik. Perhatikan bahwa pemblokir iklan dan ekstensi lain juga dapat menggunakan pengaturan proksi di balik layar. Konflik semacam ini tidak dapat dihindari karena cara kerja peramban."
+
+msgid "options_conflicts_lowerPriority"
+msgstr "Lencana merah seperti ini pada ikon SwitchyDelta menandakan aplikasi lain memiliki prioritas lebih tinggi sehingga SwitchyDelta tidak dapat mengontrol pengaturan. Coba copot dan pasang ulang SwitchyDelta, yang seharusnya menaikkan prioritas SwitchyDelta. Jika masih ada konflik setelah instalasi ulang, pertimbangkan untuk menghapus aplikasi lain yang menyebabkan konflik."
+
+msgid "options_conflicts_higherPriority"
+msgstr "Jika SwitchyDelta memiliki prioritas lebih tinggi, Anda dapat mengembalikan kontrol ke aplikasi lain atau pengaturan sistem dengan memilih $SYSTEMPROFILE$ di menu popup."
+
+msgid "options_showExternalProfile"
+msgstr "Tampilkan item menu popup untuk mengimpor pengaturan proksi dari aplikasi lain."
+
+msgid "options_showExternalProfileHelp"
+msgstr "Saat $SYSTEMPROFILE$ dipilih, Anda dapat mengimpor pengaturan proksi efektif dari aplikasi lain dengan memilih $EXTERNALPROFILE$ di menu popup. Pengaturan akan diimpor sebagai profil dengan nama yang Anda berikan. Perhatikan bahwa profil yang diimpor adalah snapshot dan tidak akan mencerminkan perubahan dari aplikasi sumber setelahnya."
+
+msgid "options_group_networkRequests"
+msgstr "Permintaan Jaringan"
+
+msgid "options_monitorWebRequests"
+msgstr "Tampilkan jumlah permintaan web gagal untuk sumber daya di tab saat ini."
+
+msgid "options_monitorWebRequestsHelp"
+msgstr "Lencana kuning akan ditampilkan pada ikon jika beberapa sumber daya gagal dimuat,<br>dan Anda dapat mengatur profil untuk sumber daya tersebut dengan mudah lewat menu popup."
+
+msgid "options_downloadOptions"
+msgstr "Opsi Unduhan"
+
+msgid "options_downloadOptionsHelp"
+msgstr "Konfigurasikan frekuensi pembaruan daftar aturan daring dan skrip PAC."
+
+msgid "options_downloadInterval"
+msgstr "Interval Unduhan"
+
+msgid "options_downloadInterval_15"
+msgstr "15 Menit"
+
+msgid "options_downloadInterval_60"
+msgstr "1 Jam"
+
+msgid "options_downloadInterval_180"
+msgstr "3 Jam"
+
+msgid "options_downloadInterval_360"
+msgstr "6 Jam"
+
+msgid "options_downloadInterval_720"
+msgstr "12 Jam"
+
+msgid "options_downloadInterval_1440"
+msgstr "Setiap hari"
+
+msgid "options_downloadInterval_never"
+msgstr "Tidak pernah"
+
+msgid "options_group_importExportProfile"
+msgstr "Profil"
+
+msgid "options_exportPacFile"
+msgstr "Ekspor sebagai File PAC"
+
+msgid "options_exportPacFileHelp"
+msgstr "Ekspor profil saat ini sebagai file PAC, agar dapat digunakan di peramban lain."
+
+msgid "options_exportProfileHelp"
+msgstr "Untuk mengekspor profil, gunakan bilah tindakan di kanan atas pada halaman profil."
+
+msgid "options_exportLegacyRuleList"
+msgstr "Ekspor daftar aturan dalam format kompatibel Proxy Switchy!/SwitchyPlus/SwitchySharp bila memungkinkan."
+
+msgid "options_exportLegacyRuleListHelp"
+msgstr "Aktifkan opsi ini hanya jika Anda menerbitkan daftar aturan untuk pengguna proyek tersebut.<br>Pertimbangkan untuk menyarankan audiens agar meningkatkan ke SwitchyDelta demi peningkatan yang ada."
+
+msgid "options_group_importExportSettings"
+msgstr "Pengaturan"
+
+msgid "options_makeBackup"
+msgstr "Buat cadangan"
+
+msgid "options_makeBackupHelp"
+msgstr "Buat cadangan penuh opsi Anda (termasuk profil dan semua opsi lainnya)."
+
+msgid "options_restoreLocal"
+msgstr "Pulihkan dari file"
+
+msgid "options_restoreLocalHelp"
+msgstr "Pulihkan opsi SwitchyDelta dari file lokal."
+
+msgid "options_restoreOnline"
+msgstr "Pulihkan dari daring"
+
+msgid "options_restoreOnlinePlaceholder"
+msgstr "URL file opsi (mis. 'http://example.com/switchy.bak')"
+
+msgid "options_restoreOnlineSubmit"
+msgstr "Pulihkan"
+
+msgid "options_group_syncing"
+msgstr "Sinkronisasi (Eksperimental)"
+
+msgid "options_syncEnable"
+msgstr "Aktifkan Sinkronisasi"
+
+msgid "options_syncEnableForce"
+msgstr "Unduh dari Sinkronisasi"
+
+msgid "options_syncDisable"
+msgstr "Nonaktifkan sinkronisasi"
+
+msgid "options_syncReset"
+msgstr "Hapus salinan jarak jauh"
+
+msgid "options_syncPristineHelp"
+msgstr "Anda kini dapat menyinkronkan pengaturan dan profil secara otomatis di semua perangkat desktop yang menjalankan peramban Chrome."
+
+msgid "options_syncSyncAlert"
+msgstr "Opsi Anda disinkronkan secara otomatis dengan perangkat lain."
+
+msgid "options_syncSyncHelp"
+msgstr "Perhatikan bahwa Anda harus masuk ke Chrome di setiap perangkat (termasuk yang ini) agar sinkronisasi benar-benar berfungsi. <br> Anda dapat memeriksa bagian ini di perangkat lain untuk memastikan sinkronisasi berjalan."
+
+msgid "options_syncConflictAlert"
+msgstr "Anda telah mengunggah salinan opsi di perangkat lain lewat sinkronisasi."
+
+msgid "options_syncConflictHelp"
+msgstr "Anda dapat mengunduh salinan jarak jauh ke perangkat ini jika mau. <br>Namun, tindakan itu akan <b>menimpa pengaturan dan profil yang ada</b> di perangkat ini."
+
+msgid "options_syncUnsupportedHelp"
+msgstr "Sinkronisasi opsi tidak didukung di platform atau peramban Anda. Saat ini hanya peramban Chrome di desktop yang didukung."
+
+msgid "options_profileSyncDisabled"
+msgstr "Sinkronisasi dinonaktifkan untuk profil ini."
+
+msgid "options_profileSyncDisabled_quotaPerItem"
+msgstr "Sinkronisasi dinonaktifkan untuk profil ini karena memakai terlalu banyak ruang penyimpanan."
+
+msgid "options_profileTabPrefix"
+msgstr "Profil :: "
+
+msgid "options_renameProfile"
+msgstr "Ganti nama"
+
+msgid "options_deleteProfile"
+msgstr "Hapus"
+
+msgid "options_profileExportRuleList"
+msgstr "Terbitkan daftar aturan"
+
+msgid "options_profileExportRuleListHelp"
+msgstr "Ekspor Aturan Peralihan sebagai format teks untuk diterbitkan."
+
+msgid "options_profileExportPac"
+msgstr "Ekspor PAC"
+
+msgid "options_profileUnsupported"
+msgstr "Jenis profil tidak didukung $TYPE$!"
+
+msgid "options_profileUnsupportedHelp"
+msgstr "Opsi mungkin rusak, atau dari versi program yang lebih baru."
+
+msgid "options_profileEditSource"
+msgstr "Edit kode sumber"
+
+msgid "options_profileEditSourceHelp"
+msgstr "Tampilkan bantuan tentang format kode sumber"
+
+msgid "options_profileEditSourceHelpUrl"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/SwitchyDelta-conditions-format#result-profile"
+
+msgid "options_group_proxyServers"
+msgstr "Server proksi"
+
+msgid "options_proxy_scheme"
+msgstr "Skema"
+
+msgid "options_proxy_protocol"
+msgstr "Protokol"
+
+msgid "options_proxy_server"
+msgstr "Server"
+
+msgid "options_proxy_port"
+msgstr "Port"
+
+msgid "options_proxy_auth"
+msgstr "Autentikasi"
+
+msgid "options_proxy_authNotSupported"
+msgstr "Peramban Anda TIDAK mendukung autentikasi proksi $PROTOCOLDISP$! Jangan laporkan masalah ini ke SwitchyDelta. Hubungi dukungan peramban Anda."
+
+msgid "options_proxy_authAllWarningPac"
+msgstr "Peringatan: Nama pengguna/kata sandi dapat dikirim ke server tak terduga yang dikembalikan skrip PAC."
+
+msgid "options_proxy_authAllWarningPacUrl"
+msgstr "Pastikan Anda memercayai skrip yang disediakan lewat URL di atas sebelum memasukkan kredensial sensitif."
+
+msgid "options_proxy_authAllWarningPacScript"
+msgstr "Pastikan Anda memercayai skrip di bawah sebelum memberikan kredensial sensitif."
+
+msgid "options_proxy_authReferencedWarning"
+msgstr "Selain itu, menggunakan profil ini di profil lain (mis. Profil Peralihan) dapat menyebabkan nama pengguna/kata sandi dikirim ke server proksi yang dikonfigurasi di profil lain."
+
+msgid "options_scheme_default"
+msgstr "(bawaan)"
+
+msgid "options_protocol_direct"
+msgstr "DIRECT"
+
+msgid "options_protocol_useDefault"
+msgstr "(gunakan bawaan)"
+
+msgid "options_proxy_single"
+msgstr "Gunakan proksi di atas untuk semua protokol."
+
+msgid "options_proxy_expand"
+msgstr "Tampilkan Lanjutan"
+
+msgid "options_group_bypassList"
+msgstr "Daftar Bypass"
+
+msgid "options_bypassListHelp"
+msgstr "Server yang tidak ingin Anda lewatkan proksi: (Satu server per baris.)"
+
+msgid "options_bypassListHelpLinkText"
+msgstr "(Wildcard dan lainnya tersedia…)"
+
+msgid "options_group_pacUrl"
+msgstr "URL PAC"
+
+msgid "options_pacUrlHelp"
+msgstr "Skrip PAC akan diperbarui dari URL ini. Jika dikosongkan, skrip berikut akan digunakan langsung."
+
+msgid "options_pacUrlFile"
+msgstr "Profil PAC dengan URL file: hanya dapat diterapkan secara langsung. Tidak dapat digunakan sebagai profil hasil karena file lokal tidak dapat diakses akibat batasan peramban."
+
+msgid "options_pacUrlFileDisabled"
+msgstr "Oleh karena itu, Anda tidak dapat menggunakan file PAC lokal untuk profil ini. Anda dapat membuat profil PAC baru jika benar-benar menginginkannya."
+
+msgid "options_group_pacScript"
+msgstr "Skrip PAC"
+
+msgid "options_pacScriptLastUpdate"
+msgstr "Skrip PAC diunduh pada $TIME$:"
+
+msgid "options_pacScriptObsolete"
+msgstr "Skrip PAC usang karena perubahan URL. Tekan tombol unduh di atas untuk memperbarui."
+
+msgid "options_group_virtualProfile"
+msgstr "Profil Virtual"
+
+msgid "options_virtualProfileTarget"
+msgstr "Sasaran"
+
+msgid "options_virtualProfileTargetHelp"
+msgstr "Saat profil ini diterapkan, perilakunya sama persis dengan profil yang dipilih di bawah."
+
+msgid "options_group_virtualProfileReplace"
+msgstr "Migrasi ke Profil Virtual"
+
+msgid "options_virtualProfileReplace"
+msgstr "Ganti profil target"
+
+msgid "options_virtualProfileReplaceHelp"
+msgstr "Anda dapat memigrasikan opsi yang ada agar menggunakan profil virtual ini sebagai ganti $PROFILE$. Tindakan ini akan memperbarui semua aturan terkait $PROFILE$ dan mengarahkannya ke profil virtual ini, sehingga profil hasilnya dapat dikontrol di sini."
+
+msgid "options_group_ruleListConfig"
+msgstr "Konfigurasi Daftar Aturan"
+
+msgid "options_ruleListFormat"
+msgstr "Format Daftar Aturan"
+
+msgid "options_group_ruleListResult"
+msgstr "Profil hasil daftar aturan"
+
+msgid "options_ruleListMatchProfile"
+msgstr "Profil cocok"
+
+msgid "options_ruleListDefaultProfile"
+msgstr "Profil bawaan"
+
+msgid "options_group_ruleListUrl"
+msgstr "URL Daftar Aturan"
+
+msgid "options_ruleListUrlHelp"
+msgstr "Daftar aturan akan diperbarui dari URL ini. Jika dikosongkan, teks berikut akan diurai sebagai gantinya."
+
+msgid "options_group_ruleListText"
+msgstr "Teks Daftar Aturan"
+
+msgid "options_ruleListLastUpdate"
+msgstr "Daftar aturan diunduh pada $TIME$:"
+
+msgid "options_ruleListObsolete"
+msgstr "Daftar aturan usang karena perubahan URL. Tekan tombol unduh di atas untuk memperbarui."
+
+msgid "options_group_switchRules"
+msgstr "Aturan peralihan"
+
+msgid "options_sort"
+msgstr "Urutkan"
+
+msgid "options_conditionType"
+msgstr "Jenis Kondisi"
+
+msgid "options_showConditionTypeHelp"
+msgstr "Tampilkan bantuan"
+
+msgid "options_conditionDetails"
+msgstr "Detail Kondisi"
+
+msgid "options_resultProfile"
+msgstr "Profil"
+
+msgid "options_conditionActions"
+msgstr "Tindakan"
+
+msgid "options_addCondition"
+msgstr "Tambah kondisi"
+
+msgid "options_cloneRule"
+msgstr "Klon"
+
+msgid "options_ruleNote"
+msgstr "Catatan"
+
+msgid "options_switchAttachedProfileInCondition"
+msgstr "Aturan daftar aturan"
+
+msgid "options_switchAttachedProfileInConditionDetails"
+msgstr "(Setiap permintaan yang cocok dengan daftar aturan di bawah)"
+
+msgid "options_switchAttachedProfileInConditionDisabled"
+msgstr "(Aturan daftar aturan DINONAKTIFKAN)"
+
+msgid "options_switchDefaultProfile"
+msgstr "Bawaan"
+
+msgid "options_hostLevelsBetween"
+msgstr "≤ level host ≤"
+
+msgid "options_hourBetween"
+msgstr "≤ jam saat ini ≤"
+
+msgid "options_weekDayShort_0"
+msgstr "Mg"
+
+msgid "options_weekDayShort_1"
+msgstr "Sn"
+
+msgid "options_weekDayShort_2"
+msgstr "Sl"
+
+msgid "options_weekDayShort_3"
+msgstr "Rb"
+
+msgid "options_weekDayShort_4"
+msgstr "Km"
+
+msgid "options_weekDayShort_5"
+msgstr "Jm"
+
+msgid "options_weekDayShort_6"
+msgstr "Sb"
+
+msgid "options_group_conditionHelp"
+msgstr "Tentang Jenis Kondisi"
+
+msgid "options_group_attachProfile"
+msgstr "Impor daftar aturan daring"
+
+msgid "options_attachProfile"
+msgstr "Tambah daftar aturan"
+
+msgid "options_attachProfileHelp"
+msgstr "Anda dapat menggunakan kembali kumpulan kondisi daring yang diterbitkan orang lain dengan menambahkan daftar aturan."
+
+msgid "options_modalHeader_welcome"
+msgstr "Selamat datang di SwitchyDelta"
+
+msgid "options_welcomeNormal"
+msgstr "Anda telah berhasil menginstal SwitchyDelta, pengalih proksi terbaik."
+
+msgid "options_welcomeNormalGuide"
+msgstr "Beritahu SwitchyDelta tentang proksi Anda lewat halaman opsi. Mari lihat caranya."
+
+msgid "options_welcomeUpgrade"
+msgstr "Anda telah berhasil meningkatkan ke SwitchyDelta. Jangan panik, opsi yang ada sepenuhnya dipertahankan."
+
+msgid "options_welcomeUpgradeGuide"
+msgstr "Sekarang mari kita lihat panduan singkat halaman opsi yang baru."
+
+msgid "options_guideNext"
+msgstr "Berikutnya"
+
+msgid "options_guideDone"
+msgstr "Selesai"
+
+msgid "options_guideSkip"
+msgstr "Lewati panduan"
+
+msgid "options_modalHeader_applyOptions"
+msgstr "Terapkan Opsi"
+
+msgid "options_optionsNotSaved"
+msgstr "Modifikasi opsi Anda belum disimpan dan akan hilang jika Anda melanjutkan!"
+
+msgid "options_applyOptionsRequired"
+msgstr "Perubahan opsi harus diterapkan sebelum Anda melanjutkan."
+
+msgid "options_applyOptionsConfirm"
+msgstr "Apakah Anda ingin menyimpan dan menerapkan opsi?"
+
+msgid "options_modalHeader_renameProfile"
+msgstr "Ganti Nama Profil"
+
+msgid "options_renameProfileName"
+msgstr "Nama profil baru"
+
+msgid "options_profileNameConflict"
+msgstr "Profil dengan nama ini sudah ada."
+
+msgid "options_profileNameReserved"
+msgstr "Nama profil yang diawali garis bawah ganda dicadangkan."
+
+msgid "options_profileNameHidden"
+msgstr "Profil dengan nama yang diawali garis bawah akan disembunyikan di menu popup. Namun, tetap dapat digunakan di tempat seperti hasil profil peralihan."
+
+msgid "options_modalHeader_replaceProfile"
+msgstr "Ganti Profil"
+
+msgid "options_replaceProfile"
+msgstr "Ganti Profil"
+
+msgid "options_replaceProfileConfirm"
+msgstr "Apakah Anda benar-benar ingin mengganti $FromProfile$ dengan $ToProfile$?"
+
+msgid "options_replaceProfileHelp"
+msgstr "Jika dilanjutkan, semua aturan yang menunjuk ke $FromProfile$ akan diperbarui agar menggunakan $ToProfile$. Opsi lain, seperti profil startup dan Peralihan Cepat, juga akan diubah seperlunya. Namun, kedua profil itu sendiri TIDAK akan diubah atau dihapus."
+
+msgid "options_replaceProfileSuccess"
+msgstr "Opsi diperbarui."
+
+msgid "options_modalHeader_deleteProfile"
+msgstr "Hapus Profil"
+
+msgid "options_deleteProfileConfirm"
+msgstr "Apakah Anda benar-benar ingin menghapus profil berikut?"
+
+msgid "options_modalHeader_cannotDeleteProfile"
+msgstr "Tidak Dapat Menghapus Profil"
+
+msgid "options_profileReferredBy"
+msgstr "Profil ini tidak dapat dihapus karena dirujuk oleh profil berikut:"
+
+msgid "options_modifyReferringProfiles"
+msgstr "Anda harus mengubah profil ini agar berhenti merujuk profil ini sebelum dapat menghapusnya."
+
+msgid "options_profileNameEmpty"
+msgstr "Nama profil tidak boleh kosong."
+
+msgid "popup_title"
+msgstr "Popup SwitchyDelta"
+
+msgid "options_modalHeader_proxyAuth"
+msgstr "Autentikasi Proksi"
+
+msgid "options_proxyAuthUsername"
+msgstr "Nama pengguna"
+
+msgid "options_proxyAuthPassword"
+msgstr "Kata sandi"
+
+msgid "options_proxyAuthShowPassword"
+msgstr "Tampilkan kata sandi"
+
+msgid "options_proxyAuthHidePassword"
+msgstr "Sembunyikan kata sandi"
+
+msgid "options_proxyAuthNone"
+msgstr "Tanpa Autentikasi"
+
+msgid "options_modalHeader_deleteRule"
+msgstr "Hapus Aturan"
+
+msgid "options_deleteRuleConfirm"
+msgstr "Apakah Anda benar-benar ingin menghapus aturan berikut?"
+
+msgid "options_deleteRule"
+msgstr "Hapus"
+
+msgid "options_modalHeader_resetRules"
+msgstr "Atur ulang aturan"
+
+msgid "options_resetRulesConfirm"
+msgstr "Yakin ingin mengatur profil hasil SEMUA aturan ke profil berikut?"
+
+msgid "options_resetRules"
+msgstr "Atur ulang aturan"
+
+msgid "options_resetRules_help"
+msgstr "Atur profil untuk semua aturan"
+
+msgid "options_modalHeader_deleteAttached"
+msgstr "Hapus Daftar Aturan"
+
+msgid "options_deleteAttachedConfirm"
+msgstr "Apakah Anda benar-benar ingin menghapus daftar aturan dari profil saat ini?"
+
+msgid "options_ruleListLineCount"
+msgstr "$COUNT$ baris aturan"
+
+msgid "options_deleteAttached"
+msgstr "Hapus daftar aturan"
+
+msgid "options_modalHeader_newProfile"
+msgstr "Profil Baru"
+
+msgid "options_newProfileName"
+msgstr "Nama profil"
+
+msgid "options_profileType"
+msgstr "Silakan pilih jenis profil:"
+
+msgid "options_profileTypeFixedProfile"
+msgstr "Profil Proksi"
+
+msgid "options_profileDescFixedProfile"
+msgstr "Mengalirkan lalu lintas melalui server proksi."
+
+msgid "options_profileTypePacProfile"
+msgstr "Profil PAC"
+
+msgid "options_profileDescPacProfile"
+msgstr "Memilih proksi menggunakan skrip PAC daring/lokal."
+
+msgid "options_profileDescMorePacProfile"
+msgstr "Anda hanya memerlukan ini jika memiliki skrip PAC atau URL-nya. Jangan mencoba membuatnya kecuali Anda paham tentang PAC."
+
+msgid "options_profileTypeSwitchProfile"
+msgstr "Profil Peralihan"
+
+msgid "options_profileDescSwitchProfile"
+msgstr ""
+"Menerapkan profil berbeda secara otomatis berdasarkan berbagai kondisi seperti domain atau pola.\n"
+" Anda juga dapat mengimpor aturan yang diterbitkan daring untuk peralihan yang lebih mudah. (Menggantikan mode AutoSwitch + Daftar Aturan.)"
+
+msgid "options_profileTypeRuleListProfile"
+msgstr "Profil Daftar Aturan"
+
+msgid "options_profileDescRuleListProfile"
+msgstr "Menggunakan kembali kumpulan kondisi daring yang diterbitkan orang lain."
+
+msgid "options_profileTypeVirtualProfile"
+msgstr "Profil Virtual"
+
+msgid "options_profileDescVirtualProfile"
+msgstr "Profil virtual dapat bertindak sebagai profil lain sesuai kebutuhan. Bekerja baik dengan Profil Peralihan, memungkinkan Anda mengubah hasil beberapa kondisi dengan satu klik."
+
+msgid "options_createProfile"
+msgstr "Buat"
+
+msgid "options_modalHeader_resetOptions"
+msgstr "Atur Ulang Opsi"
+
+msgid "options_resetOptionsConfirm"
+msgstr "Apakah Anda benar-benar ingin mengatur ulang opsi? Semua profil dan pengaturan akan HILANG!"
+
+msgid "options_formInvalid"
+msgstr "Harap perbaiki kesalahan di halaman ini."
+
+msgid "options_profileNotFound"
+msgstr "Profil $PROFILE$ tidak ada! Opsi mungkin rusak."
+
+msgid "options_resetSuccess"
+msgstr "Opsi diatur ulang."
+
+msgid "options_saveSuccess"
+msgstr "Opsi disimpan."
+
+msgid "options_importSuccess"
+msgstr "Opsi diimpor."
+
+msgid "options_importFormatError"
+msgstr "File cadangan tidak valid!"
+
+msgid "options_importDownloadError"
+msgstr "Kesalahan mengunduh file cadangan!"
+
+msgid "options_profileDownloadSuccess"
+msgstr "Profil berhasil diperbarui."
+
+msgid "options_profileDownloadError"
+msgstr "Kesalahan mengunduh data profil!"
+
+msgid "options_profileDownloadError_NetworkError"
+msgstr "Terjadi kesalahan jaringan saat memperbarui."
+
+msgid "options_profileDownloadError_HttpError"
+msgstr "Terjadi kesalahan HTTP ($STATUS$) saat memperbarui."
+
+msgid "options_profileDownloadError_HttpNotFoundError"
+msgstr "URL Profil tidak ditemukan di server. Harap periksa kembali."
+
+msgid "options_profileDownloadError_HttpServerError"
+msgstr "Server jarak jauh merespons dengan kesalahan ($STATUS$) saat memperbarui."
+
+msgid "options_profileDownloadError_ContentTypeRejectedError"
+msgstr "Data yang diunduh tidak valid! Anda dapat membuka URL Profil di peramban untuk memeriksanya."
+
+msgid "options_downloadProfileNow"
+msgstr "Unduh Profil Sekarang"
+
+msgid "options_guide_fixedProfileStep"
+msgstr "<b>Profil Proksi</b> berisi pengaturan seperti IP &amp; port server untuk proksi.<br>Profil adalah unit konfigurasi dasar di SwitchyDelta.<br>Kami sudah membuat profil contoh untuk Anda. Coba buka."
+
+msgid "options_guide_fixedServersStep"
+msgstr "Anda dapat mengisi server proksi dan port di sini sesuka Anda.<br>SwitchyDelta <b>tidak menyediakan server proksi apa pun</b>.<br>Konsultasikan penyedia jaringan atau manual perangkat lunak proksi jika Anda tidak tahu apa yang harus diisi di sini."
+
+msgid "options_guide_autoSwitchProfileStep"
+msgstr "Anda dapat meminta SwitchyDelta beralih antar-proksi secara otomatis melalui <b>Profil Peralihan</b> yang canggih.<br>Namun, fitur-fiturnya tidak dapat dibahas lengkap dalam panduan singkat ini.<br>Anda dapat membuka profil ini nanti untuk memanfaatkan kemampuannya."
+
+msgid "options_guide_addMoreProfilesStep"
+msgstr "Butuh lebih banyak profil? Anda selalu dapat menambahkan <b>Profil Proksi, Peralihan, dan lainnya</b><br>untuk semua kebutuhan proksi Anda.<br>Selamat menggunakan proksi!"
+
+msgid "options_guide_conditionStep"
+msgstr "SwitchyDelta dapat menerapkan profil berbeda pada permintaan berdasarkan <b>kondisi</b>.<br> Misalnya, kondisi <b>Host wildcard</b> memungkinkan Anda mengatur profil untuk semua URL dalam sebuah domain."
+
+msgid "options_guide_conditionTypeStep"
+msgstr "Anda dapat menggunakan berbagai jenis kondisi untuk mencocokkan host atau URL lengkap. <br> Klik tanda tanya untuk membuka referensi jenis."
+
+msgid "options_guide_conditionProfileStep"
+msgstr "SwitchyDelta menerapkan profil yang dipilih di sini ke <b>setiap permintaan yang cocok dengan kondisi.</b> <br> Profil khusus <b>\"[Langsung]\"</b> akan membuat permintaan dikirim tanpa proksi."
+
+msgid "options_guide_switchDefaultStep"
+msgstr "Jika tidak ada kondisi yang berlaku untuk suatu permintaan, profil \"Bawaan\" akan digunakan. <br>Kondisi selalu dipertimbangkan <b>dari atas ke bawah</b> secara berurutan.<br>Anda dapat mengubah urutannya dengan menyeret ikon urut."
+
+msgid "options_guide_applySwitchProfileStep"
+msgstr "Saat selesai mengatur profil peralihan, jangan lupa <b>beralih ke profil itu di menu popup.</b><br/> Ikon akan menampilkan profil <b>hasil akhir</b> yang diterapkan untuk tab saat ini. <br/> <b>Arahkan kursor</b> ke ikon untuk melihat tooltip dengan detail."
+
+msgid "popup_externalProfile"
+msgstr "(Profil Eksternal)"
+
+msgid "popup_externalProfileName"
+msgstr "nama profil"
+
+msgid "popup_proxyNotControllable_app"
+msgstr "Pengaturan proksi dikontrol oleh aplikasi atau ekstensi lain. Nonaktifkan atau copot aplikasi/ekstensi yang konflik."
+
+msgid "popup_proxyNotControllable_policy"
+msgstr "Pengaturan proksi dikuasai oleh kebijakan. Hubungi administrator Anda."
+
+msgid "popup_proxyNotControllable_unknown"
+msgstr "Pengaturan proksi tidak dapat dikontrol. Periksa pengaturan sistem dan peramban."
+
+msgid "popup_proxyNotControllable_disabled"
+msgstr "Pengaturan proksi dinonaktifkan atas permintaan eksplisit dari aplikasi atau ekstensi lain."
+
+msgid "popup_proxyNotControllable_upgrade"
+msgstr "Pengaturan proksi kini dikontrol oleh versi SwitchyDelta yang lebih baru."
+
+msgid "popup_proxyNotControllableDetails"
+msgstr "Anda tidak dapat beralih profil dengan SwitchyDelta kecuali masalah di atas diperbaiki."
+
+msgid "popup_proxyNotControllableDetails_upgrade"
+msgstr "Anda tidak dapat mengaktifkan dua (atau lebih) versi SwitchyDelta sekaligus. Nonaktifkan salah satunya."
+
+msgid "popup_proxyNotControllableManage"
+msgstr "Kelola ekstensi"
+
+msgid "popup_addConditionTo"
+msgstr "Tambah kondisi ke"
+
+msgid "popup_addCondition"
+msgstr "Tambah kondisi"
+
+msgid "popup_showOptions"
+msgstr "Opsi"
+
+msgid "popup_reportIssues"
+msgstr "Laporkan masalah"
+
+msgid "popup_errorLog"
+msgstr "Simpan log kesalahan"
+
+msgid "popup_requestErrorCount"
+msgstr "$COUNT$ sumber daya gagal"
+
+msgid "popup_requestErrorHeading"
+msgstr "Sumber daya yang gagal dimuat"
+
+msgid "popup_requestErrorWarning"
+msgstr "Beberapa sumber daya gagal dimuat karena masalah jaringan, server proksi, atau halaman web."
+
+msgid "popup_requestErrorWarningHelp"
+msgstr "SwitchyDelta hanyalah pelapor masalah ini, bukan penyebabnya."
+
+msgid "popup_requestErrorAddCondition"
+msgstr "Anda dapat meninjau domain berikut dan menggunakan proksi untuknya bila sesuai."
+
+msgid "popup_requestErrorCannotAddCondition"
+msgstr "Anda hanya dapat menambahkan kondisi peralihan untuknya saat menggunakan Profil Peralihan."
+
+msgid "popup_configureMonitorWebRequests"
+msgstr "Konfigurasi Monitor Jaringan"
+
+msgid "options_resultProfileForSelectedDomains"
+msgstr "Gunakan profil ini untuk semua domain yang dipilih"
+
+msgid "options_pac_profile_unsupported_moz"
+msgstr "Profil PAC TIDAK akan berfungsi di Mozilla Firefox karena batasan teknis!"
+
+msgid "popup_issueTemplate"
+msgstr ""
+"\n"
+"\n"
+"\n"
+"<!-- Silakan tulis komentar Anda DI ATAS baris ini. -->\n"
+"SwitchyDelta $projectVersion$\n"
+"$userAgent$"
+
+msgid "browserAction_profileDetails_PacProfile"
+msgstr "(skrip PAC)"
+
+msgid "browserAction_profileDetails_SystemProfile"
+msgstr "(dikontrol oleh ekstensi atau lingkungan lain)"
+
+msgid "browserAction_profileDetails_DirectProfile"
+msgstr "(tidak menggunakan proksi)"
+
+msgid "browserAction_profileDetails_SwitchProfile"
+msgstr "(beralih berdasarkan kondisi)"
+
+msgid "browserAction_profileDetails_RuleListProfile"
+msgstr "(beralih berdasarkan daftar aturan)"
+
+msgid "browserAction_titleNormal"
+msgstr "SwitchyDelta:: $PROFILE$"
+
+msgid "browserAction_titleWithResult"
+msgstr ""
+"SwitchyDelta:: $1:PROFILE$\n"
+"$3:DETAILS$"
+
+msgid "browserAction_titleNewerOptions"
+msgstr "KESALAHAN: Diperlukan versi SwitchyDelta yang lebih baru untuk memuat opsi tersimpan."
+
+msgid "browserAction_titleOptionError"
+msgstr "KESALAHAN: Opsi tersimpan rusak. Klik di sini untuk ATUR ULANG OPSI."
+
+msgid "browserAction_titleDownloadFail"
+msgstr "Peringatan: Gagal mengunduh skrip PAC dan/atau daftar aturan."
+
+msgid "browserAction_titleExternalProxy"
+msgstr "Catatan: Pengaturan proksi saat ini dikontrol oleh aplikasi lain."
+
+msgid "browserAction_titleInspect"
+msgstr "[Periksa] $URL$"
+
+msgid "browserAction_defaultRuleDetails"
+msgstr "(bawaan)"
+
+msgid "browserAction_directResult"
+msgstr "DIRECT"
+
+msgid "browserAction_attachedPrefix"
+msgstr "(RL) "
+
+msgid "browserAction_tempRulePrefix"
+msgstr "(TEMP) "
+
+msgid "contextMenu_inspectPage"
+msgstr "Periksa proksi yang digunakan halaman ini"
+
+msgid "contextMenu_inspectFrame"
+msgstr "Periksa proksi yang digunakan Frame ini"
+
+msgid "contextMenu_inspectLink"
+msgstr "Periksa proksi yang akan digunakan jika Tautan ini dibuka"
+
+msgid "contextMenu_inspectElement"
+msgstr "Periksa proksi yang digunakan Elemen ini"
+
+msgid "contextMenu_enableQuickSwitch"
+msgstr "Aktifkan Peralihan Cepat"
+
+msgid "about_title"
+msgstr "Tentang"
+
+msgid "about_app_description"
+msgstr "Alat konfigurasi proksi"
+
+msgid "about_version"
+msgstr "Versi $VERSION$"
+
+msgid "about_experimental_warning_moz"
+msgstr "Dukungan Mozilla Firefox masih sangat eksperimental! Jika menemui masalah, laporkan menggunakan tombol di bawah."
+
+msgid "about_disclaimer_networkService"
+msgstr "SwitchyDelta tidak menyediakan proksi, VPN, atau layanan jaringan lain."
+
+msgid "about_disclaimer_privacy"
+msgstr "SwitchyDelta tidak melacak Anda atau menyisipkan iklan ke halaman web. Lihat <a href='https://github.com/madeye/SwitchyDelta/wiki/Privacy#english'>kebijakan privasi</a> kami."
+
+msgid "about_help"
+msgstr "Pertanyaan lain? Butuh bantuan menggunakan SwitchyDelta? Lihat <a href='https://github.com/madeye/SwitchyDelta/wiki/FAQ'>FAQ</a> kami."
+
+msgid "about_copyright"
+msgstr "Copyright 2026 <a href='https://github.com/madeye'>Max Lv</a>.<br>Copyright 2012-2017 <a href='https://github.com/FelisCatus/SwitchyOmega/blob/master/AUTHORS'>The SwitchyOmega Authors</a>."
+
+msgid "about_credits"
+msgstr "SwitchyDelta dimungkinkan oleh proyek sumber terbuka <a href='https://github.com/madeye/SwitchyDelta'>SwitchyDelta</a> dan <a href='https://github.com/madeye/SwitchyDelta/blob/master/AUTHORS'>perangkat lunak sumber terbuka</a> lainnya."
+
+msgid "about_license"
+msgstr "SwitchyDelta adalah <a href='https://www.gnu.org/philosophy/free-sw.en.html'>perangkat lunak bebas</a> dilisensikan di bawah <a href='https://www.gnu.org/licenses/gpl.html'>GNU General Public License</a> Versi 3 atau lebih baru."
+
+msgid "popup_proxyAuthPermission"
+msgstr "Masuk ke proksi terautentikasi memerlukan akses ke semua situs web."
+
+msgid "popup_proxyAuthPermissionGrant"
+msgstr "Berikan akses"

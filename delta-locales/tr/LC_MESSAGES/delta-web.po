@@ -1,0 +1,1145 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SwitchyDelta 2.3.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-13 10:29+0000\n"
+"PO-Revision-Date: 2020-08-03 04:41+0000\n"
+"Last-Translator: ozgurulukir <ozgur.ulukir@gmail.com>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/switchyomega/"
+"main/tr/>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.2-dev\n"
+
+msgid "appNameShort"
+msgstr "SwitchyDelta"
+
+msgid "manifest_app_name"
+msgstr "Proxy SwitchyDelta"
+
+msgid "manifest_app_description"
+msgstr ""
+"Birden çok vekil sunucuyu yönet ve aralarında kolayca ve hızlıca geçiş yap."
+
+msgid "manifest_icon_default_title"
+msgstr "Yükleniyor…"
+
+msgid "upgrade_profile_auto"
+msgstr "Otomatik Geçiş"
+
+msgid "profile_direct"
+msgstr "[Doğrudan]"
+
+msgid "profile_system"
+msgstr "[Sistem Vekil Sunucusu]"
+
+msgid "condition_HostWildcardCondition"
+msgstr "Sunucu joker karakteri"
+
+msgid "condition_help_HostWildcardCondition"
+msgstr ""
+"Sunucuları (alan adlarını) joker karakteriyle eşler.<br><b>Yıldız karakteri "
+"<code>*</code></b> sıfır ya da daha fazla karaktere denk gelir.<br><b>Soru "
+"işareti <code>?</code></b> tam olarak tek karaktere denk gelir.<br><br>Şu "
+"şekilde <code>*.</code> başlayan kurallar sadece Sunucu joker eşleme "
+"koşulları için geçerlidir.<br>Örnek: <code>*.ornek.com</code> www.ornek.com "
+"<b>VE ornek.com için eşlenecektir.</b><br>Sadece altalan adlarını eşlemek "
+"için <b>only</b>, <b>iki</b> yıldız karakteri kullanın: "
+"<code>**.ornek.com</code>."
+
+msgid "condition_HostRegexCondition"
+msgstr "Sunucu düzenli ifadesi"
+
+msgid "condition_help_HostRegexCondition"
+msgstr "Host wildcard koşuluna benzer, ancak ana bilgisayarları (alan adlarını) <a href='https://www.google.com/search?q=regular%20expression'>düzenli ifade</a> ile eşleştirir.<br>Düzenli ifadeleri oluşturmak (ve okumak) zor olabilir.<br>Çoğu durumda joker karakter kullanmanız, diğer koşul türleriyle yapılamayan durumlar için regex kullanmanız önerilir."
+
+msgid "condition_HostLevelsCondition"
+msgstr "Sunucu seviyeleri"
+
+msgid "condition_help_HostLevelsCondition"
+msgstr ""
+"İstek sadece sunucu seviyesi(host level) belirtilen aralıkta ise eşleşir .\n"
+"<br>Tanımlanan sunucu seviyesi <b>nokta ile ayrılmış bölümlerin sayısı</b> "
+"sunucu (domain adı).<br>Örnek: <code>www.example.com</code> kodunun sunucu "
+"seviyesi 3 iken,  <code>internal</code> kodunun sunucu seviyesi 1'dir ."
+
+msgid "condition_IpCondition"
+msgstr "IP Değişmezleri"
+
+msgid "condition_help_IpCondition"
+msgstr ""
+"Gönderilen istek, sunucu istenilen şartlarda bir IP adresine sahipse ve alt "
+"ağda ise yani<a href='https://en.wikipedia.org/wiki/Classless_Inter-"
+"Domain_Routing#CIDR_notation'>CIDR notation</a>adresinde belirtilen "
+"özelliklere sahipse eşleşme gerçekleşir.<br>Örneğin,  <code>127.0.0.1/"
+"16</code>şartı mevcut olsun. Bu şarta <code>127.0.*.*</code> ile başlayan "
+"tüm IP'ler uyar yani eşleşme başarılı olur.<br>Bu "
+"yüzden<code>127.0.0.1</code> IP'si belirtilen kurala uyarken "
+"<code>127.1.0.0</code> IP'si kurala uymaz. <code>localhost</code> Şeklinde "
+"bir ada sahip olan sunucularda ise asla eşleşme gerçekleşmez çünkü istenilen "
+"şartlarda bir IP adresine sahip değillerdir."
+
+msgid "condition_UrlWildcardCondition"
+msgstr "URL wildcard"
+
+msgid "condition_help_UrlWildcardCondition"
+msgstr "İstek URL'lerini joker karakterle eşleştirir.<br>Hızlı joker referansı için yukarıdaki Host wildcard bölümüne bakın.<br>URL jokerleri özel olarak işlenmez (Host wildcard'daki alt alan adı sihri yoktur).<br>Yani <code>*://*.example.com/*</code> http://www.example.com/ ile eşleşir ancak http://example.com/ ile <b>eşleşmez</b>."
+
+msgid "condition_UrlRegexCondition"
+msgstr "URL regex"
+
+msgid "condition_help_UrlRegexCondition"
+msgstr ""
+"URL eşlemesi <a href='https://www.google.com/search?q=regular%20expression'>"
+"düzenli ifadeler</a> ile güçlüdür.<br>Ancak, düzenli ifadelerin "
+"oluşturulması (ve okunması) zor olabilir.<br>Çoğu durumda joker karakter "
+"kullanmanız ve yalnızca başka bir koşul türüyle elde edilemeyen koşullar "
+"için kurallı ifade kullanmanız önerilir."
+
+msgid "condition_KeywordCondition"
+msgstr "Anahtar Kelime"
+
+msgid "condition_help_KeywordCondition"
+msgstr "Bir anahtar kelime koşulu, URL protokolü HTTP olduğunda ve desen URL'nin tam bir alt dizesi olduğunda eşleşir.<br><code>http://*<b>pattern</b>*</code> URL joker desenine benzer davranır; burada <b>pattern</b> anahtar kelime desenidir.<br>Anahtar kelime koşulları, URL'deki bazı anahtar kelimeleri engelleyen bir güvenlik duvarını, bu URL'leri proxy üzerinden isteyerek aşmak istediğinizde kullanışlıdır."
+
+msgid "condition_FalseCondition"
+msgstr "(Devre dışı)"
+
+msgid "condition_details_FalseCondition"
+msgstr "(Eşleme sırasında koşul görmezden gelindi)"
+
+msgid "condition_help_FalseCondition"
+msgstr "Bir koşulu, türünü <code>(Disabled)</code> olarak ayarlayarak devre dışı bırakabilirsiniz. Devre dışı bir koşul yokmuş gibi davranır.<br>Bu özellik koşulları geçici olarak devre dışı bırakmak için kullanılabilir.<br>Devre dışı koşullar önceki bilgileri (ör. desenler) saklar ve koşul türü önceki türe döndürülerek yeniden etkinleştirilebilir."
+
+msgid "condition_TimeCondition"
+msgstr "Mevcut Zaman"
+
+msgid "condition_help_TimeCondition"
+msgstr "Geçerli yerel saat, <b>başlangıç saati</b> ve <b>bitiş saati</b> ile tanımlanan aralıktaysa (her ikisi de dahil) eşleşir.<br>Yerel saat, başlangıç ve bitiş saatleri <b>24 saat</b> biçiminde hesaplanır (<b>0 ile 23</b> arası).<br>Hesaplama kabaca istek gönderildiği anda yapılır."
+
+msgid "condition_WeekdayCondition"
+msgstr "Haftanın Günü"
+
+msgid "condition_help_WeekdayCondition"
+msgstr "Koşul ayrıntılarında <b>geçerli haftanın günü</b> seçiliyse eşleşir. Gün yerel saat dilimine göre hesaplanır.<br>İstek ve URL'si bu koşul için önemli değildir. Sonuç yalnızca istek gönderildiğindeki haftanın gününe bağlıdır."
+
+msgid "condition_alert_fullUrlLimitation"
+msgstr "Chrome 52 itibarıyla <code>https://</code> URL'lerinde tam URL eşleştirmesi artık mümkün değildir. <a href='https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation'>Daha fazla bilgi...</a>"
+
+msgid "condition_alert_fullUrlLimitationLink"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation"
+
+msgid "condition_group_default"
+msgstr " "
+
+msgid "condition_group_host"
+msgstr "Sunucu"
+
+msgid "condition_group_url"
+msgstr "Url"
+
+msgid "condition_group_special"
+msgstr "Özel"
+
+msgid "ruleListFormat_Switchy"
+msgstr "Değiştirilebilir"
+
+msgid "ruleListFormat_AutoProxy"
+msgstr "AutoProxy"
+
+msgid "ruleList_usageUrl"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/RuleListUsage"
+
+msgid "ruleList_error_resultNotEnabled"
+msgstr "'@with result' yönergesi eksik!"
+
+msgid "ruleList_error_unknownProfile"
+msgstr "Bilinmeyen profil: $PROFILE$"
+
+msgid "ruleList_error_missingResultProfile"
+msgstr "$LNO$ satırında sonuç profili adı eksik: $SOURCE$"
+
+msgid "ruleList_error_invalidRule"
+msgstr "$LNO$ nolu satırda geçersiz kural: $SOURCE$"
+
+msgid "ruleList_error_noDefaultRule"
+msgstr "Herkesi yakalayan '*' koşuluna sahip varsayılan kural eksik!"
+
+msgid "dialog_close"
+msgstr "Kapat"
+
+msgid "dialog_save"
+msgstr "Değişikleri Kaydet"
+
+msgid "dialog_ok"
+msgstr "Tamam"
+
+msgid "dialog_cancel"
+msgstr "İptal"
+
+msgid "inputClear_clear"
+msgstr "Temizle"
+
+msgid "inputClear_restore"
+msgstr "Eski Haline Getir"
+
+msgid "options_title"
+msgstr "SwitchyDelta Seçenekler"
+
+msgid "options_experimental_badge"
+msgstr "α"
+
+msgid "options_navHeader_setting"
+msgstr "Ayarlar"
+
+msgid "options_navHeader_profiles"
+msgstr "Profiller"
+
+msgid "options_navHeader_actions"
+msgstr "Hareketler"
+
+msgid "options_tab_ui"
+msgstr "Arayüz"
+
+msgid "options_tab_general"
+msgstr "General"
+
+msgid "options_tab_importExport"
+msgstr "İçe veya Dışa Aktar"
+
+msgid "options_newProfile"
+msgstr "Yeni profil…"
+
+msgid "options_apply"
+msgstr "Değişiklikleri uygula"
+
+msgid "options_discard"
+msgstr "Değişiklikleri yoksay"
+
+msgid "options_reset"
+msgstr "Seçenekleri sıfırla"
+
+msgid "options_group_miscOptions"
+msgstr "Diğer Seçenekler"
+
+msgid "options_confirmDeletion"
+msgstr "Koşula bağlı silinmeyi onayla."
+
+msgid "options_refreshOnProfileChange"
+msgstr "Profil güncellendiğinde mevcut sekmeyi yenile."
+
+msgid "options_showInspectMenu"
+msgstr "Bağlam menüsüyle sayfa öğeleri için kullanılan proxy'yi incelemeye izin ver."
+
+msgid "options_addConditionsToBottom"
+msgstr "Açılır menüyle eklenen yeni koşulları listenin sonuna ekle."
+
+msgid "options_group_keyboardShortcut"
+msgstr "Klavye Kısayolu"
+
+msgid "options_menuShortcutHelp"
+msgstr "Kısayola basmak anahtar açılır menüsünü açar. (Varsayılan Alt+Shift+O)."
+
+msgid "options_menuShortcutMore"
+msgstr "Açılır menü öğelerine klavye ile de erişilebilir. Daha fazla bilgi için menüde ? (veya /) tuşuna basın."
+
+msgid "options_menuShortcutConfigure"
+msgstr "Kısayolu ayarla"
+
+msgid "options_group_switchOptions"
+msgstr "Geçiş Seçenekleri"
+
+msgid "options_startupProfile"
+msgstr "Başlangıç Hesabı"
+
+msgid "options_startupProfile_none"
+msgstr "(Geçerli profil)"
+
+msgid "options_showConditionTypesAdvanced"
+msgstr "Gelişmiş koşul tiplerini göster"
+
+msgid "options_showConditionTypesAdvancedHelp"
+msgstr ""
+"Yeni tip gelişmiş ancak karmaşık geçiş koşullarının kilidini açar. Çoğu "
+"senaryoda, temel koşul türleri yeterli olmalıdır, bu yüzden bu seçenek "
+"önerilmez."
+
+msgid "options_quickSwitch"
+msgstr "Hızlı Geçiş"
+
+msgid "options_cycledProfiles"
+msgstr "Döngüdeki Profiller"
+
+msgid "options_cycledProfilesHelp"
+msgstr "Simgeye tıkladığınızda (veya yukarıdaki kısayolu kullandığınızda) aşağıdaki profiller sırayla uygulanır."
+
+msgid "options_cycledProfilesTooFew"
+msgstr "Bu işlevi etkinleştirmek için en az 2 profil seçmelisiniz! Aşağıdaki kutudan sürükleyebilirsiniz."
+
+msgid "options_notCycledProfiles"
+msgstr "Döngüde Olmayan Profiller"
+
+msgid "options_group_proxyChanges"
+msgstr "Proxy Değişiklikleri"
+
+msgid "options_revertProxyChanges"
+msgstr "Diğer uygulamaların yaptığı proxy değişikliklerini geri al."
+
+msgid "options_group_conflicts"
+msgstr "Çakışmalar"
+
+msgid "options_conflicts_introduction"
+msgstr "Bazen diğer uygulamalar da proxy ayarlarını kontrol etmeye çalışır ve çakışmalar oluşur. Reklam engelleyiciler ve diğer uzantılar da arka planda proxy ayarlarını kullanabilir. Tarayıcının çalışma biçimi nedeniyle bu tür çakışmalardan kaçınılamaz."
+
+msgid "options_conflicts_lowerPriority"
+msgstr "SwitchyDelta simgesindeki böyle kırmızı bir rozet, başka bir uygulamanın daha yüksek önceliğe sahip olduğunu ve SwitchyDelta'nın ayarları kontrol edemediğini gösterir. Önceliği yükseltmek için SwitchyDelta'yı kaldırıp yeniden yüklemeyi deneyin. Yeniden yüklemeden sonra hâlâ çakışma görürseniz, çakışmaya neden olan diğer uygulamayı kaldırmayı düşünün."
+
+msgid "options_conflicts_higherPriority"
+msgstr "SwitchyDelta daha yüksek önceliğe sahipse, açılır menüde $SYSTEMPROFILE$ seçerek denetimi diğer uygulamalara veya sistem ayarlarına bırakabilirsiniz."
+
+msgid "options_showExternalProfile"
+msgstr "Diğer uygulamalardan proxy ayarlarını içe aktarmak için açılır menü öğesini göster."
+
+msgid "options_showExternalProfileHelp"
+msgstr "$SYSTEMPROFILE$ seçiliyken, açılır menüde $EXTERNALPROFILE$ seçerek diğer uygulamalardan geçerli proxy ayarlarını içe aktarabilirsiniz. Ayarlar verdiğiniz adla bir profil olarak içe aktarılır. İçe aktarılan profilin bir anlık görüntü olduğunu ve bundan sonra kaynak uygulamadaki değişiklikleri yansıtmayacağını unutmayın."
+
+msgid "options_group_networkRequests"
+msgstr "Ağ İstekleri"
+
+msgid "options_monitorWebRequests"
+msgstr "Geçerli sekmedeki kaynaklar için başarısız web isteklerinin sayısını göster."
+
+msgid "options_monitorWebRequestsHelp"
+msgstr "Bazı kaynaklar yüklenemezse simgede sarı bir rozet gösterilir<br>ve bu kaynaklar için profili açılır menüden kolayca ayarlayabilirsiniz."
+
+msgid "options_downloadOptions"
+msgstr "İndirme Seçenekleri"
+
+msgid "options_downloadOptionsHelp"
+msgstr "Çevrimiçi kural listelerinin ve PAC betiklerinin güncelleme sıklığını yapılandırın."
+
+msgid "options_downloadInterval"
+msgstr "İndirme zaman aralığı"
+
+msgid "options_downloadInterval_15"
+msgstr "15 Dakika"
+
+msgid "options_downloadInterval_60"
+msgstr "1 Saat"
+
+msgid "options_downloadInterval_180"
+msgstr "3 Saat"
+
+msgid "options_downloadInterval_360"
+msgstr "6 Saat"
+
+msgid "options_downloadInterval_720"
+msgstr "12 Saat"
+
+msgid "options_downloadInterval_1440"
+msgstr "Her gün"
+
+msgid "options_downloadInterval_never"
+msgstr "Asla"
+
+msgid "options_group_importExportProfile"
+msgstr "Profil"
+
+msgid "options_exportPacFile"
+msgstr "PAC Dosyası Olarak Dışa Aktar"
+
+msgid "options_exportPacFileHelp"
+msgstr ""
+"Geçerli profili PAC dosyası olarak dışa aktar, böylece diğer tarayıcılarda "
+"kullanabilirsin."
+
+msgid "options_exportProfileHelp"
+msgstr "Bir profili dışa aktarmak için profil sayfasının sağ üst eylem çubuğunu kullanın."
+
+msgid "options_exportLegacyRuleList"
+msgstr "Mümkün olduğunda kural listelerini Proxy Switchy!/SwitchyPlus/SwitchySharp uyumlu biçimde dışa aktar."
+
+msgid "options_exportLegacyRuleListHelp"
+msgstr "Bu seçeneği yalnızca bu projelerin kullanıcıları için kural listesi yayınlıyorsanız etkinleştirin.<br>İyileştirmeler için kitlenize SwitchyDelta'ya yükseltmelerini önermenizi öneririz."
+
+msgid "options_group_importExportSettings"
+msgstr "Ayarlar"
+
+msgid "options_makeBackup"
+msgstr "Yedek oluştur"
+
+msgid "options_makeBackupHelp"
+msgstr ""
+"Tüm ayarlarının tam bir yedeğini oluştur (profiller ve diğer seçenekler "
+"dahil)."
+
+msgid "options_restoreLocal"
+msgstr "Dosyadan eski haline getir"
+
+msgid "options_restoreLocalHelp"
+msgstr "SwitchyDelta seçeneklerini bir dosyadan eski haline getir."
+
+msgid "options_restoreOnline"
+msgstr "Çevirimiçi eski haline getir"
+
+msgid "options_restoreOnlinePlaceholder"
+msgstr "Seçenekler dosyası bağlantısı (ör. 'http://example.com/switchy.bak')"
+
+msgid "options_restoreOnlineSubmit"
+msgstr "Eski haline getir"
+
+msgid "options_group_syncing"
+msgstr "Eşitleniyor (Deneysel)"
+
+msgid "options_syncEnable"
+msgstr "Eşitlemeyi Etkinleş"
+
+msgid "options_syncEnableForce"
+msgstr "Eşitlemeden İndir"
+
+msgid "options_syncDisable"
+msgstr "Eşitlemeyi pasifleştir"
+
+msgid "options_syncReset"
+msgstr "Uzak kopyayı temizle"
+
+msgid "options_syncPristineHelp"
+msgstr "Artık Chrome tarayıcısı çalışan tüm masaüstü cihazlarınızda ayarlarınızı ve profillerinizi otomatik olarak senkronize edebilirsiniz."
+
+msgid "options_syncSyncAlert"
+msgstr "Seçenekleriniz diğer cihazlarınızla otomatik olarak senkronize ediliyor."
+
+msgid "options_syncSyncHelp"
+msgstr "Senkronizasyonun gerçekten çalışması için her cihazınızda (bu cihaz dahil) Chrome'da oturum açmış olmanız gerektiğini unutmayın. <br> Çalıştığından emin olmak için bu bölümü diğer cihazlarda da kontrol edebilirsiniz."
+
+msgid "options_syncConflictAlert"
+msgstr "Başka bir cihazda senkronizasyon yoluyla seçeneklerinizin bir kopyasını yüklediniz."
+
+msgid "options_syncConflictHelp"
+msgstr "İsterseniz uzak kopyayı cihazınıza indirebilirsiniz. <br>Ancak bunu yapmak bu cihazdaki <b>mevcut ayarlarınızı ve profillerinizi üzerine yazar</b>."
+
+msgid "options_syncUnsupportedHelp"
+msgstr "Seçenek senkronizasyonu platformunuzda veya tarayıcınızda desteklenmiyor. Şimdilik yalnızca masaüstünde Chrome tarayıcısı desteklenir."
+
+msgid "options_profileSyncDisabled"
+msgstr "Bu profil için eşitleme pasifleştirildi."
+
+msgid "options_profileSyncDisabled_quotaPerItem"
+msgstr ""
+"Çok fazla depolama alanı kullanması sebebiyle bu profil için eşleme "
+"pasifleştirildi."
+
+msgid "options_profileTabPrefix"
+msgstr "Profil :: "
+
+msgid "options_renameProfile"
+msgstr "Yeniden adlandır"
+
+msgid "options_deleteProfile"
+msgstr "Sil"
+
+msgid "options_profileExportRuleList"
+msgstr "Kural listesini yayınla"
+
+msgid "options_profileExportRuleListHelp"
+msgstr "Geçiş kurallarını metin biçiminde yayınlama için dışa aktar."
+
+msgid "options_profileExportPac"
+msgstr "PAC Dışa Aktar"
+
+msgid "options_profileUnsupported"
+msgstr "Desteklenmeyen profil türü $TYPE$!"
+
+msgid "options_profileUnsupportedHelp"
+msgstr "Seçenekler bozuk olabilir veya bu programın daha yeni bir sürümünden gelmiş olabilir."
+
+msgid "options_profileEditSource"
+msgstr "Kaynak kodunu düzenle"
+
+msgid "options_profileEditSourceHelp"
+msgstr "Kaynak kodu biçimi hakkında yardım göster"
+
+msgid "options_profileEditSourceHelpUrl"
+msgstr ""
+"https://github.com/madeye/SwitchyDelta/wiki/SwitchyDelta-conditions-"
+"format#result-profile"
+
+msgid "options_group_proxyServers"
+msgstr "Proxy servers"
+
+msgid "options_proxy_scheme"
+msgstr "Şema"
+
+msgid "options_proxy_protocol"
+msgstr "Protokol"
+
+msgid "options_proxy_server"
+msgstr "Sunucu"
+
+msgid "options_proxy_port"
+msgstr "Port"
+
+msgid "options_proxy_auth"
+msgstr "Kimlik doğrulama"
+
+msgid "options_proxy_authNotSupported"
+msgstr "Tarayıcınız $PROTOCOLDISP$ proxy kimlik doğrulamasını DESTEKLEMİYOR! Lütfen bu sorunu SwitchyDelta'ya bildirmeyin. Bunun yerine tarayıcı desteğinize başvurun."
+
+msgid "options_proxy_authAllWarningPac"
+msgstr "Uyarı: Kullanıcı adı/parola, PAC betiğinin döndürdüğü beklenmeyen sunuculara gönderilebilir."
+
+msgid "options_proxy_authAllWarningPacUrl"
+msgstr "Hassas kimlik bilgilerini girmeden önce yukarıdaki URL ile sağlanan betiğe güvendiğinizden emin olun."
+
+msgid "options_proxy_authAllWarningPacScript"
+msgstr "Hassas kimlik bilgilerini vermeden önce aşağıdaki betiğe güvendiğinizden emin olun."
+
+msgid "options_proxy_authReferencedWarning"
+msgstr "Ayrıca bu profili diğer profillerde (ör. Switch Profile) kullanmak, kullanıcı adı/parolanın diğer profillerde yapılandırılmış proxy sunucularına gönderilmesine neden olabilir."
+
+msgid "options_scheme_default"
+msgstr "(varsayılan)"
+
+msgid "options_protocol_direct"
+msgstr "DIRECT"
+
+msgid "options_protocol_useDefault"
+msgstr "(varsayılanı kullan)"
+
+msgid "options_proxy_single"
+msgstr "Yukarıdaki proxy'yi tüm protokoller için kullan."
+
+msgid "options_proxy_expand"
+msgstr "Gelişmişi Göster"
+
+msgid "options_group_bypassList"
+msgstr "Baypas Listesi"
+
+msgid "options_bypassListHelp"
+msgstr "Herhangi bir proxy kullanmak istemediğiniz sunucular: (Her satıra bir sunucu.)"
+
+msgid "options_bypassListHelpLinkText"
+msgstr "(Joker karakterleri ve daha fazlası…)"
+
+msgid "options_group_pacUrl"
+msgstr "PAC Bağlantısı"
+
+msgid "options_pacUrlHelp"
+msgstr "PAC betiği bu URL'den güncellenir. Boş bırakılırsa aşağıdaki betik doğrudan kullanılır."
+
+msgid "options_pacUrlFile"
+msgstr "file: URL'li PAC profilleri yalnızca doğrudan uygulanabilir. Tarayıcı sınırlaması nedeniyle yerel dosyalara erişilemediğinden sonuç profili olarak kullanılamazlar."
+
+msgid "options_pacUrlFileDisabled"
+msgstr "Bu nedenle bu profil için yerel PAC dosyası kullanamazsınız. Gerçekten istiyorsanız bunun için yeni bir PAC profili oluşturabilirsiniz."
+
+msgid "options_group_pacScript"
+msgstr "PAC Betiği"
+
+msgid "options_pacScriptLastUpdate"
+msgstr "PAC betiği indirilme zamanı $TIME$:"
+
+msgid "options_pacScriptObsolete"
+msgstr "URL değişikliği nedeniyle PAC betiği eskimiş. Güncellemek için yukarıdaki indirme düğmesine basın."
+
+msgid "options_group_virtualProfile"
+msgstr "Sanal Profil"
+
+msgid "options_virtualProfileTarget"
+msgstr "Hedef"
+
+msgid "options_virtualProfileTargetHelp"
+msgstr ""
+"Bu profil uygulandığında, aşağıda seçilen profille tamamen aynı şekilde "
+"hareket eder."
+
+msgid "options_group_virtualProfileReplace"
+msgstr "Sanal Profile Taşı"
+
+msgid "options_virtualProfileReplace"
+msgstr "Hedef profille yer değiştir"
+
+msgid "options_virtualProfileReplaceHelp"
+msgstr "Mevcut seçenekleri $PROFILE$ yerine bu sanal profili kullanacak şekilde taşıyabilirsiniz. Bu, $PROFILE$ ile ilgili tüm mevcut kuralları günceller ve bunları bu sanal profile yönlendirir; böylece sonuç profilleri buradan denetlenebilir."
+
+msgid "options_group_ruleListConfig"
+msgstr "Kural Listesi Ayarı"
+
+msgid "options_ruleListFormat"
+msgstr "Kural Listesi Biçimi"
+
+msgid "options_group_ruleListResult"
+msgstr "Kural listesi sonuç profilleri"
+
+msgid "options_ruleListMatchProfile"
+msgstr "Profili eşle"
+
+msgid "options_ruleListDefaultProfile"
+msgstr "Varsayılan profil"
+
+msgid "options_group_ruleListUrl"
+msgstr "Kural Listesi Bağlantısı"
+
+msgid "options_ruleListUrlHelp"
+msgstr "Kural listesi bu URL'den güncellenir. Boş bırakılırsa aşağıdaki metin ayrıştırılır."
+
+msgid "options_group_ruleListText"
+msgstr "Kural Listesi Metni"
+
+msgid "options_ruleListLastUpdate"
+msgstr "Kural listesi indirilme zamanı $TIME$:"
+
+msgid "options_ruleListObsolete"
+msgstr "URL değişikliği nedeniyle kural listesi eskimiş. Güncellemek için yukarıdaki indirme düğmesine basın."
+
+msgid "options_group_switchRules"
+msgstr "Geçiş kuralları"
+
+msgid "options_sort"
+msgstr "Sırala"
+
+msgid "options_conditionType"
+msgstr "Koşul Türü"
+
+msgid "options_showConditionTypeHelp"
+msgstr "Yardım göster"
+
+msgid "options_conditionDetails"
+msgstr "Koşul Detayları"
+
+msgid "options_resultProfile"
+msgstr "Profil"
+
+msgid "options_conditionActions"
+msgstr "Actions"
+
+msgid "options_addCondition"
+msgstr "Koşul ekle"
+
+msgid "options_cloneRule"
+msgstr "Kopya"
+
+msgid "options_ruleNote"
+msgstr "Note"
+
+msgid "options_switchAttachedProfileInCondition"
+msgstr "Kural listesi kuralları"
+
+msgid "options_switchAttachedProfileInConditionDetails"
+msgstr "(Aşağıdaki kural listesiyle eşleşen herhangi bir istek)"
+
+msgid "options_switchAttachedProfileInConditionDisabled"
+msgstr "(Kural listesi kuralları PASİFLEŞTİRİLDİ)"
+
+msgid "options_switchDefaultProfile"
+msgstr "Default"
+
+msgid "options_hostLevelsBetween"
+msgstr "≤ ana bilgisayar düzeyleri ≤"
+
+msgid "options_hourBetween"
+msgstr "≤ geçerli saat ≤"
+
+msgid "options_weekDayShort_0"
+msgstr "Su"
+
+msgid "options_weekDayShort_1"
+msgstr "Mo"
+
+msgid "options_weekDayShort_2"
+msgstr "Tu"
+
+msgid "options_weekDayShort_3"
+msgstr "We"
+
+msgid "options_weekDayShort_4"
+msgstr "Th"
+
+msgid "options_weekDayShort_5"
+msgstr "Fr"
+
+msgid "options_weekDayShort_6"
+msgstr "Sa"
+
+msgid "options_group_conditionHelp"
+msgstr "Koşul Türleri Hakkında"
+
+msgid "options_group_attachProfile"
+msgstr "Çevirimiçi kural listelerini içe aktar"
+
+msgid "options_attachProfile"
+msgstr "Kural listesi ekle"
+
+msgid "options_attachProfileHelp"
+msgstr "Kural listesi ekleyerek başkaları tarafından yayınlanan çevrimiçi koşul koleksiyonlarını yeniden kullanabilirsiniz."
+
+msgid "options_modalHeader_welcome"
+msgstr "SwitchyDelta'ya Hoşgeldiniz"
+
+msgid "options_welcomeNormal"
+msgstr "Nihai proxy anahtarı SwitchyDelta'yı başarıyla yüklediniz."
+
+msgid "options_welcomeNormalGuide"
+msgstr "Lütfen seçenekler sayfasından proxy'lerinizi SwitchyDelta'ya tanıtın. Nasıl olduğunu görelim."
+
+msgid "options_welcomeUpgrade"
+msgstr "SwitchyDelta'ya başarıyla yükselttiniz. Endişelenmeyin, mevcut seçenekleriniz tamamen korundu."
+
+msgid "options_welcomeUpgradeGuide"
+msgstr "Şimdi yeni seçenekler sayfasının hızlı bir kılavuzuna geçelim."
+
+msgid "options_guideNext"
+msgstr "Sonraki"
+
+msgid "options_guideDone"
+msgstr "Tamamlandı"
+
+msgid "options_guideSkip"
+msgstr "Kılavuzu geç"
+
+msgid "options_modalHeader_applyOptions"
+msgstr "Seçenekleri Uygula"
+
+msgid "options_optionsNotSaved"
+msgstr "Seçeneklerdeki değişiklikleriniz kaydedilmedi ve devam ederseniz kaybolacak!"
+
+msgid "options_applyOptionsRequired"
+msgstr "Devam etmeden önce seçenek değişikliklerinizin uygulanması gerekir."
+
+msgid "options_applyOptionsConfirm"
+msgstr "Seçenekleri kaydetmek ve uygulamak istiyor musun?"
+
+msgid "options_modalHeader_renameProfile"
+msgstr "Profili Yeniden Adlandır"
+
+msgid "options_renameProfileName"
+msgstr "Yeni profil adı"
+
+msgid "options_profileNameConflict"
+msgstr "Bu adda bir profil zaten var."
+
+msgid "options_profileNameReserved"
+msgstr "Çift alt çizgi ile başlayan profil adları ayrılmıştır."
+
+msgid "options_profileNameHidden"
+msgstr "Alt çizgi ile başlayan adlara sahip profiller açılır menüde gizlenir. Yine de anahtar profil sonuçları gibi yerlerde kullanılabilirler."
+
+msgid "options_modalHeader_replaceProfile"
+msgstr "Profili Yer Değiştir"
+
+msgid "options_replaceProfile"
+msgstr "Profili Yer Değiştir"
+
+msgid "options_replaceProfileConfirm"
+msgstr ""
+"Gerçekten $FromProfile$ profilini $ToProfile$ ile yer değiştirmek istiyor "
+"musun?"
+
+msgid "options_replaceProfileHelp"
+msgstr "Devam ederseniz, $FromProfile$ öğesine işaret eden tüm kurallar bunun yerine $ToProfile$ kullanacak şekilde güncellenir. Başlangıç profili ve Hızlı Anahtar gibi diğer seçenekler de uygun şekilde değiştirilir. Ancak iki profilin kendisi DEĞİŞTİRİLMEZ veya silinmez."
+
+msgid "options_replaceProfileSuccess"
+msgstr "Seçenekler güncellendi."
+
+msgid "options_modalHeader_deleteProfile"
+msgstr "Profil Sil"
+
+msgid "options_deleteProfileConfirm"
+msgstr "Aşağıdaki profili gerçekten silmek istiyor musun?"
+
+msgid "options_modalHeader_cannotDeleteProfile"
+msgstr "Profil Silinemedi"
+
+msgid "options_profileReferredBy"
+msgstr "Bu profil silinemez, çünkü aşağıdaki profillerle bağlantılı:"
+
+msgid "options_modifyReferringProfiles"
+msgstr ""
+"Bu profilleri değiştirmeli ve silmeden önce bu profille bağlantılarını "
+"durdurmalısınız."
+
+msgid "options_profileNameEmpty"
+msgstr "Profil adı boş olamaz."
+
+msgid "popup_title"
+msgstr "SwitchyDelta Açılır Pencere"
+
+msgid "options_modalHeader_proxyAuth"
+msgstr "Proxy Authentication"
+
+msgid "options_proxyAuthUsername"
+msgstr "Kullanıcı adı"
+
+msgid "options_proxyAuthPassword"
+msgstr "Password"
+
+msgid "options_proxyAuthShowPassword"
+msgstr "Parolayı göster"
+
+msgid "options_proxyAuthHidePassword"
+msgstr "Parolayı gizle"
+
+msgid "options_proxyAuthNone"
+msgstr "No Authentication"
+
+msgid "options_modalHeader_deleteRule"
+msgstr "Kuralı Sil"
+
+msgid "options_deleteRuleConfirm"
+msgstr "Aşağıdaki kuralı silmek istediğine emin misin?"
+
+msgid "options_deleteRule"
+msgstr "Delete"
+
+msgid "options_modalHeader_resetRules"
+msgstr "Kuralları sıfırla"
+
+msgid "options_resetRulesConfirm"
+msgstr "TÜM kuralların sonuç profilini aşağıdaki profile ayarlamak istediğinizden emin misiniz?"
+
+msgid "options_resetRules"
+msgstr "Kuralları sıfırla"
+
+msgid "options_resetRules_help"
+msgstr "Tüm kurallar için profil ayarla"
+
+msgid "options_modalHeader_deleteAttached"
+msgstr "Kural Listesini Kaldır"
+
+msgid "options_deleteAttachedConfirm"
+msgstr "Geçerli profilden kural listesini gerçekten kaldırmak istiyor musun?"
+
+msgid "options_ruleListLineCount"
+msgstr "$COUNT$ satır kural"
+
+msgid "options_deleteAttached"
+msgstr "Kural listesini kaldır"
+
+msgid "options_modalHeader_newProfile"
+msgstr "Yeni Profil"
+
+msgid "options_newProfileName"
+msgstr "Profil adı"
+
+msgid "options_profileType"
+msgstr "Lütfen profil türü seç:"
+
+msgid "options_profileTypeFixedProfile"
+msgstr "Proxy Profili"
+
+msgid "options_profileDescFixedProfile"
+msgstr "Trafiği proxy sunucuları üzerinden tünelleme."
+
+msgid "options_profileTypePacProfile"
+msgstr "PAC Profili"
+
+msgid "options_profileDescPacProfile"
+msgstr "Çevrimiçi/yerel bir PAC betiği kullanarak proxy seçme."
+
+msgid "options_profileDescMorePacProfile"
+msgstr "Buna yalnızca bir PAC betiğiniz veya URL'niz varsa ihtiyacınız olur. PAC hakkında bilginiz yoksa bir tane oluşturmaya çalışmayın."
+
+msgid "options_profileTypeSwitchProfile"
+msgstr "Profile Geç"
+
+msgid "options_profileDescSwitchProfile"
+msgstr ""
+"Alan adları veya desenler gibi çeşitli koşullara göre farklı profilleri otomatik uygulama.\n"
+" Daha kolay anahtarlama için çevrimiçi yayınlanan kuralları da içe aktarabilirsiniz. (AutoSwitch modu + Kural Listesi'nin yerini alır.)"
+
+msgid "options_profileTypeRuleListProfile"
+msgstr "Kural Listesi Profili"
+
+msgid "options_profileDescRuleListProfile"
+msgstr "Başkaları tarafından yayınlanan çevrimiçi koşul koleksiyonlarını yeniden kullanma."
+
+msgid "options_profileTypeVirtualProfile"
+msgstr "Sanal Profil"
+
+msgid "options_profileDescVirtualProfile"
+msgstr "Sanal bir profil gerektiğinde diğer profillerden herhangi biri gibi davranabilir. SwitchProfile ile iyi çalışır ve bir tıklamayla birden fazla koşulun sonucunu değiştirmenizi sağlar."
+
+msgid "options_createProfile"
+msgstr "Oluştur"
+
+msgid "options_modalHeader_resetOptions"
+msgstr "Reset Options"
+
+msgid "options_resetOptionsConfirm"
+msgstr ""
+"Seçenekleri gerçekten sıfırlamak istiyor musun? Tüm profiller ve ayarlar "
+"kaybedilecek!"
+
+msgid "options_formInvalid"
+msgstr "Lütfen sayfadaki hataları düzeltin."
+
+msgid "options_profileNotFound"
+msgstr "$PROFILE$ profili yok! Seçenekler bozulmuş olabilir."
+
+msgid "options_resetSuccess"
+msgstr "Options reset."
+
+msgid "options_saveSuccess"
+msgstr "Seçenekler kaydedildi."
+
+msgid "options_importSuccess"
+msgstr "Seçenekler içe aktarıldı."
+
+msgid "options_importFormatError"
+msgstr "Geçersiz yedek dosyası!"
+
+msgid "options_importDownloadError"
+msgstr "Yedek dosyası indirirken hata!"
+
+msgid "options_profileDownloadSuccess"
+msgstr "Profil güncellendi."
+
+msgid "options_profileDownloadError"
+msgstr "Profil verisi indirilirken hata!"
+
+msgid "options_profileDownloadError_NetworkError"
+msgstr "Güncelleme sırasında ağ hatası oluştu."
+
+msgid "options_profileDownloadError_HttpError"
+msgstr "Güncelleme sırasında HTTP ($STATUS$) hatası oluştu."
+
+msgid "options_profileDownloadError_HttpNotFoundError"
+msgstr "Profil bağlantısı sunucuda bulunamadı. Lütfen tekrar kontrol edin."
+
+msgid "options_profileDownloadError_HttpServerError"
+msgstr "Güncelleme sırasında uzak sunucu ($STATUS$) hatası verdi."
+
+msgid "options_profileDownloadError_ContentTypeRejectedError"
+msgstr "İndirilen veriler geçersiz! İncelemek için tarayıcınızda Profil URL'sini açabilirsiniz."
+
+msgid "options_downloadProfileNow"
+msgstr "Profili Şimdi İndir"
+
+msgid "options_guide_fixedProfileStep"
+msgstr "Bir <b>Proxy Profili</b>, proxy için sunucu IP ve bağlantı noktası gibi ayarları içerir.<br>Profiller SwitchyDelta'daki temel yapılandırma birimleridir.<br>Sizin için zaten bir örnek profil oluşturduk. Açmayı deneyin."
+
+msgid "options_guide_fixedServersStep"
+msgstr "Proxy sunucunuzu ve bağlantı noktanızı buraya dilediğiniz gibi girebilirsiniz.<br>SwitchyDelta <b>herhangi bir proxy sunucusuyla gelmez</b>.<br>Buraya ne yazacağınızı bilmiyorsanız ağ sağlayıcınıza veya proxy yazılımı kılavuzuna danışın."
+
+msgid "options_guide_autoSwitchProfileStep"
+msgstr "Güçlü <b>Switch Profile</b> ile SwitchyDelta'ya proxy'ler arasında otomatik geçiş yapmasını söyleyebilirsiniz.<br>Ancak özellikleri bu hızlı kılavuzda anlatılamaz.<br>Daha sonra gücünü keşfetmek için bu profili açabilirsiniz."
+
+msgid "options_guide_addMoreProfilesStep"
+msgstr "Daha fazla profile mi ihtiyacınız var? Tüm proxy ihtiyaçlarınız için her zaman daha fazla <b>Proxy, Switch ve diğer profiller</b><br>ekleyebilirsiniz.<br>Proxy kullanmanın keyfini çıkarın!"
+
+msgid "options_guide_conditionStep"
+msgstr "SwitchyDelta, isteklere <b>koşullara</b> göre farklı profiller uygulayabilir.<br> Örneğin <b>Host wildcard</b> koşulu, bir alandaki tüm URL'ler için profili ayarlamanızı sağlar."
+
+msgid "options_guide_conditionTypeStep"
+msgstr "Ana bilgisayarı veya tam URL'yi eşleştirmek için çeşitli koşul türleri kullanabilirsiniz. <br> Tür referansını açmak için soru işaretine tıklayın."
+
+msgid "options_guide_conditionProfileStep"
+msgstr "SwitchyDelta, buradaki seçili profili <b>koşulla eşleşen her isteğe</b> uygular. <br> Özel <b>\"[Direct]\" profili</b>, isteğin hiç proxy olmadan gönderilmesine neden olur."
+
+msgid "options_guide_switchDefaultStep"
+msgstr "Hiçbir koşul bir istek için geçerli değilse \"Default\" profili kullanılır. <br>Koşullar her zaman <b>yukarıdan aşağıya</b> sırayla değerlendirilir.<br>Sıralama simgesini sürükleyerek sırayı değiştirebilirsiniz."
+
+msgid "options_guide_applySwitchProfileStep"
+msgstr "Anahtar profili ayarlamayı bitirdiğinizde, <b>açılır menüden o profile geçmeyi</b> unutmayın.<br/> Simge, geçerli sekme için uygulanan <b>nihai sonuç</b> profilini gösterir. <br/> Simgenin üzerine <b>gelince</b> ayrıntılı bir ipucu görünür."
+
+msgid "popup_externalProfile"
+msgstr "(Harici Profil)"
+
+msgid "popup_externalProfileName"
+msgstr "profile adı"
+
+msgid "popup_proxyNotControllable_app"
+msgstr "Proxy ayarları diğer uygulama(lar) veya uzantı(lar) tarafından denetleniyor. Çakışan uygulama veya uzantıları devre dışı bırakın ya da kaldırın."
+
+msgid "popup_proxyNotControllable_policy"
+msgstr "Proxy ayarları ilkelerle geçersiz kılınmış. Lütfen yöneticinizle iletişime geçin."
+
+msgid "popup_proxyNotControllable_unknown"
+msgstr "Proxy ayarları denetlenemiyor. Lütfen sistem ve tarayıcı ayarlarınızı kontrol edin."
+
+msgid "popup_proxyNotControllable_disabled"
+msgstr "Proxy ayarları, diğer uygulama(lar) veya uzantı(lar)dan gelen açık istek nedeniyle devre dışı."
+
+msgid "popup_proxyNotControllable_upgrade"
+msgstr "Proxy ayarları artık SwitchyDelta'nın daha yeni bir sürümü tarafından denetleniyor."
+
+msgid "popup_proxyNotControllableDetails"
+msgstr "Yukarıdaki sorunu çözmeden SwitchyDelta ile profil değiştiremezsiniz."
+
+msgid "popup_proxyNotControllableDetails_upgrade"
+msgstr "Aynı anda SwitchyDelta'nın iki (veya daha fazla) sürümünü etkinleştiremezsiniz. Lütfen birini devre dışı bırakın."
+
+msgid "popup_proxyNotControllableManage"
+msgstr "Uzantıları yönet"
+
+msgid "popup_addConditionTo"
+msgstr "Şuraya koşul ekle"
+
+msgid "popup_addCondition"
+msgstr "Koşul ekle"
+
+msgid "popup_showOptions"
+msgstr "Options"
+
+msgid "popup_reportIssues"
+msgstr "Hataları raporla"
+
+msgid "popup_errorLog"
+msgstr "Hata kayıtlarını kaydet"
+
+msgid "popup_requestErrorCount"
+msgstr "$COUNT$ başarısız kaynak"
+
+msgid "popup_requestErrorHeading"
+msgstr "Yüklemesi başarısız olan kaynaklar"
+
+msgid "popup_requestErrorWarning"
+msgstr "Ağınız, proxy sunucunuz veya web sayfasıyla ilgili sorunlar nedeniyle bazı kaynaklar yüklenemedi."
+
+msgid "popup_requestErrorWarningHelp"
+msgstr "SwitchyDelta yalnızca bu sorunları bildirir; nedeni değildir."
+
+msgid "popup_requestErrorAddCondition"
+msgstr "Aşağıdaki alan adlarını inceleyip uygun olduğunda bunlar için proxy kullanabilirsiniz."
+
+msgid "popup_requestErrorCannotAddCondition"
+msgstr "Bunlar için anahtar koşullarını yalnızca bir Switch Profile kullanırken ekleyebilirsiniz."
+
+msgid "popup_configureMonitorWebRequests"
+msgstr "Ağ İzleyicisini Yapılandır"
+
+msgid "options_resultProfileForSelectedDomains"
+msgstr "Bu profili seçilen alan adları için kullan"
+
+msgid "options_pac_profile_unsupported_moz"
+msgstr "Teknik sınırlamalar nedeniyle PAC Profilleri Mozilla Firefox'ta ÇALIŞMAZ!"
+
+msgid "popup_issueTemplate"
+msgstr ""
+"\n"
+"\n"
+"\n"
+"<!-- Yorumunuzunu bu satırın ÜSTÜNE yazın. -->\n"
+"SwitchyDelta $projectVersion$\n"
+"$userAgent$"
+
+msgid "browserAction_profileDetails_PacProfile"
+msgstr "(PAC betiği)"
+
+msgid "browserAction_profileDetails_SystemProfile"
+msgstr "(diğer uzantılar veya çevre değişkenleri tarafından kontrol ediliyor)"
+
+msgid "browserAction_profileDetails_DirectProfile"
+msgstr "(hiçbir proxy kullanmıyor)"
+
+msgid "browserAction_profileDetails_SwitchProfile"
+msgstr "(şart temelli geçiş yapma)"
+
+msgid "browserAction_profileDetails_RuleListProfile"
+msgstr "(kural listesi temelli geçiş yapma)"
+
+msgid "browserAction_titleNormal"
+msgstr "SwitchyDelta:: $PROFILE$"
+
+msgid "browserAction_titleWithResult"
+msgstr ""
+"SwitchyDelta:: $1:PROFILE$\n"
+"$3:DETAILS$"
+
+msgid "browserAction_titleNewerOptions"
+msgstr "HATA: Saklanan seçenekleri yüklemek için daha yeni bir SwitchyDelta sürümü gerekir."
+
+msgid "browserAction_titleOptionError"
+msgstr "HATA: Saklanan seçenekler bozulmuş. SEÇENEKLERİ SIFIRLAMAK için buraya tıklayın."
+
+msgid "browserAction_titleDownloadFail"
+msgstr "Uyarı: PAC betikleri ve/veya kural listeleri indirilemedi."
+
+msgid "browserAction_titleExternalProxy"
+msgstr "Not: Proxy ayarları şu anda diğer uygulama(lar) tarafından denetleniyor."
+
+msgid "browserAction_titleInspect"
+msgstr "[İncele] $URL$"
+
+msgid "browserAction_defaultRuleDetails"
+msgstr "(default)"
+
+msgid "browserAction_directResult"
+msgstr "DIRECT"
+
+msgid "browserAction_attachedPrefix"
+msgstr "(RL) "
+
+msgid "browserAction_tempRulePrefix"
+msgstr "(TEMP) "
+
+msgid "contextMenu_inspectPage"
+msgstr "Bu sayfa için kullanılan proxy'yi incele"
+
+msgid "contextMenu_inspectFrame"
+msgstr "Bu Çerçeve için kullanılan proxy'yi incele"
+
+msgid "contextMenu_inspectLink"
+msgstr "Bu Bağlantı açılırsa kullanılacak proxy'yi incele"
+
+msgid "contextMenu_inspectElement"
+msgstr "Bu Öğe için kullanılan proxy'yi incele"
+
+msgid "contextMenu_enableQuickSwitch"
+msgstr "Hızlı Geçişi Etkinleştir"
+
+msgid "about_title"
+msgstr "Hakkında"
+
+msgid "about_app_description"
+msgstr "Proxy yapılandırma aracı"
+
+msgid "about_version"
+msgstr "Sürüm $VERSION$"
+
+msgid "about_experimental_warning_moz"
+msgstr ""
+"Mozilla Firefox seteği yüksek oranda deneyseldir! Hatalar ile "
+"karşılaşırsanız, aşağıdaki düğmeleri kullanarak lütfen raporlayın."
+
+msgid "about_disclaimer_networkService"
+msgstr "SwitchyDelta proxy, VPN veya diğer ağ servislerini sağlamaz."
+
+msgid "about_disclaimer_privacy"
+msgstr ""
+"SwitchyDelta sizi takip etmez veya internet sitelerine reklam yerleştirmez. "
+"Lütfen <a href='https://github.com/madeye/SwitchyDelta/wiki/"
+"Privacy#english'>gizlilik politikası</a> sayfasına bakın."
+
+msgid "about_help"
+msgstr ""
+"SwitchyDelta kullanımı hakkında yardım ve diğer sorularınız için lütfen "
+"bakınız: <a href='https://github.com/madeye/SwitchyDelta/wiki/"
+"FAQ'>SSS</a>."
+
+msgid "about_copyright"
+msgstr "Telif Hakkı 2026 <a href='https://github.com/madeye'>Max Lv</a>.<br>Telif Hakkı 2012-2017 <a href='https://github.com/FelisCatus/SwitchyOmega/blob/master/AUTHORS'>SwitchyOmega Yazarları</a>."
+"Telif Hakkı 2012-2019 <a href='https://github.com/madeye/SwitchyDelta/"
+"blob/master/AUTHORS'>SwitchyDelta Yazarları</a>. Tüm hakları saklıdır."
+
+msgid "about_credits"
+msgstr ""
+"SwitchyDelta <a href='https://github.com/madeye/"
+"SwitchyDelta'>SwitchyDelta</a> açık kaynak kodlu bir projedir ve diğer <a "
+"href='https://github.com/madeye/SwitchyDelta/blob/master/AUTHORS'>açık "
+"kaynak kodlu yazılımlar</a> kulanılarak üretilmiştir."
+
+msgid "about_license"
+msgstr ""
+"SwitchyDelta <a href='https://www.gnu.org/philosophy/free-sw.en.html'>özgür "
+"yazılımdır</a> ve <a href='https://www.gnu.org/licenses/gpl.html'>GNU "
+"General Public License</a> Sürüm 3 ve sonrası ile lisanslanmıştır."
+
+msgid "popup_proxyAuthPermission"
+msgstr "Kimlik doğrulamalı vekil sunuculara giriş tüm web sitelerine erişim gerektirir."
+
+msgid "popup_proxyAuthPermissionGrant"
+msgstr "Erişim ver"

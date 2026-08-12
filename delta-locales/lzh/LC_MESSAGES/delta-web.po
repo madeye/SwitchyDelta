@@ -1,0 +1,1108 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SwitchyDelta 2.3.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-13 10:29+0000\n"
+"PO-Revision-Date: 2024-07-15 07:09+0000\n"
+"Last-Translator: Makerlife <yuyanggu@hotmail.com>\n"
+"Language-Team: Chinese (Literary) <https://hosted.weblate.org/projects/"
+"switchydelta/main/lzh/>\n"
+"Language: lzh\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.7-dev\n"
+
+msgid "appNameShort"
+msgstr "SwitchyDelta"
+
+msgid "manifest_app_name"
+msgstr "Proxy SwitchyDelta"
+
+msgid "manifest_app_description"
+msgstr "迅速易事地管理並切換多個代理。"
+
+msgid "manifest_icon_default_title"
+msgstr "載入中…"
+
+msgid "upgrade_profile_auto"
+msgstr "自動更迭"
+
+msgid "profile_direct"
+msgstr "[直指]"
+
+msgid "profile_system"
+msgstr "[系統代理]"
+
+msgid "condition_HostWildcardCondition"
+msgstr "主機萬象"
+
+msgid "condition_help_HostWildcardCondition"
+msgstr ""
+"依域名（主機名）匹配請求。<br><b>星號 <code>*</code></b> "
+"匹配零個或者多個字符。<br><b>問號 <code>?</code></b> 匹配任意一字符。"
+"<br><br>請注意以 <code>*.</code> "
+"起首之規則有特別處理，能同時匹配子域名與自身。<br>例如: <code>*.example.com</"
+"code> 能匹配 www.example.com ，<b>且亦能匹配 example."
+"com。</b><br>若<b>僅需匹配子域名</b>，請以<b>兩個</b>星號起首，如 <code>**."
+"example.com</code>。"
+
+msgid "condition_HostRegexCondition"
+msgstr "域名綴形法"
+
+msgid "condition_help_HostRegexCondition"
+msgstr ""
+"如主機萬象之規，但以<a href='https://www.google.com/search?q=regular%20expres"
+"sion'>綴形法</a>匹配主機（域名）。<br>綴形法可能難於構建（及閱讀）。<br>建議"
+"於大多數情況下使用萬象，僅於其他條件無法實現時使用綴形法。"
+
+msgid "condition_HostLevelsCondition"
+msgstr "域名層數"
+
+msgid "condition_help_HostLevelsCondition"
+msgstr ""
+"若且惟若主機層次在所給範圍內，則匹配該請求.<br>主機層次被定義為主機（域名）之"
+"<b>以點分隔的片段數</b>.<br>例如：<code>www.example.com</code> "
+"的主機層次為3，而 <code>internal</code> 的層次為1."
+
+msgid "condition_IpCondition"
+msgstr "IP字面量"
+
+msgid "condition_help_IpCondition"
+msgstr "惟當主機為<b>字面</b>IP位址，且在<a href='https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation'>CIDR記法</a>所指定子網內時，方匹配請求。<br>例如，規<code>127.0.0.1/16</code>匹配一切如<code>127.0.*.*</code>之IP。<br>故<code>127.0.0.1</code>匹配而<code>127.1.0.0</code>否。主機名如<code>localhost</code>永不匹配，蓋其<b>非</b>IP字面量。"
+
+msgid "condition_UrlWildcardCondition"
+msgstr "網址萬象"
+
+msgid "condition_help_UrlWildcardCondition"
+msgstr ""
+"依通配符規則以匹配網址。<br>關於通配符之表達式，詳見上文域名通配符一節之述。<"
+"br>須知網址通配符無特殊處理，不會特殊處理子域名等。<br>故<code>://.example."
+"com/*</code> 可匹配 http://www.example.com/ 然 <b>不匹配</b> http://example."
+"com/."
+
+msgid "condition_UrlRegexCondition"
+msgstr "網址之正則式"
+
+msgid "condition_help_UrlRegexCondition"
+msgstr ""
+"以功能強大之<a href='https://www.google.com/"
+"search?q=regular%20expression'>regular expression</a>正則式匹配網址。<br>然正"
+"則表達式難書而可讀性差。<br>因此，故建議大多數情況下用通配符，僅於他法不可行"
+"時用正則式。"
+
+msgid "condition_KeywordCondition"
+msgstr "關鍵字"
+
+msgid "condition_help_KeywordCondition"
+msgstr "關鍵字條件匹配之則：URL協定為HTTP，且模式為URL之精確子串。<br>其效若URL萬象模式<code>http://*<b>pattern</b>*</code>，其中<b>pattern</b>即關鍵字模式。<br>若欲繞過封鎖URL中若干關鍵字之防火牆，可經代理請求此類URL，則關鍵字條件有用。"
+
+msgid "condition_FalseCondition"
+msgstr "（禁用）"
+
+msgid "condition_details_FalseCondition"
+msgstr "（匹配時無視此條件）"
+
+msgid "condition_help_FalseCondition"
+msgstr ""
+"設規則類型為<code>(禁用)</code>可暫禁某條件。禁用之條件匹配時視為無。<br>條件"
+"禁用後，先前數據（如通配符或正則）仍存，故需時可將條件類型改回先前，以重新啟"
+"用。"
+
+msgid "condition_TimeCondition"
+msgstr "當前時辰"
+
+msgid "condition_help_TimeCondition"
+msgstr ""
+"若當前本地時辰在某範圍內，則匹配。此範圍由<b>始時</b>與<b>終時</b>確定，包含"
+"始時與終時。<br>本地時辰、始時與終時皆依<b>24小時制</b>計（自<b>0至23</b>）。"
+"<br>此條件約在請求發出瞬時，乃算是否匹配。"
+
+msgid "condition_WeekdayCondition"
+msgstr "曜日"
+
+msgid "condition_help_WeekdayCondition"
+msgstr "若條件詳情中選中<b>當前曜日</b>，則匹配。曜日依本地時區計。<br>請求及其URL與此條件無關。結果唯依請求發出時之曜日。"
+
+msgid "condition_alert_fullUrlLimitation"
+msgstr "自Chrome 52起，<code>https://</code>之完整URL不可再匹配。<a href='https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation'>詳見…</a>"
+
+msgid "condition_alert_fullUrlLimitationLink"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation"
+
+msgid "condition_group_default"
+msgstr " "
+
+msgid "condition_group_host"
+msgstr "主機"
+
+msgid "condition_group_url"
+msgstr "網址"
+
+msgid "condition_group_special"
+msgstr "特殊"
+
+msgid "ruleListFormat_Switchy"
+msgstr "Switchy"
+
+msgid "ruleListFormat_AutoProxy"
+msgstr "AutoProxy"
+
+msgid "ruleList_usageUrl"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/RuleListUsage"
+
+msgid "ruleList_error_resultNotEnabled"
+msgstr "闕'@with result'指令！"
+
+msgid "ruleList_error_unknownProfile"
+msgstr "未知情景：$PROFILE$"
+
+msgid "ruleList_error_missingResultProfile"
+msgstr "第$LNO$行闕結果情景名：$SOURCE$"
+
+msgid "ruleList_error_invalidRule"
+msgstr "第$LNO$行規則非法：$SOURCE$"
+
+msgid "ruleList_error_noDefaultRule"
+msgstr "闕含萬應'*'條件之默認規則！"
+
+msgid "dialog_close"
+msgstr "閉"
+
+msgid "dialog_save"
+msgstr "存更改"
+
+msgid "dialog_ok"
+msgstr "可"
+
+msgid "dialog_cancel"
+msgstr "罷"
+
+msgid "inputClear_clear"
+msgstr "清"
+
+msgid "inputClear_restore"
+msgstr "復"
+
+msgid "options_title"
+msgstr "SwitchyDelta選項"
+
+msgid "options_experimental_badge"
+msgstr "α"
+
+msgid "options_navHeader_setting"
+msgstr "設定"
+
+msgid "options_navHeader_profiles"
+msgstr "情景"
+
+msgid "options_navHeader_actions"
+msgstr "操作"
+
+msgid "options_tab_ui"
+msgstr "界面"
+
+msgid "options_tab_general"
+msgstr "通則"
+
+msgid "options_tab_importExport"
+msgstr "導入/導出"
+
+msgid "options_newProfile"
+msgstr "新建情景…"
+
+msgid "options_apply"
+msgstr "應用更改"
+
+msgid "options_discard"
+msgstr "棄更改"
+
+msgid "options_reset"
+msgstr "重置選項"
+
+msgid "options_group_miscOptions"
+msgstr "雜項"
+
+msgid "options_confirmDeletion"
+msgstr "刪條件時須確認。"
+
+msgid "options_refreshOnProfileChange"
+msgstr "情景變更時刷新當前標籤。"
+
+msgid "options_showInspectMenu"
+msgstr "許以右鍵菜單檢查頁面元素所用代理。"
+
+msgid "options_addConditionsToBottom"
+msgstr "以彈出菜單新增之條件置於列表末。"
+
+msgid "options_group_keyboardShortcut"
+msgstr "鍵盤捷徑"
+
+msgid "options_menuShortcutHelp"
+msgstr "按捷徑則開切換彈出菜單。（默認為Alt+Shift+O）。"
+
+msgid "options_menuShortcutMore"
+msgstr "彈出菜單諸項亦可以鍵盤達之。於菜單中按?（或/）以詳知。"
+
+msgid "options_menuShortcutConfigure"
+msgstr "配置捷徑"
+
+msgid "options_group_switchOptions"
+msgstr "切換選項"
+
+msgid "options_startupProfile"
+msgstr "起動情景"
+
+msgid "options_startupProfile_none"
+msgstr "（當前情景）"
+
+msgid "options_showConditionTypesAdvanced"
+msgstr "顯示高級條件類型"
+
+msgid "options_showConditionTypesAdvancedHelp"
+msgstr "解鎖高級而繁複之切換條件。多數情形，基本條件已足，故不薦此選。"
+
+msgid "options_quickSwitch"
+msgstr "速切"
+
+msgid "options_cycledProfiles"
+msgstr "輪替情景"
+
+msgid "options_cycledProfilesHelp"
+msgstr "點圖標（或用上方捷徑）時，依序應用下列情景。"
+
+msgid "options_cycledProfilesTooFew"
+msgstr "須選至少二情景方能啟此功能！可自下方框拖入。"
+
+msgid "options_notCycledProfiles"
+msgstr "非輪替情景"
+
+msgid "options_group_proxyChanges"
+msgstr "代理變更"
+
+msgid "options_revertProxyChanges"
+msgstr "撤他應用對代理之更改。"
+
+msgid "options_group_conflicts"
+msgstr "衝突"
+
+msgid "options_conflicts_introduction"
+msgstr "或有他應用亦圖控代理設定，遂生衝突。去廣告等擴展或暗用代理設定。此類衝突緣於瀏覽器之制，不可免。"
+
+msgid "options_conflicts_lowerPriority"
+msgstr "SwitchyDelta圖標上若見此紅徽，則他應用優先更高，SwitchyDelta不能控設定。請試卸載再重裝SwitchyDelta，或可升其優先。若重裝後仍衝突，可慮移除肇事之他應用。"
+
+msgid "options_conflicts_higherPriority"
+msgstr "若SwitchyDelta優先較高，可於彈出菜單選$SYSTEMPROFILE$，以還控權於他應用或系統設定。"
+
+msgid "options_showExternalProfile"
+msgstr "於彈出菜單顯示項，以自他應用導入代理設定。"
+
+msgid "options_showExternalProfileHelp"
+msgstr "選$SYSTEMPROFILE$時，可於彈出菜單選$EXTERNALPROFILE$，以導入他應用之有效代理設定。設定將以所名為情景導入。須知所導入情景乃快照，其後不隨源應用之變。"
+
+msgid "options_group_networkRequests"
+msgstr "網絡請求"
+
+msgid "options_monitorWebRequests"
+msgstr "顯示當前標籤中失敗之網絡請求數。"
+
+msgid "options_monitorWebRequestsHelp"
+msgstr "若有資源載入失敗，圖標上顯黃徽，<br>可經彈出菜單便捷設此等資源之情景。"
+
+msgid "options_downloadOptions"
+msgstr "下載選項"
+
+msgid "options_downloadOptionsHelp"
+msgstr "配置在線規則列表與PAC腳本之更新頻度。"
+
+msgid "options_downloadInterval"
+msgstr "下載間隔"
+
+msgid "options_downloadInterval_15"
+msgstr "十五分"
+
+msgid "options_downloadInterval_60"
+msgstr "一時"
+
+msgid "options_downloadInterval_180"
+msgstr "三時"
+
+msgid "options_downloadInterval_360"
+msgstr "六時"
+
+msgid "options_downloadInterval_720"
+msgstr "十二時"
+
+msgid "options_downloadInterval_1440"
+msgstr "每日"
+
+msgid "options_downloadInterval_never"
+msgstr "永不"
+
+msgid "options_group_importExportProfile"
+msgstr "情景"
+
+msgid "options_exportPacFile"
+msgstr "導出為PAC文件"
+
+msgid "options_exportPacFileHelp"
+msgstr "導出當前情景為PAC文件，以便他瀏覽器之用。"
+
+msgid "options_exportProfileHelp"
+msgstr "欲導出情景，用情景頁右上操作欄。"
+
+msgid "options_exportLegacyRuleList"
+msgstr "盡可能以Proxy Switchy!/SwitchyPlus/SwitchySharp兼容格式導出規則列表。"
+
+msgid "options_exportLegacyRuleListHelp"
+msgstr "惟當為彼等項目用戶發布規則列表時啟此選。<br>請慮勸閱者升至SwitchyDelta以享改進。"
+
+msgid "options_group_importExportSettings"
+msgstr "設定"
+
+msgid "options_makeBackup"
+msgstr "製備份"
+
+msgid "options_makeBackupHelp"
+msgstr "為選項製全備（含情景及一切他選）。"
+
+msgid "options_restoreLocal"
+msgstr "自文件復原"
+
+msgid "options_restoreLocalHelp"
+msgstr "自本地文件復原SwitchyDelta選項。"
+
+msgid "options_restoreOnline"
+msgstr "自線上復原"
+
+msgid "options_restoreOnlinePlaceholder"
+msgstr "選項文件URL（如'http://example.com/switchy.bak'）"
+
+msgid "options_restoreOnlineSubmit"
+msgstr "復原"
+
+msgid "options_group_syncing"
+msgstr "同步（試驗）"
+
+msgid "options_syncEnable"
+msgstr "啟同步"
+
+msgid "options_syncEnableForce"
+msgstr "自同步下載"
+
+msgid "options_syncDisable"
+msgstr "禁同步"
+
+msgid "options_syncReset"
+msgstr "清遠端副本"
+
+msgid "options_syncPristineHelp"
+msgstr "今可於一切運行Chrome桌面瀏覽器之設備間自動同步設定與情景。"
+
+msgid "options_syncSyncAlert"
+msgstr "選項已與他設備自動同步。"
+
+msgid "options_syncSyncHelp"
+msgstr "須知各設備（含本機）皆須登入Chrome，同步方實效。<br>可於他設備查此節以確其運行。"
+
+msgid "options_syncConflictAlert"
+msgstr "已於他設備經同步上傳選項副本。"
+
+msgid "options_syncConflictHelp"
+msgstr "可下載遠端副本至此設備。<br>然此舉將<b>覆寫本機既有設定與情景</b>。"
+
+msgid "options_syncUnsupportedHelp"
+msgstr "所在平台或瀏覽器不支持選項同步。今唯桌面Chrome受支持。"
+
+msgid "options_profileSyncDisabled"
+msgstr "此情景已禁同步。"
+
+msgid "options_profileSyncDisabled_quotaPerItem"
+msgstr "此情景占用過甚，故禁同步。"
+
+msgid "options_profileTabPrefix"
+msgstr "情景 :: "
+
+msgid "options_renameProfile"
+msgstr "更名"
+
+msgid "options_deleteProfile"
+msgstr "刪"
+
+msgid "options_profileExportRuleList"
+msgstr "發布規則列表"
+
+msgid "options_profileExportRuleListHelp"
+msgstr "以文本格式導出切換規則以便發布。"
+
+msgid "options_profileExportPac"
+msgstr "導出PAC"
+
+msgid "options_profileUnsupported"
+msgstr "不支持之情景類型$TYPE$！"
+
+msgid "options_profileUnsupportedHelp"
+msgstr "選項或損，或出自更新之版本。"
+
+msgid "options_profileEditSource"
+msgstr "編源碼"
+
+msgid "options_profileEditSourceHelp"
+msgstr "顯示源碼格式之助"
+
+msgid "options_profileEditSourceHelpUrl"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/SwitchyDelta-conditions-format#result-profile"
+
+msgid "options_group_proxyServers"
+msgstr "代理伺服"
+
+msgid "options_proxy_scheme"
+msgstr "綱"
+
+msgid "options_proxy_protocol"
+msgstr "協定"
+
+msgid "options_proxy_server"
+msgstr "伺服"
+
+msgid "options_proxy_port"
+msgstr "埠"
+
+msgid "options_proxy_auth"
+msgstr "認證"
+
+msgid "options_proxy_authNotSupported"
+msgstr "瀏覽器不支持$PROTOCOLDISP$代理認證！勿報此題於SwitchyDelta，請聯瀏覽器支持。"
+
+msgid "options_proxy_authAllWarningPac"
+msgstr "警：用戶名/密或送至PAC腳本所返之意外伺服。"
+
+msgid "options_proxy_authAllWarningPacUrl"
+msgstr "輸入敏感憑據前，請確可信上方URL所供腳本。"
+
+msgid "options_proxy_authAllWarningPacScript"
+msgstr "提供敏感憑據前，請確可信下方腳本。"
+
+msgid "options_proxy_authReferencedWarning"
+msgstr "又，於他情景（如切換情景）用此情景，或致用戶名/密送至他情景所配之代理伺服。"
+
+msgid "options_scheme_default"
+msgstr "（默認）"
+
+msgid "options_protocol_direct"
+msgstr "DIRECT"
+
+msgid "options_protocol_useDefault"
+msgstr "（用默認）"
+
+msgid "options_proxy_single"
+msgstr "一切協定皆用上方代理。"
+
+msgid "options_proxy_expand"
+msgstr "顯示高級"
+
+msgid "options_group_bypassList"
+msgstr "旁路列表"
+
+msgid "options_bypassListHelp"
+msgstr "不欲經代理之伺服：（每行一伺服。）"
+
+msgid "options_bypassListHelpLinkText"
+msgstr "（萬象等可用…）"
+
+msgid "options_group_pacUrl"
+msgstr "PAC網址"
+
+msgid "options_pacUrlHelp"
+msgstr "PAC腳本自此URL更新。若空，則逕用下方腳本。"
+
+msgid "options_pacUrlFile"
+msgstr "含file:URL之PAC情景僅可逕用。不可作結果情景，蓋瀏覽器限，本地文件不可訪。"
+
+msgid "options_pacUrlFileDisabled"
+msgstr "故此情景不可用本地PAC文件。若真欲之，可另建PAC情景。"
+
+msgid "options_group_pacScript"
+msgstr "PAC腳本"
+
+msgid "options_pacScriptLastUpdate"
+msgstr "PAC腳本下載於$TIME$："
+
+msgid "options_pacScriptObsolete"
+msgstr "URL已變，PAC腳本過時。按上方下載鈕以更新。"
+
+msgid "options_group_virtualProfile"
+msgstr "虛情景"
+
+msgid "options_virtualProfileTarget"
+msgstr "目標"
+
+msgid "options_virtualProfileTargetHelp"
+msgstr "應用此情景時，其效與下方所選情景全同。"
+
+msgid "options_group_virtualProfileReplace"
+msgstr "遷至虛情景"
+
+msgid "options_virtualProfileReplace"
+msgstr "替目標情景"
+
+msgid "options_virtualProfileReplaceHelp"
+msgstr "可遷既有選項，以本虛情景代$PROFILE$。此將更新一切關$PROFILE$之規則並指於本虛情景，使其結果情景可於此控。"
+
+msgid "options_group_ruleListConfig"
+msgstr "規則列表配置"
+
+msgid "options_ruleListFormat"
+msgstr "規則列表格式"
+
+msgid "options_group_ruleListResult"
+msgstr "規則列表結果情景"
+
+msgid "options_ruleListMatchProfile"
+msgstr "匹配情景"
+
+msgid "options_ruleListDefaultProfile"
+msgstr "默認情景"
+
+msgid "options_group_ruleListUrl"
+msgstr "規則列表網址"
+
+msgid "options_ruleListUrlHelp"
+msgstr "規則列表自此URL更新。若空，則析下方文本。"
+
+msgid "options_group_ruleListText"
+msgstr "規則列表正文"
+
+msgid "options_ruleListLastUpdate"
+msgstr "規則列表下載於$TIME$："
+
+msgid "options_ruleListObsolete"
+msgstr "URL已變，規則列表過時。按上方下載鈕以更新。"
+
+msgid "options_group_switchRules"
+msgstr "切換規則"
+
+msgid "options_sort"
+msgstr "排序"
+
+msgid "options_conditionType"
+msgstr "條件類型"
+
+msgid "options_showConditionTypeHelp"
+msgstr "顯示助"
+
+msgid "options_conditionDetails"
+msgstr "條件詳情"
+
+msgid "options_resultProfile"
+msgstr "情景"
+
+msgid "options_conditionActions"
+msgstr "操作"
+
+msgid "options_addCondition"
+msgstr "加條件"
+
+msgid "options_cloneRule"
+msgstr "克隆"
+
+msgid "options_ruleNote"
+msgstr "注"
+
+msgid "options_switchAttachedProfileInCondition"
+msgstr "規則列表規則"
+
+msgid "options_switchAttachedProfileInConditionDetails"
+msgstr "（凡匹配下方規則列表之請求）"
+
+msgid "options_switchAttachedProfileInConditionDisabled"
+msgstr "（規則列表規則已禁用）"
+
+msgid "options_switchDefaultProfile"
+msgstr "默認"
+
+msgid "options_hostLevelsBetween"
+msgstr "≤ 主機層數 ≤"
+
+msgid "options_hourBetween"
+msgstr "≤ 當前時 ≤"
+
+msgid "options_weekDayShort_0"
+msgstr "日"
+
+msgid "options_weekDayShort_1"
+msgstr "一"
+
+msgid "options_weekDayShort_2"
+msgstr "二"
+
+msgid "options_weekDayShort_3"
+msgstr "三"
+
+msgid "options_weekDayShort_4"
+msgstr "四"
+
+msgid "options_weekDayShort_5"
+msgstr "五"
+
+msgid "options_weekDayShort_6"
+msgstr "六"
+
+msgid "options_group_conditionHelp"
+msgstr "條件類型說"
+
+msgid "options_group_attachProfile"
+msgstr "導入在線規則列表"
+
+msgid "options_attachProfile"
+msgstr "加規則列表"
+
+msgid "options_attachProfileHelp"
+msgstr "可加規則列表，以復用他人在線所發之條件集。"
+
+msgid "options_modalHeader_welcome"
+msgstr "歡迎用SwitchyDelta"
+
+msgid "options_welcomeNormal"
+msgstr "已成功安裝SwitchyDelta，終極代理切換器。"
+
+msgid "options_welcomeNormalGuide"
+msgstr "請於選項頁告SwitchyDelta以代理。且觀其法。"
+
+msgid "options_welcomeUpgrade"
+msgstr "已成功升至SwitchyDelta。勿懼，既有選項全存。"
+
+msgid "options_welcomeUpgradeGuide"
+msgstr "今且速覽新選項頁。"
+
+msgid "options_guideNext"
+msgstr "次"
+
+msgid "options_guideDone"
+msgstr "畢"
+
+msgid "options_guideSkip"
+msgstr "略導"
+
+msgid "options_modalHeader_applyOptions"
+msgstr "應用選項"
+
+msgid "options_optionsNotSaved"
+msgstr "選項之改尚未存，若進則失！"
+
+msgid "options_applyOptionsRequired"
+msgstr "須先應用選項之改，方可繼。"
+
+msgid "options_applyOptionsConfirm"
+msgstr "欲存並應用選項乎？"
+
+msgid "options_modalHeader_renameProfile"
+msgstr "情景更名"
+
+msgid "options_renameProfileName"
+msgstr "新情景名"
+
+msgid "options_profileNameConflict"
+msgstr "此名情景已存。"
+
+msgid "options_profileNameReserved"
+msgstr "以雙下劃線起首之名保留。"
+
+msgid "options_profileNameHidden"
+msgstr "以下劃線起首之情景隱於彈出菜單。然仍可用於切換情景結果等處。"
+
+msgid "options_modalHeader_replaceProfile"
+msgstr "替情景"
+
+msgid "options_replaceProfile"
+msgstr "替情景"
+
+msgid "options_replaceProfileConfirm"
+msgstr "真欲以$ToProfile$替$FromProfile$乎？"
+
+msgid "options_replaceProfileHelp"
+msgstr "若進，凡指$FromProfile$之規則將改用$ToProfile$。起動情景、速切等選亦將適宜改之。然二情景本身不改不刪。"
+
+msgid "options_replaceProfileSuccess"
+msgstr "選項已更。"
+
+msgid "options_modalHeader_deleteProfile"
+msgstr "刪情景"
+
+msgid "options_deleteProfileConfirm"
+msgstr "真欲刪下列情景乎？"
+
+msgid "options_modalHeader_cannotDeleteProfile"
+msgstr "不能刪情景"
+
+msgid "options_profileReferredBy"
+msgstr "此情景為下列情景所引，故不可刪："
+
+msgid "options_modifyReferringProfiles"
+msgstr "須改此等情景，使止引此情景，方可刪之。"
+
+msgid "options_profileNameEmpty"
+msgstr "情景名不可空。"
+
+msgid "popup_title"
+msgstr "SwitchyDelta彈出"
+
+msgid "options_modalHeader_proxyAuth"
+msgstr "代理認證"
+
+msgid "options_proxyAuthUsername"
+msgstr "用戶名"
+
+msgid "options_proxyAuthPassword"
+msgstr "密"
+
+msgid "options_proxyAuthShowPassword"
+msgstr "顯示密"
+
+msgid "options_proxyAuthHidePassword"
+msgstr "隱密"
+
+msgid "options_proxyAuthNone"
+msgstr "無認證"
+
+msgid "options_modalHeader_deleteRule"
+msgstr "刪規則"
+
+msgid "options_deleteRuleConfirm"
+msgstr "真欲刪下列規則乎？"
+
+msgid "options_deleteRule"
+msgstr "刪"
+
+msgid "options_modalHeader_resetRules"
+msgstr "重置規則"
+
+msgid "options_resetRulesConfirm"
+msgstr "確將一切規則之結果情景設為下列情景乎？"
+
+msgid "options_resetRules"
+msgstr "重置規則"
+
+msgid "options_resetRules_help"
+msgstr "為一切規則設情景"
+
+msgid "options_modalHeader_deleteAttached"
+msgstr "移除規則列表"
+
+msgid "options_deleteAttachedConfirm"
+msgstr "真欲自當前情景移除規則列表乎？"
+
+msgid "options_ruleListLineCount"
+msgstr "$COUNT$行規則"
+
+msgid "options_deleteAttached"
+msgstr "移除規則列表"
+
+msgid "options_modalHeader_newProfile"
+msgstr "新建情景"
+
+msgid "options_newProfileName"
+msgstr "情景名"
+
+msgid "options_profileType"
+msgstr "請選情景類型："
+
+msgid "options_profileTypeFixedProfile"
+msgstr "代理情景"
+
+msgid "options_profileDescFixedProfile"
+msgstr "經代理伺服隧傳流量。"
+
+msgid "options_profileTypePacProfile"
+msgstr "PAC情景"
+
+msgid "options_profileDescPacProfile"
+msgstr "以在線/本地PAC腳本選代理。"
+
+msgid "options_profileDescMorePacProfile"
+msgstr "惟有PAC腳本或其URL時需此。非諳PAC者勿試自作。"
+
+msgid "options_profileTypeSwitchProfile"
+msgstr "切換情景"
+
+msgid "options_profileDescSwitchProfile"
+msgstr ""
+"依域名或模式等條件自動應用不同情景。\n"
+" 亦可導入在線所發規則以便切換。（代AutoSwitch模式+規則列表。）"
+
+msgid "options_profileTypeRuleListProfile"
+msgstr "規則列表情景"
+
+msgid "options_profileDescRuleListProfile"
+msgstr "復用他人在線所發之條件集。"
+
+msgid "options_profileTypeVirtualProfile"
+msgstr "虛情景"
+
+msgid "options_profileDescVirtualProfile"
+msgstr "虛情景可應需作他情景。與切換情景相宜，一點可改多條件之結果。"
+
+msgid "options_createProfile"
+msgstr "建"
+
+msgid "options_modalHeader_resetOptions"
+msgstr "重置選項"
+
+msgid "options_resetOptionsConfirm"
+msgstr "真欲重置選項乎？一切情景與設定將失！"
+
+msgid "options_formInvalid"
+msgstr "請正此頁之誤。"
+
+msgid "options_profileNotFound"
+msgstr "情景$PROFILE$不存！選項或損。"
+
+msgid "options_resetSuccess"
+msgstr "選項已重置。"
+
+msgid "options_saveSuccess"
+msgstr "選項已存。"
+
+msgid "options_importSuccess"
+msgstr "選項已導入。"
+
+msgid "options_importFormatError"
+msgstr "備份文件非法！"
+
+msgid "options_importDownloadError"
+msgstr "下載備份文件出錯！"
+
+msgid "options_profileDownloadSuccess"
+msgstr "情景更新成功。"
+
+msgid "options_profileDownloadError"
+msgstr "下載情景數據出錯！"
+
+msgid "options_profileDownloadError_NetworkError"
+msgstr "更新時網絡有誤。"
+
+msgid "options_profileDownloadError_HttpError"
+msgstr "更新時HTTP錯誤（$STATUS$）。"
+
+msgid "options_profileDownloadError_HttpNotFoundError"
+msgstr "伺服上未見情景URL。請複核。"
+
+msgid "options_profileDownloadError_HttpServerError"
+msgstr "更新時遠端伺服以錯誤（$STATUS$）應。"
+
+msgid "options_profileDownloadError_ContentTypeRejectedError"
+msgstr "所下數據非法！可於瀏覽器開情景URL以檢。"
+
+msgid "options_downloadProfileNow"
+msgstr "即下情景"
+
+msgid "options_guide_fixedProfileStep"
+msgstr "一<b>代理情景</b>含伺服ip與埠等代理設定。<br>情景乃SwitchyDelta之基本配置單元。<br>已為君建示例情景。試開之。"
+
+msgid "options_guide_fixedServersStep"
+msgstr "可於此填代理伺服與埠。<br>SwitchyDelta <b>不附任何代理伺服</b>。<br>若不知所填，請詢網絡提供者或參代理軟體手冊。"
+
+msgid "options_guide_autoSwitchProfileStep"
+msgstr "可以強大之<b>切換情景</b>令SwitchyDelta自動更迭代理。<br>然其功能非此速導可盡。<br>後可開此情景以發其力。"
+
+msgid "options_guide_addMoreProfilesStep"
+msgstr "需更多情景？可隨時加更多<b>代理、切換及其他情景</b><br>以應代理之需。<br>樂用之！"
+
+msgid "options_guide_conditionStep"
+msgstr "SwitchyDelta可依<b>條件</b>對請求施不同情景。<br> 例如<b>主機萬象</b>條件可為一域下一切URL設情景。"
+
+msgid "options_guide_conditionTypeStep"
+msgstr "可用諸條件類型匹配主機或全URL。<br> 點問號以開類型參照。"
+
+msgid "options_guide_conditionProfileStep"
+msgstr "SwitchyDelta於此對<b>凡匹配條件之請求</b>施所選情景。<br> 特殊<b>「[直指]」情景</b>令請求不經任何代理。"
+
+msgid "options_guide_switchDefaultStep"
+msgstr "若無條件適於某請求，則用「默認」情景。<br>條件恆<b>自上而下</b>序考。<br>可拖排序圖標以改序。"
+
+msgid "options_guide_applySwitchProfileStep"
+msgstr "設畢切換情景後，勿忘<b>於彈出菜單切至之。</b><br/> 圖標示當前標籤所施<b>終果</b>情景。<br/> <b>懸停</b>圖標可見詳提示。"
+
+msgid "popup_externalProfile"
+msgstr "（外部情景）"
+
+msgid "popup_externalProfileName"
+msgstr "情景名"
+
+msgid "popup_proxyNotControllable_app"
+msgstr "代理設定為他應用或擴展所控。請禁或卸載衝突者。"
+
+msgid "popup_proxyNotControllable_policy"
+msgstr "代理設定為策略所制。請聯管理員。"
+
+msgid "popup_proxyNotControllable_unknown"
+msgstr "代理設定不可控。請查系統與瀏覽器設定。"
+
+msgid "popup_proxyNotControllable_disabled"
+msgstr "代理設定因他應用或擴展之明示請求而禁。"
+
+msgid "popup_proxyNotControllable_upgrade"
+msgstr "代理設定今為更新版SwitchyDelta所控。"
+
+msgid "popup_proxyNotControllableDetails"
+msgstr "非解上題，則不能以SwitchyDelta切情景。"
+
+msgid "popup_proxyNotControllableDetails_upgrade"
+msgstr "不可同時啟二（或更多）版SwitchyDelta。請禁其一。"
+
+msgid "popup_proxyNotControllableManage"
+msgstr "管擴展"
+
+msgid "popup_addConditionTo"
+msgstr "加條件至"
+
+msgid "popup_addCondition"
+msgstr "加條件"
+
+msgid "popup_showOptions"
+msgstr "選項"
+
+msgid "popup_reportIssues"
+msgstr "報問題"
+
+msgid "popup_errorLog"
+msgstr "存錯誤日誌"
+
+msgid "popup_requestErrorCount"
+msgstr "$COUNT$資源失敗"
+
+msgid "popup_requestErrorHeading"
+msgstr "載入失敗之資源"
+
+msgid "popup_requestErrorWarning"
+msgstr "因網絡、代理伺服或網頁之故，若干資源載入失敗。"
+
+msgid "popup_requestErrorWarningHelp"
+msgstr "SwitchyDelta僅報此題，非其因。"
+
+msgid "popup_requestErrorAddCondition"
+msgstr "可審下列域名，適宜時為之用代理。"
+
+msgid "popup_requestErrorCannotAddCondition"
+msgstr "惟用切換情景時，方可為之加切換條件。"
+
+msgid "popup_configureMonitorWebRequests"
+msgstr "配置網絡監視"
+
+msgid "options_resultProfileForSelectedDomains"
+msgstr "對所選一切域名用此情景"
+
+msgid "options_pac_profile_unsupported_moz"
+msgstr "因技術限，PAC情景於Mozilla Firefox不可用！"
+
+msgid "popup_issueTemplate"
+msgstr ""
+"\n"
+"\n"
+"\n"
+"<!-- 請於上行之上書評。 -->\n"
+"SwitchyDelta $projectVersion$\n"
+"$userAgent$"
+
+msgid "browserAction_profileDetails_PacProfile"
+msgstr "（PAC腳本）"
+
+msgid "browserAction_profileDetails_SystemProfile"
+msgstr "（為他擴展或環境所控）"
+
+msgid "browserAction_profileDetails_DirectProfile"
+msgstr "（不用任何代理）"
+
+msgid "browserAction_profileDetails_SwitchProfile"
+msgstr "（依條件切換）"
+
+msgid "browserAction_profileDetails_RuleListProfile"
+msgstr "（依規則列表切換）"
+
+msgid "browserAction_titleNormal"
+msgstr "SwitchyDelta:: $PROFILE$"
+
+msgid "browserAction_titleWithResult"
+msgstr ""
+"SwitchyDelta:: $1:PROFILE$\n"
+"$3:DETAILS$"
+
+msgid "browserAction_titleNewerOptions"
+msgstr "誤：需更新版SwitchyDelta以載所存選項。"
+
+msgid "browserAction_titleOptionError"
+msgstr "誤：所存選項已損。點此重置選項。"
+
+msgid "browserAction_titleDownloadFail"
+msgstr "警：PAC腳本及/或規則列表下載失敗。"
+
+msgid "browserAction_titleExternalProxy"
+msgstr "注：代理設定現為他應用所控。"
+
+msgid "browserAction_titleInspect"
+msgstr "[檢] $URL$"
+
+msgid "browserAction_defaultRuleDetails"
+msgstr "（默認）"
+
+msgid "browserAction_directResult"
+msgstr "DIRECT"
+
+msgid "browserAction_attachedPrefix"
+msgstr "(RL) "
+
+msgid "browserAction_tempRulePrefix"
+msgstr "(TEMP) "
+
+msgid "contextMenu_inspectPage"
+msgstr "檢此頁所用代理"
+
+msgid "contextMenu_inspectFrame"
+msgstr "檢此框所用代理"
+
+msgid "contextMenu_inspectLink"
+msgstr "檢若開此鏈將用代理"
+
+msgid "contextMenu_inspectElement"
+msgstr "檢此元素所用代理"
+
+msgid "contextMenu_enableQuickSwitch"
+msgstr "啟速切"
+
+msgid "about_title"
+msgstr "關於"
+
+msgid "about_app_description"
+msgstr "代理配置工具"
+
+msgid "about_version"
+msgstr "版本$VERSION$"
+
+msgid "about_experimental_warning_moz"
+msgstr "Mozilla Firefox支持尚甚試驗！若遇題，請以下方鈕報之。"
+
+msgid "about_disclaimer_networkService"
+msgstr "SwitchyDelta不供代理、VPN或其他網絡服務。"
+
+msgid "about_disclaimer_privacy"
+msgstr "SwitchyDelta不追蹤君，不於網頁插廣告。請見<a href='https://github.com/madeye/SwitchyDelta/wiki/Privacy#english'>隱私政策</a>。"
+
+msgid "about_help"
+msgstr "他問？需助用SwitchyDelta？請見<a href='https://github.com/madeye/SwitchyDelta/wiki/FAQ'>FAQ</a>。"
+
+msgid "about_copyright"
+msgstr "Copyright 2026 <a href='https://github.com/madeye'>Max Lv</a>.<br>Copyright 2012-2017 <a href='https://github.com/FelisCatus/SwitchyOmega/blob/master/AUTHORS'>The SwitchyOmega Authors</a>."
+
+msgid "about_credits"
+msgstr "SwitchyDelta得成於<a href='https://github.com/madeye/SwitchyDelta'>SwitchyDelta</a>開源項目及其他<a href='https://github.com/madeye/SwitchyDelta/blob/master/AUTHORS'>開源軟件</a>。"
+
+msgid "about_license"
+msgstr "SwitchyDelta乃<a href='https://www.gnu.org/philosophy/free-sw.en.html'>自由軟件</a>，以<a href='https://www.gnu.org/licenses/gpl.html'>GNU General Public License</a>第三版或更新授權。"
+
+msgid "popup_proxyAuthPermission"
+msgstr "登需認證之代理，須許訪一切網站。"
+
+msgid "popup_proxyAuthPermissionGrant"
+msgstr "授訪問權"

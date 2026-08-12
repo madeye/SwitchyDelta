@@ -14,7 +14,7 @@ masoud Rahmani <mrem71@gmail.com>
 
 # SwitchyDelta includes or links to (unchanged):
 # * jQuery UI (custom build)
-#     => omega-web/lib/jquery-ui-*.js
+#     => delta-web/lib/jquery-ui-*.js
 #     => Copyright 2014 jQuery Foundation and other contributors; Licensed MIT
 # * Many npm packages and bower packages
 #     => **/node_modules, **/bower_components

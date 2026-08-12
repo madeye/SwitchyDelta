@@ -2,7 +2,7 @@
  * Presentation rules for profiles.
  *
  * The CoffeeScript UI defined all of this twice — once in the AngularJS
- * `omegaDecoration` module for the options page and again as plain objects in
+ * `deltaDecoration` module for the options page and again as plain objects in
  * the popup's `profiles.js`. The two copies had already drifted. This is the
  * single definition.
  */

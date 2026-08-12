@@ -1,8 +1,8 @@
 /**
  * Typed RPC client for talking to the MV3 service worker.
  *
- * Replaces the AngularJS `omegaTarget` factory and the parallel plain-JS
- * `OmegaTargetPopup` shim with one implementation shared by both pages.
+ * Replaces the AngularJS `deltaTarget` factory and the parallel plain-JS
+ * `DeltaTargetPopup` shim with one implementation shared by both pages.
  *
  * The wire format is fixed by the background dispatcher: a request is
  * `{method, args}` and the reply is `{result}` or `{error}`. Errors cannot
@@ -91,12 +91,31 @@ export async function setState(values: StateValues): Promise<void> {
  * The options page uses this to reopen on the screen you left; it is a
  * property of this tab, not of the extension.
  */
+const LOCAL_PREFIX = 'delta.local.';
+/** Pre-rename prefix; read as a fallback then rewritten on next set. */
+const LEGACY_LOCAL_PREFIX = 'omega.local.';
+
 export const localState = {
   get(key: string): string | null {
-    return localStorage.getItem('omega.local.' + key);
+    const current = localStorage.getItem(LOCAL_PREFIX + key);
+    if (current !== null) return current;
+    const legacy = localStorage.getItem(LEGACY_LOCAL_PREFIX + key);
+    if (legacy === null) return null;
+    try {
+      localStorage.setItem(LOCAL_PREFIX + key, legacy);
+      localStorage.removeItem(LEGACY_LOCAL_PREFIX + key);
+    } catch {
+      // Quota / private mode: still return the legacy value.
+    }
+    return legacy;
   },
   set(key: string, value: string): void {
-    localStorage.setItem('omega.local.' + key, value);
+    localStorage.setItem(LOCAL_PREFIX + key, value);
+    try {
+      localStorage.removeItem(LEGACY_LOCAL_PREFIX + key);
+    } catch {
+      // Ignore.
+    }
   },
 };
 

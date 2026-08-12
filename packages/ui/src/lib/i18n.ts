@@ -1,7 +1,7 @@
 /**
  * Message lookup.
  *
- * Translations stay in the existing gettext catalogues under `omega-locales`,
+ * Translations stay in the existing gettext catalogues under `delta-locales`,
  * compiled to `_locales/<lang>/messages.json` at build time, so `chrome.i18n`
  * remains the source of truth and no translation work is lost.
  */

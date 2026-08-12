@@ -1,0 +1,1081 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SwitchyDelta 2.3.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-13 10:29+0000\n"
+"PO-Revision-Date: 2018-06-13 01:52+0000\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: he_IL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
+"n % 10 == 0) ? 2 : 3));\n"
+"X-Generator: Weblate 3.0.1\n"
+
+msgid "appNameShort"
+msgstr "SwitchyDelta"
+
+msgid "manifest_app_name"
+msgstr "Proxy SwitchyDelta"
+
+msgid "manifest_app_description"
+msgstr "ניהול ומעבר מהיר וקל בין מספר פרוקסי."
+
+msgid "manifest_icon_default_title"
+msgstr "טוען…"
+
+msgid "upgrade_profile_auto"
+msgstr "מעבר אוטומטי"
+
+msgid "profile_direct"
+msgstr "[ישיר]"
+
+msgid "profile_system"
+msgstr "[פרוקסי מערכת]"
+
+msgid "condition_HostWildcardCondition"
+msgstr "תו כללי לשרת מארח"
+
+msgid "condition_help_HostWildcardCondition"
+msgstr "מתאים שרתים מארחים (שמות דומיין) באמצעות תו כללי.<br><b>הכוכבית <code>*</code></b> מתאימה לאפס תווים או יותר.<br><b>סימן השאלה <code>?</code></b> מתאים בדיוק לתו אחד.<br><br>שים לב: כללים שמתחילים ב-<code>*.</code> מטופלים במיוחד רק בתנאי תו כללי לשרת מארח.<br>דוגמה: <code>*.example.com</code> יתאים ל-www.example.com <b>וגם ל-example.com.</b><br>כדי להתאים <b>רק</b> תת-דומיינים, השתמש ב-<b>שתי</b> כוכביות כמו <code>**.example.com</code>."
+
+msgid "condition_HostRegexCondition"
+msgstr "ביטוי רגולרי לשרת מארח"
+
+msgid "condition_help_HostRegexCondition"
+msgstr "כמו תנאי תו כללי לשרת מארח, אך מתאים שרתים מארחים (שמות דומיין) באמצעות <a href='https://www.google.com/search?q=regular%20expression'>ביטוי רגולרי</a>.<br>ביטויים רגולריים עלולים להיות קשים לבנייה (ולקריאה).<br>מומלץ להשתמש בתווים כלליים ברוב המקרים ולהשתמש ב-regex רק לתנאים שלא ניתן להשיג בסוג תנאי אחר."
+
+msgid "condition_HostLevelsCondition"
+msgstr "רמות שרת מארח"
+
+msgid "condition_help_HostLevelsCondition"
+msgstr "מתאים לבקשה אם ורק אם רמת השרת המארח נמצאת בטווח הנתון.<br>רמת שרת מארח מוגדרת כ-<b>מספר המקטעים המופרדים בנקודה</b> של השרת המארח (שם הדומיין).<br>דוגמה: ל-<code>www.example.com</code> יש רמת שרת מארח 3, בעוד ש-<code>internal</code> הוא ברמה 1."
+
+msgid "condition_IpCondition"
+msgstr "כתובות IP מילוליות"
+
+msgid "condition_help_IpCondition"
+msgstr "מתאים לבקשה אם ורק אם השרת המארח הוא כתובת IP <b>מילולית</b> ונמצא ברשת המשנה כפי שצוין ב-<a href='https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation'>סימון CIDR</a>.<br>לדוגמה, עבור הכלל <code>127.0.0.1/16</code>, הוא מתאים לכל כתובות ה-IP כמו <code>127.0.*.*</code>.<br>לכן <code>127.0.0.1</code> מתאים ואילו <code>127.1.0.0</code> לא. שמות מארח כמו <code>localhost</code> לעולם לא יתאימו כי הם <b>אינם</b> כתובות IP מילוליות."
+
+msgid "condition_UrlWildcardCondition"
+msgstr "תו כללי ל-URL"
+
+msgid "condition_help_UrlWildcardCondition"
+msgstr "מתאים לכתובות URL של הבקשה באמצעות תו כללי.<br>ראו את סעיף תו כללי לשרת מארח למעלה לעיון מהיר בתווים כלליים.<br>שים לב שתווים כלליים ל-URL אינם מטופלים באופן מיוחד (אין \"קסם\" של תת-דומיין כמו בתו כללי לשרת מארח).<br>לכן <code>*://*.example.com/*</code> מתאים ל-http://www.example.com/ אך <b>אינו</b> מתאים ל-http://example.com/."
+
+msgid "condition_UrlRegexCondition"
+msgstr "ביטוי רגולרי ל-URL"
+
+msgid "condition_help_UrlRegexCondition"
+msgstr "מתאים ל-URL באמצעות <a href='https://www.google.com/search?q=regular%20expression'>ביטוי רגולרי</a> חזק במיוחד.<br>עם זאת, ביטויים רגולריים עלולים להיות קשים לבנייה (ולקריאה).<br>מומלץ להשתמש בתווים כלליים ברוב המקרים ולהשתמש ב-regex רק לתנאים שלא ניתן להשיג בסוג תנאי אחר."
+
+msgid "condition_KeywordCondition"
+msgstr "מילת מפתח"
+
+msgid "condition_help_KeywordCondition"
+msgstr "תנאי מילת מפתח מתאים אם פרוטוקול ה-URL הוא HTTP, והתבנית היא תת-מחרוזת מדויקת של ה-URL.<br>הוא מתנהג כמו תבנית תו כללי ל-URL <code>http://*<b>pattern</b>*</code>, כאשר <b>pattern</b> היא תבנית מילת המפתח.<br>תנאי מילת מפתח שימושיים אם ברצונך לעקוף חומת אש שחוסמת מילות מפתח מסוימות ב-URL, על ידי שליחת כתובות כאלה דרך פרוקסי."
+
+msgid "condition_FalseCondition"
+msgstr "(מושבת)"
+
+msgid "condition_details_FalseCondition"
+msgstr "(התנאי מתעלם בעת התאמה)"
+
+msgid "condition_help_FalseCondition"
+msgstr "ניתן להשבית תנאי על ידי הגדרת סוגו ל-<code>(מושבת)</code>. תנאי מושבת מתנהג כאילו אינו קיים.<br>תכונה זו יכולה לשמש להשבתה זמנית של תנאים.<br>תנאים מושבתים עדיין שומרים על המידע הקודם (כמו תבניות) וניתן להפעילם מחדש על ידי החזרת סוג התנאי לסוג הקודם."
+
+msgid "condition_TimeCondition"
+msgstr "שעה נוכחית"
+
+msgid "condition_help_TimeCondition"
+msgstr "מתאים אם השעה המקומית הנוכחית נמצאת בטווח המוגדר על ידי <b>שעת התחלה</b> ו-<b>שעת סיום</b>, כולל שתיהן.<br>שעה מקומית, שעת התחלה ושעת סיום מחושבות כולן בפורמט <b>24 שעות</b> (מ-<b>0 עד 23</b>). <br>החישוב מתבצע בערך ברגע שליחת הבקשה."
+
+msgid "condition_WeekdayCondition"
+msgstr "יום בשבוע"
+
+msgid "condition_help_WeekdayCondition"
+msgstr "מתאים אם <b>היום הנוכחי בשבוע</b> נבחר בפרטי התנאי. היום מחושב לפי אזור הזמן המקומי.<br>הבקשה וכתובת ה-URL שלה אינן רלוונטיות לתנאי זה. התוצאה מבוססת אך ורק על יום השבוע שבו נשלחת הבקשה."
+
+msgid "condition_alert_fullUrlLimitation"
+msgstr "התאמת URL מלאה אינה אפשרית עוד עבור כתובות <code>https://</code> החל מ-Chrome 52. <a href='https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation'>מידע נוסף...</a>"
+
+msgid "condition_alert_fullUrlLimitationLink"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation"
+
+msgid "condition_group_default"
+msgstr " "
+
+msgid "condition_group_host"
+msgstr "שרת מארח"
+
+msgid "condition_group_url"
+msgstr "URL"
+
+msgid "condition_group_special"
+msgstr "מיוחד"
+
+msgid "ruleListFormat_Switchy"
+msgstr "Switchy"
+
+msgid "ruleListFormat_AutoProxy"
+msgstr "AutoProxy"
+
+msgid "ruleList_usageUrl"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/RuleListUsage"
+
+msgid "ruleList_error_resultNotEnabled"
+msgstr "חסרה ההנחיה '@with result'!"
+
+msgid "ruleList_error_unknownProfile"
+msgstr "פרופיל לא ידוע: $PROFILE$"
+
+msgid "ruleList_error_missingResultProfile"
+msgstr "חסר שם פרופיל תוצאה בשורה $LNO$: $SOURCE$"
+
+msgid "ruleList_error_invalidRule"
+msgstr "כלל לא תקין בשורה $LNO$: $SOURCE$"
+
+msgid "ruleList_error_noDefaultRule"
+msgstr "חסר כלל ברירת מחדל עם תנאי '*' שתופס הכל!"
+
+msgid "dialog_close"
+msgstr "סגור"
+
+msgid "dialog_save"
+msgstr "שמור שינויים"
+
+msgid "dialog_ok"
+msgstr "אישור"
+
+msgid "dialog_cancel"
+msgstr "ביטול"
+
+msgid "inputClear_clear"
+msgstr "נקה"
+
+msgid "inputClear_restore"
+msgstr "שחזר"
+
+msgid "options_title"
+msgstr "אפשרויות SwitchyDelta"
+
+msgid "options_experimental_badge"
+msgstr "α"
+
+msgid "options_navHeader_setting"
+msgstr "הגדרות"
+
+msgid "options_navHeader_profiles"
+msgstr "פרופילים"
+
+msgid "options_navHeader_actions"
+msgstr "פעולות"
+
+msgid "options_tab_ui"
+msgstr "ממשק"
+
+msgid "options_tab_general"
+msgstr "כללי"
+
+msgid "options_tab_importExport"
+msgstr "ייבוא/ייצוא"
+
+msgid "options_newProfile"
+msgstr "פרופיל חדש…"
+
+msgid "options_apply"
+msgstr "החל שינויים"
+
+msgid "options_discard"
+msgstr "בטל שינויים"
+
+msgid "options_reset"
+msgstr "אפס אפשרויות"
+
+msgid "options_group_miscOptions"
+msgstr "אפשרויות שונות"
+
+msgid "options_confirmDeletion"
+msgstr "אשר בעת מחיקת תנאי."
+
+msgid "options_refreshOnProfileChange"
+msgstr "רענן את הלשונית הנוכחית בעת החלפת פרופיל."
+
+msgid "options_showInspectMenu"
+msgstr "אפשר בדיקת הפרוקסי המשמש לרכיבי עמוד דרך תפריט ההקשר."
+
+msgid "options_addConditionsToBottom"
+msgstr "הוסף תנאים חדשים שנוספו מהחלון הקופץ לתחתית הרשימה."
+
+msgid "options_group_keyboardShortcut"
+msgstr "קיצור מקלדת"
+
+msgid "options_menuShortcutHelp"
+msgstr "לחיצה על הקיצור תפתח את תפריט המעבר הקופץ. (ברירת מחדל: Alt+Shift+O)."
+
+msgid "options_menuShortcutMore"
+msgstr "ניתן גם לגשת לפריטים בתפריט הקופץ באמצעות המקלדת. לחץ על ? (או /) בתפריט למידע נוסף."
+
+msgid "options_menuShortcutConfigure"
+msgstr "הגדר קיצור"
+
+msgid "options_group_switchOptions"
+msgstr "אפשרויות מעבר"
+
+msgid "options_startupProfile"
+msgstr "פרופיל הפעלה"
+
+msgid "options_startupProfile_none"
+msgstr "(הפרופיל הנוכחי)"
+
+msgid "options_showConditionTypesAdvanced"
+msgstr "הצג סוגי תנאים מתקדמים"
+
+msgid "options_showConditionTypesAdvancedHelp"
+msgstr "פותח סוגי תנאי מעבר מתקדמים אך מורכבים. ברוב התרחישים מספיקים סוגי התנאים הבסיסיים, לכן אפשרות זו אינה מומלצת."
+
+msgid "options_quickSwitch"
+msgstr "מעבר מהיר"
+
+msgid "options_cycledProfiles"
+msgstr "פרופילים במחזור"
+
+msgid "options_cycledProfilesHelp"
+msgstr "בלחיצה על הסמל (או בשימוש בקיצור למעלה), הפרופילים הבאים יוחלו לפי הסדר שלהם."
+
+msgid "options_cycledProfilesTooFew"
+msgstr "יש לבחור לפחות 2 פרופילים כדי להפעיל פונקציה זו! ניתן לגרור אותם מהתיבה למטה."
+
+msgid "options_notCycledProfiles"
+msgstr "פרופילים שאינם במחזור"
+
+msgid "options_group_proxyChanges"
+msgstr "שינויי פרוקסי"
+
+msgid "options_revertProxyChanges"
+msgstr "בטל שינויי פרוקסי שבוצעו על ידי אפליקציות אחרות."
+
+msgid "options_group_conflicts"
+msgstr "התנגשויות"
+
+msgid "options_conflicts_introduction"
+msgstr "לפעמים אפליקציות אחרות גם ינסו לשלוט בהגדרות הפרוקסי, מה שגורם להתנגשויות. שים לב שחוסמי פרסומות והרחבות אחרות עשויים גם הם להשתמש בהגדרות פרוקסי מאחורי הקלעים. לא ניתן להימנע מהתנגשויות כאלה בשל אופן פעולת הדפדפן."
+
+msgid "options_conflicts_lowerPriority"
+msgstr "תג אדום כזה על סמל SwitchyDelta מציין שאפליקציה אחרת בעלת עדיפות גבוהה יותר ולכן SwitchyDelta אינו יכול לשלוט בהגדרות. נסה להסיר את SwitchyDelta ולהתקין מחדש, מה שאמור להעלות את עדיפות SwitchyDelta. אם עדיין מופיעות התנגשויות לאחר ההתקנה מחדש, שקול להסיר את האפליקציה האחרת שגורמת להתנגשות."
+
+msgid "options_conflicts_higherPriority"
+msgstr "אם ל-SwitchyDelta יש עדיפות גבוהה יותר, ניתן להחזיר את השליטה לאפליקציות אחרות או להגדרות המערכת על ידי בחירת $SYSTEMPROFILE$ בתפריט הקופץ."
+
+msgid "options_showExternalProfile"
+msgstr "הצג פריט בתפריט הקופץ לייבוא הגדרות פרוקסי מאפליקציות אחרות."
+
+msgid "options_showExternalProfileHelp"
+msgstr "כאשר $SYSTEMPROFILE$ נבחר, ניתן לייבא את הגדרות הפרוקסי הפעילות מאפליקציות אחרות על ידי בחירת $EXTERNALPROFILE$ בתפריט הקופץ. ההגדרות ייובאו כפרופיל בשם שתספק. שים לב שהפרופיל המיובא הוא תמונת מצב ולא ישקף שינויים מהאפליקציה המקורית לאחר מכן."
+
+msgid "options_group_networkRequests"
+msgstr "בקשות רשת"
+
+msgid "options_monitorWebRequests"
+msgstr "הצג מספר בקשות רשת שנכשלו עבור משאבים בלשונית הנוכחית."
+
+msgid "options_monitorWebRequestsHelp"
+msgstr "תג צהוב יוצג על הסמל אם חלק מהמשאבים נכשלים בטעינה,<br>וניתן להגדיר את הפרופיל למשאבים כאלה בנוחות דרך התפריט הקופץ."
+
+msgid "options_downloadOptions"
+msgstr "אפשרויות הורדה"
+
+msgid "options_downloadOptionsHelp"
+msgstr "הגדר את תדירות העדכון של רשימות כללים מקוונות וסקריפטי PAC."
+
+msgid "options_downloadInterval"
+msgstr "מרווח הורדה"
+
+msgid "options_downloadInterval_15"
+msgstr "15 דקות"
+
+msgid "options_downloadInterval_60"
+msgstr "שעה אחת"
+
+msgid "options_downloadInterval_180"
+msgstr "3 שעות"
+
+msgid "options_downloadInterval_360"
+msgstr "6 שעות"
+
+msgid "options_downloadInterval_720"
+msgstr "12 שעות"
+
+msgid "options_downloadInterval_1440"
+msgstr "כל יום"
+
+msgid "options_downloadInterval_never"
+msgstr "לעולם לא"
+
+msgid "options_group_importExportProfile"
+msgstr "פרופיל"
+
+msgid "options_exportPacFile"
+msgstr "ייצא כקובץ PAC"
+
+msgid "options_exportPacFileHelp"
+msgstr "ייצא את הפרופיל הנוכחי כקובץ PAC, כדי שתוכל להשתמש בו בדפדפנים אחרים."
+
+msgid "options_exportProfileHelp"
+msgstr "כדי לייצא פרופיל, השתמש בסרגל הפעולות בפינה הימנית העליונה של דף הפרופיל."
+
+msgid "options_exportLegacyRuleList"
+msgstr "ייצא רשימות כללים בפורמט תואם Proxy Switchy!/SwitchyPlus/SwitchySharp כשאפשר."
+
+msgid "options_exportLegacyRuleListHelp"
+msgstr "הפעל אפשרות זו רק אם אתה מפרסם רשימות כללים למשתמשי פרויקטים אלה.<br>שקול להמליץ לקהל שלך לשדרג ל-SwitchyDelta לשיפורים."
+
+msgid "options_group_importExportSettings"
+msgstr "הגדרות"
+
+msgid "options_makeBackup"
+msgstr "צור גיבוי"
+
+msgid "options_makeBackupHelp"
+msgstr "צור גיבוי מלא של האפשרויות שלך (כולל פרופילים וכל האפשרויות האחרות)."
+
+msgid "options_restoreLocal"
+msgstr "שחזר מקובץ"
+
+msgid "options_restoreLocalHelp"
+msgstr "שחזר את אפשרויות SwitchyDelta מקובץ מקומי."
+
+msgid "options_restoreOnline"
+msgstr "שחזר מהאינטרנט"
+
+msgid "options_restoreOnlinePlaceholder"
+msgstr "כתובת URL של קובץ אפשרויות (למשל 'http://example.com/switchy.bak')"
+
+msgid "options_restoreOnlineSubmit"
+msgstr "שחזר"
+
+msgid "options_group_syncing"
+msgstr "סנכרון (ניסיוני)"
+
+msgid "options_syncEnable"
+msgstr "הפעל סנכרון"
+
+msgid "options_syncEnableForce"
+msgstr "הורד מהסנכרון"
+
+msgid "options_syncDisable"
+msgstr "השבת סנכרון"
+
+msgid "options_syncReset"
+msgstr "נקה עותק מרוחק"
+
+msgid "options_syncPristineHelp"
+msgstr "כעת ניתן לסנכרן אוטומטית את ההגדרות והפרופילים שלך בכל מכשירי שולחן העבודה שבהם רץ דפדפן Chrome."
+
+msgid "options_syncSyncAlert"
+msgstr "האפשרויות שלך מסונכרנות אוטומטית עם שאר המכשירים שלך."
+
+msgid "options_syncSyncHelp"
+msgstr "שים לב שעליך להיכנס ל-Chrome בכל אחד מהמכשירים שלך (כולל זה) כדי שהסנכרון יעבוד בפועל. <br> ניתן לבדוק סעיף זה במכשירים אחרים כדי לוודא שהוא פועל."
+
+msgid "options_syncConflictAlert"
+msgstr "העלית עותק של האפשרויות שלך במכשיר אחר דרך הסנכרון."
+
+msgid "options_syncConflictHelp"
+msgstr "ניתן להוריד את העותק המרוחק למכשיר שלך אם תרצה. <br>עם זאת, פעולה זו <b>תדרוס את ההגדרות והפרופילים הקיימים</b> במכשיר זה."
+
+msgid "options_syncUnsupportedHelp"
+msgstr "סנכרון אפשרויות אינו נתמך בפלטפורמה או בדפדפן שלך. לעת עתה נתמך רק דפדפן Chrome בשולחן עבודה."
+
+msgid "options_profileSyncDisabled"
+msgstr "הסנכרון מושבת עבור פרופיל זה."
+
+msgid "options_profileSyncDisabled_quotaPerItem"
+msgstr "הסנכרון מושבת עבור פרופיל זה עקב שימוש בשטח אחסון רב מדי."
+
+msgid "options_profileTabPrefix"
+msgstr "פרופיל :: "
+
+msgid "options_renameProfile"
+msgstr "שנה שם"
+
+msgid "options_deleteProfile"
+msgstr "מחק"
+
+msgid "options_profileExportRuleList"
+msgstr "פרסם רשימת כללים"
+
+msgid "options_profileExportRuleListHelp"
+msgstr "ייצא כללי מעבר בפורמט טקסט לפרסום."
+
+msgid "options_profileExportPac"
+msgstr "ייצא PAC"
+
+msgid "options_profileUnsupported"
+msgstr "סוג פרופיל לא נתמך $TYPE$!"
+
+msgid "options_profileUnsupportedHelp"
+msgstr "ייתכן שהאפשרויות פגומות, או שהן מגרסה חדשה יותר של תוכנית זו."
+
+msgid "options_profileEditSource"
+msgstr "ערוך קוד מקור"
+
+msgid "options_profileEditSourceHelp"
+msgstr "הצג עזרה על פורמט קוד המקור"
+
+msgid "options_profileEditSourceHelpUrl"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/SwitchyDelta-conditions-format#result-profile"
+
+msgid "options_group_proxyServers"
+msgstr "שרתי פרוקסי"
+
+msgid "options_proxy_scheme"
+msgstr "סכמה"
+
+msgid "options_proxy_protocol"
+msgstr "פרוטוקול"
+
+msgid "options_proxy_server"
+msgstr "שרת"
+
+msgid "options_proxy_port"
+msgstr "יציאה"
+
+msgid "options_proxy_auth"
+msgstr "אימות"
+
+msgid "options_proxy_authNotSupported"
+msgstr "הדפדפן שלך אינו תומך באימות פרוקסי $PROTOCOLDISP$! אנא אל תדווח על בעיה זו ל-SwitchyDelta. פנה לתמיכה של הדפדפן שלך במקום זאת."
+
+msgid "options_proxy_authAllWarningPac"
+msgstr "אזהרה: ייתכן ששם המשתמש/הסיסמה יישלחו לשרתים בלתי צפויים שמוחזרים על ידי סקריפט ה-PAC."
+
+msgid "options_proxy_authAllWarningPacUrl"
+msgstr "ודא שאתה סומך על הסקריפט המסופק דרך ה-URL למעלה לפני הזנת אישורים רגישים."
+
+msgid "options_proxy_authAllWarningPacScript"
+msgstr "ודא שאתה סומך על הסקריפט למטה לפני מתן אישורים רגישים."
+
+msgid "options_proxy_authReferencedWarning"
+msgstr "בנוסף, שימוש בפרופיל זה בפרופילים אחרים (למשל פרופיל מעבר) עלול לגרום לשליחת שם המשתמש/הסיסמה לשרתי פרוקסי שהוגדרו בפרופילים אחרים."
+
+msgid "options_scheme_default"
+msgstr "(ברירת מחדל)"
+
+msgid "options_protocol_direct"
+msgstr "DIRECT"
+
+msgid "options_protocol_useDefault"
+msgstr "(השתמש בברירת מחדל)"
+
+msgid "options_proxy_single"
+msgstr "השתמש בפרוקסי למעלה לכל הפרוטוקולים."
+
+msgid "options_proxy_expand"
+msgstr "הצג מתקדם"
+
+msgid "options_group_bypassList"
+msgstr "רשימת עקיפה"
+
+msgid "options_bypassListHelp"
+msgstr "שרתים שעבורם אינך רוצה להשתמש בפרוקסי: (שרת אחד בכל שורה.)"
+
+msgid "options_bypassListHelpLinkText"
+msgstr "(תווים כלליים ועוד זמינים…)"
+
+msgid "options_group_pacUrl"
+msgstr "כתובת URL של PAC"
+
+msgid "options_pacUrlHelp"
+msgstr "סקריפט ה-PAC יעודכן מכתובת URL זו. אם היא נשארת ריקה, הסקריפט הבא ישמש ישירות במקום זאת."
+
+msgid "options_pacUrlFile"
+msgstr "פרופילי PAC עם כתובות file: ניתנים ליישום ישיר בלבד. לא ניתן להשתמש בהם כפרופילי תוצאה כי לא ניתן לגשת לקבצים מקומיים בשל מגבלת הדפדפן."
+
+msgid "options_pacUrlFileDisabled"
+msgstr "לכן, לא ניתן להשתמש בקובץ PAC מקומי לפרופיל זה. ניתן ליצור פרופיל PAC חדש לשם כך אם באמת תרצה בכך."
+
+msgid "options_group_pacScript"
+msgstr "סקריפט PAC"
+
+msgid "options_pacScriptLastUpdate"
+msgstr "סקריפט PAC הורד ב-$TIME$:"
+
+msgid "options_pacScriptObsolete"
+msgstr "סקריפט ה-PAC מיושן עקב שינוי URL. לחץ על כפתור ההורדה למעלה כדי לעדכן."
+
+msgid "options_group_virtualProfile"
+msgstr "פרופיל וירטואלי"
+
+msgid "options_virtualProfileTarget"
+msgstr "יעד"
+
+msgid "options_virtualProfileTargetHelp"
+msgstr "כאשר פרופיל זה מוחל, הוא מתנהג בדיוק כמו הפרופיל שנבחר למטה."
+
+msgid "options_group_virtualProfileReplace"
+msgstr "העבר לפרופיל וירטואלי"
+
+msgid "options_virtualProfileReplace"
+msgstr "החלף פרופיל יעד"
+
+msgid "options_virtualProfileReplaceHelp"
+msgstr "ניתן להעביר אפשרויות קיימות לשימוש בפרופיל וירטואלי זה במקום $PROFILE$. פעולה זו תעדכן את כל הכללים הקיימים הנוגעים ל-$PROFILE$ ותפנה אותם לפרופיל וירטואלי זה, כך שפרופיל התוצאה שלהם יהיה ניתן לשליטה כאן."
+
+msgid "options_group_ruleListConfig"
+msgstr "תצורת רשימת כללים"
+
+msgid "options_ruleListFormat"
+msgstr "פורמט רשימת כללים"
+
+msgid "options_group_ruleListResult"
+msgstr "פרופילי תוצאה של רשימת כללים"
+
+msgid "options_ruleListMatchProfile"
+msgstr "פרופיל התאמה"
+
+msgid "options_ruleListDefaultProfile"
+msgstr "פרופיל ברירת מחדל"
+
+msgid "options_group_ruleListUrl"
+msgstr "כתובת URL של רשימת כללים"
+
+msgid "options_ruleListUrlHelp"
+msgstr "רשימת הכללים תעודכן מכתובת URL זו. אם היא נשארת ריקה, הטקסט הבא ינותח במקום זאת."
+
+msgid "options_group_ruleListText"
+msgstr "טקסט רשימת כללים"
+
+msgid "options_ruleListLastUpdate"
+msgstr "רשימת כללים הורדה ב-$TIME$:"
+
+msgid "options_ruleListObsolete"
+msgstr "רשימת הכללים מיושנת עקב שינוי URL. לחץ על כפתור ההורדה למעלה כדי לעדכן."
+
+msgid "options_group_switchRules"
+msgstr "כללי מעבר"
+
+msgid "options_sort"
+msgstr "מיון"
+
+msgid "options_conditionType"
+msgstr "סוג תנאי"
+
+msgid "options_showConditionTypeHelp"
+msgstr "הצג עזרה"
+
+msgid "options_conditionDetails"
+msgstr "פרטי תנאי"
+
+msgid "options_resultProfile"
+msgstr "פרופיל"
+
+msgid "options_conditionActions"
+msgstr "פעולות"
+
+msgid "options_addCondition"
+msgstr "הוסף תנאי"
+
+msgid "options_cloneRule"
+msgstr "שכפל"
+
+msgid "options_ruleNote"
+msgstr "הערה"
+
+msgid "options_switchAttachedProfileInCondition"
+msgstr "כללי רשימת כללים"
+
+msgid "options_switchAttachedProfileInConditionDetails"
+msgstr "(כל בקשה שמתאימה לרשימת הכללים למטה)"
+
+msgid "options_switchAttachedProfileInConditionDisabled"
+msgstr "(כללי רשימת הכללים מושבתים)"
+
+msgid "options_switchDefaultProfile"
+msgstr "ברירת מחדל"
+
+msgid "options_hostLevelsBetween"
+msgstr "≤ רמות שרת מארח ≤"
+
+msgid "options_hourBetween"
+msgstr "≤ השעה הנוכחית ≤"
+
+msgid "options_weekDayShort_0"
+msgstr "א׳"
+
+msgid "options_weekDayShort_1"
+msgstr "ב׳"
+
+msgid "options_weekDayShort_2"
+msgstr "ג׳"
+
+msgid "options_weekDayShort_3"
+msgstr "ד׳"
+
+msgid "options_weekDayShort_4"
+msgstr "ה׳"
+
+msgid "options_weekDayShort_5"
+msgstr "ו׳"
+
+msgid "options_weekDayShort_6"
+msgstr "ש׳"
+
+msgid "options_group_conditionHelp"
+msgstr "אודות סוגי תנאים"
+
+msgid "options_group_attachProfile"
+msgstr "ייבא רשימות כללים מקוונות"
+
+msgid "options_attachProfile"
+msgstr "הוסף רשימת כללים"
+
+msgid "options_attachProfileHelp"
+msgstr "ניתן לעשות שימוש חוזר באוסף תנאים מקוון שפורסם על ידי אחרים על ידי הוספת רשימת כללים."
+
+msgid "options_modalHeader_welcome"
+msgstr "ברוכים הבאים ל-SwitchyDelta"
+
+msgid "options_welcomeNormal"
+msgstr "התקנת בהצלחה את SwitchyDelta, מחליף הפרוקסי האולטימטיבי."
+
+msgid "options_welcomeNormalGuide"
+msgstr "ספר ל-SwitchyDelta על הפרוקסי שלך דרך דף האפשרויות. בוא נראה איך."
+
+msgid "options_welcomeUpgrade"
+msgstr "שדרגת בהצלחה ל-SwitchyDelta. אל תדאג, האפשרויות הקיימות שלך נשמרו במלואן."
+
+msgid "options_welcomeUpgradeGuide"
+msgstr "כעת נעבור על מדריך מהיר לדף האפשרויות החדש."
+
+msgid "options_guideNext"
+msgstr "הבא"
+
+msgid "options_guideDone"
+msgstr "סיום"
+
+msgid "options_guideSkip"
+msgstr "דלג על המדריך"
+
+msgid "options_modalHeader_applyOptions"
+msgstr "החל אפשרויות"
+
+msgid "options_optionsNotSaved"
+msgstr "השינויים באפשרויות לא נשמרו ויאבדו אם תמשיך!"
+
+msgid "options_applyOptionsRequired"
+msgstr "יש להחיל את השינויים באפשרויות לפני שתמשיך."
+
+msgid "options_applyOptionsConfirm"
+msgstr "האם ברצונך לשמור ולהחיל את האפשרויות?"
+
+msgid "options_modalHeader_renameProfile"
+msgstr "שנה שם פרופיל"
+
+msgid "options_renameProfileName"
+msgstr "שם פרופיל חדש"
+
+msgid "options_profileNameConflict"
+msgstr "פרופיל בשם זה כבר קיים."
+
+msgid "options_profileNameReserved"
+msgstr "שמות פרופיל שמתחילים בקו תחתון כפול שמורים."
+
+msgid "options_profileNameHidden"
+msgstr "פרופילים עם שמות שמתחילים בקו תחתון יוסתרו בתפריט הקופץ. עם זאת, עדיין ניתן להשתמש בהם במקומות כמו תוצאות פרופיל מעבר."
+
+msgid "options_modalHeader_replaceProfile"
+msgstr "החלף פרופיל"
+
+msgid "options_replaceProfile"
+msgstr "החלף פרופיל"
+
+msgid "options_replaceProfileConfirm"
+msgstr "האם אתה באמת רוצה להחליף את $FromProfile$ ב-$ToProfile$?"
+
+msgid "options_replaceProfileHelp"
+msgstr "אם תמשיך, כל הכללים שמצביעים על $FromProfile$ יעודכנו לשימוש ב-$ToProfile$ במקום זאת. אפשרויות אחרות, כגון פרופיל הפעלה ומעבר מהיר, ישתנו גם כן בהתאם. עם זאת, שני הפרופילים עצמם לא ישונו או יימחקו."
+
+msgid "options_replaceProfileSuccess"
+msgstr "האפשרויות עודכנו."
+
+msgid "options_modalHeader_deleteProfile"
+msgstr "מחק פרופיל"
+
+msgid "options_deleteProfileConfirm"
+msgstr "האם אתה באמת רוצה למחוק את הפרופיל הבא?"
+
+msgid "options_modalHeader_cannotDeleteProfile"
+msgstr "לא ניתן למחוק פרופיל"
+
+msgid "options_profileReferredBy"
+msgstr "לא ניתן למחוק פרופיל זה כי הוא מצוין על ידי הפרופילים הבאים:"
+
+msgid "options_modifyReferringProfiles"
+msgstr "עליך לשנות פרופילים אלה ולהפסיק את ההפניה לפרופיל זה לפני שתוכל למחוק אותו."
+
+msgid "options_profileNameEmpty"
+msgstr "שם הפרופיל לא יכול להיות ריק."
+
+msgid "popup_title"
+msgstr "חלון קופץ של SwitchyDelta"
+
+msgid "options_modalHeader_proxyAuth"
+msgstr "אימות פרוקסי"
+
+msgid "options_proxyAuthUsername"
+msgstr "שם משתמש"
+
+msgid "options_proxyAuthPassword"
+msgstr "סיסמה"
+
+msgid "options_proxyAuthShowPassword"
+msgstr "הצג סיסמה"
+
+msgid "options_proxyAuthHidePassword"
+msgstr "הסתר סיסמה"
+
+msgid "options_proxyAuthNone"
+msgstr "ללא אימות"
+
+msgid "options_modalHeader_deleteRule"
+msgstr "מחק כלל"
+
+msgid "options_deleteRuleConfirm"
+msgstr "האם אתה באמת רוצה למחוק את הכלל הבא?"
+
+msgid "options_deleteRule"
+msgstr "מחק"
+
+msgid "options_modalHeader_resetRules"
+msgstr "אפס כללים"
+
+msgid "options_resetRulesConfirm"
+msgstr "האם אתה בטוח שברצונך להגדיר את פרופיל התוצאה של כל הכללים לפרופיל הבא?"
+
+msgid "options_resetRules"
+msgstr "אפס כללים"
+
+msgid "options_resetRules_help"
+msgstr "הגדר פרופיל לכל הכללים"
+
+msgid "options_modalHeader_deleteAttached"
+msgstr "הסר רשימת כללים"
+
+msgid "options_deleteAttachedConfirm"
+msgstr "האם אתה באמת רוצה להסיר את רשימת הכללים מהפרופיל הנוכחי?"
+
+msgid "options_ruleListLineCount"
+msgstr "$COUNT$ שורות של כללים"
+
+msgid "options_deleteAttached"
+msgstr "הסר רשימת כללים"
+
+msgid "options_modalHeader_newProfile"
+msgstr "פרופיל חדש"
+
+msgid "options_newProfileName"
+msgstr "שם פרופיל"
+
+msgid "options_profileType"
+msgstr "בחר את סוג הפרופיל:"
+
+msgid "options_profileTypeFixedProfile"
+msgstr "פרופיל פרוקסי"
+
+msgid "options_profileDescFixedProfile"
+msgstr "העברת תעבורה דרך שרתי פרוקסי."
+
+msgid "options_profileTypePacProfile"
+msgstr "פרופיל PAC"
+
+msgid "options_profileDescPacProfile"
+msgstr "בחירת פרוקסי באמצעות סקריפט PAC מקוון/מקומי."
+
+msgid "options_profileDescMorePacProfile"
+msgstr "תזדקק לזה רק אם יש לך סקריפט PAC או כתובת URL אליו. אל תנסה ליצור אחד אלא אם כן יש לך ידע על PAC."
+
+msgid "options_profileTypeSwitchProfile"
+msgstr "פרופיל מעבר"
+
+msgid "options_profileDescSwitchProfile"
+msgstr ""
+"החלת פרופילים שונים אוטומטית לפי תנאים כגון דומיינים או תבניות.\n"
+" ניתן גם לייבא כללים שפורסמו באינטרנט למעבר קל יותר. (מחליף מצב AutoSwitch + רשימת כללים.)"
+
+msgid "options_profileTypeRuleListProfile"
+msgstr "פרופיל רשימת כללים"
+
+msgid "options_profileDescRuleListProfile"
+msgstr "שימוש חוזר באוסף תנאים מקוון שפורסם על ידי אחרים."
+
+msgid "options_profileTypeVirtualProfile"
+msgstr "פרופיל וירטואלי"
+
+msgid "options_profileDescVirtualProfile"
+msgstr "פרופיל וירטואלי יכול לפעול ככל אחד מהפרופילים האחרים לפי דרישה. הוא עובד היטב עם SwitchProfile, ומאפשר לשנות את התוצאה של מספר תנאים בלחיצה אחת."
+
+msgid "options_createProfile"
+msgstr "צור"
+
+msgid "options_modalHeader_resetOptions"
+msgstr "אפס אפשרויות"
+
+msgid "options_resetOptionsConfirm"
+msgstr "האם אתה באמת רוצה לאפס את האפשרויות? כל הפרופילים וההגדרות יאבדו!"
+
+msgid "options_formInvalid"
+msgstr "אנא תקן את השגיאות בדף זה."
+
+msgid "options_profileNotFound"
+msgstr "הפרופיל $PROFILE$ אינו קיים! ייתכן שהאפשרויות פגומות."
+
+msgid "options_resetSuccess"
+msgstr "האפשרויות אופסו."
+
+msgid "options_saveSuccess"
+msgstr "האפשרויות נשמרו."
+
+msgid "options_importSuccess"
+msgstr "האפשרויות יובאו."
+
+msgid "options_importFormatError"
+msgstr "קובץ גיבוי לא תקין!"
+
+msgid "options_importDownloadError"
+msgstr "שגיאה בהורדת קובץ הגיבוי!"
+
+msgid "options_profileDownloadSuccess"
+msgstr "הפרופיל עודכן בהצלחה."
+
+msgid "options_profileDownloadError"
+msgstr "שגיאה בהורדת נתוני הפרופיל!"
+
+msgid "options_profileDownloadError_NetworkError"
+msgstr "אירעה שגיאת רשת בעת העדכון."
+
+msgid "options_profileDownloadError_HttpError"
+msgstr "אירעה שגיאת HTTP ($STATUS$) בעת העדכון."
+
+msgid "options_profileDownloadError_HttpNotFoundError"
+msgstr "כתובת ה-URL של הפרופיל לא נמצאה בשרת. אנא בדוק שוב."
+
+msgid "options_profileDownloadError_HttpServerError"
+msgstr "השרת המרוחק הגיב בשגיאה ($STATUS$) בעת העדכון."
+
+msgid "options_profileDownloadError_ContentTypeRejectedError"
+msgstr "הנתונים שהורדו אינם תקינים! ניתן לפתוח את כתובת ה-URL של הפרופיל בדפדפן כדי לבדוק אותם."
+
+msgid "options_downloadProfileNow"
+msgstr "הורד פרופיל עכשיו"
+
+msgid "options_guide_fixedProfileStep"
+msgstr "<b>פרופיל פרוקסי</b> מכיל הגדרות כמו כתובת IP ויציאה של השרת לפרוקסי.<br>פרופילים הם יחידות התצורה הבסיסיות ב-SwitchyDelta.<br>כבר יצרנו עבורך פרופיל לדוגמה. נסה לפתוח אותו."
+
+msgid "options_guide_fixedServersStep"
+msgstr "ניתן למלא כאן את שרת הפרוקסי והיציאה כרצונך.<br>SwitchyDelta <b>אינו מגיע עם שרתי פרוקסי</b>.<br>פנה לספק הרשת שלך או למדריך תוכנת הפרוקסי אם אינך יודע מה למלא כאן."
+
+msgid "options_guide_autoSwitchProfileStep"
+msgstr "ניתן להורות ל-SwitchyDelta לעבור בין פרוקסי אוטומטית באמצעות <b>פרופיל המעבר</b> העוצמתי.<br>עם זאת, לא ניתן לכסות את כל תכונותיו במדריך מהיר זה.<br>ניתן לפתוח פרופיל זה מאוחר יותר כדי לנצל את מלוא עוצמתו."
+
+msgid "options_guide_addMoreProfilesStep"
+msgstr "צריך עוד פרופילים? תמיד ניתן להוסיף עוד <b>פרופילי פרוקסי, מעבר ואחרים</b><br>לכל צורכי הפרוקסי שלך.<br>תהנה מהשימוש בפרוקסי!"
+
+msgid "options_guide_conditionStep"
+msgstr "SwitchyDelta יכול להחיל פרופילים שונים על בקשות על בסיס <b>תנאים</b>.<br> לדוגמה, תנאי <b>תו כללי לשרת מארח</b> מאפשר להגדיר את הפרופיל לכל כתובות ה-URL בדומיין."
+
+msgid "options_guide_conditionTypeStep"
+msgstr "ניתן להשתמש בסוגי תנאים שונים להתאמת השרת המארח או ה-URL המלא. <br> לחץ על סימן השאלה לפתיחת מדריך הסוגים."
+
+msgid "options_guide_conditionProfileStep"
+msgstr "SwitchyDelta מחיל את הפרופיל שנבחר כאן על <b>כל בקשה שמתאימה לתנאי.</b> <br> הפרופיל המיוחד <b>\"[ישיר]\"</b> יגרום לשליחת הבקשה ללא כל פרוקסי."
+
+msgid "options_guide_switchDefaultStep"
+msgstr "אם אף תנאי אינו חל על בקשה כלשהי, ייעשה שימוש בפרופיל \"ברירת מחדל\". <br>תנאים נשקלים תמיד <b>מלמעלה למטה</b> לפי הסדר.<br>ניתן לשנות את הסדר שלהם על ידי גרירת סמל המיון."
+
+msgid "options_guide_applySwitchProfileStep"
+msgstr "כשסיימת להגדיר את פרופיל המעבר, אל תשכח <b>לעבור אליו בתפריט הקופץ.</b><br/> הסמל יציג את פרופיל <b>התוצאה הסופית</b> שהוחלה על הלשונית הנוכחית. <br/> <b>ריחוף</b> מעל הסמל יחשוף תיאור כלים עם פרטים."
+
+msgid "popup_externalProfile"
+msgstr "(פרופיל חיצוני)"
+
+msgid "popup_externalProfileName"
+msgstr "שם פרופיל"
+
+msgid "popup_proxyNotControllable_app"
+msgstr "הגדרות הפרוקסי נשלטות על ידי אפליקציה/ות או הרחבה/ות אחרות. אנא השבת או הסר את האפליקציות או ההרחבות שבקונפליקט."
+
+msgid "popup_proxyNotControllable_policy"
+msgstr "הגדרות הפרוקסי נשלטות על ידי מדיניות. אנא פנה למנהל המערכת שלך."
+
+msgid "popup_proxyNotControllable_unknown"
+msgstr "לא ניתן לשלוט בהגדרות הפרוקסי. אנא בדוק את הגדרות המערכת והדפדפן."
+
+msgid "popup_proxyNotControllable_disabled"
+msgstr "הגדרות הפרוקסי הושבתו לפי בקשה מפורשת מאפליקציה/ות או הרחבה/ות אחרות."
+
+msgid "popup_proxyNotControllable_upgrade"
+msgstr "הגדרות הפרוקסי נשלטות כעת על ידי גרסה חדשה יותר של SwitchyDelta."
+
+msgid "popup_proxyNotControllableDetails"
+msgstr "לא ניתן להחליף פרופילים עם SwitchyDelta אלא אם תתקן את הבעיה למעלה."
+
+msgid "popup_proxyNotControllableDetails_upgrade"
+msgstr "לא ניתן להפעיל שתי גרסאות (או יותר) של SwitchyDelta בו-זמנית. אנא השבת אחת מהן."
+
+msgid "popup_proxyNotControllableManage"
+msgstr "נהל הרחבות"
+
+msgid "popup_addConditionTo"
+msgstr "הוסף תנאי ל"
+
+msgid "popup_addCondition"
+msgstr "הוסף תנאי"
+
+msgid "popup_showOptions"
+msgstr "אפשרויות"
+
+msgid "popup_reportIssues"
+msgstr "דווח על בעיות"
+
+msgid "popup_errorLog"
+msgstr "שמור יומן שגיאות"
+
+msgid "popup_requestErrorCount"
+msgstr "$COUNT$ משאבים שנכשלו"
+
+msgid "popup_requestErrorHeading"
+msgstr "משאבים שנכשלו בטעינה"
+
+msgid "popup_requestErrorWarning"
+msgstr "כמה משאבים נכשלו בטעינה עקב בעיות ברשת, בשרת הפרוקסי או בדף האינטרנט."
+
+msgid "popup_requestErrorWarningHelp"
+msgstr "SwitchyDelta רק מדווח על בעיות אלה, ואינו הגורם להן."
+
+msgid "popup_requestErrorAddCondition"
+msgstr "ניתן לבדוק את הדומיינים הבאים ולהשתמש בפרוקסי עבורם כשמתאים."
+
+msgid "popup_requestErrorCannotAddCondition"
+msgstr "ניתן להוסיף תנאי מעבר עבורם רק בעת שימוש בפרופיל מעבר."
+
+msgid "popup_configureMonitorWebRequests"
+msgstr "הגדר ניטור רשת"
+
+msgid "options_resultProfileForSelectedDomains"
+msgstr "השתמש בפרופיל זה לכל הדומיינים שנבחרו"
+
+msgid "options_pac_profile_unsupported_moz"
+msgstr "פרופילי PAC לא יעבדו ב-Mozilla Firefox עקב מגבלות טכניות!"
+
+msgid "popup_issueTemplate"
+msgstr ""
+"\n"
+"\n"
+"\n"
+"<!-- Please write your comment ABOVE this line. -->\n"
+"SwitchyDelta $projectVersion$\n"
+"$userAgent$"
+
+msgid "browserAction_profileDetails_PacProfile"
+msgstr "(סקריפט PAC)"
+
+msgid "browserAction_profileDetails_SystemProfile"
+msgstr "(נשלט על ידי הרחבות אחרות או הסביבה)"
+
+msgid "browserAction_profileDetails_DirectProfile"
+msgstr "(ללא שימוש בפרוקסי)"
+
+msgid "browserAction_profileDetails_SwitchProfile"
+msgstr "(מעבר על בסיס תנאים)"
+
+msgid "browserAction_profileDetails_RuleListProfile"
+msgstr "(מעבר על בסיס רשימת כללים)"
+
+msgid "browserAction_titleNormal"
+msgstr "SwitchyDelta:: $PROFILE$"
+
+msgid "browserAction_titleWithResult"
+msgstr ""
+"SwitchyDelta:: $1:PROFILE$\n"
+"$3:DETAILS$"
+
+msgid "browserAction_titleNewerOptions"
+msgstr "שגיאה: נדרשת גרסה חדשה יותר של SwitchyDelta לטעינת האפשרויות השמורות."
+
+msgid "browserAction_titleOptionError"
+msgstr "שגיאה: האפשרויות השמורות פגומות. לחץ כאן לאיפוס האפשרויות."
+
+msgid "browserAction_titleDownloadFail"
+msgstr "אזהרה: הורדת סקריפטי PAC ו/או רשימות כללים נכשלה."
+
+msgid "browserAction_titleExternalProxy"
+msgstr "הערה: הגדרות הפרוקסי נשלטות כעת על ידי אפליקציה/ות אחרות."
+
+msgid "browserAction_titleInspect"
+msgstr "[בדיקה] $URL$"
+
+msgid "browserAction_defaultRuleDetails"
+msgstr "(ברירת מחדל)"
+
+msgid "browserAction_directResult"
+msgstr "DIRECT"
+
+msgid "browserAction_attachedPrefix"
+msgstr "(RL) "
+
+msgid "browserAction_tempRulePrefix"
+msgstr "(TEMP) "
+
+msgid "contextMenu_inspectPage"
+msgstr "בדוק פרוקסי המשמש לדף זה"
+
+msgid "contextMenu_inspectFrame"
+msgstr "בדוק פרוקסי המשמש למסגרת זו"
+
+msgid "contextMenu_inspectLink"
+msgstr "בדוק פרוקסי שייעשה בו שימוש אם קישור זה ייפתח"
+
+msgid "contextMenu_inspectElement"
+msgstr "בדוק פרוקסי המשמש לרכיב זה"
+
+msgid "contextMenu_enableQuickSwitch"
+msgstr "הפעל מעבר מהיר"
+
+msgid "about_title"
+msgstr "אודות"
+
+msgid "about_app_description"
+msgstr "כלי להגדרת פרוקסי"
+
+msgid "about_version"
+msgstr "גרסה $VERSION$"
+
+msgid "about_experimental_warning_moz"
+msgstr "התמיכה ב-Mozilla Firefox היא ניסיונית מאוד! אם נתקלת בבעיות, דווח באמצעות הכפתורים למטה."
+
+msgid "about_disclaimer_networkService"
+msgstr "SwitchyDelta אינו מספק פרוקסי, VPN או שירותי רשת אחרים."
+
+msgid "about_disclaimer_privacy"
+msgstr "SwitchyDelta אינו עוקב אחריך ואינו מוסיף פרסומות לדפי אינטרנט. ראה את <a href='https://github.com/madeye/SwitchyDelta/wiki/Privacy#english'>מדיניות הפרטיות</a> שלנו."
+
+msgid "about_help"
+msgstr "שאלות נוספות? צריך עזרה בשימוש ב-SwitchyDelta? ראה את <a href='https://github.com/madeye/SwitchyDelta/wiki/FAQ'>שאלות נפוצות</a>."
+
+msgid "about_copyright"
+msgstr "Copyright 2026 <a href='https://github.com/madeye'>Max Lv</a>.<br>Copyright 2012-2017 <a href='https://github.com/FelisCatus/SwitchyOmega/blob/master/AUTHORS'>The SwitchyOmega Authors</a>."
+
+msgid "about_credits"
+msgstr "SwitchyDelta התאפשר הודות לפרויקט הקוד הפתוח <a href='https://github.com/madeye/SwitchyDelta'>SwitchyDelta</a> ותוכנות <a href='https://github.com/madeye/SwitchyDelta/blob/master/AUTHORS'>קוד פתוח</a> אחרות."
+
+msgid "about_license"
+msgstr "SwitchyDelta הוא <a href='https://www.gnu.org/philosophy/free-sw.en.html'>תוכנה חופשית</a> ברישיון <a href='https://www.gnu.org/licenses/gpl.html'>GNU General Public License</a> גרסה 3 או מאוחרת יותר."
+
+msgid "popup_proxyAuthPermission"
+msgstr "התחברות לשרתי proxy מאומתים דורשת גישה לכל האתרים."
+
+msgid "popup_proxyAuthPermissionGrant"
+msgstr "הענקת גישה"

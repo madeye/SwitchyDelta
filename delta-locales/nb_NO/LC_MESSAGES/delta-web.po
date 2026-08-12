@@ -1,0 +1,1144 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SwitchyDelta 2.3.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-13 10:29+0000\n"
+"PO-Revision-Date: 2019-05-14 08:49+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
+"switchydelta/main/nb_NO/>\n"
+"Language: nb_NO\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.7-dev\n"
+
+msgid "appNameShort"
+msgstr "SwitchyDelta"
+
+#, fuzzy
+msgid "manifest_app_name"
+msgstr "Mellomtjeneren SwitchyDelta"
+
+msgid "manifest_app_description"
+msgstr "Behandle og bytt mellom flerfoldige mellomtjenere raskt og enkelt."
+
+msgid "manifest_icon_default_title"
+msgstr "Laster inn…"
+
+msgid "upgrade_profile_auto"
+msgstr "Automatisk bytte"
+
+msgid "profile_direct"
+msgstr "[Direkte]"
+
+msgid "profile_system"
+msgstr "[Systemmellomtjener]"
+
+msgid "condition_HostWildcardCondition"
+msgstr "Vertsjokertegn"
+
+msgid "condition_help_HostWildcardCondition"
+msgstr "Samsvarer med verter (domenenavn) med jokertegn.<br><b>Stjernen <code>*</code></b> samsvarer med null eller flere tegn.<br><b>Spørsmålstegnet <code>?</code></b> samsvarer med nøyaktig ett tegn.<br><br>Merk at regler som begynner med <code>*.</code> behandles spesielt bare i Vertsjokertegn-betingelser.<br>Eksempel: <code>*.example.com</code> vil samsvare med www.example.com <b>OG også example.com.</b><br>For å samsvare med underdomener <b>bare</b>, bruk <b>to</b> stjerner som <code>**.example.com</code>."
+
+msgid "condition_HostRegexCondition"
+msgstr "Regulært uttrykk for vert"
+
+msgid "condition_help_HostRegexCondition"
+msgstr "Som Vertsjokertegn-betingelse, men samsvarer med verter (domenenavn) med <a href='https://www.google.com/search?q=regular%20expression'>regulært uttrykk</a>.<br>Regulære uttrykk kan være vanskelige å lage (og lese).<br>Det anbefales å bruke jokertegn i de fleste tilfeller og bare bruke regulære uttrykk for betingelser som ikke kan oppnås med noen annen betingelsestype."
+
+msgid "condition_HostLevelsCondition"
+msgstr "Vertsnivåer"
+
+msgid "condition_help_HostLevelsCondition"
+msgstr "Samsvarer med forespørselen hvis og bare hvis vertsnivået er innenfor det angitte området.<br>Vertsnivå er definert som <b>antall punktumseparerte segmenter</b> i verten (domenenavnet).<br>Eksempel: <code>www.example.com</code> har vertsnivå 3, mens <code>internal</code> har vertsnivå 1."
+
+msgid "condition_IpCondition"
+msgstr "IP Literals"
+
+msgid "condition_help_IpCondition"
+msgstr ""
+"Matches the request if and only if the host is a <b>literal</b> IP address and"
+" in the subnet as specified by <a href='"
+"https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation'>"
+"CIDR notation</a>.<br>For example, given the rule <code>127.0.0.1/16</code>, "
+"it matches all IP addresses like <code>127.0.*.*</code>.<br>"
+"So <code>127.0.0.1</code> matches while <code>127.1.0.0</code> does not. "
+"Host names like <code>localhost</code> will never match because they are "
+"<b>not</b> IP literals."
+
+msgid "condition_UrlWildcardCondition"
+msgstr "Nettadressejokertegn"
+
+msgid "condition_help_UrlWildcardCondition"
+msgstr "Samsvarer med URL-er i forespørselen med jokertegn.<br>Se avsnittet om Vertsjokertegn ovenfor for en rask jokertegn-referanse.<br>Merk at URL-jokertegn ikke behandles spesielt (ingen underdomenemagi som i Vertsjokertegn).<br>Så <code>*://*.example.com/*</code> samsvarer med http://www.example.com/ men <b>ikke</b> med http://example.com/."
+
+msgid "condition_UrlRegexCondition"
+msgstr "Regulært uttrykk for URL"
+
+#, fuzzy
+msgid "condition_help_UrlRegexCondition"
+msgstr ""
+"Samsvarer med URL-er i kraft av ekstremt mektige <a "
+"href='https://www.google.com/search?q=regular%20expression'>regulære "
+"uttrykk</a>.<br>Dog kan regulære uttrykk være vanskelige å lage (og "
+"lese).<br>Det er anbefalt å bruke wildcards i de fleste fall og bare bruke "
+"regulære uttrykk for tilstander som ikke kan oppnås av noen annen "
+"tilstandstype."
+
+msgid "condition_KeywordCondition"
+msgstr "Nøkkelord"
+
+msgid "condition_help_KeywordCondition"
+msgstr "En nøkkelordbetingelse samsvarer hvis URL-protokollen er HTTP, og mønsteret er en eksakt delstreng av URL-en.<br>Den oppfører seg som URL-jokertegnmønsteret <code>http://*<b>pattern</b>*</code>, der <b>pattern</b> er nøkkelordmønsteret.<br>Nøkkelordbetingelser er nyttige hvis du vil omgå en brannmur som blokkerer enkelte nøkkelord i URL-en, ved å be om slike URL-er gjennom en mellomtjener."
+
+msgid "condition_FalseCondition"
+msgstr "(Avskrudd)"
+
+msgid "condition_details_FalseCondition"
+msgstr "(Tilstand sett bort fra ved jamførelse)"
+
+msgid "condition_help_FalseCondition"
+msgstr "Du kan deaktivere en betingelse ved å sette typen til <code>(Avskrudd)</code>. En avskrudd betingelse oppfører seg som om den ikke finnes.<br>Denne funksjonen kan brukes til å deaktivere betingelser midlertidig.<br>Avskrudd betingelser beholder fortsatt den forrige informasjonen (som mønstre) og kan aktiveres på nytt ved å sette betingelsestypen tilbake til den forrige typen."
+
+msgid "condition_TimeCondition"
+msgstr "Gjeldende tid"
+
+msgid "condition_help_TimeCondition"
+msgstr "Samsvarer hvis gjeldende lokal tid er innenfor området definert av <b>starttime</b> og <b>sluttime</b>, begge inklusive.<br>Lokal tid, starttime og sluttime beregnes alle i <b>24-timers</b> format (fra <b>0 til 23</b>). <br>Beregningen skjer omtrent i det øyeblikket forespørselen sendes."
+
+msgid "condition_WeekdayCondition"
+msgstr "Ukedag"
+
+msgid "condition_help_WeekdayCondition"
+msgstr "Samsvarer hvis <b>gjeldende ukedag</b> er valgt i betingelsesdetaljene. Dagen beregnes etter lokal tidssone.<br>Forespørselen og dens URL spiller ingen rolle for denne betingelsen. Resultatet baseres kun på ukedagen da forespørselen sendes."
+
+msgid "condition_alert_fullUrlLimitation"
+msgstr ""
+"Full URL matching is no longer possible for <code>https://</code> "
+"URLs as of Chrome 52. "
+"<a href='https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation'>"
+"Learn more...</a>"
+
+msgid "condition_alert_fullUrlLimitationLink"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation"
+
+msgid "condition_group_default"
+msgstr " "
+
+msgid "condition_group_host"
+msgstr "Vert"
+
+msgid "condition_group_url"
+msgstr "URL"
+
+msgid "condition_group_special"
+msgstr "Spesiell"
+
+msgid "ruleListFormat_Switchy"
+msgstr "Byttende"
+
+msgid "ruleListFormat_AutoProxy"
+msgstr "AutoProxy"
+
+msgid "ruleList_usageUrl"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/RuleListUsage"
+
+msgid "ruleList_error_resultNotEnabled"
+msgstr "Mangler direktivet '@with result'!"
+
+msgid "ruleList_error_unknownProfile"
+msgstr "Ukjent profil: $PROFILE$"
+
+msgid "ruleList_error_missingResultProfile"
+msgstr "Mangler resultatprofilnavn på linje $LNO$: $SOURCE$"
+
+msgid "ruleList_error_invalidRule"
+msgstr "Ugyldig regel på linje $LNO$: $SOURCE$"
+
+msgid "ruleList_error_noDefaultRule"
+msgstr "Mangler standardregel med catch-all-betingelsen '*'!"
+
+msgid "dialog_close"
+msgstr "Lukk"
+
+msgid "dialog_save"
+msgstr "Lagre endringer"
+
+msgid "dialog_ok"
+msgstr "OK"
+
+msgid "dialog_cancel"
+msgstr "Avbryt"
+
+msgid "inputClear_clear"
+msgstr "Tøm"
+
+msgid "inputClear_restore"
+msgstr "Gjenopprett"
+
+msgid "options_title"
+msgstr "SwitchyDelta-valg"
+
+msgid "options_experimental_badge"
+msgstr "α"
+
+msgid "options_navHeader_setting"
+msgstr "Innstillinger"
+
+msgid "options_navHeader_profiles"
+msgstr "Profiler"
+
+msgid "options_navHeader_actions"
+msgstr "Handlinger"
+
+msgid "options_tab_ui"
+msgstr "Grensesnitt"
+
+msgid "options_tab_general"
+msgstr "Generelt"
+
+msgid "options_tab_importExport"
+msgstr "Importer/Exporter"
+
+msgid "options_newProfile"
+msgstr "Ny profil…"
+
+msgid "options_apply"
+msgstr "Legg til endringer"
+
+msgid "options_discard"
+msgstr "Forkast endringer"
+
+msgid "options_reset"
+msgstr "Tilbakestill valg"
+
+msgid "options_group_miscOptions"
+msgstr "Ymse valg"
+
+msgid "options_confirmDeletion"
+msgstr "Bekreft ved sletting av betingelse."
+
+msgid "options_refreshOnProfileChange"
+msgstr "Gjenoppfrisk gjeldende fane ved profilendring."
+
+msgid "options_showInspectMenu"
+msgstr "Tillat inspeksjon av mellomtjener brukt for sideelementer via hurtigmenyen."
+
+msgid "options_addConditionsToBottom"
+msgstr "Put new conditions added using the popup to the bottom of the list."
+
+msgid "options_group_keyboardShortcut"
+msgstr "Tastatursnarvei"
+
+msgid "options_menuShortcutHelp"
+msgstr "Ved å trykke snarveien åpnes byttemenyen. (Standard er Alt+Shift+O)."
+
+msgid "options_menuShortcutMore"
+msgstr "Elementene i popup-menyen kan også nås med tastaturet. Trykk ? (eller /) i menyen for å lære mer."
+
+msgid "options_menuShortcutConfigure"
+msgstr "Sett opp snarvei"
+
+msgid "options_group_switchOptions"
+msgstr "Bytt valg"
+
+msgid "options_startupProfile"
+msgstr "Oppstartsprofil"
+
+msgid "options_startupProfile_none"
+msgstr "(Gjeldende profil)"
+
+msgid "options_showConditionTypesAdvanced"
+msgstr "Vis avanserte betingelsestyper"
+
+msgid "options_showConditionTypesAdvancedHelp"
+msgstr "Låser opp nye typer avanserte men kompliserte byttebetingelser. For de fleste scenarier er de grunnleggende betingelsestypene nok, så dette alternativet anbefales ikke."
+
+msgid "options_quickSwitch"
+msgstr "Hurtigbytte"
+
+msgid "options_cycledProfiles"
+msgstr "Roterende profiler"
+
+msgid "options_cycledProfilesHelp"
+msgstr "Når du klikker på ikonet (eller bruker snarveien ovenfor), brukes følgende profiler i rekkefølge."
+
+msgid "options_cycledProfilesTooFew"
+msgstr "Du må velge minst 2 profiler for å aktivere denne funksjonen! Du kan dra dem fra boksen nedenfor."
+
+msgid "options_notCycledProfiles"
+msgstr "Ikke-roterende profiler"
+
+msgid "options_group_proxyChanges"
+msgstr "Mellomtjenerendringer"
+
+msgid "options_revertProxyChanges"
+msgstr "Tilbakestill mellomtjenerinnstillinger gjort av andre programmer."
+
+msgid "options_group_conflicts"
+msgstr "Conflicts"
+
+msgid "options_conflicts_introduction"
+msgstr ""
+"Sometimes, other apps will also try to control the proxy settings, resulting "
+"in conflicts. Note that ad blockers and other extensions may also use proxy "
+"settings under the hood. Such conflicts cannot be avoided due to how the "
+"browser works."
+
+msgid "options_conflicts_lowerPriority"
+msgstr ""
+"A red badge like this on the SwitchyDelta icon indicates that another app has "
+"higher priority so SwitchyDelta cannot control the settings. Please try to "
+"uninstall SwitchyDelta and reinstall, which should raise SwitchyDelta's "
+"priority. If you still see conflicts after reinstallation, please consider "
+"removing the other app causing the conflict."
+
+msgid "options_conflicts_higherPriority"
+msgstr ""
+"If SwitchyDelta has higher priority, you can give the control back to other "
+"apps or system settings by selecting $SYSTEMPROFILE$ in the popup menu."
+
+msgid "options_showExternalProfile"
+msgstr "Show popup menu item to import proxy settings from other apps."
+
+msgid "options_showExternalProfileHelp"
+msgstr ""
+"When $SYSTEMPROFILE$ is selected, you can import the effective proxy settings "
+"from other apps by selecting $EXTERNALPROFILE$ on the popup menu. "
+"The settings will be imported as a profile using the name you provide. "
+"Please note that the imported profile is a snapshot and will not reflect "
+"any changes from the source app thereafter."
+
+msgid "options_group_networkRequests"
+msgstr "Nettverksforespørsler"
+
+msgid "options_monitorWebRequests"
+msgstr "Vis antall feilede nettforespørsler for ressurser i gjeldende fane."
+
+msgid "options_monitorWebRequestsHelp"
+msgstr "Et gult merke vises på ikonet hvis noen ressurser ikke lastes inn,<br>og du kan enkelt sette profilen for slike ressurser via popup-menyen."
+
+msgid "options_downloadOptions"
+msgstr "Nedlastingsvalg"
+
+msgid "options_downloadOptionsHelp"
+msgstr "Sett oppdateringsfrekvensen for nettbaserte regellister og PAC-skript."
+
+msgid "options_downloadInterval"
+msgstr "Nedlastingsintervall"
+
+msgid "options_downloadInterval_15"
+msgstr "15 minutter"
+
+msgid "options_downloadInterval_60"
+msgstr "en time"
+
+msgid "options_downloadInterval_180"
+msgstr "tre timer"
+
+msgid "options_downloadInterval_360"
+msgstr "seks timer"
+
+msgid "options_downloadInterval_720"
+msgstr "12 timer"
+
+msgid "options_downloadInterval_1440"
+msgstr "Hver dag"
+
+msgid "options_downloadInterval_never"
+msgstr "Aldri"
+
+msgid "options_group_importExportProfile"
+msgstr "Profil"
+
+msgid "options_exportPacFile"
+msgstr "Eksporter som PAC-fil"
+
+msgid "options_exportPacFileHelp"
+msgstr ""
+"Eksporter gjeldende profil som PAC-fil, slik at du kan bruke den i andre "
+"nettlesere."
+
+#, fuzzy
+msgid "options_exportProfileHelp"
+msgstr ""
+"For å eksportere en profil, bruk handlingsfeltet øverst til høyre på "
+"profilsiden."
+
+msgid "options_exportLegacyRuleList"
+msgstr "Eksporter regellister i Proxy Switchy!/SwitchyPlus/SwitchySharp-kompatibelt format når det er mulig."
+
+msgid "options_exportLegacyRuleListHelp"
+msgstr "Aktiver dette alternativet bare hvis du publiserer regellister for brukere av de prosjektene.<br>Vurder å anbefale publikum å oppgradere til SwitchyDelta for forbedringene."
+
+msgid "options_group_importExportSettings"
+msgstr "Innstillinger"
+
+msgid "options_makeBackup"
+msgstr "Ta sikkerhetskopi"
+
+msgid "options_makeBackupHelp"
+msgstr ""
+"Ta full sikkerhetskopi av dine valg (inkludert profiler og alle andre valg)."
+
+msgid "options_restoreLocal"
+msgstr "Gjenopprett fra fil"
+
+msgid "options_restoreLocalHelp"
+msgstr "Gjennopprett dine SwitchyDelta-valg fra ei lokal fil."
+
+msgid "options_restoreOnline"
+msgstr "Gjenopprett fra nett"
+
+msgid "options_restoreOnlinePlaceholder"
+msgstr "URL til valg-fil (f.eks. 'http://eksempel.no/switchy.bak')"
+
+msgid "options_restoreOnlineSubmit"
+msgstr "Gjenopprett"
+
+msgid "options_group_syncing"
+msgstr "Synkroniserer (eksperimentelt)"
+
+msgid "options_syncEnable"
+msgstr "Skru på synkronisering"
+
+msgid "options_syncEnableForce"
+msgstr "Last ned fra synkronisering"
+
+msgid "options_syncDisable"
+msgstr "Skru av synkronisering"
+
+msgid "options_syncReset"
+msgstr "Tøm ekstern kopi"
+
+msgid "options_syncPristineHelp"
+msgstr "Du kan nå automatisk synkronisere innstillinger og profiler på tvers av alle skrivebordsenheter som kjører Chrome-nettleseren."
+
+msgid "options_syncSyncAlert"
+msgstr "Valgene dine synkroniseres automatisk med de andre enhetene dine."
+
+msgid "options_syncSyncHelp"
+msgstr "Merk at du må logge inn i Chrome på hver av enhetene dine (inkludert denne) for at synkroniseringen faktisk skal fungere. <br> Du kan sjekke denne delen på andre enheter for å sikre at den fungerer."
+
+msgid "options_syncConflictAlert"
+msgstr "Du har lastet opp en kopi av valgene dine på en annen enhet via synkronisering."
+
+msgid "options_syncConflictHelp"
+msgstr "Du kan laste ned den eksterne kopien til enheten din hvis du vil. <br>Men det vil <b>overskrive eksisterende innstillinger og profiler</b> på denne enheten."
+
+msgid "options_syncUnsupportedHelp"
+msgstr "Valgsynkronisering støttes ikke på plattformen eller nettleseren din. For øyeblikket støttes bare Chrome-nettleseren på skrivebord."
+
+msgid "options_profileSyncDisabled"
+msgstr "Synkronisering er deaktivert for denne profilen."
+
+msgid "options_profileSyncDisabled_quotaPerItem"
+msgstr "Synkronisering er deaktivert for denne profilen fordi den bruker for mye lagringsplass."
+
+msgid "options_profileTabPrefix"
+msgstr "Profil :: "
+
+msgid "options_renameProfile"
+msgstr "Gi nytt navn"
+
+msgid "options_deleteProfile"
+msgstr "Slett"
+
+msgid "options_profileExportRuleList"
+msgstr "Offentliggjør regelliste"
+
+msgid "options_profileExportRuleListHelp"
+msgstr "Eksporter bytteregler som tekstformat for publisering."
+
+msgid "options_profileExportPac"
+msgstr "Eksporter PAC"
+
+msgid "options_profileUnsupported"
+msgstr "Ustøttet profiltype $TYPE$!"
+
+msgid "options_profileUnsupportedHelp"
+msgstr "Valg kan være skadelidende, eller fra en nyere versjon av programmet."
+
+msgid "options_profileEditSource"
+msgstr "Rediger kildekode"
+
+msgid "options_profileEditSourceHelp"
+msgstr "Vis hjelp om kildekodeformatet"
+
+msgid "options_profileEditSourceHelpUrl"
+msgstr ""
+"https://github.com/madeye/SwitchyDelta/wiki/SwitchyDelta-conditions-"
+"format#result-profile"
+
+msgid "options_group_proxyServers"
+msgstr "Tjenere for mellomtjening"
+
+msgid "options_proxy_scheme"
+msgstr "Skjema"
+
+msgid "options_proxy_protocol"
+msgstr "Protokoll"
+
+msgid "options_proxy_server"
+msgstr "Tjener"
+
+msgid "options_proxy_port"
+msgstr "Port"
+
+msgid "options_proxy_auth"
+msgstr "Identitetsbekreftelse"
+
+msgid "options_proxy_authNotSupported"
+msgstr "Your browser DOES NOT support $PROTOCOLDISP$ proxy authentication! "
+"Please do not report this issue to SwitchyDelta. Contact the support for "
+"your browser instead."
+
+#, fuzzy
+msgid "options_proxy_authAllWarningPac"
+msgstr ""
+"Advarsel: Brukernavn/passord kan bli sendt til uventede tjenere fra PAC-"
+"skriptet."
+
+msgid "options_proxy_authAllWarningPacUrl"
+msgstr "Sørg for at du stoler på skriptet som er oppgitt via URL-en ovenfor før du skriver inn sensitive påloggingsdetaljer."
+
+msgid "options_proxy_authAllWarningPacScript"
+msgstr "Sørg for at du stoler på skriptet nedenfor før du oppgir sensitive påloggingsdetaljer."
+
+msgid "options_proxy_authReferencedWarning"
+msgstr "I tillegg kan bruk av denne profilen i andre profiler (f.eks. Bytt profil) føre til at brukernavn/passord sendes til mellomtjenere konfigurert i andre profiler."
+
+msgid "options_scheme_default"
+msgstr "(forvalg)"
+
+#, fuzzy
+msgid "options_protocol_direct"
+msgstr "DIREKTE"
+
+msgid "options_protocol_useDefault"
+msgstr "(bruk forvalg)"
+
+msgid "options_proxy_single"
+msgstr "Bruk mellomtjeneren ovenfor for alle protokoller."
+
+msgid "options_proxy_expand"
+msgstr "Vis avanserte valg"
+
+msgid "options_group_bypassList"
+msgstr "Omgåelsesliste"
+
+msgid "options_bypassListHelp"
+msgstr "Tjenere du ikke vil bruke noen mellomtjener for: (Én tjener per linje.)"
+
+msgid "options_bypassListHelpLinkText"
+msgstr "(Jokertegn og mer tilgjengelig…)"
+
+msgid "options_group_pacUrl"
+msgstr "PAC-URL"
+
+msgid "options_pacUrlHelp"
+msgstr "PAC-skriptet oppdateres fra denne URL-en. Hvis den er blank, brukes skriptet nedenfor direkte i stedet."
+
+msgid "options_pacUrlFile"
+msgstr "PAC-profiler med file:-URL-er kan bare brukes direkte. De kan ikke brukes som resultatprofiler fordi lokale filer ikke kan nås på grunn av nettleserbegrensning."
+
+msgid "options_pacUrlFileDisabled"
+msgstr "Derfor kan du ikke bruke lokal PAC-fil for denne profilen. Du kan opprette en ny PAC-profil for det hvis du virkelig vil det."
+
+msgid "options_group_pacScript"
+msgstr "PAC-skript"
+
+msgid "options_pacScriptLastUpdate"
+msgstr "PAC-skript lastet ned $TIME$:"
+
+msgid "options_pacScriptObsolete"
+msgstr "PAC-skriptet er utdatert på grunn av URL-endring. Trykk på nedlastingsknappen ovenfor for å oppdatere."
+
+msgid "options_group_virtualProfile"
+msgstr "Virtuell profil"
+
+msgid "options_virtualProfileTarget"
+msgstr "Mål"
+
+msgid "options_virtualProfileTargetHelp"
+msgstr "Når denne profilen brukes, oppfører den seg nøyaktig som profilen valgt nedenfor."
+
+msgid "options_group_virtualProfileReplace"
+msgstr "Migrer til virtuell profil"
+
+msgid "options_virtualProfileReplace"
+msgstr "Erstatt målprofil"
+
+msgid "options_virtualProfileReplaceHelp"
+msgstr "Du kan migrere eksisterende valg til å bruke denne virtuelle profilen i stedet for $PROFILE$. Det vil oppdatere alle eksisterende regler som gjelder $PROFILE$ og peke dem til denne virtuelle profilen, slik at resultatprofilen deres kan styres her."
+
+msgid "options_group_ruleListConfig"
+msgstr "Regellisteoppsett"
+
+msgid "options_ruleListFormat"
+msgstr "Regellisteformat"
+
+msgid "options_group_ruleListResult"
+msgstr "Regellistens resultatprofiler"
+
+msgid "options_ruleListMatchProfile"
+msgstr "Samsvarsprofil"
+
+msgid "options_ruleListDefaultProfile"
+msgstr "Standardprofil"
+
+msgid "options_group_ruleListUrl"
+msgstr "Regelliste-URL"
+
+msgid "options_ruleListUrlHelp"
+msgstr "Regellisten oppdateres fra denne URL-en. Hvis den er blank, parses teksten nedenfor i stedet."
+
+msgid "options_group_ruleListText"
+msgstr "Regellistetekst"
+
+msgid "options_ruleListLastUpdate"
+msgstr "Regelliste lastet ned $TIME$:"
+
+msgid "options_ruleListObsolete"
+msgstr "Regellisten er utdatert på grunn av URL-endring. Trykk på nedlastingsknappen ovenfor for å oppdatere."
+
+msgid "options_group_switchRules"
+msgstr "Bytteregler"
+
+msgid "options_sort"
+msgstr "Sorter"
+
+msgid "options_conditionType"
+msgstr "Betingelsestype"
+
+msgid "options_showConditionTypeHelp"
+msgstr "Vis hjelp"
+
+msgid "options_conditionDetails"
+msgstr "Betingelsesdetaljer"
+
+msgid "options_resultProfile"
+msgstr "Profil"
+
+msgid "options_conditionActions"
+msgstr "Handlinger"
+
+msgid "options_addCondition"
+msgstr "Legg til betingelse"
+
+msgid "options_cloneRule"
+msgstr "Klone"
+
+msgid "options_ruleNote"
+msgstr "Note"
+
+msgid "options_switchAttachedProfileInCondition"
+msgstr "Regellisteregler"
+
+msgid "options_switchAttachedProfileInConditionDetails"
+msgstr "(Enhver forespørsel som samsvarer med regellisten nedenfor)"
+
+msgid "options_switchAttachedProfileInConditionDisabled"
+msgstr "(Regellisteregler er DEAKTIVERT)"
+
+msgid "options_switchDefaultProfile"
+msgstr "Standard"
+
+msgid "options_hostLevelsBetween"
+msgstr "≤ vertsnivåer ≤"
+
+msgid "options_hourBetween"
+msgstr "≤ gjeldende time ≤"
+
+msgid "options_weekDayShort_0"
+msgstr "Søn"
+
+msgid "options_weekDayShort_1"
+msgstr "Man"
+
+msgid "options_weekDayShort_2"
+msgstr "Tirs"
+
+msgid "options_weekDayShort_3"
+msgstr "Ons"
+
+msgid "options_weekDayShort_4"
+msgstr "Tors"
+
+msgid "options_weekDayShort_5"
+msgstr "Fre"
+
+msgid "options_weekDayShort_6"
+msgstr "Lør"
+
+msgid "options_group_conditionHelp"
+msgstr "Om betingelsestyper"
+
+msgid "options_group_attachProfile"
+msgstr "Importer nettbaserte regellister"
+
+msgid "options_attachProfile"
+msgstr "Legg til en regelliste"
+
+msgid "options_attachProfileHelp"
+msgstr "Du kan gjenbruke en nettbasert samling av betingelser publisert av andre ved å legge til en regelliste."
+
+msgid "options_modalHeader_welcome"
+msgstr "Velkommen til SwitchyDelta"
+
+msgid "options_welcomeNormal"
+msgstr "Du har installert SwitchyDelta, det ultimate mellomtjenerbytteverktøyet."
+
+msgid "options_welcomeNormalGuide"
+msgstr "Fortell SwitchyDelta om mellomtjenerne dine via valgsiden. La oss se hvordan."
+
+msgid "options_welcomeUpgrade"
+msgstr "Du har oppgradert til SwitchyDelta. Ikke få panikk, eksisterende valg er fullstendig bevart."
+
+msgid "options_welcomeUpgradeGuide"
+msgstr "La oss nå gå gjennom en rask veiledning til den nye valgsiden."
+
+msgid "options_guideNext"
+msgstr "Neste"
+
+msgid "options_guideDone"
+msgstr "Ferdig"
+
+msgid "options_guideSkip"
+msgstr "Hopp over guide"
+
+msgid "options_modalHeader_applyOptions"
+msgstr "Legg til valg"
+
+msgid "options_optionsNotSaved"
+msgstr "Endringene dine i valgene er ikke lagret og vil gå tapt hvis du fortsetter!"
+
+msgid "options_applyOptionsRequired"
+msgstr "Endringene dine i valgene må lagres før du fortsetter."
+
+msgid "options_applyOptionsConfirm"
+msgstr "Vil du lagre og bruke valgene?"
+
+msgid "options_modalHeader_renameProfile"
+msgstr "Gi profil nytt navn"
+
+msgid "options_renameProfileName"
+msgstr "Nytt profilnavn"
+
+msgid "options_profileNameConflict"
+msgstr "En profil ved dette navnet finnes allerede."
+
+msgid "options_profileNameReserved"
+msgstr "Profilnavn som begynner med dobbel understrek er reservert."
+
+msgid "options_profileNameHidden"
+msgstr "Profiler med navn som begynner med understrek skjules i popup-menyen. De kan likevel brukes f.eks. som resultater i bytteprofiler."
+
+msgid "options_modalHeader_replaceProfile"
+msgstr "Erstatt profil"
+
+msgid "options_replaceProfile"
+msgstr "Erstatt profil"
+
+msgid "options_replaceProfileConfirm"
+msgstr "Ønsker du virkelig å erstatte $FromProfile$ med $ToProfile$?"
+
+msgid "options_replaceProfileHelp"
+msgstr "Hvis du fortsetter, oppdateres alle regler som peker til $FromProfile$ til å bruke $ToProfile$ i stedet. Andre valg, som oppstartsprofil og Hurtigbytte, endres også etter behov. De to profilene selv endres eller slettes IKKE."
+
+msgid "options_replaceProfileSuccess"
+msgstr "Valg oppdatert."
+
+msgid "options_modalHeader_deleteProfile"
+msgstr "Slett profil"
+
+msgid "options_deleteProfileConfirm"
+msgstr "Ønsker du virkelig å slette følgende profil?"
+
+msgid "options_modalHeader_cannotDeleteProfile"
+msgstr "Kunne ikke slette profil"
+
+msgid "options_profileReferredBy"
+msgstr ""
+"Denne profilen kunne ikke slettes fordi den vises til av følgende profiler:"
+
+msgid "options_modifyReferringProfiles"
+msgstr "Du må endre disse profilene slik at de slutter å referere til denne profilen før du kan slette den."
+
+msgid "options_profileNameEmpty"
+msgstr "Profilnavnet kan ikke være tomt."
+
+msgid "popup_title"
+msgstr "Oppsprettsvindu for SwitchyDelta"
+
+msgid "options_modalHeader_proxyAuth"
+msgstr "Identitetsbekreftelse for mellomtjener"
+
+msgid "options_proxyAuthUsername"
+msgstr "Brukernavn"
+
+msgid "options_proxyAuthPassword"
+msgstr "Passord"
+
+msgid "options_proxyAuthShowPassword"
+msgstr "Show password"
+
+msgid "options_proxyAuthHidePassword"
+msgstr "Hide password"
+
+msgid "options_proxyAuthNone"
+msgstr "Ingen identitetsbekreftelse"
+
+msgid "options_modalHeader_deleteRule"
+msgstr "Slett regel"
+
+msgid "options_deleteRuleConfirm"
+msgstr "Ønsker du virkelig å slette følgende regel?"
+
+msgid "options_deleteRule"
+msgstr "Slett"
+
+msgid "options_modalHeader_resetRules"
+msgstr "Tilbakestill regler"
+
+msgid "options_resetRulesConfirm"
+msgstr "Er du sikker på at du vil sette resultatprofilen for ALLE regler til følgende profil?"
+
+msgid "options_resetRules"
+msgstr "Tilbakestill regler"
+
+msgid "options_resetRules_help"
+msgstr "Sett profil for alle regler"
+
+msgid "options_modalHeader_deleteAttached"
+msgstr "Fjern regelliste"
+
+msgid "options_deleteAttachedConfirm"
+msgstr "Ønsker du virkelig å slette regellisten fra gjeldende profil?"
+
+msgid "options_ruleListLineCount"
+msgstr "$COUNT$ linje(r) med regler"
+
+msgid "options_deleteAttached"
+msgstr "Slett regelliste"
+
+msgid "options_modalHeader_newProfile"
+msgstr "Ny profil"
+
+msgid "options_newProfileName"
+msgstr "Profilnavn"
+
+msgid "options_profileType"
+msgstr "Velg type profil:"
+
+msgid "options_profileTypeFixedProfile"
+msgstr "Mellomtjenerprofil"
+
+msgid "options_profileDescFixedProfile"
+msgstr "Tunnelering av trafikk gjennom mellomtjenere."
+
+msgid "options_profileTypePacProfile"
+msgstr "PAC-profil"
+
+msgid "options_profileDescPacProfile"
+msgstr "Velger mellomtjenere med et nettbasert/lokalt PAC-skript."
+
+msgid "options_profileDescMorePacProfile"
+msgstr "Du trenger bare dette hvis du har et PAC-skript eller en URL til det. Ikke prøv å lage ett med mindre du kjenner til PAC."
+
+msgid "options_profileTypeSwitchProfile"
+msgstr "Bytt profil"
+
+msgid "options_profileDescSwitchProfile"
+msgstr ""
+"Bruker ulike profiler automatisk basert på betingelser som domener eller mønstre.\n"
+" Du kan også importere regler publisert på nettet for enklere bytte. (Erstatter AutoSwitch-modus + regelliste.)"
+
+msgid "options_profileTypeRuleListProfile"
+msgstr "Regellisteprofil"
+
+msgid "options_profileDescRuleListProfile"
+msgstr "Gjenbruker en nettbasert samling av betingelser publisert av andre."
+
+msgid "options_profileTypeVirtualProfile"
+msgstr "Virtuell profil"
+
+msgid "options_profileDescVirtualProfile"
+msgstr "En virtuell profil kan opptre som hvilken som helst av de andre profilene etter behov. Den fungerer godt med Bytt profil og lar deg endre resultatet av flere betingelser med ett klikk."
+
+msgid "options_createProfile"
+msgstr "Opprett"
+
+msgid "options_modalHeader_resetOptions"
+msgstr "Tilbakestill valg"
+
+msgid "options_resetOptionsConfirm"
+msgstr ""
+"Lnsker du virkelig å tilbakestille valgene? Alle profiler og innstillinger "
+"vil gå TAPT!"
+
+msgid "options_formInvalid"
+msgstr "Korriger feilene på denne siden."
+
+msgid "options_profileNotFound"
+msgstr "Profilen $PROFILE$ finnes ikke! Valgene kan være skadet."
+
+msgid "options_resetSuccess"
+msgstr "Valg tilbakestilt."
+
+msgid "options_saveSuccess"
+msgstr "Valg lagret."
+
+msgid "options_importSuccess"
+msgstr "Valg importert."
+
+msgid "options_importFormatError"
+msgstr "Ugyldig sikkerhetskopifil!"
+
+msgid "options_importDownloadError"
+msgstr "Feil ved nedlasting av sikkerhetskopifil!"
+
+msgid "options_profileDownloadSuccess"
+msgstr "Vellykket oppdatering av profil."
+
+msgid "options_profileDownloadError"
+msgstr "Feil ved nedlasting av profildata!"
+
+msgid "options_profileDownloadError_NetworkError"
+msgstr "A network error occurred when updating."
+
+msgid "options_profileDownloadError_HttpError"
+msgstr "An HTTP error ($STATUS$) occurred when updating."
+
+msgid "options_profileDownloadError_HttpNotFoundError"
+msgstr "The Profile URL was not found on the server. Please double-check."
+
+msgid "options_profileDownloadError_HttpServerError"
+msgstr "The remote server responded with error ($STATUS$) when updating."
+
+msgid "options_profileDownloadError_ContentTypeRejectedError"
+msgstr "The downloaded data is invalid! "
+"You may open the Profile URL in your browser to inspect it."
+
+msgid "options_downloadProfileNow"
+msgstr "Last ned profil nå"
+
+msgid "options_guide_fixedProfileStep"
+msgstr "En <b>mellomtjenerprofil</b> inneholder innstillinger som tjener-IP og -port for mellomtjener.<br>Profiler er de grunnleggende konfigurasjonsenhetene i SwitchyDelta.<br>Vi har allerede opprettet en eksempelprofil for deg. Prøv å åpne den."
+
+msgid "options_guide_fixedServersStep"
+msgstr "Du kan fylle inn mellomtjener og port her som du ønsker.<br>SwitchyDelta <b>leveres ikke med noen mellomtjenere</b>.<br>Kontakt nettverksleverandøren din eller se håndboken til mellomtjenerprogramvaren hvis du ikke vet hva som skal fylles inn her."
+
+msgid "options_guide_autoSwitchProfileStep"
+msgstr "Du kan be SwitchyDelta bytte mellom mellomtjenere automatisk via den kraftige <b>Bytt profil</b>.<br>Funksjonene kan imidlertid ikke dekkes i denne raske veiledningen.<br>Du kan åpne denne profilen senere for å låse opp mulighetene."
+
+msgid "options_guide_addMoreProfilesStep"
+msgstr "Trenger du flere profiler? Du kan alltid legge til flere <b>mellomtjener-, bytte- og andre profiler</b><br>for alle dine mellomtjenerbehov.<br>Kos deg med proxying!"
+
+msgid "options_guide_conditionStep"
+msgstr "SwitchyDelta kan bruke ulike profiler på forespørsler basert på <b>betingelser</b>.<br> For eksempel lar <b>Vertsjokertegn</b>-betingelsen deg sette profilen for alle URL-er i et domene."
+
+msgid "options_guide_conditionTypeStep"
+msgstr "Du kan bruke ulike betingelsestyper for å samsvare med verten eller full URL. <br> Klikk på spørsmålstegnet for å åpne typereferansen."
+
+msgid "options_guide_conditionProfileStep"
+msgstr "SwitchyDelta bruker den valgte profilen her på <b>enhver forespørsel som samsvarer med betingelsen.</b> <br> Den spesielle <b>«[Direkte]»-profilen</b> gjør at forespørselen sendes uten mellomtjener."
+
+msgid "options_guide_switchDefaultStep"
+msgstr "Hvis ingen betingelse gjelder for en forespørsel, brukes «Standard»-profilen. <br>Betingelser vurderes alltid <b>ovenfra og ned</b> i rekkefølge.<br>Du kan endre rekkefølgen ved å dra sorteringsikonet."
+
+msgid "options_guide_applySwitchProfileStep"
+msgstr "Når du er ferdig med å sette bytteprofilen, husk å <b>bytte til den i popup-menyen.</b><br/> Ikonet viser deg <b>sluttresultat</b>-profilen brukt for gjeldende fane. <br/> <b>Hold musepekeren</b> over ikonet for å se en verktøytips med detaljer."
+
+msgid "popup_externalProfile"
+msgstr "(Ekstern profil)"
+
+msgid "popup_externalProfileName"
+msgstr "profilnavn"
+
+msgid "popup_proxyNotControllable_app"
+msgstr "Mellomtjenerinnstillingene styres av andre app(er) eller utvidelse(r). Deaktiver eller avinstaller appene eller utvidelsene som er i konflikt."
+
+msgid "popup_proxyNotControllable_policy"
+msgstr "Mellomtjenerinnstillingene er overstyrt av policyer. Kontakt administratoren din."
+
+msgid "popup_proxyNotControllable_unknown"
+msgstr "Mellomtjenerinnstillingene kan ikke styres. Sjekk system- og nettleserinnstillingene."
+
+msgid "popup_proxyNotControllable_disabled"
+msgstr "Mellomtjenerinnstillingene er deaktivert etter eksplisitt forespørsel fra andre app(er) eller utvidelse(r)."
+
+msgid "popup_proxyNotControllable_upgrade"
+msgstr "Mellomtjenerinnstillingene styres nå av en nyere versjon av SwitchyDelta."
+
+msgid "popup_proxyNotControllableDetails"
+msgstr "Du kan ikke bytte profiler med SwitchyDelta før du har fikset problemet ovenfor."
+
+msgid "popup_proxyNotControllableDetails_upgrade"
+msgstr "Du kan ikke aktivere to (eller flere) versjoner av SwitchyDelta samtidig. Deaktiver én av dem."
+
+msgid "popup_proxyNotControllableManage"
+msgstr "Behandle tillegg"
+
+msgid "popup_addConditionTo"
+msgstr "Legg til betingelse i"
+
+msgid "popup_addCondition"
+msgstr "Legg til betingelse"
+
+msgid "popup_showOptions"
+msgstr "Valg"
+
+msgid "popup_reportIssues"
+msgstr "Rapporter feil"
+
+msgid "popup_errorLog"
+msgstr "Lagre feilrettingslogg"
+
+msgid "popup_requestErrorCount"
+msgstr "$COUNT$ failede ressurser"
+
+msgid "popup_requestErrorHeading"
+msgstr "Ressurser som ikke kunne lastes inn"
+
+msgid "popup_requestErrorWarning"
+msgstr ""
+"En del ressurser kunne ikke lastes inn på grunn av feil med ditt nettverk, "
+"mellomtjeneren eller nettsiden."
+
+msgid "popup_requestErrorWarningHelp"
+msgstr "SwitchyDelta rapporterer bare disse feilene, det er ikke opphavet."
+
+msgid "popup_requestErrorAddCondition"
+msgstr ""
+"Du kan se over følgende domener og bruke mellomtjener for dem når det høver "
+"seg."
+
+msgid "popup_requestErrorCannotAddCondition"
+msgstr "Du kan bare legge til byttebetingelser for dem når du bruker en Bytt profil."
+
+#, fuzzy
+msgid "popup_configureMonitorWebRequests"
+msgstr "Sett opp nettverksoversikt"
+
+msgid "options_resultProfileForSelectedDomains"
+msgstr "Bruk denne profilen for alle valgte domener"
+
+msgid "options_pac_profile_unsupported_moz"
+msgstr "PAC Profiles WILL NOT work in Mozilla Firefox due to technical limitations!"
+
+msgid "popup_issueTemplate"
+msgstr ""
+"\n"
+"\n"
+"\n"
+"<!-- Skriv kommentaren din OVER denne linjen. -->\n"
+"SwitchyDelta $projectVersion$\n"
+"$userAgent$"
+
+msgid "browserAction_profileDetails_PacProfile"
+msgstr "(PAC-skript)"
+
+msgid "browserAction_profileDetails_SystemProfile"
+msgstr "(styrt av andre tillegg eller miljø)"
+
+msgid "browserAction_profileDetails_DirectProfile"
+msgstr "(bruker ikke noen mellomtjener)"
+
+msgid "browserAction_profileDetails_SwitchProfile"
+msgstr "(bytter basert på betingelser)"
+
+msgid "browserAction_profileDetails_RuleListProfile"
+msgstr "(bytter basert på regelliste)"
+
+msgid "browserAction_titleNormal"
+msgstr "SwitchyDelta:: $PROFILE$"
+
+msgid "browserAction_titleWithResult"
+msgstr ""
+"SwitchyDelta:: $1:PROFILE$\n"
+"$3:DETAILS$"
+
+msgid "browserAction_titleNewerOptions"
+msgstr ""
+"FEIL: En nyere versjon av SwitchyDelta kreves for å laste de lagrede valgene."
+
+msgid "browserAction_titleOptionError"
+msgstr "FEIL: Lagrede valg skadet. Klikk her for å TILBAKESTILLE VALG."
+
+msgid "browserAction_titleDownloadFail"
+msgstr "Advarsel: Kunne ikke laste ned PAC-skript og/eller regellister."
+
+msgid "browserAction_titleExternalProxy"
+msgstr "Merk: Mellomtjenerinnstillingene styres for øyeblikket av andre app(er)."
+
+msgid "browserAction_titleInspect"
+msgstr "[Se over] $URL$"
+
+msgid "browserAction_defaultRuleDetails"
+msgstr "(forvalg)"
+
+#, fuzzy
+msgid "browserAction_directResult"
+msgstr "DIREKTE"
+
+msgid "browserAction_attachedPrefix"
+msgstr "(RL) "
+
+msgid "browserAction_tempRulePrefix"
+msgstr "(MIDLERTIDIG) "
+
+msgid "contextMenu_inspectPage"
+msgstr "Se over mellomtjenerbruk for denne siden"
+
+msgid "contextMenu_inspectFrame"
+msgstr "Inspiser mellomtjener brukt for denne rammen"
+
+msgid "contextMenu_inspectLink"
+msgstr "Inspiser mellomtjener som brukes hvis denne lenken åpnes"
+
+msgid "contextMenu_inspectElement"
+msgstr "Inspiser mellomtjener brukt for dette elementet"
+
+msgid "contextMenu_enableQuickSwitch"
+msgstr "Skru på raskt bytte"
+
+msgid "about_title"
+msgstr "About"
+
+msgid "about_app_description"
+msgstr "A proxy configuration tool"
+
+msgid "about_version"
+msgstr "Version $VERSION$"
+
+msgid "about_experimental_warning_moz"
+msgstr "Mozilla Firefox support is highly experimental! If you encounter issues, please report using the buttons below."
+
+msgid "about_disclaimer_networkService"
+msgstr "SwitchyDelta does not provide proxies, VPNs, or other network services."
+
+msgid "about_disclaimer_privacy"
+msgstr "SwitchyDelta does not track you or insert ads into webpages. Please see"
+" our <a href='https://github.com/madeye/SwitchyDelta/wiki/Privacy#english'>privacy policy</a>."
+
+msgid "about_help"
+msgstr "Other questions? Need help with using SwitchyDelta? Please see our "
+"<a href='https://github.com/madeye/SwitchyDelta/wiki/FAQ'>FAQ</a>."
+
+msgid "about_copyright"
+msgstr "Copyright 2026 <a href='https://github.com/madeye'>Max Lv</a>.<br>Copyright 2012-2017 <a href='https://github.com/FelisCatus/SwitchyOmega/blob/master/AUTHORS'>The SwitchyOmega Authors</a>."
+
+msgid "about_credits"
+msgstr "SwitchyDelta is made possible by the <a href='https://github.com/madeye/SwitchyDelta'>SwitchyDelta</a> open source project and other <a href='https://github.com/madeye/SwitchyDelta/blob/master/AUTHORS'>open source software</a>."
+
+msgid "about_license"
+msgstr "SwitchyDelta is <a href='https://www.gnu.org/philosophy/free-sw.en.html'>free software</a> licensed under <a href='https://www.gnu.org/licenses/gpl.html'>GNU General Public License</a> Version 3 or later."
+
+msgid "popup_proxyAuthPermission"
+msgstr "Innlogging på autentiserte proxyer krever tilgang til alle nettsteder."
+
+msgid "popup_proxyAuthPermissionGrant"
+msgstr "Gi tilgang"

@@ -1,5 +1,5 @@
 /**
- * Compile the gettext catalogues in omega-locales/ to Chrome's
+ * Compile the gettext catalogues in delta-locales/ to Chrome's
  * _locales/<locale>/messages.json format.
  *
  * A port of the legacy grunt-po2crx task, so the output is byte-compatible
@@ -30,7 +30,7 @@ const LOCALE_NAMES = {
 };
 
 /** Parse a PO file into {msgid: msgstr}, ignoring the header entry. */
-function parsePo(source) {
+export function parsePo(source) {
   const messages = {};
   let msgid = null;
   let current = null; // the string being accumulated, 'id' | 'str'
@@ -74,8 +74,20 @@ function parsePo(source) {
   return messages;
 }
 
+/**
+ * Placeholder tokens the runtime substitutes: $Name$, $1:Name$, %s/%d, {n}.
+ * Exported so catalogue tests assert the same set the compiler/runtime care about.
+ */
+export function extractPlaceholders(message) {
+  const set = new Set();
+  for (const m of message.matchAll(/\$([^$]+)\$/g)) set.add('$' + m[1] + '$');
+  for (const m of message.matchAll(/%[sd]/g)) set.add(m[0]);
+  for (const m of message.matchAll(/\{n\}/g)) set.add(m[0]);
+  return [...set].sort();
+}
+
 /** The grunt-po2crx message transform: extract $REF$ placeholders. */
-function toChromeMessage(message) {
+export function toChromeMessage(message) {
   const refs = [];
   let matchCount = 0;
   const rewritten = message.replace(/\$(\d+:)?(\w+)\$/g, (_, order, ref) => {
@@ -105,7 +117,7 @@ const STORE_REQUIRED_KEYS = ['manifest_app_name', 'manifest_app_description'];
 /** Compile every catalogue into `<outDir>/<locale>/messages.json`. */
 export async function buildLocales(localesDir, outDir, defaultLocaleDir = 'en_US') {
   const parse = async (dir) => {
-    const po = await readFile(join(localesDir, dir, 'LC_MESSAGES', 'omega-web.po'), 'utf8');
+    const po = await readFile(join(localesDir, dir, 'LC_MESSAGES', 'delta-web.po'), 'utf8');
     const result = {};
     for (const [key, value] of Object.entries(parsePo(po))) {
       // Untranslated entries are omitted so Chrome falls back to the

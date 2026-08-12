@@ -1,0 +1,1114 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SwitchyDelta 2.3.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-13 10:29+0000\n"
+"PO-Revision-Date: 2016-04-03 03:49+0000\n"
+"Last-Translator: Simon Leonhardt <simonl@fastmail.com>\n"
+"Language-Team: Icelandic "
+"<https://hosted.weblate.org/projects/switchyomega/main/is/>\n"
+"Language: is\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.6-dev\n"
+
+msgid "appNameShort"
+msgstr "SwitchyDelta"
+
+msgid "manifest_app_name"
+msgstr "Proxy SwitchyDelta"
+
+msgid "manifest_app_description"
+msgstr "Stjórnaðu eða skiptu á milli margra proxy hratt og auðveldlega."
+
+msgid "manifest_icon_default_title"
+msgstr "Hleður…"
+
+msgid "upgrade_profile_auto"
+msgstr "Sjálfskipting"
+
+msgid "profile_direct"
+msgstr "[Beint]"
+
+msgid "profile_system"
+msgstr "[System Proxy]"
+
+msgid "condition_HostWildcardCondition"
+msgstr "Gestgjafi með jokerum"
+
+msgid "condition_help_HostWildcardCondition"
+msgstr "Samsvarar gestgjöfum (lénsheiti) með jokerum.<br><b>Stjarnan <code>*</code></b> samsvarar núll eða fleiri stöfum.<br><b>Spurningarmerkið <code>?</code></b> samsvarar nákvæmlega einum staf.<br><br>Athugaðu að reglur sem byrja á <code>*.</code> eru meðhöndlaðar sérstaklega aðeins í gestgjafa-jokera skilyrðum.<br>Dæmi: <code>*.example.com</code> samsvarar www.example.com <b>OG einnig example.com.</b><br>Til að samsvara aðeins undirlénum, notaðu <b>tvær</b> stjörnur eins og <code>**.example.com</code>."
+
+msgid "condition_HostRegexCondition"
+msgstr "Gestgjafi með regex"
+
+msgid "condition_help_HostRegexCondition"
+msgstr "Eins og gestgjafa-jokera skilyrði, en samsvarar gestgjöfum (lénsheiti) með <a href='https://www.google.com/search?q=regular%20expression'>reglulegri segð</a>.<br>Reglulegar segðir geta verið erfiðar að smíða (og lesa).<br>Mælt er með jokerum í flestum tilfellum og regex aðeins fyrir skilyrði sem ekki er hægt að ná með öðrum gerðum."
+
+msgid "condition_HostLevelsCondition"
+msgstr "Gestgjafastig"
+
+msgid "condition_help_HostLevelsCondition"
+msgstr "Samsvarar beiðninni þá og því aðeins að gestgjafastigið sé innan gefins bils.<br>Gestgjafastig er skilgreint sem <b>fjöldi punktaskilinnra hluta</b> gestgjafans (lénsheitis).<br>Dæmi: <code>www.example.com</code> hefur gestgjafastig 3, en <code>internal</code> hefur stig 1."
+
+msgid "condition_IpCondition"
+msgstr "IP Literals"
+
+msgid "condition_help_IpCondition"
+msgstr ""
+"Matches the request if and only if the host is a <b>literal</b> IP address and"
+" in the subnet as specified by <a href='"
+"https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation'>"
+"CIDR notation</a>.<br>For example, given the rule <code>127.0.0.1/16</code>, "
+"it matches all IP addresses like <code>127.0.*.*</code>.<br>"
+"So <code>127.0.0.1</code> matches while <code>127.1.0.0</code> does not. "
+"Host names like <code>localhost</code> will never match because they are "
+"<b>not</b> IP literals."
+
+msgid "condition_UrlWildcardCondition"
+msgstr "URL með jokerum"
+
+msgid "condition_help_UrlWildcardCondition"
+msgstr "Samsvarar URL-um beiðninnar með jokerum.<br>Sjá gestgjafa-jokera hlutann hér að ofan fyrir stutta jokera-tilvísun.<br>Athugaðu að URL-jokerar eru ekki meðhöndlaðir sérstaklega (engin undirléna-töfrar eins og í gestgjafa-jokerum).<br>Svo <code>*://*.example.com/*</code> samsvarar http://www.example.com/ en <b>ekki</b> http://example.com/."
+
+msgid "condition_UrlRegexCondition"
+msgstr "URL-regex"
+
+msgid "condition_help_UrlRegexCondition"
+msgstr "Samsvarar URL með öflugri <a href='https://www.google.com/search?q=regular%20expression'>reglulegri segð</a>.<br>Hins vegar geta reglulegar segðir verið erfiðar að smíða (og lesa).<br>Mælt er með jokerum í flestum tilfellum og regex aðeins þegar þörf krefur."
+
+msgid "condition_KeywordCondition"
+msgstr "Lykilorð"
+
+msgid "condition_help_KeywordCondition"
+msgstr "Lykilorðsskilyrði samsvarar ef URL-samskiptareglan er HTTP og mynstrið er nákvæm hlutstrengur URL-sins.<br>Það hegðar sér eins og URL-jokera mynstrið <code>http://*<b>pattern</b>*</code>, þar sem <b>pattern</b> er lykilorðsmynstrið.<br>Lykilorðsskilyrði eru gagnleg ef þú vilt sniðganga eldvegg sem blokkar sum lykilorð í URL, með því að biðja um slík URL í gegnum proxy."
+
+msgid "condition_FalseCondition"
+msgstr "(Slökkt)"
+
+msgid "condition_details_FalseCondition"
+msgstr "(Skilyrði hunsað við samsvörun)"
+
+msgid "condition_help_FalseCondition"
+msgstr "Þú getur gert skilyrði óvirkt með því að setja gerðina á <code>(Óvirkt)</code>. Óvirkt skilyrði hegðar sér eins og það sé ekki til.<br>Þessi eiginleiki er hægt að nota til að gera skilyrði tímabundið óvirk.<br>Óvirk skilyrði geyma samt fyrri upplýsingar (eins og mynstur) og er hægt að virkja aftur með því að setja gerðina til baka."
+
+msgid "condition_TimeCondition"
+msgstr "Tími"
+
+msgid "condition_help_TimeCondition"
+msgstr "Samsvarar ef núverandi staðartími er á bilinu sem skilgreint er af <b>upphafstíma</b> og <b>lokartíma</b>, bæði meðtalin.<br>Staðartími, upphafs- og lokartími eru allir í <b>24-stunda</b> sniði (frá <b>0 til 23</b>). <br>Útreikningurinn gerist um það bil þegar beiðnin er send."
+
+msgid "condition_WeekdayCondition"
+msgstr "Vikudagur"
+
+msgid "condition_help_WeekdayCondition"
+msgstr "Samsvarar ef <b>núverandi vikudagur</b> er valinn í skilyrðisupplýsingum. Dagur er reiknaður samkvæmt staðartímabelti.<br>Beiðnin og URL skipta ekki máli. Niðurstaðan byggist eingöngu á vikudeginum þegar beiðnin er send."
+
+msgid "condition_alert_fullUrlLimitation"
+msgstr ""
+"Full URL matching is no longer possible for <code>https://</code> "
+"URLs as of Chrome 52. "
+"<a href='https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation'>"
+"Learn more...</a>"
+
+msgid "condition_alert_fullUrlLimitationLink"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation"
+
+msgid "condition_group_default"
+msgstr " "
+
+msgid "condition_group_host"
+msgstr "Gestgjafi"
+
+msgid "condition_group_url"
+msgstr "URL"
+
+msgid "condition_group_special"
+msgstr "Sérstakt"
+
+msgid "ruleListFormat_Switchy"
+msgstr "Switchy"
+
+msgid "ruleListFormat_AutoProxy"
+msgstr "AutoProxy"
+
+msgid "ruleList_usageUrl"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/RuleListUsage"
+
+msgid "ruleList_error_resultNotEnabled"
+msgstr "Vantar '@with result' tilskipun!"
+
+msgid "ruleList_error_unknownProfile"
+msgstr "Óþekkt snið: $PROFILE$"
+
+msgid "ruleList_error_missingResultProfile"
+msgstr "Vantar nafn niðurstöðusniðs á línu $LNO$: $SOURCE$"
+
+msgid "ruleList_error_invalidRule"
+msgstr "Ógild regla á línu $LNO$: $SOURCE$"
+
+msgid "ruleList_error_noDefaultRule"
+msgstr "Vantar sjálfgefna reglu með catch-all '*'-skilyrði!"
+
+msgid "dialog_close"
+msgstr "Loka"
+
+msgid "dialog_save"
+msgstr "Vista"
+
+msgid "dialog_ok"
+msgstr "Í lagi"
+
+msgid "dialog_cancel"
+msgstr "Hætta við"
+
+msgid "inputClear_clear"
+msgstr "Hreinsa"
+
+msgid "inputClear_restore"
+msgstr "Endurheimta"
+
+msgid "options_title"
+msgstr "SwitchyDelta Valkostir"
+
+msgid "options_experimental_badge"
+msgstr "α"
+
+msgid "options_navHeader_setting"
+msgstr "Stillingar"
+
+msgid "options_navHeader_profiles"
+msgstr "Snið"
+
+msgid "options_navHeader_actions"
+msgstr "Aðgerðir"
+
+msgid "options_tab_ui"
+msgstr "Viðmót"
+
+msgid "options_tab_general"
+msgstr "Almennt"
+
+msgid "options_tab_importExport"
+msgstr "Inn-/útflutningur"
+
+msgid "options_newProfile"
+msgstr "Nýtt snið…"
+
+msgid "options_apply"
+msgstr "Nota breytingar"
+
+msgid "options_discard"
+msgstr "Henda breytingum"
+
+msgid "options_reset"
+msgstr "Endurstilla stillingar"
+
+msgid "options_group_miscOptions"
+msgstr "Ýmsir valkostir"
+
+msgid "options_confirmDeletion"
+msgstr "Staðfesta við eyðingu skilyrðis."
+
+msgid "options_refreshOnProfileChange"
+msgstr "Endurnýja núverandi flipa við sniðbreytingu."
+
+msgid "options_showInspectMenu"
+msgstr "Leyfa skoðun á proxy sem notað er fyrir síðuþætti í gegnum samhengisvalmynd."
+
+msgid "options_addConditionsToBottom"
+msgstr "Put new conditions added using the popup to the bottom of the list."
+
+msgid "options_group_keyboardShortcut"
+msgstr "Flýtilykill"
+
+msgid "options_menuShortcutHelp"
+msgstr "Að ýta á flýtilykilinn opnar skiptisprettivalmyndina. (Sjálfgefið Alt+Shift+O)."
+
+msgid "options_menuShortcutMore"
+msgstr "Atriði í sprettivalmyndinni er einnig hægt að nálgast með lyklaborði. Ýttu á ? (eða /) í valmyndinni til að læra meira."
+
+msgid "options_menuShortcutConfigure"
+msgstr "Stilla flýtilykil"
+
+msgid "options_group_switchOptions"
+msgstr "Skiptivalkostir"
+
+msgid "options_startupProfile"
+msgstr "Ræsnið"
+
+msgid "options_startupProfile_none"
+msgstr "(Núverandi snið)"
+
+msgid "options_showConditionTypesAdvanced"
+msgstr "Sýna háþróaðar skilyrðisgerðir"
+
+msgid "options_showConditionTypesAdvancedHelp"
+msgstr "Opnar nýjar gerðir af háþróuðum en flóknum skiptiskilyrðum. Í flestum tilfellum duga grunntegundir, svo þessi valkostur er ekki mælt með."
+
+msgid "options_quickSwitch"
+msgstr "Flýtiskipti"
+
+msgid "options_cycledProfiles"
+msgstr "Hringrásarsnið"
+
+msgid "options_cycledProfilesHelp"
+msgstr "Þegar þú smellir á táknið (eða notar flýtilykilinn hér að ofan) eru eftirfarandi snið notuð í röð."
+
+msgid "options_cycledProfilesTooFew"
+msgstr "Þú þarft að velja að minnsta kosti 2 snið til að virkja þetta! Þú getur dregið þau úr reitnum hér fyrir neðan."
+
+msgid "options_notCycledProfiles"
+msgstr "Ekki hringrásarsnið"
+
+msgid "options_group_proxyChanges"
+msgstr "Proxy-breytingar"
+
+msgid "options_revertProxyChanges"
+msgstr "Afturkalla proxy-breytingar gerðar af öðrum forritum."
+
+msgid "options_group_conflicts"
+msgstr "Conflicts"
+
+msgid "options_conflicts_introduction"
+msgstr ""
+"Sometimes, other apps will also try to control the proxy settings, resulting "
+"in conflicts. Note that ad blockers and other extensions may also use proxy "
+"settings under the hood. Such conflicts cannot be avoided due to how the "
+"browser works."
+
+msgid "options_conflicts_lowerPriority"
+msgstr ""
+"A red badge like this on the SwitchyDelta icon indicates that another app has "
+"higher priority so SwitchyDelta cannot control the settings. Please try to "
+"uninstall SwitchyDelta and reinstall, which should raise SwitchyDelta's "
+"priority. If you still see conflicts after reinstallation, please consider "
+"removing the other app causing the conflict."
+
+msgid "options_conflicts_higherPriority"
+msgstr ""
+"If SwitchyDelta has higher priority, you can give the control back to other "
+"apps or system settings by selecting $SYSTEMPROFILE$ in the popup menu."
+
+msgid "options_showExternalProfile"
+msgstr "Show popup menu item to import proxy settings from other apps."
+
+msgid "options_showExternalProfileHelp"
+msgstr ""
+"When $SYSTEMPROFILE$ is selected, you can import the effective proxy settings "
+"from other apps by selecting $EXTERNALPROFILE$ on the popup menu. "
+"The settings will be imported as a profile using the name you provide. "
+"Please note that the imported profile is a snapshot and will not reflect "
+"any changes from the source app thereafter."
+
+msgid "options_group_networkRequests"
+msgstr "Netbeiðnir"
+
+msgid "options_monitorWebRequests"
+msgstr "Sýna fjölda misheppnaðra vefbeiðna fyrir auðlindir í núverandi flipa."
+
+msgid "options_monitorWebRequestsHelp"
+msgstr "Gult merki birtist á tákninu ef sumar auðlindir hlaðast ekki,<br>og þú getur stillt sniðið fyrir slíkar auðlindir þægilega í gegnum sprettivalmyndina."
+
+msgid "options_downloadOptions"
+msgstr "Niðurhalavalkostir"
+
+msgid "options_downloadOptionsHelp"
+msgstr "Stilla uppfærslutíðni netreglulista og PAC-skrifta."
+
+msgid "options_downloadInterval"
+msgstr "Niðurhalabil"
+
+msgid "options_downloadInterval_15"
+msgstr "15 mínútur"
+
+msgid "options_downloadInterval_60"
+msgstr "1 klukkustund"
+
+msgid "options_downloadInterval_180"
+msgstr "3 klukkustundir"
+
+msgid "options_downloadInterval_360"
+msgstr "6 klukkustundir"
+
+msgid "options_downloadInterval_720"
+msgstr "12 klukkustundir"
+
+msgid "options_downloadInterval_1440"
+msgstr "Daglega"
+
+msgid "options_downloadInterval_never"
+msgstr "Aldrei"
+
+msgid "options_group_importExportProfile"
+msgstr "Snið"
+
+msgid "options_exportPacFile"
+msgstr "Flytja út sem PAC-skrá"
+
+msgid "options_exportPacFileHelp"
+msgstr "Flyttu núverandi snið út sem PAC-skrá svo þú getir notað það í öðrum vöfrum."
+
+msgid "options_exportProfileHelp"
+msgstr "Til að flytja snið út, notaðu aðgerðastikuna efst til hægri á sniðsíðunni."
+
+msgid "options_exportLegacyRuleList"
+msgstr "Flytja út reglulista á sniði sem er samhæft við Proxy Switchy!/SwitchyPlus/SwitchySharp þegar mögulegt er."
+
+msgid "options_exportLegacyRuleListHelp"
+msgstr "Virkjaðu þennan valkost aðeins ef þú birtir reglulista fyrir notendur þeirra verkefna.<br>Íhugaðu að ráðleggja áhorfendum að uppfæra í SwitchyDelta vegna umbóta."
+
+msgid "options_group_importExportSettings"
+msgstr "Stillingar"
+
+msgid "options_makeBackup"
+msgstr "Búa til afrit"
+
+msgid "options_makeBackupHelp"
+msgstr "Búðu til fullt afrit af valkostunum þínum (þ.m.t. snið og alla aðra valkosti)."
+
+msgid "options_restoreLocal"
+msgstr "Endurheimta úr skrá"
+
+msgid "options_restoreLocalHelp"
+msgstr "Endurheimtu valkosti úr afritsskrá."
+
+msgid "options_restoreOnline"
+msgstr "Endurheimta af neti"
+
+msgid "options_restoreOnlinePlaceholder"
+msgstr "URL valkostaskrár (t.d. 'http://example.com/switchy.bak')"
+
+msgid "options_restoreOnlineSubmit"
+msgstr "Endurheimta"
+
+msgid "options_group_syncing"
+msgstr "Samstilling (tilraunaútgáfa)"
+
+msgid "options_syncEnable"
+msgstr "Virkja samstillingu"
+
+msgid "options_syncEnableForce"
+msgstr "Sækja úr samstillingu"
+
+msgid "options_syncDisable"
+msgstr "Slökkva á samstillingu"
+
+msgid "options_syncReset"
+msgstr "Hreinsa fjarafrit"
+
+msgid "options_syncPristineHelp"
+msgstr "Þú getur nú sjálfkrafa samstillt stillingar og snið á öllum skjáborðstækjum sem keyra Chrome."
+
+msgid "options_syncSyncAlert"
+msgstr "Valkostirnir þínir eru sjálfkrafa samstilltir við önnur tæki."
+
+msgid "options_syncSyncHelp"
+msgstr "Athugaðu að þú verður að skrá þig inn í Chrome á hverju tæki (þ.m.t. þessu) til að samstilling virki. <br> Þú getur athugað þennan hluta á öðrum tækjum til að ganga úr skugga um að hún virki."
+
+msgid "options_syncConflictAlert"
+msgstr "Þú hefur hlaðið upp afriti af valkostunum á öðru tæki með samstillingu."
+
+msgid "options_syncConflictHelp"
+msgstr "Þú getur sótt fjarlæga afritið í tækið ef þú vilt. <br>Hins vegar myndi það <b>yfirskrifa núverandi stillingar og snið</b> á þessu tæki."
+
+msgid "options_syncUnsupportedHelp"
+msgstr "Samstilling valkosta er ekki studd á vettvangi þínum eða vafra. Eins og er er aðeins Chrome á skjáborði studdur."
+
+msgid "options_profileSyncDisabled"
+msgstr "Samstilling er óvirk fyrir þetta snið."
+
+msgid "options_profileSyncDisabled_quotaPerItem"
+msgstr "Samstilling er óvirk fyrir þetta snið vegna of mikils geymslupláss."
+
+msgid "options_profileTabPrefix"
+msgstr "Snið :: "
+
+msgid "options_renameProfile"
+msgstr "Endurnefna"
+
+msgid "options_deleteProfile"
+msgstr "Eyða sniði"
+
+msgid "options_profileExportRuleList"
+msgstr "Flytja út reglulista"
+
+msgid "options_profileExportRuleListHelp"
+msgstr "Flyttu skiptireglur út á textasniði til birtingar."
+
+msgid "options_profileExportPac"
+msgstr "Flytja út PAC"
+
+msgid "options_profileUnsupported"
+msgstr "Óstudd sniðgerð $TYPE$!"
+
+msgid "options_profileUnsupportedHelp"
+msgstr "Valkostirnir gætu verið skemmdir eða frá nýrri útgáfu af þessu forriti."
+
+msgid "options_profileEditSource"
+msgstr "Breyta frumkóða"
+
+msgid "options_profileEditSourceHelp"
+msgstr "Sýna hjálp um snið frumkóða"
+
+msgid "options_profileEditSourceHelpUrl"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/SwitchyDelta-conditions-format#result-profile"
+
+msgid "options_group_proxyServers"
+msgstr "Proxy-þjónar"
+
+msgid "options_proxy_scheme"
+msgstr "Skema"
+
+msgid "options_proxy_protocol"
+msgstr "Samskiptaregla"
+
+msgid "options_proxy_server"
+msgstr "Þjónn"
+
+msgid "options_proxy_port"
+msgstr "Gátt"
+
+msgid "options_proxy_auth"
+msgstr "Auðkenning"
+
+msgid "options_proxy_authNotSupported"
+msgstr "Your browser DOES NOT support $PROTOCOLDISP$ proxy authentication! "
+"Please do not report this issue to SwitchyDelta. Contact the support for "
+"your browser instead."
+
+msgid "options_proxy_authAllWarningPac"
+msgstr "Viðvörun: Notandanafn/lykilorð geta verið send til óvæntra þjóna sem PAC-skriftan skilar."
+
+msgid "options_proxy_authAllWarningPacUrl"
+msgstr "Gakktu úr skugga um að þú treystir skriftunni sem veitt er um URL-ið hér að ofan áður en þú slærð inn viðkvæmar auðkenningarupplýsingar."
+
+msgid "options_proxy_authAllWarningPacScript"
+msgstr "Gakktu úr skugga um að þú treystir skriftunni hér fyrir neðan áður en þú veitir viðkvæmar auðkenningarupplýsingar."
+
+msgid "options_proxy_authReferencedWarning"
+msgstr "Að auki getur notkun þessa sniðs í öðrum sniðum (t.d. skiptisniði) valdið því að notandanafn/lykilorð séu send til proxy-þjóna stilltra í öðrum sniðum."
+
+msgid "options_scheme_default"
+msgstr "(sjálfgefið)"
+
+msgid "options_protocol_direct"
+msgstr "DIRECT"
+
+msgid "options_protocol_useDefault"
+msgstr "Nota sjálfgefið"
+
+msgid "options_proxy_single"
+msgstr "Nota proxyið hér að ofan fyrir allar samskiptareglur."
+
+msgid "options_proxy_expand"
+msgstr "Sýna ítarlegt"
+
+msgid "options_group_bypassList"
+msgstr "Sniðgangslist"
+
+msgid "options_bypassListHelp"
+msgstr "Þjónar sem þú vilt ekki nota neitt proxy fyrir: (Einn þjónn á hverja línu.)"
+
+msgid "options_bypassListHelpLinkText"
+msgstr "(Jokerar og meira í boði…)"
+
+msgid "options_group_pacUrl"
+msgstr "PAC-URL"
+
+msgid "options_pacUrlHelp"
+msgstr "PAC-skriftan verður uppfærð úr þessu URL. Ef það er autt er eftirfarandi skrifta notuð beint í staðinn."
+
+msgid "options_pacUrlFile"
+msgstr "PAC-snið með file: URL er aðeins hægt að beita beint. Þau er ekki hægt að nota sem niðurstöðusnið vegna þess að ekki er hægt að nálgast staðbundnar skrár vegna takmarkana vafrans."
+
+msgid "options_pacUrlFileDisabled"
+msgstr "Þess vegna geturðu ekki notað staðbundna PAC-skrá fyrir þetta snið. Þú getur búið til nýtt PAC-snið fyrir það ef þú vilt það virkilega."
+
+msgid "options_group_pacScript"
+msgstr "PAC-skrifta"
+
+msgid "options_pacScriptLastUpdate"
+msgstr "PAC-skrifta sótt kl. $TIME$:"
+
+msgid "options_pacScriptObsolete"
+msgstr "PAC-skrifta er úrelt vegna URL-breytingar. Ýttu á niðurhalshnappinn hér að ofan til að uppfæra."
+
+msgid "options_group_virtualProfile"
+msgstr "Sýndarsnið"
+
+msgid "options_virtualProfileTarget"
+msgstr "Marksnid"
+
+msgid "options_virtualProfileTargetHelp"
+msgstr "Þegar þetta snið er notað hegðar það sér nákvæmlega eins og sniðið sem valið er hér fyrir neðan."
+
+msgid "options_group_virtualProfileReplace"
+msgstr "Flytja yfir í sýndarsnið"
+
+msgid "options_virtualProfileReplace"
+msgstr "Skipta út marksniði"
+
+msgid "options_virtualProfileReplaceHelp"
+msgstr "Þú getur flutt núverandi valkosti yfir til að nota þetta sýndarsnið í stað $PROFILE$. Það uppfærir allar núverandi reglur varðandi $PROFILE$ og vísar þeim á þetta sýndarsnið svo hægt sé að stjórna niðurstöðusniðinu hér."
+
+msgid "options_group_ruleListConfig"
+msgstr "Stilling reglulista"
+
+msgid "options_ruleListFormat"
+msgstr "Snið reglulista"
+
+msgid "options_group_ruleListResult"
+msgstr "Niðurstöðusnið reglulista"
+
+msgid "options_ruleListMatchProfile"
+msgstr "Samsvörunarsnið"
+
+msgid "options_ruleListDefaultProfile"
+msgstr "Sjálfgefið snið"
+
+msgid "options_group_ruleListUrl"
+msgstr "URL reglulista"
+
+msgid "options_ruleListUrlHelp"
+msgstr "Reglulistinn verður uppfærður úr þessu URL. Ef það er autt er textinn hér fyrir neðan greindur í staðinn."
+
+msgid "options_group_ruleListText"
+msgstr "Texti reglulista"
+
+msgid "options_ruleListLastUpdate"
+msgstr "Reglulisti sóttur kl. $TIME$:"
+
+msgid "options_ruleListObsolete"
+msgstr "Reglulisti er úreltur vegna URL-breytingar. Ýttu á niðurhalshnappinn hér að ofan til að uppfæra."
+
+msgid "options_group_switchRules"
+msgstr "Skiptireglur"
+
+msgid "options_sort"
+msgstr "Raða"
+
+msgid "options_conditionType"
+msgstr "Gerð skilyrðis"
+
+msgid "options_showConditionTypeHelp"
+msgstr "Sýna hjálp"
+
+msgid "options_conditionDetails"
+msgstr "Upplýsingar skilyrðis"
+
+msgid "options_resultProfile"
+msgstr "Snið"
+
+msgid "options_conditionActions"
+msgstr "Aðgerðir"
+
+msgid "options_addCondition"
+msgstr "Bæta við skilyrði"
+
+msgid "options_cloneRule"
+msgstr "Klóna"
+
+msgid "options_ruleNote"
+msgstr "Note"
+
+msgid "options_switchAttachedProfileInCondition"
+msgstr "Reglur reglulista"
+
+msgid "options_switchAttachedProfileInConditionDetails"
+msgstr "(Allar beiðnir sem samsvara reglulistanum hér fyrir neðan)"
+
+msgid "options_switchAttachedProfileInConditionDisabled"
+msgstr "(Reglur reglulista eru ÓVIRKAR)"
+
+msgid "options_switchDefaultProfile"
+msgstr "Sjálfgefið"
+
+msgid "options_hostLevelsBetween"
+msgstr "≤ gestgjafastig ≤"
+
+msgid "options_hourBetween"
+msgstr "≤ núverandi klukkustund ≤"
+
+msgid "options_weekDayShort_0"
+msgstr "Su"
+
+msgid "options_weekDayShort_1"
+msgstr "Má"
+
+msgid "options_weekDayShort_2"
+msgstr "Þr"
+
+msgid "options_weekDayShort_3"
+msgstr "Mi"
+
+msgid "options_weekDayShort_4"
+msgstr "Fi"
+
+msgid "options_weekDayShort_5"
+msgstr "Fö"
+
+msgid "options_weekDayShort_6"
+msgstr "La"
+
+msgid "options_group_conditionHelp"
+msgstr "Um skilyrðisgerðir"
+
+msgid "options_group_attachProfile"
+msgstr "Flytja inn netreglulista"
+
+msgid "options_attachProfile"
+msgstr "Bæta við reglulista"
+
+msgid "options_attachProfileHelp"
+msgstr "Þú getur endurnýtt net-safn skilyrða sem aðrir hafa birt með því að bæta við reglulista."
+
+msgid "options_modalHeader_welcome"
+msgstr "Velkomin í SwitchyDelta"
+
+msgid "options_welcomeNormal"
+msgstr "Þú hefur sett upp SwitchyDelta, fullkomna proxy-skiptann."
+
+msgid "options_welcomeNormalGuide"
+msgstr "Segðu SwitchyDelta frá proxyunum þínum í gegnum valkostasíðuna. Sjáum hvernig."
+
+msgid "options_welcomeUpgrade"
+msgstr "Þú hefur uppfært í SwitchyDelta. Ekki panikka, núverandi valkostir þínir eru fullkomlega varðveittir."
+
+msgid "options_welcomeUpgradeGuide"
+msgstr "Nú förum við hratt yfir nýju valkostasíðuna."
+
+msgid "options_guideNext"
+msgstr "Næsta"
+
+msgid "options_guideDone"
+msgstr "Lokið"
+
+msgid "options_guideSkip"
+msgstr "Sleppa leiðsögn"
+
+msgid "options_modalHeader_applyOptions"
+msgstr "Beita valkostum"
+
+msgid "options_optionsNotSaved"
+msgstr "Breytingar þínar á valkostunum hafa ekki verið vistaðar og tapast ef þú heldur áfram!"
+
+msgid "options_applyOptionsRequired"
+msgstr "Breytingar þínar á valkostunum verða að vera beittar áður en þú heldur áfram."
+
+msgid "options_applyOptionsConfirm"
+msgstr "Viltu vista og beita valkostunum?"
+
+msgid "options_modalHeader_renameProfile"
+msgstr "Endurnefna snið"
+
+msgid "options_renameProfileName"
+msgstr "Nýtt sniðnafn"
+
+msgid "options_profileNameConflict"
+msgstr "Snið með þessu nafni er þegar til."
+
+msgid "options_profileNameReserved"
+msgstr "Sniðnöfn sem byrja á tvöföldum undirstrikum eru frátekin."
+
+msgid "options_profileNameHidden"
+msgstr "Snið með nöfnum sem byrja á undirstriki eru falin í sprettivalmyndinni. Þau er samt hægt að nota á stöðum eins og niðurstöðum skiptisniðs."
+
+msgid "options_modalHeader_replaceProfile"
+msgstr "Skipta út sniði"
+
+msgid "options_replaceProfile"
+msgstr "Skipta út sniði"
+
+msgid "options_replaceProfileConfirm"
+msgstr "Viltu virkilega skipta $FromProfile$ út fyrir $ToProfile$?"
+
+msgid "options_replaceProfileHelp"
+msgstr "Ef þú heldur áfram verða allar reglur sem benda á $FromProfile$ uppfærðar til að nota $ToProfile$ í staðinn. Aðrir valkostir, eins og ræsnið og flýtiskipti, verða einnig breytt eftir þörfum. Hins vegar verða sniðin tvö sjálf EKKI breytt eða eytt."
+
+msgid "options_replaceProfileSuccess"
+msgstr "Valkostir uppfærðir."
+
+msgid "options_modalHeader_deleteProfile"
+msgstr "Eyða sniði"
+
+msgid "options_deleteProfileConfirm"
+msgstr "Viltu virkilega eyða þessu sniði?"
+
+msgid "options_modalHeader_cannotDeleteProfile"
+msgstr "Ekki er hægt að eyða sniði"
+
+msgid "options_profileReferredBy"
+msgstr "Ekki er hægt að eyða þessu sniði vegna þess að eftirfarandi snið vísa á það:"
+
+msgid "options_modifyReferringProfiles"
+msgstr "Þú verður að breyta þessum sniðum og láta þau hætta að vísa á þetta snið áður en þú getur eytt því."
+
+msgid "options_profileNameEmpty"
+msgstr "Nafn sniðsins má ekki vera autt."
+
+msgid "popup_title"
+msgstr "SwitchyDelta"
+
+msgid "options_modalHeader_proxyAuth"
+msgstr "Proxy-auðkenning"
+
+msgid "options_proxyAuthUsername"
+msgstr "Notandanafn"
+
+msgid "options_proxyAuthPassword"
+msgstr "Lykilorð"
+
+msgid "options_proxyAuthShowPassword"
+msgstr "Show password"
+
+msgid "options_proxyAuthHidePassword"
+msgstr "Hide password"
+
+msgid "options_proxyAuthNone"
+msgstr "Engin auðkenning"
+
+msgid "options_modalHeader_deleteRule"
+msgstr "Eyða reglu"
+
+msgid "options_deleteRuleConfirm"
+msgstr "Viltu virkilega eyða eftirfarandi reglu?"
+
+msgid "options_deleteRule"
+msgstr "Eyða"
+
+msgid "options_modalHeader_resetRules"
+msgstr "Endurstilla reglur"
+
+msgid "options_resetRulesConfirm"
+msgstr "Ertu viss um að setja niðurstöðusnið ALLRA reglna á eftirfarandi snið?"
+
+msgid "options_resetRules"
+msgstr "Endurstilla reglur"
+
+msgid "options_resetRules_help"
+msgstr "Setja niðurstöðusnið allra skilyrða í þessu skiptisniði á valið snið."
+
+msgid "options_modalHeader_deleteAttached"
+msgstr "Fjarlægja reglulista"
+
+msgid "options_deleteAttachedConfirm"
+msgstr "Viltu virkilega fjarlægja reglulistann úr núverandi sniði?"
+
+msgid "options_ruleListLineCount"
+msgstr "$COUNT$ línur af reglum"
+
+msgid "options_deleteAttached"
+msgstr "Fjarlægja reglulista"
+
+msgid "options_modalHeader_newProfile"
+msgstr "Nýtt snið"
+
+msgid "options_newProfileName"
+msgstr "Sniðnafn"
+
+msgid "options_profileType"
+msgstr "Veldu gerð sniðsins:"
+
+msgid "options_profileTypeFixedProfile"
+msgstr "Proxy-snið"
+
+msgid "options_profileDescFixedProfile"
+msgstr "Gangandi umferð í gegnum proxy-þjóna."
+
+msgid "options_profileTypePacProfile"
+msgstr "PAC-snið"
+
+msgid "options_profileDescPacProfile"
+msgstr "Að velja proxy með net-/staðbundinni PAC-skriftu."
+
+msgid "options_profileDescMorePacProfile"
+msgstr "Þú þarft þetta aðeins ef þú hefur PAC-skriftu eða URL að henni. Ekki reyna að búa til eina nema þú hafir þekkingu á PAC."
+
+msgid "options_profileTypeSwitchProfile"
+msgstr "Skiptisnið"
+
+msgid "options_profileDescSwitchProfile"
+msgstr ""
+"Að beita mismunandi sniðum sjálfkrafa við ýmis skilyrði eins og lén eða mynstur.\n"
+" Þú getur einnig flutt inn reglur sem birtar eru á netinu. (Kemur í stað AutoSwitch-hams + reglulista.)"
+
+msgid "options_profileTypeRuleListProfile"
+msgstr "Reglulistasnið"
+
+msgid "options_profileDescRuleListProfile"
+msgstr "Að endurnýta net-safn skilyrða sem aðrir hafa birt."
+
+msgid "options_profileTypeVirtualProfile"
+msgstr "Sýndarsnið"
+
+msgid "options_profileDescVirtualProfile"
+msgstr "Sýndarsnið getur hegðað sér eins og eitthvert af hinum sniðunum eftir þörfum. Það virkar vel með SwitchProfile og gerir þér kleift að breyta niðurstöðu margra skilyrða með einum smelli."
+
+msgid "options_createProfile"
+msgstr "Búa til"
+
+msgid "options_modalHeader_resetOptions"
+msgstr "Endurstilla valkosti"
+
+msgid "options_resetOptionsConfirm"
+msgstr "Viltu virkilega endurstilla valkostina? Öll snið og stillingar munu TAPAST!"
+
+msgid "options_formInvalid"
+msgstr "Vinsamlegast leiðréttu villurnar á þessari síðu."
+
+msgid "options_profileNotFound"
+msgstr "Sniðið $PROFILE$ er ekki til! Valkostirnir gætu verið skemmdir."
+
+msgid "options_resetSuccess"
+msgstr "Valkostir endurstilltir."
+
+msgid "options_saveSuccess"
+msgstr "Valkostir vistaðir."
+
+msgid "options_importSuccess"
+msgstr "Valkostir fluttir inn!"
+
+msgid "options_importFormatError"
+msgstr "Villa: ógilt snið afritsskrár!"
+
+msgid "options_importDownloadError"
+msgstr "Villa við niðurhal afritsskrár!"
+
+msgid "options_profileDownloadSuccess"
+msgstr "Snið uppfært."
+
+msgid "options_profileDownloadError"
+msgstr "Villa við uppfærslu sniðs."
+
+msgid "options_profileDownloadError_NetworkError"
+msgstr "A network error occurred when updating."
+
+msgid "options_profileDownloadError_HttpError"
+msgstr "An HTTP error ($STATUS$) occurred when updating."
+
+msgid "options_profileDownloadError_HttpNotFoundError"
+msgstr "The Profile URL was not found on the server. Please double-check."
+
+msgid "options_profileDownloadError_HttpServerError"
+msgstr "The remote server responded with error ($STATUS$) when updating."
+
+msgid "options_profileDownloadError_ContentTypeRejectedError"
+msgstr "The downloaded data is invalid! "
+"You may open the Profile URL in your browser to inspect it."
+
+msgid "options_downloadProfileNow"
+msgstr "Uppfæra núna"
+
+msgid "options_guide_fixedProfileStep"
+msgstr "<b>Proxy-snið</b> inniheldur stillingar eins og IP og gátt þjóns fyrir proxy.<br>Snið eru grunneiningar stillinga í SwitchyDelta.<br>Við höfum þegar búið til dæmissnið fyrir þig. Reyndu að opna það."
+
+msgid "options_guide_fixedServersStep"
+msgstr "Þú getur fyllt inn proxy-þjón og gátt hér eins og þér hentar.<br>SwitchyDelta <b>kemur ekki með neina proxy-þjóna</b>.<br>Hafðu samband við netveituna eða handbók proxy-hugbúnaðarins ef þú veist ekki hvað á að fylla inn."
+
+msgid "options_guide_autoSwitchProfileStep"
+msgstr "Þú getur látið SwitchyDelta skipta sjálfkrafa milli proxy með öfluga <b>skiptisniðinu</b>.<br>Eiginleikar þess rúmast þó ekki í þessari stuttu leiðsögn.<br>Þú getur opnað þetta snið síðar til að opna kraftinn."
+
+msgid "options_guide_addMoreProfilesStep"
+msgstr "Þarftu fleiri snið? Þú getur alltaf bætt við fleiri <b>proxy-, skipti- og öðrum sniðum</b><br>fyrir allar proxy-þarfir þínar.<br>Njóttu proxyingar!"
+
+msgid "options_guide_conditionStep"
+msgstr "SwitchyDelta getur beitt mismunandi sniðum á beiðnir byggt á <b>skilyrðum</b>.<br> Til dæmis gerir <b>gestgjafi með jokerum</b>-skilyrðið þér kleift að setja snið fyrir öll URL á léni."
+
+msgid "options_guide_conditionTypeStep"
+msgstr "Þú getur notað ýmsar skilyrðisgerðir til að samsvara gestgjafa eða fullu URL. <br> Smelltu á spurningarmerkið til að opna gerðartilvísunina."
+
+msgid "options_guide_conditionProfileStep"
+msgstr "SwitchyDelta beitir völdu sniði hér á <b>allar beiðnir sem samsvara skilyrðinu.</b> <br> Sérstaka <b>\"[Beint]\"-sniðið</b> sendir beiðnina án nokkurs proxy."
+
+msgid "options_guide_switchDefaultStep"
+msgstr "Ef ekkert skilyrði gildir um beiðni er „Sjálfgefið“-sniðið notað. <br>Skilyrði eru alltaf skoðuð <b>ofan frá og niður</b> í röð.<br>Þú getur breytt röðinni með því að draga raðtáknið."
+
+msgid "options_guide_applySwitchProfileStep"
+msgstr "Þegar þú ert búinn að stilla skiptisniðið, gleymdu ekki að <b>skipta yfir í það í sprettivalmyndinni.</b><br/> Táknið sýnir þér <b>endanlega niðurstöðu</b>-sniðið sem notað er fyrir núverandi flipa. <br/> <b>Haltu músinni</b> yfir tákninu til að sýna ábendingu með upplýsingum."
+
+msgid "popup_externalProfile"
+msgstr "[Flytja inn…]"
+
+msgid "popup_externalProfileName"
+msgstr "Nafn nýja sniðsins"
+
+msgid "popup_proxyNotControllable_app"
+msgstr "Proxy-stillingum er stjórnað af öðru/öðrum forriti/forritum eða viðbót(um). Vinsamlegast slökktu á eða fjarlægðu forrit eða viðbætur í árekstri."
+
+msgid "popup_proxyNotControllable_policy"
+msgstr "Proxy-stillingar eru yfirskrifaðar af stefnum. Hafðu samband við kerfisstjórann."
+
+msgid "popup_proxyNotControllable_unknown"
+msgstr "Ekki er hægt að stjórna proxy-stillingum. Athugaðu kerfis- og vafrastillingar."
+
+msgid "popup_proxyNotControllable_disabled"
+msgstr "Proxy-stillingar eru óvirkar að beiðni annarra forrita eða viðbóta."
+
+msgid "popup_proxyNotControllable_upgrade"
+msgstr "Proxy-stillingum er nú stjórnað af nýrri útgáfu af SwitchyDelta."
+
+msgid "popup_proxyNotControllableDetails"
+msgstr "Þú getur ekki skipt um snið með SwitchyDelta nema þú lagar vandamálið hér að ofan."
+
+msgid "popup_proxyNotControllableDetails_upgrade"
+msgstr "Þú getur ekki virkjað tvær (eða fleiri) útgáfur af SwitchyDelta á sama tíma. Slökktu á annarri þeirra."
+
+msgid "popup_proxyNotControllableManage"
+msgstr "Stjórna viðbótum"
+
+msgid "popup_addConditionTo"
+msgstr "Bæta skilyrði við"
+
+msgid "popup_addCondition"
+msgstr "Bæta við skilyrði"
+
+msgid "popup_showOptions"
+msgstr "Valkostir"
+
+msgid "popup_reportIssues"
+msgstr "Tilkynna vandamál"
+
+msgid "popup_errorLog"
+msgstr "Villuskrá"
+
+msgid "popup_requestErrorCount"
+msgstr "$COUNT$ misheppnaðar auðlindir"
+
+msgid "popup_requestErrorHeading"
+msgstr "Auðlindir hlaðast ekki"
+
+msgid "popup_requestErrorWarning"
+msgstr "Nokkrar auðlindir tókust ekki að hlaða vegna vandamála með netið, proxy-þjóninn eða vefsíðuna."
+
+msgid "popup_requestErrorWarningHelp"
+msgstr "SwitchyDelta er aðeins tilkynnandi þessara vandamála, ekki orsök þeirra."
+
+msgid "popup_requestErrorAddCondition"
+msgstr "Þú getur farið yfir eftirfarandi lén og notað proxy fyrir þau þegar við á."
+
+msgid "popup_requestErrorCannotAddCondition"
+msgstr "Þú getur aðeins bætt við skiptiskilyrðum fyrir þau þegar þú notar skiptisnið."
+
+msgid "popup_configureMonitorWebRequests"
+msgstr "Stilla vöktun beiðna"
+
+msgid "options_resultProfileForSelectedDomains"
+msgstr "Snið fyrir valin lén"
+
+msgid "options_pac_profile_unsupported_moz"
+msgstr "PAC Profiles WILL NOT work in Mozilla Firefox due to technical limitations!"
+
+msgid "popup_issueTemplate"
+msgstr ""
+"\n"
+"\n"
+"\n"
+"<!-- Vinsamlegast skrifaðu athugasemdina þína FYRIR OFAN þessa línu. -->\n"
+"SwitchyDelta $projectVersion$\n"
+"$userAgent$"
+
+msgid "browserAction_profileDetails_PacProfile"
+msgstr "PAC-snið"
+
+msgid "browserAction_profileDetails_SystemProfile"
+msgstr "Kerfissnið"
+
+msgid "browserAction_profileDetails_DirectProfile"
+msgstr "Bein tenging"
+
+msgid "browserAction_profileDetails_SwitchProfile"
+msgstr "Skiptisnið"
+
+msgid "browserAction_profileDetails_RuleListProfile"
+msgstr "Reglulistasnið"
+
+msgid "browserAction_titleNormal"
+msgstr "SwitchyDelta:: $PROFILE$"
+
+msgid "browserAction_titleWithResult"
+msgstr ""
+"SwitchyDelta:: $1:PROFILE$\n"
+"$3:DETAILS$"
+
+msgid "browserAction_titleNewerOptions"
+msgstr "VILLA: Nýrri útgáfa af SwitchyDelta er nauðsynleg til að hlaða vistaða valkosti."
+
+msgid "browserAction_titleOptionError"
+msgstr "VILLA: Vistaðir valkostir eru skemmdir. Smelltu hér til að ENDURSTILLA VALKOSTI."
+
+msgid "browserAction_titleDownloadFail"
+msgstr "Viðvörun: Mistókst að sækja PAC-skriftur og/eða reglulista."
+
+msgid "browserAction_titleExternalProxy"
+msgstr "Athugið: Proxy-stillingum er nú stjórnað af öðru/öðrum forriti/forritum."
+
+msgid "browserAction_titleInspect"
+msgstr "[Skoða] $URL$"
+
+msgid "browserAction_defaultRuleDetails"
+msgstr "Sjálfgefin regla"
+
+msgid "browserAction_directResult"
+msgstr "Beint"
+
+msgid "browserAction_attachedPrefix"
+msgstr "Viðhengt: "
+
+msgid "browserAction_tempRulePrefix"
+msgstr "Tímabundið: "
+
+msgid "contextMenu_inspectPage"
+msgstr "Skoða proxy notað fyrir þessa síðu"
+
+msgid "contextMenu_inspectFrame"
+msgstr "Skoða proxy notað fyrir þennan ramma"
+
+msgid "contextMenu_inspectLink"
+msgstr "Skoða proxy sem yrði notað ef þessi tengill er opnaður"
+
+msgid "contextMenu_inspectElement"
+msgstr "Skoða proxy notað fyrir þennan þátt"
+
+msgid "contextMenu_enableQuickSwitch"
+msgstr "Virkja flýtiskipti"
+
+msgid "about_title"
+msgstr "About"
+
+msgid "about_app_description"
+msgstr "A proxy configuration tool"
+
+msgid "about_version"
+msgstr "Version $VERSION$"
+
+msgid "about_experimental_warning_moz"
+msgstr "Mozilla Firefox support is highly experimental! If you encounter issues, please report using the buttons below."
+
+msgid "about_disclaimer_networkService"
+msgstr "SwitchyDelta does not provide proxies, VPNs, or other network services."
+
+msgid "about_disclaimer_privacy"
+msgstr "SwitchyDelta does not track you or insert ads into webpages. Please see"
+" our <a href='https://github.com/madeye/SwitchyDelta/wiki/Privacy#english'>privacy policy</a>."
+
+msgid "about_help"
+msgstr "Other questions? Need help with using SwitchyDelta? Please see our "
+"<a href='https://github.com/madeye/SwitchyDelta/wiki/FAQ'>FAQ</a>."
+
+msgid "about_copyright"
+msgstr "Copyright 2026 <a href='https://github.com/madeye'>Max Lv</a>.<br>Copyright 2012-2017 <a href='https://github.com/FelisCatus/SwitchyOmega/blob/master/AUTHORS'>The SwitchyOmega Authors</a>."
+
+msgid "about_credits"
+msgstr "SwitchyDelta is made possible by the <a href='https://github.com/madeye/SwitchyDelta'>SwitchyDelta</a> open source project and other <a href='https://github.com/madeye/SwitchyDelta/blob/master/AUTHORS'>open source software</a>."
+
+msgid "about_license"
+msgstr "SwitchyDelta is <a href='https://www.gnu.org/philosophy/free-sw.en.html'>free software</a> licensed under <a href='https://www.gnu.org/licenses/gpl.html'>GNU General Public License</a> Version 3 or later."
+
+msgid "popup_proxyAuthPermission"
+msgstr "Innskráning í auðkennda proxy-þjóna krefst aðgangs að öllum vefsíðum."
+
+msgid "popup_proxyAuthPermissionGrant"
+msgstr "Veita aðgang"

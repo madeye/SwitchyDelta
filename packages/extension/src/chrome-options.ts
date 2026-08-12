@@ -11,7 +11,7 @@
 
 import { Options, Log, NoOptionsError, upgradeLegacyOptions } from '@switchydelta/target';
 import type { StorageItems } from '@switchydelta/target';
-import type { OmegaOptions } from '@switchydelta/target';
+import type { DeltaOptions } from '@switchydelta/target';
 import { Conditions, Profiles } from '@switchydelta/pac';
 import type { MatchResult, OptionsBag, Profile } from '@switchydelta/pac';
 
@@ -65,7 +65,7 @@ export class ChromeOptions extends Options {
     periodInMinutes: number,
     callback: () => void,
   ): Promise<void> {
-    const alarmName = 'omega.' + name;
+    const alarmName = 'delta.' + name;
 
     if (periodInMinutes < 0) {
       this.#alarms.delete(alarmName);
@@ -135,15 +135,15 @@ export class ChromeOptions extends Options {
    * of this build, so only the local-storage path remains.
    */
   override async upgrade(
-    options: OmegaOptions | null | undefined,
+    options: DeltaOptions | null | undefined,
     changes?: StorageItems,
-  ): Promise<[OmegaOptions, StorageItems]> {
+  ): Promise<[DeltaOptions, StorageItems]> {
     try {
       return await super.upgrade(options, changes);
     } catch (err) {
       if (options?.['schemaVersion']) throw err;
       if (options?.['config']) {
-        let upgraded: OmegaOptions | null;
+        let upgraded: DeltaOptions | null;
         try {
           upgraded = upgradeLegacyOptions(options, {
             upgrade_profile_auto: chrome.i18n.getMessage('upgrade_profile_auto'),

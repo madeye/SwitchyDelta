@@ -1,7 +1,7 @@
 /**
  * Keyboard shortcuts for the popup.
  *
- * Ported from the shortcut layer of `omega-web/src/coffee/popup.coffee`
+ * Ported from the shortcut layer of SwitchyOmega's `popup.coffee`
  * (everything above `PopupCtrl`). The original matched legacy `event.keyCode`
  * numbers; this port matches `event.key`. Letter shortcuts stay
  * case-insensitive, which is what the keyCode matching gave users for free.

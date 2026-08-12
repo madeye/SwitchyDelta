@@ -68,7 +68,7 @@ await copyIfPresent(resolve(root, 'packages/extension/img'), resolve(out, 'img')
 
 // Translations are compiled from the gettext catalogues on every build.
 const { buildLocales } = await import('./build-locales.mjs');
-const locales = await buildLocales(resolve(root, 'omega-locales'), resolve(out, '_locales'));
+const locales = await buildLocales(resolve(root, 'delta-locales'), resolve(out, '_locales'));
 console.log(`  built   _locales (${locales.length} locales)`);
 
 console.log(`\ndone -> ${out}`);

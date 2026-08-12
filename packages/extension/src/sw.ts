@@ -42,10 +42,37 @@ function encodeError(value: unknown): unknown {
 }
 
 let options: ChromeOptions | undefined;
-const state = new BrowserStorage('omega.local.');
+const STATE_PREFIX = 'delta.local.';
+const LEGACY_STATE_PREFIX = 'omega.local.';
+const state = new BrowserStorage(STATE_PREFIX);
 const proxySettings = new ProxySettings();
 
+/**
+ * One-shot rename of worker state keys `omega.local.*` → `delta.local.*`.
+ * Profile options live under unprefixed keys and are untouched.
+ */
+async function migrateLegacyStatePrefix(): Promise<void> {
+  if (typeof chrome === 'undefined' || !chrome.storage?.local) return;
+  try {
+    const all = await chrome.storage.local.get(null);
+    const moves: Record<string, unknown> = {};
+    const remove: string[] = [];
+    for (const [key, value] of Object.entries(all ?? {})) {
+      if (!key.startsWith(LEGACY_STATE_PREFIX)) continue;
+      const next = STATE_PREFIX + key.slice(LEGACY_STATE_PREFIX.length);
+      if (!(next in (all ?? {}))) moves[next] = value;
+      remove.push(key);
+    }
+    if (Object.keys(moves).length) await chrome.storage.local.set(moves);
+    if (remove.length) await chrome.storage.local.remove(remove);
+  } catch {
+    // Boot continues with empty state if migration fails.
+  }
+}
+
 async function boot(): Promise<Options> {
+  await migrateLegacyStatePrefix();
+
   const storage = new ChromeStorage('local');
 
   // Sync is optional: it is absent when the browser has sync storage disabled.

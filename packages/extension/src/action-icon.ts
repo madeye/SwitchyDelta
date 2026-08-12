@@ -4,7 +4,7 @@
  * Redraws the delta mark from icon.svg on an OffscreenCanvas: the profile
  * colour fills the rounded square and the white delta outline sits on top,
  * so the icon both brands the extension and shows which profile is active —
- * the same job the original's dynamically drawn omega icon did.
+ * the same job the original's dynamically drawn action icon did.
  *
  * With an auto switch active the icon carries two colours: the matched
  * profile fills the square and the switch profile's own colour rings its

@@ -4,9 +4,9 @@
  * Keys carry a string prefix so that state can share an area with options data
  * without clashing. Two constructions are supported:
  *
- *     new BrowserStorage('omega.local.')            // chrome.storage.local
- *     new BrowserStorage('omega.local.', 'sync')    // chrome.storage.sync
- *     new BrowserStorage(localStorage, 'omega.local.')  // legacy pages / tests
+ *     new BrowserStorage('delta.local.')            // chrome.storage.local
+ *     new BrowserStorage('delta.local.', 'sync')    // chrome.storage.sync
+ *     new BrowserStorage(localStorage, 'delta.local.')  // legacy pages / tests
  */
 
 import { Storage } from './storage.js';
@@ -68,7 +68,7 @@ export class BrowserStorage extends Storage {
       this._proto = null;
     } else {
       this._legacy = storageOrPrefix;
-      this.prefix = prefixOrArea || 'omega.local.';
+      this.prefix = prefixOrArea || 'delta.local.';
       this.areaName = 'local';
       this._proto = storageOrPrefix
         ? (Object.getPrototypeOf(storageOrPrefix) as LegacyStorageArea)
