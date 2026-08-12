@@ -75,7 +75,7 @@ function group(labelKey: string) {
 /**
  * A help paragraph. Rendered as HTML because several catalogue strings carry
  * inline markup (`<br>`, `<b>`, …); they are our own translations, so this is
- * as trusted as the original's `omega-html` binding was.
+ * as trusted as the original's `delta-html` binding was.
  */
 function help(labelKey: string, substitutions?: string[]) {
   return h('p', { class: 'om-help', html: t(labelKey, substitutions) });
@@ -343,7 +343,7 @@ export function renderIo(container: HTMLElement): void {
       class: 'om-btn',
       text: t('options_makeBackup'),
       onclick: () =>
-        downloadFile('OmegaOptions.bak', JSON.stringify(options, null, 2), 'application/json'),
+        downloadFile('DeltaOptions.bak', JSON.stringify(options, null, 2), 'application/json'),
     }),
     help('options_makeBackupHelp'),
 
@@ -985,7 +985,7 @@ function renderSwitchProfile(
       rules: profile.rules,
       defaultProfileName: effectiveDefault(),
     }).replace('\n', info);
-    downloadFile(`OmegaRules_${exportBaseName()}.sorl`, text, 'text/plain;charset=utf-8');
+    downloadFile(`DeltaRules_${exportBaseName()}.sorl`, text, 'text/plain;charset=utf-8');
   };
 
   const exportLegacyRuleList = () => {
@@ -1024,7 +1024,7 @@ function renderSwitchProfile(
     downloadFile(`SwitchyRules_${exportBaseName()}.ssrl`, text, 'text/plain;charset=utf-8');
   };
 
-  const exportOmegaButton = h('button', {
+  const exportDeltaButton = h('button', {
     type: 'button',
     class: 'om-btn',
     title: t('options_profileExportRuleListHelp'),
@@ -1047,7 +1047,7 @@ function renderSwitchProfile(
   const updateExportButtons = () => {
     exportLegacyButton.hidden = !options['-exportLegacyRuleList'] || advancedInUse();
   };
-  actions?.append(exportOmegaButton, exportLegacyButton);
+  actions?.append(exportDeltaButton, exportLegacyButton);
 
   // --- Source editor ---------------------------------------------------------
   // The rules table and a rule-list text form of it, toggled in place. The
@@ -1102,7 +1102,7 @@ function renderSwitchProfile(
     }
     let rules: Rule[];
     try {
-      rules = RuleList.Switchy.parseOmega(code, '', '', { strict: true, source: false });
+      rules = RuleList.Switchy.parseDelta(code, '', '', { strict: true, source: false });
     } catch (err) {
       const failure = err as RuleList.RuleListError;
       return problem(
@@ -1158,7 +1158,7 @@ function renderSwitchProfile(
   let attachedListTextarea: HTMLTextAreaElement | null = null;
 
   /**
-   * The attached-list branch of the original's `omegaApplyOptions` handler: a
+   * The attached-list branch of the original's `deltaApplyOptions` handler: a
    * manually maintained attached list must either not look like a Switchy
    * list at all (it may legitimately be AutoProxy) or parse as one, and on a
    * successful detection the stored format is corrected to 'Switchy' so the
@@ -1186,7 +1186,7 @@ function renderSwitchProfile(
       }
     }
     try {
-      RuleList.Switchy.parseOmega(code, '', '', { strict: true, source: false });
+      RuleList.Switchy.parseDelta(code, '', '', { strict: true, source: false });
     } catch (err) {
       const failure = err as RuleList.RuleListError;
       return problem(
@@ -1207,7 +1207,7 @@ function renderSwitchProfile(
     return true;
   };
 
-  // The original intercepted its `omegaApplyOptions` event to validate the
+  // The original intercepted its `deltaApplyOptions` event to validate the
   // attached rule list and parse a touched source before anything was saved;
   // capturing the Apply click has the same effect. The listener unhooks
   // itself once this editor leaves the page.
@@ -2289,7 +2289,7 @@ function renderPacProfile(container: HTMLElement, profile: PacProfile): void {
 async function exportPac(profile: Profile): Promise<void> {
   try {
     const pac = await callPac(profile.name);
-    downloadFile(`OmegaProfile_${profile.name}.pac`, pac, 'application/x-ns-proxy-autoconfig');
+    downloadFile(`DeltaProfile_${profile.name}.pac`, pac, 'application/x-ns-proxy-autoconfig');
   } catch (err) {
     must('#om-status').textContent = err instanceof Error ? err.message : String(err);
   }

@@ -30,7 +30,9 @@ import type {
 } from '@switchydelta/pac';
 import type { Logger } from '@switchydelta/target';
 
-const STORAGE_KEY = 'omegaProxyAuth';
+const STORAGE_KEY = 'deltaProxyAuth';
+/** Pre-rename key; still read so an upgrade does not drop saved credentials. */
+const LEGACY_STORAGE_KEY = 'omegaProxyAuth';
 
 /** One candidate credential for a challenge. Fallbacks carry no `config`. */
 interface AuthEntry {
@@ -177,9 +179,21 @@ export class ProxyAuth {
     const area = storageArea(areaName);
     if (!area) return null;
     try {
-      const items = await area.get(STORAGE_KEY);
+      const items = await area.get([STORAGE_KEY, LEGACY_STORAGE_KEY]);
       if (chrome.runtime?.lastError) return null;
-      return (items?.[STORAGE_KEY] as AuthPayload | undefined) ?? null;
+      const current = items?.[STORAGE_KEY] as AuthPayload | undefined;
+      if (current) return current;
+      const legacy = items?.[LEGACY_STORAGE_KEY] as AuthPayload | undefined;
+      if (!legacy) return null;
+      // Rewrite under the new key and drop the old one so later boots only
+      // touch deltaProxyAuth.
+      try {
+        await area.set({ [STORAGE_KEY]: legacy });
+        await area.remove(LEGACY_STORAGE_KEY);
+      } catch {
+        // Still use the legacy payload in memory even if the rewrite failed.
+      }
+      return legacy;
     } catch {
       return null;
     }

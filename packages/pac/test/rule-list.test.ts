@@ -277,7 +277,7 @@ describe('RuleList', () => {
     });
   });
 
-  describe('Switchy (omega format)', () => {
+  describe('Switchy (delta format)', () => {
     const parse = RuleList.Switchy.parse;
     const compose = RuleList.Switchy.compose;
 

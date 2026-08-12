@@ -98,20 +98,20 @@ export const AutoProxy: FormatHandler = {
 
 // --- Switchy ----------------------------------------------------------------
 
-const OMEGA_PREFIX = '[SwitchyDelta Conditions';
+const DELTA_PREFIX = '[SwitchyDelta Conditions';
 /** Rule lists written before the project was renamed. */
-const LEGACY_OMEGA_PREFIX = '[SwitchyOmega Conditions';
+const LEGACY_SWITCHY_PREFIX = '[SwitchyOmega Conditions';
 const SPECIAL_LINE_START = '[;#@!';
 
-type SwitchyParser = 'parseOmega' | 'parseLegacy';
+type SwitchyParser = 'parseDelta' | 'parseLegacy';
 
 function getParser(text: string): SwitchyParser {
-  const hasOmegaHeader =
-    text.startsWith(OMEGA_PREFIX) || text.startsWith(LEGACY_OMEGA_PREFIX);
-  if (!hasOmegaHeader && (text[0] === '#' || text.indexOf('\n#') >= 0)) {
+  const hasSwitchyHeader =
+    text.startsWith(DELTA_PREFIX) || text.startsWith(LEGACY_SWITCHY_PREFIX);
+  if (!hasSwitchyHeader && (text[0] === '#' || text.indexOf('\n#') >= 0)) {
     return 'parseLegacy';
   }
-  return 'parseOmega';
+  return 'parseDelta';
 }
 
 export interface ComposeOptions {
@@ -228,7 +228,7 @@ function parseLegacy(
   return exclusiveRules.concat(normalRules);
 }
 
-function parseOmega(
+function parseDelta(
   text: string,
   matchProfileName: string,
   defaultProfileName: string,
@@ -341,33 +341,33 @@ function parseOmega(
 
 export const Switchy: FormatHandler & {
   compose: typeof compose;
-  parseOmega: typeof parseOmega;
+  parseDelta: typeof parseDelta;
   parseLegacy: typeof parseLegacy;
   conditionFromLegacyWildcard: typeof conditionFromLegacyWildcard;
-  omegaPrefix: string;
-  legacyOmegaPrefix: string;
+  deltaPrefix: string;
+  legacySwitchyPrefix: string;
   specialLineStart: string;
 } = {
-  omegaPrefix: OMEGA_PREFIX,
-  legacyOmegaPrefix: LEGACY_OMEGA_PREFIX,
+  deltaPrefix: DELTA_PREFIX,
+  legacySwitchyPrefix: LEGACY_SWITCHY_PREFIX,
   specialLineStart: SPECIAL_LINE_START,
 
   detect(text) {
-    if (text.startsWith(OMEGA_PREFIX)) return true;
-    if (text.startsWith(LEGACY_OMEGA_PREFIX)) return true;
+    if (text.startsWith(DELTA_PREFIX)) return true;
+    if (text.startsWith(LEGACY_SWITCHY_PREFIX)) return true;
     return undefined;
   },
 
   parse(text, matchProfileName, defaultProfileName, args) {
     const parser = getParser(text);
-    return parser === 'parseOmega'
-      ? parseOmega(text, matchProfileName, defaultProfileName, args)
+    return parser === 'parseDelta'
+      ? parseDelta(text, matchProfileName, defaultProfileName, args)
       : parseLegacy(text, matchProfileName, defaultProfileName, args);
   },
 
   directReferenceSet({ ruleList, defaultProfileName }) {
     const text = ruleList.trim();
-    if (getParser(text) !== 'parseOmega') return undefined;
+    if (getParser(text) !== 'parseDelta') return undefined;
     if (!/(^|\n)@with\s+results?(\r|\n|$)/i.test(text)) return undefined;
 
     const refs: Record<string, string> = {};
@@ -384,7 +384,7 @@ export const Switchy: FormatHandler & {
   },
 
   compose,
-  parseOmega,
+  parseDelta,
   parseLegacy,
   conditionFromLegacyWildcard,
 };

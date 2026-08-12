@@ -1,0 +1,1081 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SwitchyDelta 2.3.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-13 10:29+0000\n"
+"PO-Revision-Date: 2021-02-27 11:50+0000\n"
+"Last-Translator: HelaBasa <R45XvezA@protonmail.ch>\n"
+"Language-Team: Sinhala <https://hosted.weblate.org/projects/switchyomega/"
+"main/si/>\n"
+"Language: si\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.5\n"
+
+msgid "appNameShort"
+msgstr "SwitchyDelta"
+
+msgid "manifest_app_name"
+msgstr "Proxy SwitchyDelta"
+
+msgid "manifest_app_description"
+msgstr "බහු ප්‍රොක්සි අතර ඉක්මනින් හා පහසුවෙන් කළමනාකරණය කර මාරු වන්න."
+
+msgid "manifest_icon_default_title"
+msgstr "පූරණය වෙමින්…"
+
+msgid "upgrade_profile_auto"
+msgstr "ස්වයංක්‍රීය මාරුව"
+
+msgid "profile_direct"
+msgstr "[සෘජු]"
+
+msgid "profile_system"
+msgstr "[පද්ධති ප්‍රොක්සි]"
+
+msgid "condition_HostWildcardCondition"
+msgstr "සත්කාරක වයිල්ඩ්කාඩ්"
+
+msgid "condition_help_HostWildcardCondition"
+msgstr "වයිල්ඩ්කාඩ් මගින් සත්කාරක (වසම් නාම) ගැලපේ.<br><b>තරු ලකුණ <code>*</code></b> ශුන්‍ය හෝ තවත් අක්ෂර ගැලපේ.<br><b>ප්‍රශ්න ලකුණ <code>?</code></b> හරියටම එක් අක්ෂරයක් ගැලපේ.<br><br><code>*.</code> වලින් ආරම්භ වන නීති විශේෂයෙන් සැලකෙන්නේ සත්කාරක වයිල්ඩ්කාඩ් කොන්දේසිවල පමණි.<br>උදාහරණය: <code>*.example.com</code> www.example.com <b>සහ example.com ද</b> ගැලපේ.<br>උප වසම් <b>පමණක්</b> ගැලපීමට <b>තරු දෙකක්</b> භාවිතා කරන්න: <code>**.example.com</code>."
+
+msgid "condition_HostRegexCondition"
+msgstr "සත්කාරක regex"
+
+msgid "condition_help_HostRegexCondition"
+msgstr "සත්කාරක වයිල්ඩ්කාඩ් කොන්දේසියට සමාන නමුත් සත්කාරක (වසම් නාම) <a href='https://www.google.com/search?q=regular%20expression'>නිත්‍ය ප්‍රකාශන</a> මගින් ගැලපේ.<br>නිත්‍ය ප්‍රකාශන ගොඩනැගීමට (සහ කියවීමට) අපහසු විය හැක.<br>බොහෝ අවස්ථාවල වයිල්ඩ්කාඩ් භාවිතා කිරීමටත්, වෙනත් කොන්දේසි වර්ගයකින් කළ නොහැකි දේවලට පමණක් regex භාවිතා කිරීමටත් නිර්දේශ කෙරේ."
+
+msgid "condition_HostLevelsCondition"
+msgstr "සත්කාරක මට්ටම්"
+
+msgid "condition_help_HostLevelsCondition"
+msgstr "සත්කාරක මට්ටම දෙන ලද පරාසය තුළ ඇත්නම් පමණක් ඉල්ලීම ගැලපේ.<br>සත්කාරක මට්ටම යනු සත්කාරකයේ (වසම් නාමයේ) <b>තිත් මගින් වෙන් වූ කොටස් ගණන</b>ය.<br>උදාහරණය: <code>www.example.com</code> හි සත්කාරක මට්ටම 3 වන අතර <code>internal</code> හි මට්ටම 1 වේ."
+
+msgid "condition_IpCondition"
+msgstr "IP අකුරු සටහන්"
+
+msgid "condition_help_IpCondition"
+msgstr "සත්කාරකය <b>සෘජු</b> IP ලිපිනයක් වන අතර <a href='https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation'>CIDR සටහන</a> මගින් දක්වන උප ජාලය තුළ ඇත්නම් පමණක් ඉල්ලීම ගැලපේ.<br>උදාහරණයක් ලෙස, <code>127.0.0.1/16</code> නීතිය <code>127.0.*.*</code> වැනි සියලුම IP ලිපින ගැලපේ.<br>එබැවින් <code>127.0.0.1</code> ගැලපෙන අතර <code>127.1.0.0</code> නොගැලපේ. <code>localhost</code> වැනි සත්කාරක නාම <b>නොවන</b> IP අකුරු සටහන් නිසා කිසිදා නොගැලපේ."
+
+msgid "condition_UrlWildcardCondition"
+msgstr "URL වයිල්ඩ්කාඩ්"
+
+msgid "condition_help_UrlWildcardCondition"
+msgstr "වයිල්ඩ්කාඩ් මගින් ඉල්ලීමේ URL ගැලපේ.<br>වයිල්ඩ්කාඩ් යොමුවක් සඳහා ඉහත සත්කාරක වයිල්ඩ්කාඩ් කොටස බලන්න.<br>URL වයිල්ඩ්කාඩ් විශේෂයෙන් සැලකෙන්නේ නැත (සත්කාරක වයිල්ඩ්කාඩ්හි මෙන් උප වසම් ඉන්ද්‍රජාලයක් නැත).<br>එබැවින් <code>*://*.example.com/*</code> http://www.example.com/ ගැලපෙන නමුත් http://example.com/ <b>නොගැලපේ</b>."
+
+msgid "condition_UrlRegexCondition"
+msgstr "URL regex"
+
+msgid "condition_help_UrlRegexCondition"
+msgstr "ඉතා බලවත් <a href='https://www.google.com/search?q=regular%20expression'>නිත්‍ය ප්‍රකාශන</a> මගින් URL ගැලපේ.<br>කෙසේ වෙතත්, නිත්‍ය ප්‍රකාශන ගොඩනැගීමට (සහ කියවීමට) අපහසු විය හැක.<br>බොහෝ අවස්ථාවල වයිල්ඩ්කාඩ් භාවිතා කිරීමටත්, වෙනත් කොන්දේසි වර්ගයකින් කළ නොහැකි දේවලට පමණක් regex භාවිතා කිරීමටත් නිර්දේශ කෙරේ."
+
+msgid "condition_KeywordCondition"
+msgstr "මූල පදය"
+
+msgid "condition_help_KeywordCondition"
+msgstr "URL ප්‍රොටොකෝලය HTTP වන අතර රටාව URL හි නිශ්චිත උප-අනුලකුණු වන විට මූල පද කොන්දේසිය ගැලපේ.<br>එය URL වයිල්ඩ්කාඩ් රටාව <code>http://*<b>pattern</b>*</code> මෙන් ක්‍රියා කරයි, මෙහි <b>pattern</b> මූල පද රටාවයි.<br>URL හි යම් මූල පද අවහිර කරන ෆයර්වෝලයක් මගහැර ප්‍රොක්සි හරහා එවැනි URL ඉල්ලීමට මූල පද කොන්දේසි ප්‍රයෝජනවත් වේ."
+
+msgid "condition_FalseCondition"
+msgstr "(අක්‍රිය)"
+
+msgid "condition_details_FalseCondition"
+msgstr "(ගැලපීමේදී කොන්දේසිය නොසලකා හරිනු ලැබේ)"
+
+msgid "condition_help_FalseCondition"
+msgstr "කොන්දේසියක වර්ගය <code>(අක්‍රිය)</code> ලෙස සකසා එය අක්‍රිය කළ හැක. අක්‍රිය කොන්දේසියක් නොපවතින්නාක් මෙන් ක්‍රියා කරයි.<br>මෙම විශේෂාංගය තාවකාලිකව කොන්දේසි අක්‍රිය කිරීමට භාවිතා කළ හැක.<br>අක්‍රිය කොන්දේසි තවමත් පෙර තොරතුරු (රටා වැනි) රඳවා ගන්නා අතර වර්ගය පෙර එකට ආපසු සකසා නැවත සක්‍රිය කළ හැක."
+
+msgid "condition_TimeCondition"
+msgstr "දැන් වේලාව"
+
+msgid "condition_help_TimeCondition"
+msgstr "දේශීය වේලාව <b>ආරම්භක පැය</b> සහ <b>අවසාන පැය</b> මගින් නිර්වචනය කරන පරාසය තුළ (දෙකම ඇතුළුව) ඇත්නම් ගැලපේ.<br>දේශීය වේලාව, ආරම්භක පැය සහ අවසාන පැය සියල්ල <b>24-පැය</b> ආකෘතියෙන් (<b>0 සිට 23</b> දක්වා) ගණනය කෙරේ. <br>ගණනය කිරීම ආසන්න වශයෙන් ඉල්ලීම යවන මොහොතේ සිදු වේ."
+
+msgid "condition_WeekdayCondition"
+msgstr "සතියේ දිනය"
+
+msgid "condition_help_WeekdayCondition"
+msgstr "කොන්දේසි විස්තර තුළ <b>වත්මන් සතියේ දිනය</b> තෝරා ඇත්නම් ගැලපේ. දිනය දේශීය කාල කලාපය අනුව ගණනය කෙරේ.<br>ඉල්ලීම සහ එහි URL මෙම කොන්දේසියට අදාළ නොවේ. ප්‍රතිඵලය රඳා පවතින්නේ ඉල්ලීම යවන සතියේ දිනය මත පමණි."
+
+msgid "condition_alert_fullUrlLimitation"
+msgstr "Chrome 52 සිට <code>https://</code> URL සඳහා සම්පූර්ණ URL ගැලපීම තවදුරටත් කළ නොහැක. <a href='https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation'>තව දැනගන්න...</a>"
+
+msgid "condition_alert_fullUrlLimitationLink"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation"
+
+msgid "condition_group_default"
+msgstr " "
+
+msgid "condition_group_host"
+msgstr "සත්කාරක"
+
+msgid "condition_group_url"
+msgstr "Url"
+
+msgid "condition_group_special"
+msgstr "විශේෂ"
+
+msgid "ruleListFormat_Switchy"
+msgstr "Switchy"
+
+msgid "ruleListFormat_AutoProxy"
+msgstr "AutoProxy"
+
+msgid "ruleList_usageUrl"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/RuleListUsage"
+
+msgid "ruleList_error_resultNotEnabled"
+msgstr "'@with result' නියෝගය අස්ථානගතයි!"
+
+msgid "ruleList_error_unknownProfile"
+msgstr "නොදන්නා පැතිකඩ: $PROFILE$"
+
+msgid "ruleList_error_missingResultProfile"
+msgstr "$LNO$ පේළියේ ප්‍රතිඵල පැතිකඩ නාමය අස්ථානගතයි: $SOURCE$"
+
+msgid "ruleList_error_invalidRule"
+msgstr "$LNO$ පේළියේ වලංගු නොවන නීතිය: $SOURCE$"
+
+msgid "ruleList_error_noDefaultRule"
+msgstr "සියල්ල අල්ලා ගන්නා '*' කොන්දේසිය සහිත පෙරනිමි නීතිය අස්ථානගතයි!"
+
+msgid "dialog_close"
+msgstr "වසන්න"
+
+msgid "dialog_save"
+msgstr "වෙනස්කම් සුරකින්න"
+
+msgid "dialog_ok"
+msgstr "හරි"
+
+msgid "dialog_cancel"
+msgstr "අවලංගු කරන්න"
+
+msgid "inputClear_clear"
+msgstr "හිස් කරන්න"
+
+msgid "inputClear_restore"
+msgstr "ප්‍රතිස්ථාපනය"
+
+msgid "options_title"
+msgstr "SwitchyDelta විකල්ප"
+
+msgid "options_experimental_badge"
+msgstr "α"
+
+msgid "options_navHeader_setting"
+msgstr "සැකසුම්"
+
+msgid "options_navHeader_profiles"
+msgstr "පැතිකඩ"
+
+msgid "options_navHeader_actions"
+msgstr "ක්‍රියා"
+
+msgid "options_tab_ui"
+msgstr "අතුරුමුහුණත"
+
+msgid "options_tab_general"
+msgstr "සාමාන්‍ය"
+
+msgid "options_tab_importExport"
+msgstr "ආයාත/නිර්යාත"
+
+msgid "options_newProfile"
+msgstr "නව පැතිකඩ…"
+
+msgid "options_apply"
+msgstr "වෙනස්කම් යොදන්න"
+
+msgid "options_discard"
+msgstr "වෙනස්කම් අත්හරින්න"
+
+msgid "options_reset"
+msgstr "විකල්ප යළි සකසන්න"
+
+msgid "options_group_miscOptions"
+msgstr "විවිධ විකල්ප"
+
+msgid "options_confirmDeletion"
+msgstr "කොන්දේසිය මකන විට තහවුරු කරන්න."
+
+msgid "options_refreshOnProfileChange"
+msgstr "පැතිකඩ වෙනස් වන විට වත්මන් ටැබය නැවුම් කරන්න."
+
+msgid "options_showInspectMenu"
+msgstr "සන්දර්භ මෙනුව හරහා පිටු අංග සඳහා භාවිතා වන ප්‍රොක්සි පරීක්ෂා කිරීමට ඉඩ දෙන්න."
+
+msgid "options_addConditionsToBottom"
+msgstr "පොප්අප් මගින් එකතු කරන නව කොන්දේසි ලැයිස්තුවේ පහළට දමන්න."
+
+msgid "options_group_keyboardShortcut"
+msgstr "යතුරුපුවරු කෙටිමඟ"
+
+msgid "options_menuShortcutHelp"
+msgstr "කෙටිමඟ ඔබීමෙන් මාරු පොප්අප් මෙනුව විවෘත වේ. (පෙරනිමිය Alt+Shift+O)."
+
+msgid "options_menuShortcutMore"
+msgstr "පොප්අප් මෙනුවේ අයිතම වලට යතුරුපුවරුවෙන් ද ප්‍රවේශ විය හැක. තව දැන ගැනීමට මෙනුවේ ? (හෝ /) ඔබන්න."
+
+msgid "options_menuShortcutConfigure"
+msgstr "කෙටිමඟ වින්‍යාස කරන්න"
+
+msgid "options_group_switchOptions"
+msgstr "මාරු විකල්ප"
+
+msgid "options_startupProfile"
+msgstr "ආරම්භක පැතිකඩ"
+
+msgid "options_startupProfile_none"
+msgstr "(වත්මන් පැතිකඩ)"
+
+msgid "options_showConditionTypesAdvanced"
+msgstr "උසස් කොන්දේසි වර්ග පෙන්වන්න"
+
+msgid "options_showConditionTypesAdvancedHelp"
+msgstr "උසස් නමුත් සංකීර්ණ මාරු කොන්දේසි වර්ග අගුළු හරියි. බොහෝ අවස්ථාවල මූලික කොන්දේසි වර්ග ප්‍රමාණවත් බැවින් මෙම විකල්පය නිර්දේශ නොකෙරේ."
+
+msgid "options_quickSwitch"
+msgstr "ඉක්මන් මාරුව"
+
+msgid "options_cycledProfiles"
+msgstr "චක්‍රීය පැතිකඩ"
+
+msgid "options_cycledProfilesHelp"
+msgstr "අයිකනය මත ක්ලික් කරන විට (හෝ ඉහත කෙටිමඟ භාවිතා කරන විට), පහත පැතිකඩ ඒවායේ අනුපිළිවෙලට යොදනු ලැබේ."
+
+msgid "options_cycledProfilesTooFew"
+msgstr "මෙම ක්‍රියාකාරිත්වය සක්‍රිය කිරීමට අවම වශයෙන් පැතිකඩ 2ක් තෝරන්න! ඒවා පහත කොටුවෙන් ඇදගෙන යා හැක."
+
+msgid "options_notCycledProfiles"
+msgstr "චක්‍රීය නොවන පැතිකඩ"
+
+msgid "options_group_proxyChanges"
+msgstr "ප්‍රොක්සි වෙනස්කම්"
+
+msgid "options_revertProxyChanges"
+msgstr "වෙනත් යෙදුම් මගින් කළ ප්‍රොක්සි වෙනස්කම් ආපසු හරවන්න."
+
+msgid "options_group_conflicts"
+msgstr "ගැටුම්"
+
+msgid "options_conflicts_introduction"
+msgstr "සමහර විට වෙනත් යෙදුම් ද ප්‍රොක්සි සැකසුම් පාලනය කිරීමට උත්සාහ කරන අතර ගැටුම් ඇති වේ. දැන්වීම් අවහිරකයන් සහ වෙනත් දිගු ද ප්‍රොක්සි සැකසුම් භාවිතා කළ හැක. බ්‍රව්සරය ක්‍රියා කරන ආකාරය නිසා එවැනි ගැටුම් වළක්වා ගත නොහැක."
+
+msgid "options_conflicts_lowerPriority"
+msgstr "SwitchyDelta අයිකනයේ මෙවැනි රතු ලාංඡනයක් යනු වෙනත් යෙදුමකට ඉහළ ප්‍රමුඛතාවක් ඇති නිසා SwitchyDelta හට සැකසුම් පාලනය කළ නොහැකි බවයි. SwitchyDelta අස්ථාපනය කර නැවත ස්ථාපනය කිරීමට උත්සාහ කරන්න—එය ප්‍රමුඛතාව ඉහළ නැංවිය යුතුය. නැවත ස්ථාපනයෙන් පසුවත් ගැටුම් දුටුවහොත්, ගැටුම ඇති කරන අනෙක් යෙදුම ඉවත් කිරීම සලකා බලන්න."
+
+msgid "options_conflicts_higherPriority"
+msgstr "SwitchyDelta හට ඉහළ ප්‍රමුඛතාවක් ඇත්නම්, පොප්අප් මෙනුවේ $SYSTEMPROFILE$ තේරීමෙන් වෙනත් යෙදුම් හෝ පද්ධති සැකසුම් වෙත පාලනය ආපසු දිය හැක."
+
+msgid "options_showExternalProfile"
+msgstr "වෙනත් යෙදුම්වලින් ප්‍රොක්සි සැකසුම් ආයාත කිරීමට පොප්අප් මෙනු අයිතමය පෙන්වන්න."
+
+msgid "options_showExternalProfileHelp"
+msgstr "$SYSTEMPROFILE$ තෝරා ඇති විට, පොප්අප් මෙනුවේ $EXTERNALPROFILE$ තේරීමෙන් වෙනත් යෙදුම්වලින් ක්‍රියාකාරී ප්‍රොක්සි සැකසුම් ආයාත කළ හැක. සැකසුම් ඔබ ලබා දෙන නාමයෙන් පැතිකඩක් ලෙස ආයාත වේ. ආයාත කළ පැතිකඩ ස්නැප්ෂොට් එකක් වන අතර ඉන්පසු මූලාශ්‍ර යෙදුමේ වෙනස්කම් පිළිබිඹු නොකරයි."
+
+msgid "options_group_networkRequests"
+msgstr "ජාල ඉල්ලීම්"
+
+msgid "options_monitorWebRequests"
+msgstr "වත්මන් ටැබයේ සම්පත් සඳහා අසාර්ථක වූ වෙබ් ඉල්ලීම් ගණන පෙන්වන්න."
+
+msgid "options_monitorWebRequestsHelp"
+msgstr "සමහර සම්පත් පූරණය අසාර්ථක වුවහොත් අයිකනය මත කහ ලාංඡනයක් පෙන්වනු ඇත,<br>සහ පොප්අප් මෙනුව හරහා එවැනි සම්පත් සඳහා පැතිකඩ පහසුවෙන් සැකසිය හැක."
+
+msgid "options_downloadOptions"
+msgstr "බාගැනීම් විකල්ප"
+
+msgid "options_downloadOptionsHelp"
+msgstr "මාර්ගගත නීති ලැයිස්තු සහ PAC ස්ක්‍රිප්ට් යාවත්කාලීන සංඛ්‍යාතය වින්‍යාස කරන්න."
+
+msgid "options_downloadInterval"
+msgstr "බාගැනීම් පරතරය"
+
+msgid "options_downloadInterval_15"
+msgstr "මිනිත්තු 15"
+
+msgid "options_downloadInterval_60"
+msgstr "පැය 1"
+
+msgid "options_downloadInterval_180"
+msgstr "පැය 3"
+
+msgid "options_downloadInterval_360"
+msgstr "පැය 6"
+
+msgid "options_downloadInterval_720"
+msgstr "පැය 12"
+
+msgid "options_downloadInterval_1440"
+msgstr "සෑම දිනකම"
+
+msgid "options_downloadInterval_never"
+msgstr "කවදාවත් නැත"
+
+msgid "options_group_importExportProfile"
+msgstr "පැතිකඩ"
+
+msgid "options_exportPacFile"
+msgstr "PAC ගොනුවක් ලෙස නිර්යාත කරන්න"
+
+msgid "options_exportPacFileHelp"
+msgstr "වත්මන් පැතිකඩ PAC ගොනුවක් ලෙස නිර්යාත කරන්න, එවිට වෙනත් බ්‍රව්සරවල භාවිතා කළ හැක."
+
+msgid "options_exportProfileHelp"
+msgstr "පැතිකඩක් නිර්යාත කිරීමට, පැතිකඩ පිටුවේ ඉහළ-දකුණු ක්‍රියා තීරුව භාවිතා කරන්න."
+
+msgid "options_exportLegacyRuleList"
+msgstr "හැකි විට Proxy Switchy!/SwitchyPlus/SwitchySharp අනුකූල ආකෘතියෙන් නීති ලැයිස්තු නිර්යාත කරන්න."
+
+msgid "options_exportLegacyRuleListHelp"
+msgstr "එම ව්‍යාපෘතිවල පරිශීලකයන් සඳහා නීති ලැයිස්තු ප්‍රකාශයට පත් කරන්නේ නම් පමණක් මෙම විකල්පය සක්‍රිය කරන්න.<br>වැඩිදියුණු කිරීම් සඳහා ඔබේ ප්‍රේක්ෂකයන්ට SwitchyDelta වෙත උත්ශ්‍රේණි කිරීමට උපදෙස් දීම සලකා බලන්න."
+
+msgid "options_group_importExportSettings"
+msgstr "සැකසුම්"
+
+msgid "options_makeBackup"
+msgstr "උපස්ථයක් සාදන්න"
+
+msgid "options_makeBackupHelp"
+msgstr "ඔබේ විකල්පවල සම්පූර්ණ උපස්ථයක් සාදන්න (පැතිකඩ සහ අනෙකුත් සියලු විකල්ප ඇතුළුව)."
+
+msgid "options_restoreLocal"
+msgstr "ගොනුවකින් ප්‍රතිස්ථාපනය"
+
+msgid "options_restoreLocalHelp"
+msgstr "දේශීය ගොනුවකින් ඔබේ SwitchyDelta විකල්ප ප්‍රතිස්ථාපනය කරන්න."
+
+msgid "options_restoreOnline"
+msgstr "මාර්ගගතව ප්‍රතිස්ථාපනය"
+
+msgid "options_restoreOnlinePlaceholder"
+msgstr "විකල්ප ගොනු URL (උදා. 'http://example.com/switchy.bak')"
+
+msgid "options_restoreOnlineSubmit"
+msgstr "ප්‍රතිස්ථාපනය"
+
+msgid "options_group_syncing"
+msgstr "සමමුහුර්තකරණය (පරීක්ෂණාත්මක)"
+
+msgid "options_syncEnable"
+msgstr "සමමුහුර්තකරණය සක්‍රිය කරන්න"
+
+msgid "options_syncEnableForce"
+msgstr "සමමුහුර්තකරණයෙන් බාගන්න"
+
+msgid "options_syncDisable"
+msgstr "සමමුහුර්තකරණය අක්‍රිය කරන්න"
+
+msgid "options_syncReset"
+msgstr "දුරස්ථ පිටපත හිස් කරන්න"
+
+msgid "options_syncPristineHelp"
+msgstr "දැන් Chrome බ්‍රව්සරය ධාවනය වන ඔබේ සියලුම ඩෙස්ක්ටොප් උපාංග හරහා සැකසුම් සහ පැතිකඩ ස්වයංක්‍රීයව සමමුහුර්ත කළ හැක."
+
+msgid "options_syncSyncAlert"
+msgstr "ඔබේ විකල්ප ඔබේ අනෙකුත් උපාංග සමඟ ස්වයංක්‍රීයව සමමුහුර්ත වේ."
+
+msgid "options_syncSyncHelp"
+msgstr "සමමුහුර්තකරණය ඇත්ත වශයෙන්ම ක්‍රියාත්මක වීමට ඔබේ සෑම උපාංගයකම (මෙය ඇතුළුව) Chrome වෙත පුරනය විය යුතුය. <br> එය ක්‍රියා කරන බව තහවුරු කිරීමට වෙනත් උපාංගවල මෙම කොටස පරීක්ෂා කළ හැක."
+
+msgid "options_syncConflictAlert"
+msgstr "සමමුහුර්තකරණය හරහා වෙනත් උපාංගයක ඔබේ විකල්පවල පිටපතක් උඩුගත කර ඇත."
+
+msgid "options_syncConflictHelp"
+msgstr "කැමති නම් දුරස්ථ පිටපත ඔබේ උපාංගයට බාගත හැක. <br>කෙසේ වෙතත්, එසේ කිරීමෙන් මෙම උපාංගයේ <b>පවතින සැකසුම් සහ පැතිකඩ උඩින් ලියනු ලැබේ</b>."
+
+msgid "options_syncUnsupportedHelp"
+msgstr "ඔබේ වේදිකාවේ හෝ බ්‍රව්සරයේ විකල්ප සමමුහුර්තකරණය සහාය නොදක්වයි. දැනට ඩෙස්ක්ටොප්හි Chrome බ්‍රව්සරය පමණක් සහාය දක්වයි."
+
+msgid "options_profileSyncDisabled"
+msgstr "මෙම පැතිකඩ සඳහා සමමුහුර්තකරණය අක්‍රියයි."
+
+msgid "options_profileSyncDisabled_quotaPerItem"
+msgstr "ආචයන ඉඩ වැඩිපුර භාවිතා කිරීම නිසා මෙම පැතිකඩ සඳහා සමමුහුර්තකරණය අක්‍රියයි."
+
+msgid "options_profileTabPrefix"
+msgstr "පැතිකඩ :: "
+
+msgid "options_renameProfile"
+msgstr "නැවත නම් කරන්න"
+
+msgid "options_deleteProfile"
+msgstr "මකන්න"
+
+msgid "options_profileExportRuleList"
+msgstr "නීති ලැයිස්තුව ප්‍රකාශයට පත් කරන්න"
+
+msgid "options_profileExportRuleListHelp"
+msgstr "ප්‍රකාශනය සඳහා මාරු නීති පෙළ ආකෘතියෙන් නිර්යාත කරන්න."
+
+msgid "options_profileExportPac"
+msgstr "PAC නිර්යාත කරන්න"
+
+msgid "options_profileUnsupported"
+msgstr "සහාය නොදක්වන පැතිකඩ වර්ගය $TYPE$!"
+
+msgid "options_profileUnsupportedHelp"
+msgstr "විකල්ප කැඩී ඇති හෝ මෙම වැඩසටහනේ නව අනුවාදයකින් විය හැක."
+
+msgid "options_profileEditSource"
+msgstr "මූල කේතය සංස්කරණය"
+
+msgid "options_profileEditSourceHelp"
+msgstr "මූල කේත ආකෘතිය පිළිබඳ උදව් පෙන්වන්න"
+
+msgid "options_profileEditSourceHelpUrl"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/SwitchyDelta-conditions-format#result-profile"
+
+msgid "options_group_proxyServers"
+msgstr "ප්‍රොක්සි සේවාදායක"
+
+msgid "options_proxy_scheme"
+msgstr "යෝජනා ක්‍රමය"
+
+msgid "options_proxy_protocol"
+msgstr "ප්‍රොටොකෝලය"
+
+msgid "options_proxy_server"
+msgstr "සේවාදායකය"
+
+msgid "options_proxy_port"
+msgstr "පෝට්"
+
+msgid "options_proxy_auth"
+msgstr "සත්‍යාපනය"
+
+msgid "options_proxy_authNotSupported"
+msgstr "ඔබේ බ්‍රව්සරය $PROTOCOLDISP$ ප්‍රොක්සි සත්‍යාපනයට සහාය නොදක්වයි! මෙම ගැටලුව SwitchyDelta වෙත වාර්තා නොකරන්න. ඒ වෙනුවට ඔබේ බ්‍රව්සර සහාය අමතන්න."
+
+msgid "options_proxy_authAllWarningPac"
+msgstr "අනතුරු ඇඟවීම: පරිශීලක නාමය/මුරපදය PAC ස්ක්‍රිප්ට් මගින් ආපසු දෙන අනපේක්ෂිත සේවාදායක වෙත යැවිය හැක."
+
+msgid "options_proxy_authAllWarningPacUrl"
+msgstr "සංවේදී අක්තපත්‍ර ඇතුළත් කිරීමට පෙර ඉහත URL හරහා සපයන ස්ක්‍රිප්ට් විශ්වාස කරන බවට වග බලා ගන්න."
+
+msgid "options_proxy_authAllWarningPacScript"
+msgstr "සංවේදී අක්තපත්‍ර ලබා දීමට පෙර පහත ස්ක්‍රිප්ට් විශ්වාස කරන බවට වග බලා ගන්න."
+
+msgid "options_proxy_authReferencedWarning"
+msgstr "අමතරව, මෙම පැතිකඩ වෙනත් පැතිකඩවල (උදා. මාරු පැතිකඩ) භාවිතා කිරීමෙන් පරිශීලක නාමය/මුරපදය වෙනත් පැතිකඩවල වින්‍යාස කළ ප්‍රොක්සි සේවාදායක වෙත යැවීමට හේතු විය හැක."
+
+msgid "options_scheme_default"
+msgstr "(පෙරනිමි)"
+
+msgid "options_protocol_direct"
+msgstr "DIRECT"
+
+msgid "options_protocol_useDefault"
+msgstr "(පෙරනිමිය භාවිතා කරන්න)"
+
+msgid "options_proxy_single"
+msgstr "සියලුම ප්‍රොටොකෝල සඳහා ඉහත ප්‍රොක්සි භාවිතා කරන්න."
+
+msgid "options_proxy_expand"
+msgstr "උසස් පෙන්වන්න"
+
+msgid "options_group_bypassList"
+msgstr "මගහැරීම් ලැයිස්තුව"
+
+msgid "options_bypassListHelp"
+msgstr "ඔබට කිසිදු ප්‍රොක්සියක් භාවිතා නොකිරීමට අවශ්‍ය සේවාදායක: (සෑම පේළියකටම එක් සේවාදායකයක්.)"
+
+msgid "options_bypassListHelpLinkText"
+msgstr "(වයිල්ඩ්කාඩ් සහ තවත් තිබේ…)"
+
+msgid "options_group_pacUrl"
+msgstr "PAC URL"
+
+msgid "options_pacUrlHelp"
+msgstr "PAC ස්ක්‍රිප්ට් මෙම URL වෙතින් යාවත්කාලීන වේ. හිස්ව තැබුවහොත්, පහත ස්ක්‍රිප්ට් සෘජුවම භාවිතා වේ."
+
+msgid "options_pacUrlFile"
+msgstr "file: URL සහිත PAC පැතිකඩ සෘජුවම පමණක් යෙදිය හැක. බ්‍රව්සර සීමාව නිසා දේශීය ගොනු වෙත ප්‍රවේශ විය නොහැකි නිසා ඒවා ප්‍රතිඵල පැතිකඩ ලෙස භාවිතා කළ නොහැක."
+
+msgid "options_pacUrlFileDisabled"
+msgstr "එබැවින් මෙම පැතිකඩ සඳහා දේශීය PAC ගොනුවක් භාවිතා කළ නොහැක. ඇත්තටම අවශ්‍ය නම් ඒ සඳහා නව PAC පැතිකඩක් සෑදිය හැක."
+
+msgid "options_group_pacScript"
+msgstr "PAC ස්ක්‍රිප්ට්"
+
+msgid "options_pacScriptLastUpdate"
+msgstr "PAC ස්ක්‍රිප්ට් $TIME$ හිදී බාගන්නා ලදී:"
+
+msgid "options_pacScriptObsolete"
+msgstr "URL වෙනස්වීම නිසා PAC ස්ක්‍රිප්ට් කල් ඉකුත් වී ඇත. යාවත්කාලීන කිරීමට ඉහත බාගැනීම් බොත්තම ඔබන්න."
+
+msgid "options_group_virtualProfile"
+msgstr "අතථ්‍ය පැතිකඩ"
+
+msgid "options_virtualProfileTarget"
+msgstr "ඉලක්කය"
+
+msgid "options_virtualProfileTargetHelp"
+msgstr "මෙම පැතිකඩ යෙදූ විට, එය පහත තෝරාගත් පැතිකඩ හා හරියටම සමානව ක්‍රියා කරයි."
+
+msgid "options_group_virtualProfileReplace"
+msgstr "අතථ්‍ය පැතිකඩ වෙත සංක්‍රමණය"
+
+msgid "options_virtualProfileReplace"
+msgstr "ඉලක්ක පැතිකඩ ප්‍රතිස්ථාපනය"
+
+msgid "options_virtualProfileReplaceHelp"
+msgstr "පවතින විකල්ප $PROFILE$ වෙනුවට මෙම අතථ්‍ය පැතිකඩ භාවිතා කිරීමට සංක්‍රමණය කළ හැක. එසේ කිරීමෙන් $PROFILE$ පිළිබඳ සියලු පවතින නීති යාවත්කාලීන වී මෙම අතථ්‍ය පැතිකඩ වෙත යොමු වන අතර, ඒවායේ ප්‍රතිඵල පැතිකඩ මෙතැනින් පාලනය කළ හැක."
+
+msgid "options_group_ruleListConfig"
+msgstr "නීති ලැයිස්තු වින්‍යාසය"
+
+msgid "options_ruleListFormat"
+msgstr "නීති ලැයිස්තු ආකෘතිය"
+
+msgid "options_group_ruleListResult"
+msgstr "නීති ලැයිස්තු ප්‍රතිඵල පැතිකඩ"
+
+msgid "options_ruleListMatchProfile"
+msgstr "ගැලපුම් පැතිකඩ"
+
+msgid "options_ruleListDefaultProfile"
+msgstr "පෙරනිමි පැතිකඩ"
+
+msgid "options_group_ruleListUrl"
+msgstr "නීති ලැයිස්තු URL"
+
+msgid "options_ruleListUrlHelp"
+msgstr "නීති ලැයිස්තුව මෙම URL වෙතින් යාවත්කාලීන වේ. හිස්ව තැබුවහොත්, පහත පෙළ විග්‍රහ කෙරේ."
+
+msgid "options_group_ruleListText"
+msgstr "නීති ලැයිස්තු පෙළ"
+
+msgid "options_ruleListLastUpdate"
+msgstr "නීති ලැයිස්තුව $TIME$ හිදී බාගන්නා ලදී:"
+
+msgid "options_ruleListObsolete"
+msgstr "URL වෙනස්වීම නිසා නීති ලැයිස්තුව කල් ඉකුත් වී ඇත. යාවත්කාලීන කිරීමට ඉහත බාගැනීම් බොත්තම ඔබන්න."
+
+msgid "options_group_switchRules"
+msgstr "මාරු නීති"
+
+msgid "options_sort"
+msgstr "අනුපිළිවෙල"
+
+msgid "options_conditionType"
+msgstr "කොන්දේසි වර්ගය"
+
+msgid "options_showConditionTypeHelp"
+msgstr "උදව් පෙන්වන්න"
+
+msgid "options_conditionDetails"
+msgstr "කොන්දේසි විස්තර"
+
+msgid "options_resultProfile"
+msgstr "පැතිකඩ"
+
+msgid "options_conditionActions"
+msgstr "ක්‍රියා"
+
+msgid "options_addCondition"
+msgstr "කොන්දේසිය එකතු කරන්න"
+
+msgid "options_cloneRule"
+msgstr "පිටපත් කරන්න"
+
+msgid "options_ruleNote"
+msgstr "සටහන"
+
+msgid "options_switchAttachedProfileInCondition"
+msgstr "නීති ලැයිස්තු නීති"
+
+msgid "options_switchAttachedProfileInConditionDetails"
+msgstr "(පහත නීති ලැයිස්තුවට ගැලපෙන ඕනෑම ඉල්ලීමක්)"
+
+msgid "options_switchAttachedProfileInConditionDisabled"
+msgstr "(නීති ලැයිස්තු නීති අක්‍රියයි)"
+
+msgid "options_switchDefaultProfile"
+msgstr "පෙරනිමි"
+
+msgid "options_hostLevelsBetween"
+msgstr "≤ සත්කාරක මට්ටම් ≤"
+
+msgid "options_hourBetween"
+msgstr "≤ වත්මන් පැය ≤"
+
+msgid "options_weekDayShort_0"
+msgstr "ඉ"
+
+msgid "options_weekDayShort_1"
+msgstr "ස"
+
+msgid "options_weekDayShort_2"
+msgstr "අ"
+
+msgid "options_weekDayShort_3"
+msgstr "බ"
+
+msgid "options_weekDayShort_4"
+msgstr "බ්‍ර"
+
+msgid "options_weekDayShort_5"
+msgstr "සි"
+
+msgid "options_weekDayShort_6"
+msgstr "සෙ"
+
+msgid "options_group_conditionHelp"
+msgstr "කොන්දේසි වර්ග පිළිබඳව"
+
+msgid "options_group_attachProfile"
+msgstr "මාර්ගගත නීති ලැයිස්තු ආයාත කරන්න"
+
+msgid "options_attachProfile"
+msgstr "නීති ලැයිස්තුවක් එකතු කරන්න"
+
+msgid "options_attachProfileHelp"
+msgstr "නීති ලැයිස්තුවක් එකතු කිරීමෙන් අන් අය විසින් ප්‍රකාශයට පත් කළ මාර්ගගත කොන්දේසි එකතුවක් නැවත භාවිතා කළ හැක."
+
+msgid "options_modalHeader_welcome"
+msgstr "SwitchyDelta වෙත සාදරයෙන් පිළිගනිමු"
+
+msgid "options_welcomeNormal"
+msgstr "අවසාන ප්‍රොක්සි මාරුකරන්නා වන SwitchyDelta සාර්ථකව ස්ථාපනය කර ඇත."
+
+msgid "options_welcomeNormalGuide"
+msgstr "විකල්ප පිටුව හරහා ඔබේ ප්‍රොක්සි ගැන SwitchyDelta ට පවසන්න. බලමු කෙසේද කියා."
+
+msgid "options_welcomeUpgrade"
+msgstr "SwitchyDelta වෙත සාර්ථකව උත්ශ්‍රේණි කර ඇත. බිය නොවන්න, ඔබේ පවතින විකල්ප සම්පූර්ණයෙන්ම සුරැකී ඇත."
+
+msgid "options_welcomeUpgradeGuide"
+msgstr "දැන් නව විකල්ප පිටුවේ කෙටි මාර්ගෝපදේශයක් බලමු."
+
+msgid "options_guideNext"
+msgstr "ඊළඟ"
+
+msgid "options_guideDone"
+msgstr "අවසන්"
+
+msgid "options_guideSkip"
+msgstr "මාර්ගෝපදේශය මඟ හරින්න"
+
+msgid "options_modalHeader_applyOptions"
+msgstr "විකල්ප යොදන්න"
+
+msgid "options_optionsNotSaved"
+msgstr "විකල්පවලට ඔබේ වෙනස්කම් සුරැකී නැති අතර ඉදිරියට ගියහොත් නැති වේ!"
+
+msgid "options_applyOptionsRequired"
+msgstr "ඉදිරියට යාමට පෙර විකල්පවලට ඔබේ වෙනස්කම් යෙදිය යුතුය."
+
+msgid "options_applyOptionsConfirm"
+msgstr "විකල්ප සුරැක යෙදීමට අවශ්‍යද?"
+
+msgid "options_modalHeader_renameProfile"
+msgstr "පැතිකඩ නැවත නම් කරන්න"
+
+msgid "options_renameProfileName"
+msgstr "නව පැතිකඩ නාමය"
+
+msgid "options_profileNameConflict"
+msgstr "මෙම නාමය සහිත පැතිකඩක් දැනටමත් පවතී."
+
+msgid "options_profileNameReserved"
+msgstr "ද්විත්ව යටි ඉරි වලින් ආරම්භ වන පැතිකඩ නාම වෙන් කර ඇත."
+
+msgid "options_profileNameHidden"
+msgstr "යටි ඉරි වලින් ආරම්භ වන නාම සහිත පැතිකඩ පොප්අප් මෙනුවේ සැඟවේ. කෙසේ වෙතත්, මාරු පැතිකඩ ප්‍රතිඵල වැනි ස්ථානවල තවමත් භාවිතා කළ හැක."
+
+msgid "options_modalHeader_replaceProfile"
+msgstr "පැතිකඩ ප්‍රතිස්ථාපනය"
+
+msgid "options_replaceProfile"
+msgstr "පැතිකඩ ප්‍රතිස්ථාපනය"
+
+msgid "options_replaceProfileConfirm"
+msgstr "ඇත්තටම $FromProfile$ $ToProfile$ වෙනුවට ප්‍රතිස්ථාපනය කිරීමට අවශ්‍යද?"
+
+msgid "options_replaceProfileHelp"
+msgstr "ඉදිරියට ගියහොත්, $FromProfile$ වෙත යොමු වන සියලු නීති $ToProfile$ භාවිතා කිරීමට යාවත්කාලීන වේ. ආරම්භක පැතිකඩ සහ ඉක්මන් මාරුව වැනි අනෙකුත් විකල්ප ද අවශ්‍ය පරිදි වෙනස් වේ. කෙසේ වෙතත්, පැතිකඩ දෙකම වෙනස් හෝ මකනු නොලැබේ."
+
+msgid "options_replaceProfileSuccess"
+msgstr "විකල්ප යාවත්කාලීන කෙරිණි."
+
+msgid "options_modalHeader_deleteProfile"
+msgstr "පැතිකඩ මකන්න"
+
+msgid "options_deleteProfileConfirm"
+msgstr "ඇත්තටම පහත පැතිකඩ මකන්නට අවශ්‍යද?"
+
+msgid "options_modalHeader_cannotDeleteProfile"
+msgstr "පැතිකඩ මැකීමට නොහැක"
+
+msgid "options_profileReferredBy"
+msgstr "පහත පැතිකඩ මගින් යොමු කර ඇති නිසා මෙම පැතිකඩ මකා දැමිය නොහැක:"
+
+msgid "options_modifyReferringProfiles"
+msgstr "එය මකා දැමීමට පෙර මෙම පැතිකඩ වෙනස් කර මෙම පැතිකඩට යොමු වීම නැවැත්විය යුතුය."
+
+msgid "options_profileNameEmpty"
+msgstr "පැතිකඩේ නාමය හිස් නොවිය යුතුය."
+
+msgid "popup_title"
+msgstr "SwitchyDelta පොප්අප්"
+
+msgid "options_modalHeader_proxyAuth"
+msgstr "ප්‍රොක්සි සත්‍යාපනය"
+
+msgid "options_proxyAuthUsername"
+msgstr "පරිශීලක නාමය"
+
+msgid "options_proxyAuthPassword"
+msgstr "මුරපදය"
+
+msgid "options_proxyAuthShowPassword"
+msgstr "මුරපදය පෙන්වන්න"
+
+msgid "options_proxyAuthHidePassword"
+msgstr "මුරපදය සඟවන්න"
+
+msgid "options_proxyAuthNone"
+msgstr "සත්‍යාපනය නැත"
+
+msgid "options_modalHeader_deleteRule"
+msgstr "නීතිය මකන්න"
+
+msgid "options_deleteRuleConfirm"
+msgstr "ඇත්තටම පහත නීතිය මකන්නට අවශ්‍යද?"
+
+msgid "options_deleteRule"
+msgstr "මකන්න"
+
+msgid "options_modalHeader_resetRules"
+msgstr "නීති යළි සකසන්න"
+
+msgid "options_resetRulesConfirm"
+msgstr "සියලු නීතිවල ප්‍රතිඵල පැතිකඩ පහත පැතිකඩට සැකසීමට ඔබට විශ්වාසද?"
+
+msgid "options_resetRules"
+msgstr "නීති යළි සකසන්න"
+
+msgid "options_resetRules_help"
+msgstr "සියලු නීති සඳහා පැතිකඩ සකසන්න"
+
+msgid "options_modalHeader_deleteAttached"
+msgstr "නීති ලැයිස්තුව ඉවත් කරන්න"
+
+msgid "options_deleteAttachedConfirm"
+msgstr "ඇත්තටම වත්මන් පැතිකඩෙන් නීති ලැයිස්තුව ඉවත් කිරීමට අවශ්‍යද?"
+
+msgid "options_ruleListLineCount"
+msgstr "නීති පේළි $COUNT$ක්"
+
+msgid "options_deleteAttached"
+msgstr "නීති ලැයිස්තුව ඉවත් කරන්න"
+
+msgid "options_modalHeader_newProfile"
+msgstr "නව පැතිකඩ"
+
+msgid "options_newProfileName"
+msgstr "පැතිකඩ නාමය"
+
+msgid "options_profileType"
+msgstr "පැතිකඩේ වර්ගය තෝරන්න:"
+
+msgid "options_profileTypeFixedProfile"
+msgstr "ප්‍රොක්සි පැතිකඩ"
+
+msgid "options_profileDescFixedProfile"
+msgstr "ප්‍රොක්සි සේවාදායක හරහා ගමනාගමනය යැවීම."
+
+msgid "options_profileTypePacProfile"
+msgstr "PAC පැතිකඩ"
+
+msgid "options_profileDescPacProfile"
+msgstr "මාර්ගගත/දේශීය PAC ස්ක්‍රිප්ට් භාවිතයෙන් ප්‍රොක්සි තේරීම."
+
+msgid "options_profileDescMorePacProfile"
+msgstr "PAC ස්ක්‍රිප්ට් එකක් හෝ එහි URL එකක් තිබේ නම් පමණක් මෙය අවශ්‍ය වේ. PAC පිළිබඳ දැනුමක් නැතිනම් එකක් සෑදීමට උත්සාහ නොකරන්න."
+
+msgid "options_profileTypeSwitchProfile"
+msgstr "මාරු පැතිකඩ"
+
+msgid "options_profileDescSwitchProfile"
+msgstr ""
+"වසම් හෝ රටා වැනි විවිධ කොන්දේසි මත විවිධ පැතිකඩ ස්වයංක්‍රීයව යෙදීම.\n"
+" පහසු මාරුව සඳහා මාර්ගගතව ප්‍රකාශිත නීති ද ආයාත කළ හැක. (AutoSwitch ප්‍රකාරය + නීති ලැයිස්තුව ප්‍රතිස්ථාපනය කරයි.)"
+
+msgid "options_profileTypeRuleListProfile"
+msgstr "නීති ලැයිස්තු පැතිකඩ"
+
+msgid "options_profileDescRuleListProfile"
+msgstr "අන් අය විසින් ප්‍රකාශයට පත් කළ මාර්ගගත කොන්දේසි එකතුවක් නැවත භාවිතා කිරීම."
+
+msgid "options_profileTypeVirtualProfile"
+msgstr "අතථ්‍ය පැතිකඩ"
+
+msgid "options_profileDescVirtualProfile"
+msgstr "අතථ්‍ය පැතිකඩක් අවශ්‍යතාවය මත අනෙකුත් ඕනෑම පැතිකඩක් ලෙස ක්‍රියා කළ හැක. එය SwitchProfile සමඟ හොඳින් ක්‍රියා කරන අතර, එක් ක්ලික් කිරීමකින් බහු කොන්දේසිවල ප්‍රතිඵලය වෙනස් කිරීමට ඉඩ දෙයි."
+
+msgid "options_createProfile"
+msgstr "සාදන්න"
+
+msgid "options_modalHeader_resetOptions"
+msgstr "විකල්ප යළි සකසන්න"
+
+msgid "options_resetOptionsConfirm"
+msgstr "ඇත්තටම විකල්ප යළි සැකසීමට අවශ්‍යද? සියලු පැතිකඩ සහ සැකසුම් නැති වේ!"
+
+msgid "options_formInvalid"
+msgstr "කරුණාකර මෙම පිටුවේ දෝෂ නිවැරදි කරන්න."
+
+msgid "options_profileNotFound"
+msgstr "$PROFILE$ පැතිකඩ නොපවතී! විකල්ප දූෂිත වී තිබිය හැක."
+
+msgid "options_resetSuccess"
+msgstr "විකල්ප යළි සකසන ලදී."
+
+msgid "options_saveSuccess"
+msgstr "විකල්ප සුරකින ලදී."
+
+msgid "options_importSuccess"
+msgstr "විකල්ප ආයාත කෙරිණි."
+
+msgid "options_importFormatError"
+msgstr "වලංගු නොවන උපස්ථ ගොනුව!"
+
+msgid "options_importDownloadError"
+msgstr "උපස්ථ ගොනුව බාගැනීමේ දෝෂයක්!"
+
+msgid "options_profileDownloadSuccess"
+msgstr "පැතිකඩ සාර්ථකව යාවත්කාලීන කෙරිණි."
+
+msgid "options_profileDownloadError"
+msgstr "පැතිකඩ දත්ත බාගැනීමේ දෝෂයක්!"
+
+msgid "options_profileDownloadError_NetworkError"
+msgstr "යාවත්කාලීන කිරීමේදී ජාල දෝෂයක් සිදු විය."
+
+msgid "options_profileDownloadError_HttpError"
+msgstr "යාවත්කාලීන කිරීමේදී HTTP දෝෂයක් ($STATUS$) සිදු විය."
+
+msgid "options_profileDownloadError_HttpNotFoundError"
+msgstr "සේවාදායකයේ පැතිකඩ URL හමු නොවීය. කරුණාකර නැවත පරීක්ෂා කරන්න."
+
+msgid "options_profileDownloadError_HttpServerError"
+msgstr "යාවත්කාලීන කිරීමේදී දුරස්ථ සේවාදායකය දෝෂයක් ($STATUS$) සමඟ ප්‍රතිචාර දැක්වීය."
+
+msgid "options_profileDownloadError_ContentTypeRejectedError"
+msgstr "බාගත් දත්ත වලංගු නොවේ! පරීක්ෂා කිරීමට බ්‍රව්සරයේ පැතිකඩ URL විවෘත කළ හැක."
+
+msgid "options_downloadProfileNow"
+msgstr "දැන් පැතිකඩ බාගන්න"
+
+msgid "options_guide_fixedProfileStep"
+msgstr "<b>ප්‍රොක්සි පැතිකඩ</b> හි ප්‍රොක්සි සඳහා සේවාදායක ip සහ පෝට් වැනි සැකසුම් අඩංගු වේ.<br>පැතිකඩ SwitchyDelta හි මූලික වින්‍යාස ඒකක වේ.<br>අපි දැනටමත් ඔබ වෙනුවෙන් උදාහරණ පැතිකඩක් සාදා ඇත. එය විවෘත කිරීමට උත්සාහ කරන්න."
+
+msgid "options_guide_fixedServersStep"
+msgstr "ඔබට කැමති පරිදි මෙහි ඔබේ ප්‍රොක්සි සේවාදායකය සහ පෝට් පුරවන්න.<br>SwitchyDelta <b>කිසිදු ප්‍රොක්සි සේවාදායකයක් සමඟ නොපැමිණේ</b>.<br>මෙහි කුමක් පුරවන්නේදැයි නොදන්නේ නම් ඔබේ ජාල සපයන්නා හෝ ප්‍රොක්සි මෘදුකාංග අත්පොත විමසන්න."
+
+msgid "options_guide_autoSwitchProfileStep"
+msgstr "බලවත් <b>මාරු පැතිකඩ</b> හරහා SwitchyDelta ට ස්වයංක්‍රීයව ප්‍රොක්සි අතර මාරු වීමට පැවසිය හැක.<br>කෙසේ වෙතත්, එහි විශේෂාංග මෙම කෙටි මාර්ගෝපදේශයෙන් ආවරණය කළ නොහැක.<br>පසුව මෙම පැතිකඩ විවෘත කර එහි බලය භාවිතා කළ හැක."
+
+msgid "options_guide_addMoreProfilesStep"
+msgstr "තවත් පැතිකඩ අවශ්‍යද? ඔබේ සියලු ප්‍රොක්සි අවශ්‍යතා සඳහා සැමවිටම තවත් <b>ප්‍රොක්සි, මාරු සහ අනෙකුත් පැතිකඩ</b><br>එකතු කළ හැක.<br>ප්‍රොක්සි භාවිතයෙන් භුක්ති විඳින්න!"
+
+msgid "options_guide_conditionStep"
+msgstr "SwitchyDelta හට <b>කොන්දේසි</b> මත පදනම්ව ඉල්ලීම් සඳහා විවිධ පැතිකඩ යෙදිය හැක.<br> උදාහරණයක් ලෙස, <b>සත්කාරක වයිල්ඩ්කාඩ්</b> කොන්දේසිය වසමක සියලු URL සඳහා පැතිකඩ සැකසීමට ඉඩ දෙයි."
+
+msgid "options_guide_conditionTypeStep"
+msgstr "සත්කාරකය හෝ සම්පූර්ණ URL ගැලපීමට විවිධ කොන්දේසි වර්ග භාවිතා කළ හැක. <br> වර්ග යොමුව විවෘත කිරීමට ප්‍රශ්න ලකුණ මත ක්ලික් කරන්න."
+
+msgid "options_guide_conditionProfileStep"
+msgstr "SwitchyDelta මෙහි තෝරාගත් පැතිකඩ <b>කොන්දේසියට ගැලපෙන ඕනෑම ඉල්ලීමකට</b> යොදයි. <br> විශේෂ <b>\"[සෘජු]\" පැතිකඩ</b> ඉල්ලීම කිසිදු ප්‍රොක්සියකින් තොරව යැවීමට හේතු වේ."
+
+msgid "options_guide_switchDefaultStep"
+msgstr "කිසිදු කොන්දේසියක් යම් ඉල්ලීමකට නොගැලපේ නම්, \"පෙරනිමි\" පැතිකඩ භාවිතා වේ. <br>කොන්දේසි සැමවිටම <b>ඉහළ සිට පහළට</b> අනුපිළිවෙලින් සලකනු ලැබේ.<br>අනුපිළිවෙල අයිකනය ඇදගෙන යාමෙන් ඒවායේ අනුපිළිවෙල වෙනස් කළ හැක."
+
+msgid "options_guide_applySwitchProfileStep"
+msgstr "මාරු පැතිකඩ සැකසීම අවසන් වූ පසු, <b>පොප්අප් මෙනුවේ එයට මාරු වීමට</b> අමතක නොකරන්න.<br/> අයිකනය වත්මන් ටැබය සඳහා යෙදූ <b>අවසාන ප්‍රතිඵල</b> පැතිකඩ පෙන්වයි. <br/> අයිකනය මත <b>හෝවර්</b> කිරීමෙන් විස්තර සහිත මෙවලම් ඉඟියක් හෙළි වේ."
+
+msgid "popup_externalProfile"
+msgstr "(බාහිර පැතිකඩ)"
+
+msgid "popup_externalProfileName"
+msgstr "පැතිකඩ නාමය"
+
+msgid "popup_proxyNotControllable_app"
+msgstr "ප්‍රොක්සි සැකසුම් වෙනත් යෙදුම් හෝ දිගු මගින් පාලනය වේ. ගැටුම් ඇති යෙදුම් හෝ දිගු අක්‍රිය හෝ අස්ථාපනය කරන්න."
+
+msgid "popup_proxyNotControllable_policy"
+msgstr "ප්‍රොක්සි සැකසුම් ප්‍රතිපත්ති මගින් උඩින් පාලනය වේ. ඔබේ පරිපාලක අමතන්න."
+
+msgid "popup_proxyNotControllable_unknown"
+msgstr "ප්‍රොක්සි සැකසුම් පාලනය කළ නොහැක. ඔබේ පද්ධති සහ බ්‍රව්සර සැකසුම් පරීක්ෂා කරන්න."
+
+msgid "popup_proxyNotControllable_disabled"
+msgstr "වෙනත් යෙදුම් හෝ දිගුවලින් පැහැදිලි ඉල්ලීමකින් ප්‍රොක්සි සැකසුම් අක්‍රිය කර ඇත."
+
+msgid "popup_proxyNotControllable_upgrade"
+msgstr "ප්‍රොක්සි සැකසුම් දැන් SwitchyDelta හි නව අනුවාදයක් මගින් පාලනය වේ."
+
+msgid "popup_proxyNotControllableDetails"
+msgstr "ඉහත ගැටලුව නිවැරදි නොකළහොත් SwitchyDelta සමඟ පැතිකඩ මාරු කළ නොහැක."
+
+msgid "popup_proxyNotControllableDetails_upgrade"
+msgstr "එකවර SwitchyDelta හි අනුවාද දෙකක් (හෝ වැඩි) සක්‍රිය කළ නොහැක. ඉන් එකක් අක්‍රිය කරන්න."
+
+msgid "popup_proxyNotControllableManage"
+msgstr "දිගු කළමනාකරණය"
+
+msgid "popup_addConditionTo"
+msgstr "කොන්දේසිය එකතු කරන්න"
+
+msgid "popup_addCondition"
+msgstr "කොන්දේසිය එකතු කරන්න"
+
+msgid "popup_showOptions"
+msgstr "විකල්ප"
+
+msgid "popup_reportIssues"
+msgstr "ගැටලු වාර්තා කරන්න"
+
+msgid "popup_errorLog"
+msgstr "දෝෂ ලොගය සුරකින්න"
+
+msgid "popup_requestErrorCount"
+msgstr "අසාර්ථක සම්පත් $COUNT$ක්"
+
+msgid "popup_requestErrorHeading"
+msgstr "පූරණය අසාර්ථක වූ සම්පත්"
+
+msgid "popup_requestErrorWarning"
+msgstr "ඔබේ ජාලය, ප්‍රොක්සි සේවාදායකය හෝ වෙබ් පිටුවේ ගැටලු නිසා සමහර සම්පත් පූරණය අසාර්ථක විය."
+
+msgid "popup_requestErrorWarningHelp"
+msgstr "SwitchyDelta මෙම ගැටලු වාර්තා කරන්නා පමණි, ඒවාට හේතුව නොවේ."
+
+msgid "popup_requestErrorAddCondition"
+msgstr "පහත වසම් සමාලෝචනය කර අවශ්‍ය විට ඒවා සඳහා ප්‍රොක්සි භාවිතා කළ හැක."
+
+msgid "popup_requestErrorCannotAddCondition"
+msgstr "මාරු පැතිකඩක් භාවිතා කරන විට පමණක් ඒවා සඳහා මාරු කොන්දේසි එකතු කළ හැක."
+
+msgid "popup_configureMonitorWebRequests"
+msgstr "ජාල අධීක්ෂකය වින්‍යාස කරන්න"
+
+msgid "options_resultProfileForSelectedDomains"
+msgstr "තෝරාගත් සියලු වසම් සඳහා මෙම පැතිකඩ භාවිතා කරන්න"
+
+msgid "options_pac_profile_unsupported_moz"
+msgstr "තාක්ෂණික සීමාවන් නිසා Mozilla Firefox හි PAC පැතිකඩ ක්‍රියා නොකරයි!"
+
+msgid "popup_issueTemplate"
+msgstr ""
+"\n"
+"\n"
+"\n"
+"<!-- Please write your comment ABOVE this line. -->\n"
+"SwitchyDelta $projectVersion$\n"
+"$userAgent$"
+
+msgid "browserAction_profileDetails_PacProfile"
+msgstr "(PAC ස්ක්‍රිප්ට්)"
+
+msgid "browserAction_profileDetails_SystemProfile"
+msgstr "(වෙනත් දිගු හෝ පරිසරය මගින් පාලනය වේ)"
+
+msgid "browserAction_profileDetails_DirectProfile"
+msgstr "(කිසිදු ප්‍රොක්සියක් භාවිතා නොකරයි)"
+
+msgid "browserAction_profileDetails_SwitchProfile"
+msgstr "(කොන්දේසි මත පදනම්ව මාරු වේ)"
+
+msgid "browserAction_profileDetails_RuleListProfile"
+msgstr "(නීති ලැයිස්තුව මත පදනම්ව මාරු වේ)"
+
+msgid "browserAction_titleNormal"
+msgstr "SwitchyDelta:: $PROFILE$"
+
+msgid "browserAction_titleWithResult"
+msgstr ""
+"SwitchyDelta:: $1:PROFILE$\n"
+"$3:DETAILS$"
+
+msgid "browserAction_titleNewerOptions"
+msgstr "දෝෂය: ගබඩා කළ විකල්ප පූරණයට SwitchyDelta හි නව අනුවාදයක් අවශ්‍යයි."
+
+msgid "browserAction_titleOptionError"
+msgstr "දෝෂය: ගබඩා කළ විකල්ප දූෂිතයි. විකල්ප යළි සැකසීමට මෙහි ක්ලික් කරන්න."
+
+msgid "browserAction_titleDownloadFail"
+msgstr "අනතුරු ඇඟවීම: PAC ස්ක්‍රිප්ට් සහ/හෝ නීති ලැයිස්තු බාගැනීම අසාර්ථක විය."
+
+msgid "browserAction_titleExternalProxy"
+msgstr "සටහන: ප්‍රොක්සි සැකසුම් දැනට වෙනත් යෙදුම් මගින් පාලනය වේ."
+
+msgid "browserAction_titleInspect"
+msgstr "[පරීක්ෂාව] $URL$"
+
+msgid "browserAction_defaultRuleDetails"
+msgstr "(පෙරනිමි)"
+
+msgid "browserAction_directResult"
+msgstr "DIRECT"
+
+msgid "browserAction_attachedPrefix"
+msgstr "(RL) "
+
+msgid "browserAction_tempRulePrefix"
+msgstr "(TEMP) "
+
+msgid "contextMenu_inspectPage"
+msgstr "මෙම පිටුව සඳහා භාවිතා වන ප්‍රොක්සි පරීක්ෂා කරන්න"
+
+msgid "contextMenu_inspectFrame"
+msgstr "මෙම රාමුව සඳහා භාවිතා වන ප්‍රොක්සි පරීක්ෂා කරන්න"
+
+msgid "contextMenu_inspectLink"
+msgstr "මෙම සබැඳිය විවෘත කළහොත් භාවිතා වන ප්‍රොක්සි පරීක්ෂා කරන්න"
+
+msgid "contextMenu_inspectElement"
+msgstr "මෙම අංගය සඳහා භාවිතා වන ප්‍රොක්සි පරීක්ෂා කරන්න"
+
+msgid "contextMenu_enableQuickSwitch"
+msgstr "ඉක්මන් මාරුව සක්‍රිය කරන්න"
+
+msgid "about_title"
+msgstr "පිළිබඳව"
+
+msgid "about_app_description"
+msgstr "ප්‍රොක්සි වින්‍යාස මෙවලමක්"
+
+msgid "about_version"
+msgstr "අනුවාදය $VERSION$"
+
+msgid "about_experimental_warning_moz"
+msgstr "Mozilla Firefox සහාය ඉතා පරීක්ෂණාත්මකයි! ගැටලුවලට මුහුණ දුන්නහොත්, පහත බොත්තම් භාවිතයෙන් වාර්තා කරන්න."
+
+msgid "about_disclaimer_networkService"
+msgstr "SwitchyDelta ප්‍රොක්සි, VPN හෝ වෙනත් ජාල සේවා සපයන්නේ නැත."
+
+msgid "about_disclaimer_privacy"
+msgstr "SwitchyDelta ඔබව නිරීක්ෂණය නොකරන අතර වෙබ් පිටුවලට දැන්වීම් ඇතුළත් නොකරයි. කරුණාකර අපගේ <a href='https://github.com/madeye/SwitchyDelta/wiki/Privacy#english'>පෞද්ගලිකත්ව ප්‍රතිපත්තිය</a> බලන්න."
+
+msgid "about_help"
+msgstr "වෙනත් ප්‍රශ්න? SwitchyDelta භාවිතයට උදව් අවශ්‍යද? කරුණාකර අපගේ <a href='https://github.com/madeye/SwitchyDelta/wiki/FAQ'>නිති අසන ප්‍රශ්න</a> බලන්න."
+
+msgid "about_copyright"
+msgstr "Copyright 2026 <a href='https://github.com/madeye'>Max Lv</a>.<br>Copyright 2012-2017 <a href='https://github.com/FelisCatus/SwitchyOmega/blob/master/AUTHORS'>The SwitchyOmega Authors</a>."
+
+msgid "about_credits"
+msgstr "SwitchyDelta හැකි වී ඇත්තේ <a href='https://github.com/madeye/SwitchyDelta'>SwitchyDelta</a> විවෘත මූලාශ්‍ර ව්‍යාපෘතිය සහ වෙනත් <a href='https://github.com/madeye/SwitchyDelta/blob/master/AUTHORS'>විවෘත මූලාශ්‍ර මෘදුකාංග</a> නිසාය."
+
+msgid "about_license"
+msgstr "SwitchyDelta යනු <a href='https://www.gnu.org/philosophy/free-sw.en.html'>නිදහස් මෘදුකාංග</a>යක් වන අතර <a href='https://www.gnu.org/licenses/gpl.html'>GNU General Public License</a> අනුවාදය 3 හෝ ඊට පසු අනුවාදය යටතේ බලපත්‍ර ලත් ය."
+
+msgid "popup_proxyAuthPermission"
+msgstr "සත්‍යාපිත ප්‍රොක්සි වෙත පිවිසීමට සියලු වෙබ් අඩවි වෙත ප්‍රවේශය අවශ්‍ය වේ."
+
+msgid "popup_proxyAuthPermissionGrant"
+msgstr "ප්‍රවේශය ලබා දෙන්න"

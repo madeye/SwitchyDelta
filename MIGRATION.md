@@ -1,29 +1,18 @@
-# TypeScript rewrite
+# Migration history
 
-SwitchyDelta is being moved off CoffeeScript + Grunt + Browserify + Bower +
-AngularJS onto TypeScript + npm workspaces + Vite/esbuild + Vitest.
+SwitchyDelta was ported from SwitchyOmega's original CoffeeScript + Grunt +
+Browserify + Bower + AngularJS stack to TypeScript + npm workspaces +
+Vite/esbuild + Vitest. The port is complete: the old toolchain and the
+`omega-*` CoffeeScript source directories are gone. `delta-locales/` (the
+gettext catalogues) is data, not code, and stays — the build compiles it into
+`_locales/`. See the [README](README.md#architecture) for the current package
+layout.
 
-## Layout
-
-| New package | Replaces | State |
-| --- | --- | --- |
-| `packages/pac` (`@switchydelta/pac`) | `omega-pac` | Done, 174 tests |
-| `packages/target` (`@switchydelta/target`) | `omega-target` | Done, 46 tests |
-| `packages/extension` | `omega-target-chromium-extension` | Done (reduced worker, see below) |
-| `packages/ui` (`@switchydelta/ui`) | `omega-web` | Done |
-
-The old CoffeeScript directories were kept until every replacement was verified
-and v3.0.1 had shipped, then deleted. `omega-locales` (the gettext catalogues)
-is data, not code, and stays: the build compiles it into `_locales/`.
-
-## Commands
-
-```sh
-npm install          # workspace root
-npm test             # vitest, all packages
-npm run typecheck    # tsc --build across project references
-npm run build        # per-package builds
-```
+This file is the record of that port: why certain dependencies were dropped,
+the bugs it found in the original implementation, and the behaviour that was
+deliberately changed or reduced along the way. That last part especially is
+still load-bearing — several code comments elsewhere in the repo point back
+to the sections below by name.
 
 ## The main optimisations
 
@@ -49,19 +38,19 @@ entry point.
 
 Net: **743 KB -> 30 KB** (10.7 KB gzipped), with the generator included.
 
-Across the whole packaged extension, JavaScript goes from **1,730,921 bytes to
+Across the whole packaged extension, JavaScript went from **1,730,921 bytes to
 122,174** (93% smaller), both minified.
 
-**The UI drops its framework.** 19 bower runtime packages become 44 KB of JS and
-CSS with no runtime dependency. See the commit message on the UI package for why
-Vite rather than Next.js.
+**The UI drops its framework.** 19 bower runtime packages became 44 KB of JS
+and CSS with no runtime dependency, built with Vite rather than a framework
+like Next.js.
 
-**Other reductions in flight:** bluebird replaced by native `async`/`await`;
-`limiter` replaced by a ~60-line token bucket; `heap` dropped with the dead
+**Other reductions:** bluebird replaced by native `async`/`await`; `limiter`
+replaced by a ~60-line token bucket; `heap` dropped with the dead
 `WebRequestMonitor`; `xhr` replaced by `fetch`. `jsondiffpatch` stays only where
 a real structural diff is needed.
 
-**Logging.** `Log.method` ran on every storage read and write and pretty-prints
+**Logging.** `Log.method` ran on every storage read and write and pretty-printed
 its subject with `JSON.stringify(..., 4)`, i.e. it serialised the whole options
 object on every operation. Tracing is now opt-in via `setTracing`.
 
@@ -190,10 +179,10 @@ The worker is deliberately reduced to what only it can do:
 - **applying the profile** to `chrome.proxy.settings`
 - **answering RPC** from the options page and popup
 
-Dropped from this build: quick-switch cycling, the badge and per-tab
-icons/titles, the request monitor, the inspect context menus, and the
-SwitchySharp / external-extension bridges. `proxy_impl_script` and
-`proxy_impl_listener` are Firefox-only and were already dead on Chromium.
+Dropped from this build: quick-switch cycling, the badge, the request monitor,
+the inspect context menus, and the SwitchySharp / external-extension bridges.
+`proxy_impl_script` and `proxy_impl_listener` were Firefox-only and were
+already dead on Chromium.
 
 The per-tab icon later returned in reduced form: with an auto-switch (or
 rule-list) profile active, the single global icon is tinted with the profile
@@ -216,10 +205,10 @@ actually addresses the cost that motivated the previous `af4efbe` work.
 
 ## Measured memory footprint
 
-Measured 2026-08-11 on Chrome 151 (macOS) against the running v3.0.0 build,
-using a `disabled-by-default-memory-infra` tracing dump taken over the DevTools
-protocol — the same attribution Chrome's own Task Manager uses. Only the
-service worker was alive (no popup, options page or side panel open).
+Measured 2026-08-11 on Chrome 151 (macOS) against the then-current v3.0.0
+build, using a `disabled-by-default-memory-infra` tracing dump taken over the
+DevTools protocol — the same attribution Chrome's own Task Manager uses. Only
+the service worker was alive (no popup, options page or side panel open).
 
 Private memory footprint of the extension's process: **41.7 MB**. The largest
 allocators inside it:
@@ -258,12 +247,12 @@ scrollable strip of chips, and an "open in tab" button appears, since the rule
 tables are not usable at ~360px. The page is still registered as
 `options_page`/`options_ui`, so the full-tab route is unchanged.
 
-## The final porting round
+## Completing the port
 
-Everything on the old remaining-work list is done. An audit of all 138 leftover
-`.coffee` files classified each as already ported, deliberately dropped, or
-build glue replaced by `scripts/*.mjs` — except seven that still carried real
-behaviour or coverage, which were ported last:
+An audit of all 138 leftover `.coffee` files classified each as already
+ported, deliberately dropped, or build glue replaced by `scripts/*.mjs` —
+except seven that still carried real behaviour or coverage, which were ported
+last:
 
 - `omega-target/test/options_sync.coffee` → `packages/target/test/options-sync.test.ts`
   (17 tests, the first coverage of `OptionsSync`).
@@ -294,6 +283,7 @@ is in `conditions.test.ts`: for every fixture, `match()` evaluated in-process an
 the compiled PAC expression evaluated as real JavaScript must agree. That is what
 makes replacing the code generator safe.
 
-The built extension is exercised by the Puppeteer e2e suite (`npm run e2e`:
-smoke, side panel, profiles, rule list against a real CONNECT proxy) and has
-shipped to the Chrome Web Store as v3.0.x.
+The built extension is exercised by end-to-end scripts that drive a real
+headless Chrome over the DevTools protocol directly, with no Puppeteer
+dependency (`npm run e2e`: smoke, side panel, profiles, action icon, rule
+list, and rule-list icon, the last two against a real CONNECT proxy).

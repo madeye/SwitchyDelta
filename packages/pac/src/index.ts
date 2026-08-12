@@ -1,5 +1,5 @@
 /**
- * omega-pac: profile, condition and PAC-script logic.
+ * /pac: profile, condition and PAC-script logic.
  *
  * This entry point is dependency-free and safe to load in a service worker.
  * Public-suffix helpers live in the separate `./psl` entry point because they

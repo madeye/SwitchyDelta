@@ -1,0 +1,1363 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SwitchyDelta 2.3.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-13 10:29+0000\n"
+"PO-Revision-Date: 2020-08-30 19:36+0000\n"
+"Last-Translator: Scoopity Whoop <Scoo0p@yandex.com>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/switchyomega/"
+"main/es/>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.2.1-dev\n"
+
+msgid "appNameShort"
+msgstr "SwitchyDelta"
+
+msgid "manifest_app_name"
+msgstr "SwitchyDelta Proxy"
+
+msgid "manifest_app_description"
+msgstr ""
+"Gestiona y utiliza diferentes servidores proxy de forma rápida y sencilla."
+
+msgid "manifest_icon_default_title"
+msgstr "Cargando…"
+
+msgid "upgrade_profile_auto"
+msgstr "Cambio automático"
+
+msgid "profile_direct"
+msgstr "[Directo]"
+
+msgid "profile_system"
+msgstr "[Proxy del sistema]"
+
+msgid "condition_HostWildcardCondition"
+msgstr "Patrón de servidor"
+
+msgid "condition_help_HostWildcardCondition"
+msgstr ""
+"Detecta servidores (nombres de dominio) según patrones.<br><b>El asterisco "
+"<code>*</code></b> equivale a cero o más caracteres.<br><b>La interrogación "
+"<code>?</code></b> equivale exactamente a un carácter.<br><br>Tenga en "
+"cuenta que reglas que comienzan con <code>*.</code> se tratan de forma "
+"especial únicamente al usar patrones de sevidor.<br>Ejemplo: <code>*.example."
+"com</code> detecta www.example.com <b> Y example.com también.</b><br>Para "
+"detectar <b>únicamente</b> subdominios, utilice <b>dos</b> asteriscos "
+"<code>**.example.com</code>."
+
+msgid "condition_HostRegexCondition"
+msgstr "Expresión regular de servidor"
+
+msgid "condition_help_HostRegexCondition"
+msgstr ""
+"Igual que los patrones de servidor, pero detecta servidores (nombres de "
+"dominio) mediante <a "
+"href='https://www.google.com/search?q=regular%20expression'>expresiones "
+"regulares</a>.<br>Las expresiones regulares pueden ser díficiles de crear (e "
+"interpretar).<br>Generalmente se recomienda usar patrones y utilizar "
+"expresiones regulares para condiciones que no se puedan detectar de ninguna "
+"otra forma."
+
+msgid "condition_HostLevelsCondition"
+msgstr "Niveles de servidor"
+
+msgid "condition_help_HostLevelsCondition"
+msgstr ""
+"Detecta la petición únicamente si tiene un determinado nivel de servidor.<br>"
+"El nivel de servidor se define como el <b>número de componentes separados "
+"por punto</b> en el nombre de dominio.<br>Ejemplo: "
+"<code>www.example.com</code> tiene 3 niveles, ,mientras que "
+"<code>internal</code> tiene sólo 1."
+
+msgid "condition_IpCondition"
+msgstr "Literales IP"
+
+msgid "condition_help_IpCondition"
+msgstr ""
+"Detecta peticiones únicamente por direcciones IP <b>literales</b> y en una "
+"determinada red especificada en <a href='https://en.wikipedia.org/wiki"
+"/Classless_Inter-Domain_Routing#CIDR_notation'>notación CIDR</a>.<br>Por "
+"ejemplo, la regla <code>127.0.0.1/16</code>, detecta todas las direcciones "
+"IP de tipo <code>127.0.*.*</code>.<br>La IP <code>127.0.0.1</code> cumple la "
+"regla, mientras que <code>127.1.0.0</code> no la cumple. Nombres como "
+"<code>localhost</code> nunca cumplirán la regla porque <b>no</b> son "
+"literales IP."
+
+msgid "condition_UrlWildcardCondition"
+msgstr "Patrones de URL"
+
+msgid "condition_help_UrlWildcardCondition"
+msgstr ""
+"Detecta patrones en la URL de la petición.<br>Consulte la sección de "
+"patrones de servidor para tener una referencia rápida sobre patrones.<br>"
+"Tenga presente que para los patrones URL no hay casos especiales (como el de "
+"subdominios en los patrones de servidor).<br>Así que "
+"<code>*://*.example.com/*</code> detecta http://www.example.com/ "
+"pero<b>no</b> detecta http://example.com/."
+
+msgid "condition_UrlRegexCondition"
+msgstr "Expresión regular URL"
+
+msgid "condition_help_UrlRegexCondition"
+msgstr ""
+"Detecta URL con la potencia de las <a "
+"href='https://www.google.com/search?q=regular%20expression'>expresiones "
+"regulares</a>.<br>De todas formas,las expresiones regulares son difíciles de "
+"crear (e interpretar).<br>Se recomienda utilizar patrones en la mayoría de "
+"las situaciones y usar sólo las expresiones regulares cuando no funcionen "
+"otros tipos de condiciones."
+
+msgid "condition_KeywordCondition"
+msgstr "Palabra clave"
+
+msgid "condition_help_KeywordCondition"
+msgstr ""
+"Detecta palabras clave que aparezcan como subcadenas en la URL de peticiones "
+"que usen el protocolo HTTP.<br>Funcionan igual que el patrón "
+"<code>http://*<b>texto</b>*</code>, donde <b>texto</b> es la palabra clave "
+".<br>Es útil para burlar cortafuegos que bloquean algunas palabras clave en "
+"la URL, realizando esas peticiones a través de proxy."
+
+msgid "condition_FalseCondition"
+msgstr "(Deshabilitado)"
+
+msgid "condition_details_FalseCondition"
+msgstr "(Condición ignorada al procesar)"
+
+msgid "condition_help_FalseCondition"
+msgstr ""
+"Puede anular una condición cambiando su tipo a <code>(Deshabilitada)</code>. "
+"Será como si esa condición no existiera.<br>Esto permite anular condiciones "
+"temporalmente.<br>Las condiciones deshabilitadas conservan toda la "
+"información (patrones) y se pueden habilitar de nuevo cambiando su tipo al "
+"que tuvieran antes."
+
+msgid "condition_TimeCondition"
+msgstr "Hora actual"
+
+msgid "condition_help_TimeCondition"
+msgstr ""
+"Detecta si la hora actual está en el intervalo definido por <b>hora "
+"inicio</b> y <b>hora fin</b>, incluyendo ambas.<br>La hora local, la de "
+"inicio y la de fin se calculan en formato de <b>24-horas</b> (entre <b>0 y "
+"23</b>). <br>El cálculo se realiza en el momento en que se envía la petición."
+
+msgid "condition_WeekdayCondition"
+msgstr "Día de la semana"
+
+msgid "condition_help_WeekdayCondition"
+msgstr ""
+"Detecta si el <b>día de la semana actual</b> es uno de los seleccionados en "
+"el detalle de la condición. El día se calcula según la zona horaria "
+"local.<br>La petición y su URL se ignoran. El resultado se basa únicamente "
+"en el día de la semana en que se envía la petición."
+
+msgid "condition_alert_fullUrlLimitation"
+msgstr ""
+"La detección sobre URL completas no es posible al usar direcciones "
+"<code>https://</code> desde la versión 52 de Chrome. <a "
+"href='https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-"
+"Limitation'>Más información...</a>"
+
+msgid "condition_alert_fullUrlLimitationLink"
+msgstr ""
+"https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation"
+
+msgid "condition_group_default"
+msgstr " . "
+
+msgid "condition_group_host"
+msgstr "Servidor"
+
+msgid "condition_group_url"
+msgstr "Url"
+
+msgid "condition_group_special"
+msgstr "Especial"
+
+msgid "ruleListFormat_Switchy"
+msgstr "Switchy"
+
+msgid "ruleListFormat_AutoProxy"
+msgstr "Proxy Automático"
+
+msgid "ruleList_usageUrl"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/RuleListUsage"
+
+msgid "ruleList_error_resultNotEnabled"
+msgstr "¡ Falta directiva '@with result' !"
+
+msgid "ruleList_error_unknownProfile"
+msgstr "Perfil desconocido: $PROFILE$"
+
+msgid "ruleList_error_missingResultProfile"
+msgstr "Falta nombre del perfil en la línea $LNO$: $SOURCE$"
+
+msgid "ruleList_error_invalidRule"
+msgstr "Regla no válida en la línea $LNO$: $SOURCE$"
+
+msgid "ruleList_error_noDefaultRule"
+msgstr "¡ Falta regla por defecto con condición universal '*' !"
+
+msgid "dialog_close"
+msgstr "Cerrar"
+
+msgid "dialog_save"
+msgstr "Guardar cambios"
+
+msgid "dialog_ok"
+msgstr "OK"
+
+msgid "dialog_cancel"
+msgstr "Cancelar"
+
+msgid "inputClear_clear"
+msgstr "Borrar"
+
+msgid "inputClear_restore"
+msgstr "Deshacer"
+
+msgid "options_title"
+msgstr "Opciones SwitchyDelta"
+
+msgid "options_experimental_badge"
+msgstr "α"
+
+msgid "options_navHeader_setting"
+msgstr "Ajustes"
+
+msgid "options_navHeader_profiles"
+msgstr "Perfiles"
+
+msgid "options_navHeader_actions"
+msgstr "Acciones"
+
+msgid "options_tab_ui"
+msgstr "Interfaz"
+
+msgid "options_tab_general"
+msgstr "General"
+
+msgid "options_tab_importExport"
+msgstr "Importar/Exportar"
+
+msgid "options_newProfile"
+msgstr "Nuevo perfil…"
+
+msgid "options_apply"
+msgstr "Aplicar cambios"
+
+msgid "options_discard"
+msgstr "Descartar cambios"
+
+msgid "options_reset"
+msgstr "Opciones por defecto"
+
+msgid "options_group_miscOptions"
+msgstr "Opciones adicionales"
+
+msgid "options_confirmDeletion"
+msgstr "Confirmar al borrar condición."
+
+msgid "options_refreshOnProfileChange"
+msgstr "Recargar pestaña actual al cambiar perfil."
+
+msgid "options_showInspectMenu"
+msgstr ""
+"Permitir inspeccionar el proxy utilizado por cada elemento de la página a "
+"través del menú contextual."
+
+msgid "options_addConditionsToBottom"
+msgstr ""
+"Agregue nuevas condiciones usando la ventana emergente al final de la lista."
+
+msgid "options_group_keyboardShortcut"
+msgstr "Atajo de teclado"
+
+msgid "options_menuShortcutHelp"
+msgstr ""
+"Al utilizar el atajo se abrirá el menú emergente. (Predeterminado Alt+May+O)."
+
+msgid "options_menuShortcutMore"
+msgstr ""
+"Los elementos del menú emergente también son accesibles usando el teclado. "
+"Pulse ? (o /) en el menú para más información."
+
+msgid "options_menuShortcutConfigure"
+msgstr "Configurar atajo"
+
+msgid "options_group_switchOptions"
+msgstr "Opciones del Conmutador"
+
+msgid "options_startupProfile"
+msgstr "Perfil inicial"
+
+msgid "options_startupProfile_none"
+msgstr "(Perfil actual)"
+
+msgid "options_showConditionTypesAdvanced"
+msgstr "Mostrar tipos de condición avanzados"
+
+msgid "options_showConditionTypesAdvancedHelp"
+msgstr ""
+"Habilita nuevos tipos de condiciones avanzadas pero más complicadas. En la "
+"mayoría de las situaciones los tipos básicos son más que suficientes, por lo "
+"que no se recomienda habilitar los avanzados."
+
+msgid "options_quickSwitch"
+msgstr "Conmutador Rápido"
+
+msgid "options_cycledProfiles"
+msgstr "Perfiles cíclicos"
+
+msgid "options_cycledProfilesHelp"
+msgstr ""
+"Cuando pulses el icono(o el atajo superior), los siguientes perfiles se "
+"aplicarán en el orden indicado."
+
+msgid "options_cycledProfilesTooFew"
+msgstr ""
+"¡Necesitas seleccionar al menos 2 perfiles para habilitar esta función! "
+"Puedes arrastrarlos desde el cuadro inferior."
+
+msgid "options_notCycledProfiles"
+msgstr "Perfiles no cíclicos"
+
+msgid "options_group_proxyChanges"
+msgstr "Cambios Proxy"
+
+msgid "options_revertProxyChanges"
+msgstr "Deshacer cambios de proxy realizados por otras aplicaciones."
+
+msgid "options_group_conflicts"
+msgstr "Conflictos"
+
+msgid "options_conflicts_introduction"
+msgstr ""
+"Algunas veces, otras aplicaciones también intentarán controlar la "
+"configuración del proxy, lo que generará conflictos. Tenga en cuenta que los "
+"bloqueadores de anuncios y otras extensiones también pueden usar "
+"configuraciones de proxy. Dichos conflictos no se pueden evitar debido a la "
+"forma en que funciona el navegador."
+
+msgid "options_conflicts_lowerPriority"
+msgstr ""
+"Una insignia roja como esta en el icono de SwitchyDelta indica que otra "
+"aplicación tiene mayor prioridad, por lo que SwitchyDelta no puede controlar "
+"la configuración. Intente desinstalar SwitchyDelta y reinstalar, lo que "
+"debería aumentar la prioridad de SwitchyDelta. Si sigue viendo conflictos "
+"después de la reinstalación, considere eliminar la otra aplicación que causa "
+"el conflicto."
+
+msgid "options_conflicts_higherPriority"
+msgstr ""
+"Si SwitchyDelta tiene una prioridad más alta, puede devolver el control a "
+"otras aplicaciones o configuraciones del sistema seleccionando "
+"$SYSTEMPROFILE$ en el menú emergente."
+
+msgid "options_showExternalProfile"
+msgstr ""
+"Mostrar el elemento del menú emergente para importar configuraciones proxy "
+"de otras aplicaciones."
+
+msgid "options_showExternalProfileHelp"
+msgstr ""
+"Cuando se selecciona $SYSTEMPROFILE$, puede importar la configuración "
+"efectiva del proxy de otras aplicaciones seleccionando $EXTERNALPROFILE$ en "
+"el menú emergente. La configuración se importará como un perfil con el "
+"nombre que proporcione. Tenga en cuenta que el perfil importado es una "
+"instantánea y no reflejará ningún cambio desde la aplicación de origen a "
+"partir de entonces."
+
+msgid "options_group_networkRequests"
+msgstr "Peticiones de red"
+
+msgid "options_monitorWebRequests"
+msgstr "Muestra el número de peticiones web con error en la pestaña actual."
+
+msgid "options_monitorWebRequestsHelp"
+msgstr ""
+"Aparecerá un marcador amarillo sobre el icono si no pudieron cargarse "
+"algunos recursos,<br> y podrá actualizar el perfil a utilizar para ellos "
+"desde el menú emergente."
+
+msgid "options_downloadOptions"
+msgstr "Opciones de descarga"
+
+msgid "options_downloadOptionsHelp"
+msgstr ""
+"Configurar la frecuencia de actualización en línea de reglas y scripts PAC."
+
+msgid "options_downloadInterval"
+msgstr "Intervalo de descarga"
+
+msgid "options_downloadInterval_15"
+msgstr "15 minutos"
+
+msgid "options_downloadInterval_60"
+msgstr "1 Hora"
+
+msgid "options_downloadInterval_180"
+msgstr "3 Horas"
+
+msgid "options_downloadInterval_360"
+msgstr "6 Horas"
+
+msgid "options_downloadInterval_720"
+msgstr "12 Horas"
+
+msgid "options_downloadInterval_1440"
+msgstr "a diario"
+
+msgid "options_downloadInterval_never"
+msgstr "Nunca"
+
+msgid "options_group_importExportProfile"
+msgstr "Perfil"
+
+msgid "options_exportPacFile"
+msgstr "Exportar como archivo PAC"
+
+msgid "options_exportPacFileHelp"
+msgstr ""
+"Exporta el perfil actual como un archivo PAC, para poder utilizarlo en otros "
+"navegadores."
+
+msgid "options_exportProfileHelp"
+msgstr ""
+"Para exportar un perfil, utilice la barra de acción de arriba a la derecha "
+"en la página del perfil."
+
+msgid "options_exportLegacyRuleList"
+msgstr ""
+"Exporta la lista de reglas utilizando, si es posible, un formato compatible "
+"con Proxy Switchy!/SwitchyPlus/SwitchySharp."
+
+msgid "options_exportLegacyRuleListHelp"
+msgstr ""
+"Habilite esta opción si publica listas de reglas para usuarios de esos "
+"proyectos.<br> Le agradeceríamos que recomendara a sus contactos actualizar "
+"a SwitchyDelta para disfrutar de las mejoras."
+
+msgid "options_group_importExportSettings"
+msgstr "Ajustes"
+
+msgid "options_makeBackup"
+msgstr "Crear copia de seguridad"
+
+msgid "options_makeBackupHelp"
+msgstr ""
+"Haga una copia de seguridad de sus opciones (incluye perfiles y el resto de "
+"opciones)."
+
+msgid "options_restoreLocal"
+msgstr "Restaurar desde archivo"
+
+msgid "options_restoreLocalHelp"
+msgstr "Restaura las opciones de SwitchyDelta desde un archivo local."
+
+msgid "options_restoreOnline"
+msgstr "Restaurar en línea"
+
+msgid "options_restoreOnlinePlaceholder"
+msgstr "URL del archivo de opciones (p.e. 'http://example.com/switchy.bak')"
+
+msgid "options_restoreOnlineSubmit"
+msgstr "Restaurar"
+
+msgid "options_group_syncing"
+msgstr "Sincronizando (Experimental)"
+
+msgid "options_syncEnable"
+msgstr "Habilitar sincronización"
+
+msgid "options_syncEnableForce"
+msgstr "Descargar desde la sincronización"
+
+msgid "options_syncDisable"
+msgstr "Deshabilitar sincronización"
+
+msgid "options_syncReset"
+msgstr "Borrar copia remota"
+
+msgid "options_syncPristineHelp"
+msgstr ""
+"Puede sincronizar automáticamente sus ajustes y perfiles en todos los "
+"dispositivos donde utilice el navegador Chrome."
+
+msgid "options_syncSyncAlert"
+msgstr "Sus opciones se sincronizan automáticamente en todos sus equipos."
+
+msgid "options_syncSyncHelp"
+msgstr ""
+"Tenga en cuenta que debe iniciar sesión en Chrome en cada uno de sus "
+"dispositivos (incluido este) para que la sincronización funcione realmente. "
+"<br> Puede verificar esta sección en otros dispositivos para asegurarse de "
+"que esté funcionando."
+
+msgid "options_syncConflictAlert"
+msgstr ""
+"Usted ha cargado una copia de sus opciones en otro dispositivo mediante la "
+"sincronización."
+
+msgid "options_syncConflictHelp"
+msgstr ""
+"Puede descargar la copia remota a su dispositivo si lo desea. <br> Sin "
+"embargo, al hacerlo, <b> sobrescribirá sus configuraciones y perfiles "
+"existentes </ b> en este dispositivo."
+
+msgid "options_syncUnsupportedHelp"
+msgstr ""
+"Las opciones de sincronización no son soportadas por su plataforma o "
+"navegador. Por ahora, solo el navegador Chrome en el escritorio las soporta."
+
+msgid "options_profileSyncDisabled"
+msgstr "La sincronización esta inhabilitada para este perfil."
+
+msgid "options_profileSyncDisabled_quotaPerItem"
+msgstr ""
+"La sincronización esta inhabilitada para este perfil por usar mucho espacio "
+"de almacenamiento."
+
+msgid "options_profileTabPrefix"
+msgstr "Perfil :: "
+
+msgid "options_renameProfile"
+msgstr "Renombrar"
+
+msgid "options_deleteProfile"
+msgstr "Borrar"
+
+msgid "options_profileExportRuleList"
+msgstr "Publicar lista de reglas"
+
+msgid "options_profileExportRuleListHelp"
+msgstr "Exportar Reglas del Conmutador para publicar en formato texto."
+
+msgid "options_profileExportPac"
+msgstr "Exportar PAC"
+
+msgid "options_profileUnsupported"
+msgstr "¡Tipo de perfil no soportado $TYPE$!"
+
+msgid "options_profileUnsupportedHelp"
+msgstr ""
+"Las opciones pueden haber fallado, o de una versión mas reciente de este "
+"programa."
+
+msgid "options_profileEditSource"
+msgstr "Editar código fuente"
+
+msgid "options_profileEditSourceHelp"
+msgstr "Mostrar ayuda sobre el formato del código fuente"
+
+msgid "options_profileEditSourceHelpUrl"
+msgstr ""
+"https://github.com/madeye/SwitchyDelta/wiki/SwitchyDelta-conditions-"
+"format#result-profile"
+
+msgid "options_group_proxyServers"
+msgstr "Servidores proxy"
+
+msgid "options_proxy_scheme"
+msgstr "Esquema"
+
+msgid "options_proxy_protocol"
+msgstr "Protocolo"
+
+msgid "options_proxy_server"
+msgstr "Servidor"
+
+msgid "options_proxy_port"
+msgstr "Puerto"
+
+msgid "options_proxy_auth"
+msgstr "Autenticación"
+
+msgid "options_proxy_authNotSupported"
+msgstr ""
+"¡Tu navegador NO soporta la autenticación proxy $PROTOCOLDISP$! Por favor no "
+"reportes esta incidencia a SwitchyDelta. Ponte en contacto con el soporte "
+"para tu navegador."
+
+msgid "options_proxy_authAllWarningPac"
+msgstr ""
+"Advertencia: El nombre usuario/contraseña pueden enviarse a servidores "
+"inesperados devueltos por el script PAC."
+
+msgid "options_proxy_authAllWarningPacUrl"
+msgstr ""
+"Asegúrese de confiar en el script proporcionado a través de la URL anterior "
+"antes de ingresar credenciales confidenciales."
+
+msgid "options_proxy_authAllWarningPacScript"
+msgstr ""
+"Asegúrese de confiar en el script de a continuación antes de proporcionar "
+"credenciales confidenciales."
+
+msgid "options_proxy_authReferencedWarning"
+msgstr ""
+"Adicionalmente, el uso de este perfil en otros perfiles (p. ej. Perfil "
+"Conmutador) puede hacer que el nombre de usuario/contraseña se envíe a los "
+"servidores proxy configurados en otros perfiles."
+
+msgid "options_scheme_default"
+msgstr "(por defecto)"
+
+msgid "options_protocol_direct"
+msgstr "DIRECTO"
+
+msgid "options_protocol_useDefault"
+msgstr "(usa por defecto)"
+
+msgid "options_proxy_single"
+msgstr "Use el proxy anterior para todos los protocolos."
+
+msgid "options_proxy_expand"
+msgstr "Mostrar avanzado"
+
+msgid "options_group_bypassList"
+msgstr "Lista de omisión"
+
+msgid "options_bypassListHelp"
+msgstr ""
+"Servidores para los cuales no desea usar ningún proxy: (Un servidor en cada "
+"línea)"
+
+msgid "options_bypassListHelpLinkText"
+msgstr "(Comodines y más disponible ...)"
+
+msgid "options_group_pacUrl"
+msgstr "URL PAC"
+
+msgid "options_pacUrlHelp"
+msgstr ""
+"El script PAC será actualizado desde esta URL. Si se deja en blanco, el "
+"siguiente script se usará directamente en su lugar."
+
+msgid "options_pacUrlFile"
+msgstr ""
+"Archivos con perfiles PAC: las URL solamente se pueden aplicar directamente. "
+"No se pueden usar como perfiles de resultados porque no se puede acceder a "
+"los archivos locales debido a una limitación del navegador."
+
+msgid "options_pacUrlFileDisabled"
+msgstr ""
+"Por lo tanto, no puedes usar un archivo PAC local para este perfil. Puedes "
+"crear un nuevo perfil PAC para eso si realmente quieres eso."
+
+msgid "options_group_pacScript"
+msgstr "Script PAC"
+
+msgid "options_pacScriptLastUpdate"
+msgstr "Script PAC descargado el $TIME$:"
+
+msgid "options_pacScriptObsolete"
+msgstr ""
+"Script PAC obsoleto debido a cambio de URL. Presiona el botón de descarga de "
+"arriba para actualizar."
+
+msgid "options_group_virtualProfile"
+msgstr "Perfil Virtual"
+
+msgid "options_virtualProfileTarget"
+msgstr "Objetivo"
+
+msgid "options_virtualProfileTargetHelp"
+msgstr ""
+"Cuando este perfil se aplique, actuará exactamente igual que el perfil "
+"seleccionado abajo."
+
+msgid "options_group_virtualProfileReplace"
+msgstr "Migrar a Perfil Virtual"
+
+msgid "options_virtualProfileReplace"
+msgstr "Reemplazar perfil objetivo"
+
+msgid "options_virtualProfileReplaceHelp"
+msgstr ""
+"Puedes migrar las opciones existentes para usar este perfil virtual en vez "
+"de $PROFILE$. Haciendo esto actualizarás todas las reglas existentes "
+"concernientes a $PROFILE$ y apuntarán a este perfil virtual, para que su "
+"perfil de resultados pueda ser controlado aquí."
+
+msgid "options_group_ruleListConfig"
+msgstr "Configuración de la Lista de Reglas"
+
+msgid "options_ruleListFormat"
+msgstr "Formato de la Lista de Reglas"
+
+msgid "options_group_ruleListResult"
+msgstr "Perfiles de resultados de la lista de reglas"
+
+msgid "options_ruleListMatchProfile"
+msgstr "Emparejar perfil"
+
+msgid "options_ruleListDefaultProfile"
+msgstr "Perfil por defecto"
+
+msgid "options_group_ruleListUrl"
+msgstr "URL de la lista de reglas"
+
+msgid "options_ruleListUrlHelp"
+msgstr ""
+"Esta lista de reglas será actualizada desde esta URL. Si se deja en blanco, "
+"el siguiente texto será interpretado en su lugar."
+
+msgid "options_group_ruleListText"
+msgstr "Texto de la Lista de Reglas"
+
+msgid "options_ruleListLastUpdate"
+msgstr "Lista de reglas descargada el $TIME$:"
+
+msgid "options_ruleListObsolete"
+msgstr ""
+"La lista de reglas está obsoleta debido a un cambio de URL. Presiona el "
+"botón descargar de arriba para actualizar."
+
+msgid "options_group_switchRules"
+msgstr "Reglas de conmutación"
+
+msgid "options_sort"
+msgstr "Ordenar"
+
+msgid "options_conditionType"
+msgstr "Tipo de Condición"
+
+msgid "options_showConditionTypeHelp"
+msgstr "Mostrar ayuda"
+
+msgid "options_conditionDetails"
+msgstr "Detalles de la Condición"
+
+msgid "options_resultProfile"
+msgstr "Perfil"
+
+msgid "options_conditionActions"
+msgstr "Acciones"
+
+msgid "options_addCondition"
+msgstr "Añadir condición"
+
+msgid "options_cloneRule"
+msgstr "Clonar"
+
+msgid "options_ruleNote"
+msgstr "Nota"
+
+msgid "options_switchAttachedProfileInCondition"
+msgstr "Reglas de la lista de reglas"
+
+msgid "options_switchAttachedProfileInConditionDetails"
+msgstr ""
+"(Cualquier solicitud que coincida con la lista de reglas a continuación)"
+
+msgid "options_switchAttachedProfileInConditionDisabled"
+msgstr "(Las reglas de la lista de reglas están DESHABILITADAS)"
+
+msgid "options_switchDefaultProfile"
+msgstr "Por defecto"
+
+msgid "options_hostLevelsBetween"
+msgstr "≤ niveles de host ≤"
+
+msgid "options_hourBetween"
+msgstr "≤ hora actual ≤"
+
+msgid "options_weekDayShort_0"
+msgstr "Lu"
+
+msgid "options_weekDayShort_1"
+msgstr "Ma"
+
+msgid "options_weekDayShort_2"
+msgstr "Mi"
+
+msgid "options_weekDayShort_3"
+msgstr "Ju"
+
+msgid "options_weekDayShort_4"
+msgstr "Vi"
+
+msgid "options_weekDayShort_5"
+msgstr "Sa"
+
+msgid "options_weekDayShort_6"
+msgstr "Do"
+
+msgid "options_group_conditionHelp"
+msgstr "Acerca de Tipos de Condición"
+
+msgid "options_group_attachProfile"
+msgstr "Importar lista de reglas en línea"
+
+msgid "options_attachProfile"
+msgstr "Añadir una lista de reglas"
+
+msgid "options_attachProfileHelp"
+msgstr ""
+"Puedes reusar una colección de condiciones en línea publicada por otros al "
+"añadirla a tu lista de reglas."
+
+msgid "options_modalHeader_welcome"
+msgstr "Bienvenido/a a SwitchyDelta"
+
+msgid "options_welcomeNormal"
+msgstr "Has instalado exitosamente SwitchyDelta, el proxy switcher definitivo."
+
+msgid "options_welcomeNormalGuide"
+msgstr ""
+"Indica a SwitchyDelta acerca de tus proxies a través de la pagina de "
+"opciones. Vamos a ver cómo."
+
+msgid "options_welcomeUpgrade"
+msgstr ""
+"Has actualizado exitosamente a SwitchyDelta. No te asustes, tus opciones "
+"existentes han sido completamente preservadas."
+
+msgid "options_welcomeUpgradeGuide"
+msgstr "Ahora veamos una guía rápida de la nueva página de opciones."
+
+msgid "options_guideNext"
+msgstr "Siguiente"
+
+msgid "options_guideDone"
+msgstr "Hecho"
+
+msgid "options_guideSkip"
+msgstr "Omitir guía"
+
+msgid "options_modalHeader_applyOptions"
+msgstr "Aplicar Opciones"
+
+msgid "options_optionsNotSaved"
+msgstr ""
+"¡Tus modificaciones de las opciones no han sido guardadas y se perderán si "
+"continúas!"
+
+msgid "options_applyOptionsRequired"
+msgstr "Tus cambios de las opciones deben aplicarse antes de proceder."
+
+msgid "options_applyOptionsConfirm"
+msgstr "¿Quieres guardar y aplicar las opciones?"
+
+msgid "options_modalHeader_renameProfile"
+msgstr "Renombrar Perfil"
+
+msgid "options_renameProfileName"
+msgstr "Nuevo nombre de perfil"
+
+msgid "options_profileNameConflict"
+msgstr "Ya existe un perfil con este nombre."
+
+msgid "options_profileNameReserved"
+msgstr ""
+"Los nombres de perfil que empiezan con doble guión bajo están reservados."
+
+msgid "options_profileNameHidden"
+msgstr ""
+"Los perfiles con nombres que empiecen por guión bajo se ocultarán en el menú "
+"emergente. Sin embargo, pueden seguirse utilizando en sitios como los "
+"resultados del perfil conmutador."
+
+msgid "options_modalHeader_replaceProfile"
+msgstr "Reemplazar Perfil"
+
+msgid "options_replaceProfile"
+msgstr "Reemplazar perfil"
+
+msgid "options_replaceProfileConfirm"
+msgstr "¿De verdad deseas reemplazar $FromProfile$ con $ToProfile$?"
+
+msgid "options_replaceProfileHelp"
+msgstr ""
+"Si continúas, todas las reglas apuntando a $FromProfile$ se actualizarán "
+"para usar $ToProfile$ en su lugar. Otras opciones, como el perfil de inicio "
+"y el Conmutador Rápido también se modificarán según corresponda. Sin "
+"embargo, los dos perfiles en sí NO serán modificados o eliminados."
+
+msgid "options_replaceProfileSuccess"
+msgstr "Opciones actualizadas."
+
+msgid "options_modalHeader_deleteProfile"
+msgstr "Eliminar Perfil"
+
+msgid "options_deleteProfileConfirm"
+msgstr "¿De verdad quieres borrar el siguiente perfil?"
+
+msgid "options_modalHeader_cannotDeleteProfile"
+msgstr "Incapaz de Borrar el Perfil"
+
+msgid "options_profileReferredBy"
+msgstr ""
+"Este perfil no puede ser borrado porque está referenciado por los siguientes "
+"perfiles:"
+
+msgid "options_modifyReferringProfiles"
+msgstr ""
+"Debes modificar estos perfiles y hacer que dejen de referenciar este perfil "
+"antes de que puedas borrarlo."
+
+msgid "options_profileNameEmpty"
+msgstr "El nombre del perfil no debe estar vacío."
+
+msgid "popup_title"
+msgstr "Ventana emergente de SwitchyDelta"
+
+msgid "options_modalHeader_proxyAuth"
+msgstr "Autenticación Proxy"
+
+msgid "options_proxyAuthUsername"
+msgstr "Nombre de usuario"
+
+msgid "options_proxyAuthPassword"
+msgstr "Contraseña"
+
+msgid "options_proxyAuthShowPassword"
+msgstr "Mostrar contraseña"
+
+msgid "options_proxyAuthHidePassword"
+msgstr "Ocultar contraseña"
+
+msgid "options_proxyAuthNone"
+msgstr "Sin Autenticación"
+
+msgid "options_modalHeader_deleteRule"
+msgstr "Eliminar Regla"
+
+msgid "options_deleteRuleConfirm"
+msgstr "¿De verdad quieres borrar la siguiente regla?"
+
+msgid "options_deleteRule"
+msgstr "Borrar"
+
+msgid "options_modalHeader_resetRules"
+msgstr "Reestablecer reglas"
+
+msgid "options_resetRulesConfirm"
+msgstr ""
+"¿Estás seguro/a de establecer el perfil resultante de TODAS las reglas en el "
+"siguiente perfil?"
+
+msgid "options_resetRules"
+msgstr "Reestablecer reglas"
+
+msgid "options_resetRules_help"
+msgstr "Establecer perfil para todas las reglas"
+
+msgid "options_modalHeader_deleteAttached"
+msgstr "Eliminar Lista de Reglas"
+
+msgid "options_deleteAttachedConfirm"
+msgstr ""
+"¿Estás seguro/a de querer eliminar la lista de reglas del perfil actual?"
+
+msgid "options_ruleListLineCount"
+msgstr "$COUNT$ linea(s) de reglas"
+
+msgid "options_deleteAttached"
+msgstr "Eliminar lista de reglas"
+
+msgid "options_modalHeader_newProfile"
+msgstr "Nuevo Perfil"
+
+msgid "options_newProfileName"
+msgstr "Nombre del perfil"
+
+msgid "options_profileType"
+msgstr "Por favor selecciona el tipo de perfil:"
+
+msgid "options_profileTypeFixedProfile"
+msgstr "Perfil de Proxy"
+
+msgid "options_profileDescFixedProfile"
+msgstr "Tunelización del tráfico a través de servidores proxy."
+
+msgid "options_profileTypePacProfile"
+msgstr "Perfil PAC"
+
+msgid "options_profileDescPacProfile"
+msgstr "Elegir proxies usando un script PAC en línea/local."
+
+msgid "options_profileDescMorePacProfile"
+msgstr ""
+"Solo necesitarás esto si tienes un script PAC o una URL hacia uno. No "
+"intentes crear uno a menos que tengas conocimiento sobre PAC."
+
+msgid "options_profileTypeSwitchProfile"
+msgstr "Perfil Conmutador"
+
+msgid "options_profileDescSwitchProfile"
+msgstr ""
+"Aplicando distintos perfiles automáticamente en diversas condiciones tales "
+"como dominios o patrones.\n"
+" También puedes importar reglas publicadas en línea para un cambio más "
+"fácil. (Reemplaza el modo AutoSwitch + Lista de Reglas.)"
+
+msgid "options_profileTypeRuleListProfile"
+msgstr "Perfil de Lista de Reglas"
+
+msgid "options_profileDescRuleListProfile"
+msgstr "Reusando una colección en línea de condiciones publicadas por otros."
+
+msgid "options_profileTypeVirtualProfile"
+msgstr "Perfil Virtual"
+
+msgid "options_profileDescVirtualProfile"
+msgstr ""
+"Un perfil virtual puede actuar como cualquier otro perfil bajo demanda. "
+"Funciona bien con SwitchProfile, permitiondo cambiar el resultado de "
+"múltiples condiciones con un solo click."
+
+msgid "options_createProfile"
+msgstr "Crear"
+
+msgid "options_modalHeader_resetOptions"
+msgstr "Reestablecer Opciones"
+
+msgid "options_resetOptionsConfirm"
+msgstr ""
+"¿Realmente quieres reestablecer las opciones? ¡Todos los perfiles y "
+"configuración se PERDERÁN!"
+
+msgid "options_formInvalid"
+msgstr "Por favor corrige los errores de esta página."
+
+msgid "options_profileNotFound"
+msgstr "¡El perfil $PROFILE$ no existe! Las opciones pueden estar corruptas."
+
+msgid "options_resetSuccess"
+msgstr "Opciones reestablecidas."
+
+msgid "options_saveSuccess"
+msgstr "Opciones guardadas."
+
+msgid "options_importSuccess"
+msgstr "Opciones importadas."
+
+msgid "options_importFormatError"
+msgstr "¡Archivo de copia de seguridad no válido!"
+
+msgid "options_importDownloadError"
+msgstr "¡Error descargando el archivo de copia de seguridad!"
+
+msgid "options_profileDownloadSuccess"
+msgstr "Perfil actualizado existosamente."
+
+msgid "options_profileDownloadError"
+msgstr "¡Error descargando los datos del perfil!"
+
+msgid "options_profileDownloadError_NetworkError"
+msgstr "Un error de red ha ocurrido al actualizar."
+
+msgid "options_profileDownloadError_HttpError"
+msgstr "Un error HTTP ($STATUS$) ha ocurrido al actualizar."
+
+msgid "options_profileDownloadError_HttpNotFoundError"
+msgstr ""
+"La URL del Perfil no ha sido encontrada en el servidor. Por favor vuelve a "
+"comprobarla."
+
+msgid "options_profileDownloadError_HttpServerError"
+msgstr "El servidor remoto ha respondido con error ($STATUS$) al actualizar."
+
+msgid "options_profileDownloadError_ContentTypeRejectedError"
+msgstr ""
+"¡Los datos descargados son inválidos! Puedes abrir la URL del Perfil en tu "
+"navegador para inspeccionarla."
+
+msgid "options_downloadProfileNow"
+msgstr "Descargar el Perfil Ahora"
+
+msgid "options_guide_fixedProfileStep"
+msgstr ""
+"Un <b>Perfil Proxy</b> contiene ajustes como la ip y puerto del servidor "
+"para proxy.<br>Los perfiles son las unidades basicas de configuración en "
+"SwitchyDelta.<br>Hemos creado un perfil de ejemplo para ti. Intenta abrirlo."
+
+msgid "options_guide_fixedServersStep"
+msgstr ""
+"Puedes completar tu servidor proxy y puerto como desees.<br>SwitchyDelta <b>"
+"no viene con ningún servidor proxy</b>.<br>Por favor consulta con tu "
+"proveedor de red o con el manual de software de tu proxy si no sabes lo que "
+"se debe llenar aquí."
+
+msgid "options_guide_autoSwitchProfileStep"
+msgstr ""
+"Puedes decirle a SwitchyDelta que cambie entre proxies automáticamente a "
+"través del poderoso <b>Perfil Conmutador</b>.<br>Sin embargo, sus "
+"características no pueden ser cubiertas con esta breve guía.<br>Puedes abrir "
+"este perfil para desbloquear su poder más tarde."
+
+msgid "options_guide_addMoreProfilesStep"
+msgstr ""
+"¿Necesitas más perfiles? Siempre puedes añadir más <b>perfiles de tipo "
+"Proxy, Conmutador y otros</b><br>para todas tus necesidades de configuración "
+"con proxies.<br>¡Disfruta configurando tus proxies!"
+
+msgid "options_guide_conditionStep"
+msgstr ""
+"SwitchyDelta puede aplicar distintos perfiles para peticiones basadas en "
+"<b>condiciones</b>.<br> Por ejemplo, la condición <b>Comodín host</b> "
+"permite establecer el perfil para todas las URL en un domino."
+
+msgid "options_guide_conditionTypeStep"
+msgstr ""
+"Puedes usar varios tipos de condición para coincidir con el host o la URL "
+"completa. <br> Haz clic en el símbolo de interrogación para abrir la "
+"referencia de tipo."
+
+msgid "options_guide_conditionProfileStep"
+msgstr ""
+"SwitchyDelta aplica el perfil aquí seleccionado a <b>cualquier petición que "
+"coincida con la condición.</b> <br> El <b>perfil especial \"[Por defecto]\""
+"</b> hará que la petición se envíe sin ningún proxy."
+
+msgid "options_guide_switchDefaultStep"
+msgstr ""
+"Si ninguna condición se aplica a alguna solicitud, el perfil \"Por defecto\" "
+"será usado. <br>Las condiciones siempre serán consideradas <b>desde arriba "
+"hacia abajo</b> en orden.<br>Puedes cambiar el order arrastrando el icono "
+"ordenar."
+
+msgid "options_guide_applySwitchProfileStep"
+msgstr ""
+"Cuando termines de configurar el perfil conmutador, no te olvides de <b>"
+"cambiar a el en el menú emergente.</b><br/> El icono mostrará el perfil <b>"
+"resultante final</b> aplicado a la pestaña actual. <br/> <b>Pasando el "
+"cursor</b> sobre el icono revelará información detallada."
+
+msgid "popup_externalProfile"
+msgstr "(Perfil Externo)"
+
+msgid "popup_externalProfileName"
+msgstr "nombre del perfil"
+
+msgid "popup_proxyNotControllable_app"
+msgstr ""
+"La configuración del proxy está controlada por otra(s) aplicación(es) o "
+"extensión(es). Por favor deshabilita o desinstala las aplicaciones o "
+"extensiones en conflicto."
+
+msgid "popup_proxyNotControllable_policy"
+msgstr ""
+"La configuración del proxy está anulada por las políticas. Por favor, "
+"póngase en contacto con su administrador."
+
+msgid "popup_proxyNotControllable_unknown"
+msgstr ""
+"La configuración del proxy no puede ser controlada. Por favor, compruebe su "
+"sistema y la configuración del navegador."
+
+msgid "popup_proxyNotControllable_disabled"
+msgstr ""
+"La configuración del proxy está deshabilitada por solicitud explícita de "
+"otra(s) aplicación(es) o extensión(es)."
+
+msgid "popup_proxyNotControllable_upgrade"
+msgstr ""
+"Las configuraciones de proxy ahora están controladas por una versión más "
+"reciente de SwitchyDelta."
+
+msgid "popup_proxyNotControllableDetails"
+msgstr ""
+"No puedes cambiar los perfiles con SwitchyDelta a menos que soluciones el "
+"problema anterior."
+
+msgid "popup_proxyNotControllableDetails_upgrade"
+msgstr ""
+"No puede habilitar dos (o más) versiones de SwitchyDelta al mismo tiempo. "
+"Por favor deshabilita una de ellas."
+
+msgid "popup_proxyNotControllableManage"
+msgstr "Administrar extensiones"
+
+msgid "popup_addConditionTo"
+msgstr "Añadir condición a"
+
+msgid "popup_addCondition"
+msgstr "Añadir condición"
+
+msgid "popup_showOptions"
+msgstr "Opciones"
+
+msgid "popup_reportIssues"
+msgstr "Reportar problemas"
+
+msgid "popup_errorLog"
+msgstr "Guardar registro de errores"
+
+msgid "popup_requestErrorCount"
+msgstr "$COUNT$ recursos fallidos"
+
+msgid "popup_requestErrorHeading"
+msgstr "Recursos que no se pudieron cargar"
+
+msgid "popup_requestErrorWarning"
+msgstr ""
+"Algunos recursos no se pudieron cargar debido a problemas con tu red, "
+"servidor proxy o la página web."
+
+msgid "popup_requestErrorWarningHelp"
+msgstr ""
+"SwitchyDelta es solo el informador de estos problemas, no la causa de ellos."
+
+msgid "popup_requestErrorAddCondition"
+msgstr ""
+"Puede revisar los siguientes dominios y usar un proxy cuando sea apropiado."
+
+msgid "popup_requestErrorCannotAddCondition"
+msgstr ""
+"Puedes agregar condiciones de conmutación solo cuando se usa un Perfil "
+"Conmutador."
+
+msgid "popup_configureMonitorWebRequests"
+msgstr "Configurar el Monitor de Red"
+
+msgid "options_resultProfileForSelectedDomains"
+msgstr "Usar este perfil para todos los dominios seleccionados"
+
+msgid "options_pac_profile_unsupported_moz"
+msgstr ""
+"¡Los Perfiles PAC NO funcionan en Mozilla Firefox debido a limitaciones "
+"técnicas!"
+
+msgid "popup_issueTemplate"
+msgstr ""
+"\n"
+"\n"
+"\n"
+"<!-- Por favor escribe tu comentario SOBRE esta línea. -->\n"
+"SwitchyDelta $projectVersion$\n"
+"$userAgent$"
+
+msgid "browserAction_profileDetails_PacProfile"
+msgstr "(Script PAC)"
+
+msgid "browserAction_profileDetails_SystemProfile"
+msgstr "(controllado por otras extensiones o entorno)"
+
+msgid "browserAction_profileDetails_DirectProfile"
+msgstr "(sin usar ningún proxy)"
+
+msgid "browserAction_profileDetails_SwitchProfile"
+msgstr "(cambio basado en condiciones)"
+
+msgid "browserAction_profileDetails_RuleListProfile"
+msgstr "(cambio basado en la lista de reglas)"
+
+msgid "browserAction_titleNormal"
+msgstr "SwitchyDelta:: $PROFILE$"
+
+msgid "browserAction_titleWithResult"
+msgstr ""
+"SwitchyDelta:: $1:PROFILE$\n"
+"$3:DETAILS$"
+
+msgid "browserAction_titleNewerOptions"
+msgstr ""
+"ERROR: Una nueva versión de SwitchyDelta es necesaria para cargar las "
+"opciones guardadas."
+
+msgid "browserAction_titleOptionError"
+msgstr ""
+"ERROR: Las opciones guardadas están corrompidas. Haz clic aquí para "
+"REINICIAR LAS OPCIONES."
+
+msgid "browserAction_titleDownloadFail"
+msgstr ""
+"Advertencia: Error al descargar los scripts PAC y/o las listas de reglas."
+
+msgid "browserAction_titleExternalProxy"
+msgstr ""
+"Nota: La configuración del proxy está actualmente controlada por otra(s) "
+"aplicación(es)."
+
+msgid "browserAction_titleInspect"
+msgstr "[Inspeccionar] $URL$"
+
+msgid "browserAction_defaultRuleDetails"
+msgstr "(por defecto)"
+
+msgid "browserAction_directResult"
+msgstr "DIRECTO"
+
+msgid "browserAction_attachedPrefix"
+msgstr "(RL) "
+
+msgid "browserAction_tempRulePrefix"
+msgstr "(TEMP) "
+
+msgid "contextMenu_inspectPage"
+msgstr "Inspeccionar proxy usado en esta página"
+
+msgid "contextMenu_inspectFrame"
+msgstr "Inspeccionar proxy utilizado para este Frame"
+
+msgid "contextMenu_inspectLink"
+msgstr "Inspeccionar proxy utilizado si este Enlace es abierto"
+
+msgid "contextMenu_inspectElement"
+msgstr "Inspeccionar proxy utilizado para este Elemento"
+
+msgid "contextMenu_enableQuickSwitch"
+msgstr "Habilitar Conmutador Rápido"
+
+msgid "about_title"
+msgstr "Acerca de"
+
+msgid "about_app_description"
+msgstr "Una herramienta de configuración de proxy"
+
+msgid "about_version"
+msgstr "Versión $VERSION$"
+
+msgid "about_experimental_warning_moz"
+msgstr ""
+"¡El soporte de Mozilla Firefox es altamente experimental! Si tienes "
+"problemas, informa utilizando los botones a continuación."
+
+msgid "about_disclaimer_networkService"
+msgstr "SwitchyDelta no proporciona proxies, VPN u otros servicios de red."
+
+msgid "about_disclaimer_privacy"
+msgstr ""
+"SwitchyDelta no te rastrea ni inserta anuncios en páginas web. Por favor ve "
+"nuestra <a href='https://github.com/madeye/SwitchyDelta/wiki/Privacy'>"
+"política de privacidad</a>."
+
+msgid "about_help"
+msgstr ""
+"¿Otras preguntas? ¿Necesitas ayuda con el uso de SwitchyDelta? Por favor ve "
+"nuestro <a href='https://github.com/madeye/SwitchyDelta/wiki/"
+"FAQ'>FAQ</a>."
+
+msgid "about_copyright"
+msgstr "Copyright 2026 <a href='https://github.com/madeye'>Max Lv</a>.<br>Copyright 2012-2017 <a href='https://github.com/FelisCatus/SwitchyOmega/blob/master/AUTHORS'>Los autores de SwitchyOmega</a>."
+"Copyright 2012-2017 <a href='https://github.com/madeye/SwitchyDelta/blob/"
+"master/AUTHORS'>Los autores de SwitchyDelta</a>. Todos los derechos "
+"reservados."
+
+msgid "about_credits"
+msgstr ""
+"SwitchyDelta es posible gracias al proyecto de código abierto <a "
+"href='https://github.com/madeye/SwitchyDelta'>SwitchyDelta</a> y otro <a "
+"href='https://github.com/madeye/SwitchyDelta/blob/master/AUTHORS'>"
+"software de código abierto</a>."
+
+msgid "about_license"
+msgstr ""
+"SwitchyDelta es <a href='https://www.gnu.org/philosophy/free-sw.en.html'>"
+"software libre</a> licenciado bajo <a href='https://www.gnu.org/licenses/"
+"gpl.html'>GNU General Public License</a> Versión 3 o posterior."
+
+msgid "popup_proxyAuthPermission"
+msgstr "Iniciar sesión en proxies autenticados requiere acceso a todos los sitios web."
+
+msgid "popup_proxyAuthPermissionGrant"
+msgstr "Conceder acceso"

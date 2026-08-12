@@ -54,7 +54,7 @@ The project is an npm workspace of four TypeScript packages:
 
 Supporting directories:
 
-- [`omega-locales/`](omega-locales) — gettext translation catalogues, compiled
+- [`delta-locales/`](delta-locales) — gettext translation catalogues, compiled
   into `_locales/*/messages.json` at build time.
 - [`scripts/`](scripts) — the build pipeline: `build-extension.mjs` (esbuild
   worker bundle + asset assembly into `dist/`), `build-locales.mjs`,
@@ -62,9 +62,10 @@ Supporting directories:
   loaded). Web Store releases are uploaded manually in the developer
   dashboard: zip the `dist/` contents (`cd dist && zip -r -X ../release.zip .`)
   and upload it on the Package tab.
-- [`test/e2e/`](test/e2e) — Puppeteer suites that exercise the built extension
-  in a real headless Chrome, including PAC generation from a ~4.5k-rule list
-  and traffic through a real CONNECT proxy.
+- [`test/e2e/`](test/e2e) — scripts that drive the built extension in a real
+  headless Chrome over the DevTools protocol directly (no Puppeteer
+  dependency), including PAC generation from a ~4.5k-rule list and traffic
+  through a real CONNECT proxy.
 
 Building
 --------

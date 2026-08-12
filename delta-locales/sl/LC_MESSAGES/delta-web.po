@@ -1,0 +1,1115 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SwitchyDelta 2.3.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-13 10:29+0000\n"
+"PO-Revision-Date: 2016-05-12 10:47+0000\n"
+"Last-Translator: Štefan Baebler <stefan.baebler@gmail.com>\n"
+"Language-Team: Slovenian "
+"<https://hosted.weblate.org/projects/switchyomega/main/sl/>\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 2.7-dev\n"
+
+msgid "appNameShort"
+msgstr "SwitchyDelta"
+
+msgid "manifest_app_name"
+msgstr "Proxy SwitchyDelta"
+
+msgid "manifest_app_description"
+msgstr "Hitro in enostavno upravljajte in preklapljajte med več proksiji."
+
+msgid "manifest_icon_default_title"
+msgstr "Nalaganje…"
+
+msgid "upgrade_profile_auto"
+msgstr "Samodejna izbira"
+
+msgid "profile_direct"
+msgstr "[Neposredno]"
+
+msgid "profile_system"
+msgstr "[Sistemski proksi]"
+
+msgid "condition_HostWildcardCondition"
+msgstr "Gostitelj (joker)"
+
+msgid "condition_help_HostWildcardCondition"
+msgstr "Ujema gostitelje (domenska imena) z jokerji.<br><b>Zvezdica <code>*</code></b> ujame nič ali več znakov.<br><b>Vprašaj <code>?</code></b> ujame natanko en znak.<br><br>Pravila, ki se začnejo z <code>*.</code>, so posebej obravnavana le pri pogojih Gostitelj (joker).<br>Primer: <code>*.example.com</code> ujame www.example.com <b>IN tudi example.com.</b><br>Za ujemanje <b>samo</b> poddomen uporabite <b>dve</b> zvezdici, npr. <code>**.example.com</code>."
+
+msgid "condition_HostRegexCondition"
+msgstr "Gostitelj (regex)"
+
+msgid "condition_help_HostRegexCondition"
+msgstr "Kot pogoj Gostitelj (joker), vendar ujema gostitelje (domenska imena) z <a href='https://www.google.com/search?q=regular%20expression'>regularnim izrazom</a>.<br>Regularne izraze je težko sestaviti (in brati).<br>V večini primerov uporabite jokerje; regex le za pogoje, ki jih drugače ne morete doseči."
+
+msgid "condition_HostLevelsCondition"
+msgstr "Ravni gostitelja"
+
+msgid "condition_help_HostLevelsCondition"
+msgstr "Ujema zahtevo samo, če je raven gostitelja v danem obsegu.<br>Raven gostitelja je <b>število s piko ločenih segmentov</b> gostitelja (domene).<br>Primer: <code>www.example.com</code> ima raven 3, <code>internal</code> pa raven 1."
+
+msgid "condition_IpCondition"
+msgstr "IP Literals"
+
+msgid "condition_help_IpCondition"
+msgstr ""
+"Matches the request if and only if the host is a <b>literal</b> IP address and"
+" in the subnet as specified by <a href='"
+"https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation'>"
+"CIDR notation</a>.<br>For example, given the rule <code>127.0.0.1/16</code>, "
+"it matches all IP addresses like <code>127.0.*.*</code>.<br>"
+"So <code>127.0.0.1</code> matches while <code>127.1.0.0</code> does not. "
+"Host names like <code>localhost</code> will never match because they are "
+"<b>not</b> IP literals."
+
+msgid "condition_UrlWildcardCondition"
+msgstr "URL (joker)"
+
+msgid "condition_help_UrlWildcardCondition"
+msgstr "Ujema URL-je zahteve z jokerji.<br>Hiter pregled jokerjev je v razdelku Gostitelj (joker) zgoraj.<br>URL jokerji niso posebej obravnavani (ni magije poddomen kot pri Gostitelj (joker)).<br>Tako <code>*://*.example.com/*</code> ujame http://www.example.com/, a <b>ne ujame</b> http://example.com/."
+
+msgid "condition_UrlRegexCondition"
+msgstr "URL (regex)"
+
+msgid "condition_help_UrlRegexCondition"
+msgstr "Ujema URL z zelo zmogljivim <a href='https://www.google.com/search?q=regular%20expression'>regularnim izrazom</a>.<br>Regularne izraze je težko sestaviti (in brati).<br>V večini primerov uporabite jokerje; regex le, ko drugih tipov pogojev ne zadošča."
+
+msgid "condition_KeywordCondition"
+msgstr "Ključna beseda"
+
+msgid "condition_help_KeywordCondition"
+msgstr "Pogoj ključne besede se ujema, če je protokol URL HTTP in je vzorec natančen podniz URL-ja.<br>Obnaša se kot URL joker <code>http://*<b>pattern</b>*</code>, kjer je <b>pattern</b> vzorec ključne besede.<br>Uporabno, če želite zaobiti požarni zid, ki blokira določene besede v URL-ju, tako da take URL-je zahtevate prek proksija."
+
+msgid "condition_FalseCondition"
+msgstr "(Onemogočeno)"
+
+msgid "condition_details_FalseCondition"
+msgstr "(Pogoj se pri ujemanju prezre)"
+
+msgid "condition_help_FalseCondition"
+msgstr "Pogoj onemogočite tako, da tip nastavite na <code>(Disabled)</code>. Onemogočen pogoj se obnaša, kot da ne obstaja.<br>To lahko uporabite za začasno onemogočenje pogojev.<br>Onemogočeni pogoji ohranijo prejšnje podatke (npr. vzorce) in jih znova omogočite z vrnitvijo tipa pogoja."
+
+msgid "condition_TimeCondition"
+msgstr "Trenutni čas"
+
+msgid "condition_help_TimeCondition"
+msgstr "Ujema, če je trenutni lokalni čas v obsegu <b>začetne ure</b> in <b>končne ure</b> (vključno z obema).<br>Lokalni čas, začetna in končna ura so v <b>24-urnem</b> formatu (od <b>0 do 23</b>).<br>Izračun poteka približno ob pošiljanju zahteve."
+
+msgid "condition_WeekdayCondition"
+msgstr "Dan v tednu"
+
+msgid "condition_help_WeekdayCondition"
+msgstr "Ujema, če je v podrobnostih pogoja izbran <b>trenutni dan v tednu</b>. Dan se računa po lokalnem časovnem pasu.<br>Zahteva in njen URL za ta pogoj nista pomembna. Rezultat temelji le na dnevu v tednu ob pošiljanju zahteve."
+
+msgid "condition_alert_fullUrlLimitation"
+msgstr ""
+"Full URL matching is no longer possible for <code>https://</code> "
+"URLs as of Chrome 52. "
+"<a href='https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation'>"
+"Learn more...</a>"
+
+msgid "condition_alert_fullUrlLimitationLink"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation"
+
+msgid "condition_group_default"
+msgstr " "
+
+msgid "condition_group_host"
+msgstr "Gostitelj"
+
+msgid "condition_group_url"
+msgstr "URL"
+
+msgid "condition_group_special"
+msgstr "Posebno"
+
+msgid "ruleListFormat_Switchy"
+msgstr "Switchy"
+
+msgid "ruleListFormat_AutoProxy"
+msgstr "AutoProxy"
+
+msgid "ruleList_usageUrl"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/RuleListUsage"
+
+msgid "ruleList_error_resultNotEnabled"
+msgstr "Manjka direktiva '@with result'!"
+
+msgid "ruleList_error_unknownProfile"
+msgstr "Neznan profil: $PROFILE$"
+
+msgid "ruleList_error_missingResultProfile"
+msgstr "Manjka ime rezultatnega profila v vrstici $LNO$: $SOURCE$"
+
+msgid "ruleList_error_invalidRule"
+msgstr "Neveljavno pravilo v vrstici $LNO$: $SOURCE$"
+
+msgid "ruleList_error_noDefaultRule"
+msgstr "Manjka privzeto pravilo s pogojem catch-all '*'!"
+
+msgid "dialog_close"
+msgstr "Zapri"
+
+msgid "dialog_save"
+msgstr "Shrani spremembe"
+
+msgid "dialog_ok"
+msgstr "V redu"
+
+msgid "dialog_cancel"
+msgstr "Prekliči"
+
+msgid "inputClear_clear"
+msgstr "Počisti"
+
+msgid "inputClear_restore"
+msgstr "Obnovi"
+
+msgid "options_title"
+msgstr "Možnosti SwitchyDelta"
+
+msgid "options_experimental_badge"
+msgstr "α"
+
+msgid "options_navHeader_setting"
+msgstr "Nastavitve"
+
+msgid "options_navHeader_profiles"
+msgstr "Profili"
+
+msgid "options_navHeader_actions"
+msgstr "Dejanja"
+
+msgid "options_tab_ui"
+msgstr "Vmesnik"
+
+msgid "options_tab_general"
+msgstr "Splošno"
+
+msgid "options_tab_importExport"
+msgstr "Uvoz/Izvoz"
+
+msgid "options_newProfile"
+msgstr "Nov profil…"
+
+msgid "options_apply"
+msgstr "Uporabi spremembe"
+
+msgid "options_discard"
+msgstr "Zavrzi spremembe"
+
+msgid "options_reset"
+msgstr "Ponastavi možnosti"
+
+msgid "options_group_miscOptions"
+msgstr "Razne možnosti"
+
+msgid "options_confirmDeletion"
+msgstr "Potrdi brisanje pogoja."
+
+msgid "options_refreshOnProfileChange"
+msgstr "Osveži trenutni zavihek ob spremembi profila."
+
+msgid "options_showInspectMenu"
+msgstr "Dovoli pregled proksija za elemente strani prek kontekstnega menija."
+
+msgid "options_addConditionsToBottom"
+msgstr "Put new conditions added using the popup to the bottom of the list."
+
+msgid "options_group_keyboardShortcut"
+msgstr "Tipkovna bližnjica"
+
+msgid "options_menuShortcutHelp"
+msgstr "Pritisk bližnjice odpre preklopni pojavni meni. (Privzeto Alt+Shift+O)."
+
+msgid "options_menuShortcutMore"
+msgstr "Elemente v pojavnem meniju lahko dosežete tudi s tipkovnico. Pritisnite ? (ali /) v meniju za več informacij."
+
+msgid "options_menuShortcutConfigure"
+msgstr "Nastavi bližnjico"
+
+msgid "options_group_switchOptions"
+msgstr "Možnosti preklopa"
+
+msgid "options_startupProfile"
+msgstr "Zagonski profil"
+
+msgid "options_startupProfile_none"
+msgstr "(Trenutni profil)"
+
+msgid "options_showConditionTypesAdvanced"
+msgstr "Prikaži napredne tipe pogojev"
+
+msgid "options_showConditionTypesAdvancedHelp"
+msgstr "Odkleni nove tipe naprednih, a zapletenih preklopnih pogojev. V večini primerov zadoščajo osnovni tipi, zato ta možnost ni priporočena."
+
+msgid "options_quickSwitch"
+msgstr "Hitri preklop"
+
+msgid "options_cycledProfiles"
+msgstr "Ciklični profili"
+
+msgid "options_cycledProfilesHelp"
+msgstr "Ob kliku na ikono (ali bližnjici zgoraj) se naslednji profili uporabijo po vrsti."
+
+msgid "options_cycledProfilesTooFew"
+msgstr "Za vklop te funkcije morate izbrati vsaj 2 profila! Povlečete jih lahko iz polja spodaj."
+
+msgid "options_notCycledProfiles"
+msgstr "Neciklični profili"
+
+msgid "options_group_proxyChanges"
+msgstr "Spremembe proksija"
+
+msgid "options_revertProxyChanges"
+msgstr "Razveljavi spremembe proksija drugih aplikacij."
+
+msgid "options_group_conflicts"
+msgstr "Conflicts"
+
+msgid "options_conflicts_introduction"
+msgstr ""
+"Sometimes, other apps will also try to control the proxy settings, resulting "
+"in conflicts. Note that ad blockers and other extensions may also use proxy "
+"settings under the hood. Such conflicts cannot be avoided due to how the "
+"browser works."
+
+msgid "options_conflicts_lowerPriority"
+msgstr ""
+"A red badge like this on the SwitchyDelta icon indicates that another app has "
+"higher priority so SwitchyDelta cannot control the settings. Please try to "
+"uninstall SwitchyDelta and reinstall, which should raise SwitchyDelta's "
+"priority. If you still see conflicts after reinstallation, please consider "
+"removing the other app causing the conflict."
+
+msgid "options_conflicts_higherPriority"
+msgstr ""
+"If SwitchyDelta has higher priority, you can give the control back to other "
+"apps or system settings by selecting $SYSTEMPROFILE$ in the popup menu."
+
+msgid "options_showExternalProfile"
+msgstr "Show popup menu item to import proxy settings from other apps."
+
+msgid "options_showExternalProfileHelp"
+msgstr ""
+"When $SYSTEMPROFILE$ is selected, you can import the effective proxy settings "
+"from other apps by selecting $EXTERNALPROFILE$ on the popup menu. "
+"The settings will be imported as a profile using the name you provide. "
+"Please note that the imported profile is a snapshot and will not reflect "
+"any changes from the source app thereafter."
+
+msgid "options_group_networkRequests"
+msgstr "Omrežne zahteve"
+
+msgid "options_monitorWebRequests"
+msgstr "Prikaži število spodletelih spletnih zahtev za vire na trenutnem zavihku."
+
+msgid "options_monitorWebRequestsHelp"
+msgstr "Če se nekateri viri ne naložijo, se na ikoni prikaže rumeni znak<br>in profil za te vire lahko nastavite v pojavnem meniju."
+
+msgid "options_downloadOptions"
+msgstr "Možnosti prenosa"
+
+msgid "options_downloadOptionsHelp"
+msgstr "Nastavite frekvenco posodabljanja spletnih seznamov pravil in PAC skriptov."
+
+msgid "options_downloadInterval"
+msgstr "Interval prenosa"
+
+msgid "options_downloadInterval_15"
+msgstr "15 minut"
+
+msgid "options_downloadInterval_60"
+msgstr "1 ura"
+
+msgid "options_downloadInterval_180"
+msgstr "3 ure"
+
+msgid "options_downloadInterval_360"
+msgstr "6 ur"
+
+msgid "options_downloadInterval_720"
+msgstr "12 ur"
+
+msgid "options_downloadInterval_1440"
+msgstr "Vsak dan"
+
+msgid "options_downloadInterval_never"
+msgstr "Nikoli"
+
+msgid "options_group_importExportProfile"
+msgstr "Profil"
+
+msgid "options_exportPacFile"
+msgstr "Izvozi kot datoteko PAC"
+
+msgid "options_exportPacFileHelp"
+msgstr "Izvozite trenutni profil kot datoteko PAC za uporabo v drugih brskalnikih."
+
+msgid "options_exportProfileHelp"
+msgstr "Za izvoz profila uporabite akcijsko vrstico zgoraj desno na strani profila."
+
+msgid "options_exportLegacyRuleList"
+msgstr "Ko je mogoče, izvozi sezname pravil v obliki, združljivi s Proxy Switchy!/SwitchyPlus/SwitchySharp."
+
+msgid "options_exportLegacyRuleListHelp"
+msgstr "To možnost vklopite le, če objavljate sezname pravil za uporabnike teh projektov.<br>Razmislite o priporočilu, da preidejo na SwitchyDelta zaradi izboljšav."
+
+msgid "options_group_importExportSettings"
+msgstr "Nastavitve"
+
+msgid "options_makeBackup"
+msgstr "Ustvari varnostno kopijo"
+
+msgid "options_makeBackupHelp"
+msgstr "Ustvari popolno varnostno kopijo možnosti (vključno s profili in vsemi drugimi nastavitvami)."
+
+msgid "options_restoreLocal"
+msgstr "Obnovi iz datoteke"
+
+msgid "options_restoreLocalHelp"
+msgstr "Obnovi možnosti SwitchyDelta iz lokalne datoteke."
+
+msgid "options_restoreOnline"
+msgstr "Obnovi iz spleta"
+
+msgid "options_restoreOnlinePlaceholder"
+msgstr "URL datoteke z možnostmi (npr. 'http://example.com/switchy.bak')"
+
+msgid "options_restoreOnlineSubmit"
+msgstr "Obnovi"
+
+msgid "options_group_syncing"
+msgstr "Sinhronizacija (poskusno)"
+
+msgid "options_syncEnable"
+msgstr "Omogoči sinhronizacijo"
+
+msgid "options_syncEnableForce"
+msgstr "Prenesi iz sinhronizacije"
+
+msgid "options_syncDisable"
+msgstr "Onemogoči sinhronizacijo"
+
+msgid "options_syncReset"
+msgstr "Počisti oddaljeno kopijo"
+
+msgid "options_syncPristineHelp"
+msgstr "Zdaj lahko samodejno sinhronizirate nastavitve in profile na vseh namiznih napravah z brskalnikom Chrome."
+
+msgid "options_syncSyncAlert"
+msgstr "Vaše možnosti se samodejno sinhronizirajo z drugimi napravami."
+
+msgid "options_syncSyncHelp"
+msgstr "Za delovanje sinhronizacije morate biti prijavljeni v Chrome na vsaki napravi (vključno s to). <br> Ta razdelek lahko preverite tudi na drugih napravah."
+
+msgid "options_syncConflictAlert"
+msgstr "Na drugi napravi ste prek sinhronizacije naložili kopijo svojih možnosti."
+
+msgid "options_syncConflictHelp"
+msgstr "Oddaljeno kopijo lahko prenesete v to napravo. <br>S tem pa <b>prepišete obstoječe nastavitve in profile</b> na tej napravi."
+
+msgid "options_syncUnsupportedHelp"
+msgstr "Sinhronizacija možnosti na vaši platformi ali brskalniku ni podprta. Trenutno je podprt le Chrome na namizju."
+
+msgid "options_profileSyncDisabled"
+msgstr "Sinhronizacija je za ta profil onemogočena."
+
+msgid "options_profileSyncDisabled_quotaPerItem"
+msgstr "Sinhronizacija je za ta profil onemogočena zaradi prevelike porabe shrambe."
+
+msgid "options_profileTabPrefix"
+msgstr "Profil :: "
+
+msgid "options_renameProfile"
+msgstr "Preimenuj"
+
+msgid "options_deleteProfile"
+msgstr "Izbriši"
+
+msgid "options_profileExportRuleList"
+msgstr "Objavi seznam pravil"
+
+msgid "options_profileExportRuleListHelp"
+msgstr "Izvozi preklopna pravila v besedilni obliki za objavo."
+
+msgid "options_profileExportPac"
+msgstr "Izvozi PAC"
+
+msgid "options_profileUnsupported"
+msgstr "Nepodprt tip profila $TYPE$!"
+
+msgid "options_profileUnsupportedHelp"
+msgstr "Možnosti so morda pokvarjene ali iz novejše različice tega programa."
+
+msgid "options_profileEditSource"
+msgstr "Uredi izvorno kodo"
+
+msgid "options_profileEditSourceHelp"
+msgstr "Prikaži pomoč o formatu izvorne kode"
+
+msgid "options_profileEditSourceHelpUrl"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/SwitchyDelta-conditions-format#result-profile"
+
+msgid "options_group_proxyServers"
+msgstr "Proksi strežniki"
+
+msgid "options_proxy_scheme"
+msgstr "Shema"
+
+msgid "options_proxy_protocol"
+msgstr "Protokol"
+
+msgid "options_proxy_server"
+msgstr "Strežnik"
+
+msgid "options_proxy_port"
+msgstr "Vrata"
+
+msgid "options_proxy_auth"
+msgstr "Preverjanje pristnosti"
+
+msgid "options_proxy_authNotSupported"
+msgstr "Your browser DOES NOT support $PROTOCOLDISP$ proxy authentication! "
+"Please do not report this issue to SwitchyDelta. Contact the support for "
+"your browser instead."
+
+msgid "options_proxy_authAllWarningPac"
+msgstr "Opozorilo: Uporabniško ime/geslo se lahko pošlje nepričakovanim strežnikom, ki jih vrne PAC skript."
+
+msgid "options_proxy_authAllWarningPacUrl"
+msgstr "Pred vnosom občutljivih poverilnic se prepričajte, da zaupate skriptu z zgornjega URL-ja."
+
+msgid "options_proxy_authAllWarningPacScript"
+msgstr "Pred vnosom občutljivih poverilnic se prepričajte, da zaupate spodnjemu skriptu."
+
+msgid "options_proxy_authReferencedWarning"
+msgstr "Poleg tega lahko uporaba tega profila v drugih profilih (npr. Switch Profile) povzroči pošiljanje uporabniškega imena/gesla na proksi strežnike v drugih profilih."
+
+msgid "options_scheme_default"
+msgstr "(privzeto)"
+
+msgid "options_protocol_direct"
+msgstr "DIRECT"
+
+msgid "options_protocol_useDefault"
+msgstr "(uporabi privzeto)"
+
+msgid "options_proxy_single"
+msgstr "Uporabi zgornji proksi za vse protokole."
+
+msgid "options_proxy_expand"
+msgstr "Prikaži napredno"
+
+msgid "options_group_bypassList"
+msgstr "Seznam izjem"
+
+msgid "options_bypassListHelp"
+msgstr "Strežniki, za katere ne želite uporabljati proksija: (En strežnik na vrstico.)"
+
+msgid "options_bypassListHelpLinkText"
+msgstr "(Na voljo jokerji in več…)"
+
+msgid "options_group_pacUrl"
+msgstr "PAC URL"
+
+msgid "options_pacUrlHelp"
+msgstr "PAC skript se posodobi s tega URL-ja. Če je prazno, se neposredno uporabi spodnji skript."
+
+msgid "options_pacUrlFile"
+msgstr "PAC profile z file: URL-ji je mogoče uporabiti le neposredno. Ne morejo biti rezultatni profili, ker brskalnik ne more dostopati do lokalnih datotek."
+
+msgid "options_pacUrlFileDisabled"
+msgstr "Zato za ta profil ne morete uporabiti lokalne datoteke PAC. Če to res želite, ustvarite nov PAC profil."
+
+msgid "options_group_pacScript"
+msgstr "PAC skript"
+
+msgid "options_pacScriptLastUpdate"
+msgstr "PAC skript prenesen ob $TIME$:"
+
+msgid "options_pacScriptObsolete"
+msgstr "PAC skript je zastarel zaradi spremembe URL-ja. Posodobite s pritiskom na gumb za prenos zgoraj."
+
+msgid "options_group_virtualProfile"
+msgstr "Navidezni profil"
+
+msgid "options_virtualProfileTarget"
+msgstr "Cilj"
+
+msgid "options_virtualProfileTargetHelp"
+msgstr "Ko je ta profil uporabljen, se obnaša enako kot spodaj izbrani profil."
+
+msgid "options_group_virtualProfileReplace"
+msgstr "Migracija na navidezni profil"
+
+msgid "options_virtualProfileReplace"
+msgstr "Zamenjaj ciljni profil"
+
+msgid "options_virtualProfileReplaceHelp"
+msgstr "Obstoječe možnosti lahko migrirate tako, da namesto $PROFILE$ uporabijo ta navidezni profil. S tem se posodobijo vsa pravila za $PROFILE$ in kažejo na ta navidezni profil, da rezultatne profile upravljate tukaj."
+
+msgid "options_group_ruleListConfig"
+msgstr "Nastavitev seznama pravil"
+
+msgid "options_ruleListFormat"
+msgstr "Oblika seznama pravil"
+
+msgid "options_group_ruleListResult"
+msgstr "Rezultatni profili seznama pravil"
+
+msgid "options_ruleListMatchProfile"
+msgstr "Profil ob ujemanju"
+
+msgid "options_ruleListDefaultProfile"
+msgstr "Privzeti profil"
+
+msgid "options_group_ruleListUrl"
+msgstr "URL seznama pravil"
+
+msgid "options_ruleListUrlHelp"
+msgstr "Seznam pravil se posodobi s tega URL-ja. Če je prazno, se razčleni spodnje besedilo."
+
+msgid "options_group_ruleListText"
+msgstr "Besedilo seznama pravil"
+
+msgid "options_ruleListLastUpdate"
+msgstr "Seznam pravil prenesen ob $TIME$:"
+
+msgid "options_ruleListObsolete"
+msgstr "Seznam pravil je zastarel zaradi spremembe URL-ja. Posodobite s pritiskom na gumb za prenos zgoraj."
+
+msgid "options_group_switchRules"
+msgstr "Preklopna pravila"
+
+msgid "options_sort"
+msgstr "Razvrsti"
+
+msgid "options_conditionType"
+msgstr "Tip pogoja"
+
+msgid "options_showConditionTypeHelp"
+msgstr "Prikaži pomoč"
+
+msgid "options_conditionDetails"
+msgstr "Podrobnosti pogoja"
+
+msgid "options_resultProfile"
+msgstr "Profil"
+
+msgid "options_conditionActions"
+msgstr "Dejanja"
+
+msgid "options_addCondition"
+msgstr "Dodaj pogoj"
+
+msgid "options_cloneRule"
+msgstr "Kloniraj"
+
+msgid "options_ruleNote"
+msgstr "Note"
+
+msgid "options_switchAttachedProfileInCondition"
+msgstr "Pravila s seznama"
+
+msgid "options_switchAttachedProfileInConditionDetails"
+msgstr "(Katera koli zahteva, ki se ujema s spodnjim seznamom pravil)"
+
+msgid "options_switchAttachedProfileInConditionDisabled"
+msgstr "(Pravila s seznama so ONEMOGOČENA)"
+
+msgid "options_switchDefaultProfile"
+msgstr "Privzeto"
+
+msgid "options_hostLevelsBetween"
+msgstr "≤ ravni gostitelja ≤"
+
+msgid "options_hourBetween"
+msgstr "≤ trenutna ura ≤"
+
+msgid "options_weekDayShort_0"
+msgstr "Ne"
+
+msgid "options_weekDayShort_1"
+msgstr "Po"
+
+msgid "options_weekDayShort_2"
+msgstr "To"
+
+msgid "options_weekDayShort_3"
+msgstr "Sr"
+
+msgid "options_weekDayShort_4"
+msgstr "Če"
+
+msgid "options_weekDayShort_5"
+msgstr "Pe"
+
+msgid "options_weekDayShort_6"
+msgstr "So"
+
+msgid "options_group_conditionHelp"
+msgstr "O tipih pogojev"
+
+msgid "options_group_attachProfile"
+msgstr "Uvozi spletne sezname pravil"
+
+msgid "options_attachProfile"
+msgstr "Dodaj seznam pravil"
+
+msgid "options_attachProfileHelp"
+msgstr "Z dodajanjem seznama pravil lahko znova uporabite spletno zbirko pogojev drugih."
+
+msgid "options_modalHeader_welcome"
+msgstr "Dobrodošli v SwitchyDelta"
+
+msgid "options_welcomeNormal"
+msgstr "Uspešno ste namestili SwitchyDelta, vrhunski proksi preklopnik."
+
+msgid "options_welcomeNormalGuide"
+msgstr "Povejte SwitchyDelta o svojih proksijih na strani možnosti. Poglejmo kako."
+
+msgid "options_welcomeUpgrade"
+msgstr "Uspešno ste nadgradili na SwitchyDelta. Brez panike, obstoječe možnosti so v celoti ohranjene."
+
+msgid "options_welcomeUpgradeGuide"
+msgstr "Zdaj hitro preglejmo novo stran možnosti."
+
+msgid "options_guideNext"
+msgstr "Naprej"
+
+msgid "options_guideDone"
+msgstr "Končano"
+
+msgid "options_guideSkip"
+msgstr "Preskoči vodič"
+
+msgid "options_modalHeader_applyOptions"
+msgstr "Uporabi možnosti"
+
+msgid "options_optionsNotSaved"
+msgstr "Spremembe možnosti niso shranjene in bodo ob nadaljevanju izgubljene!"
+
+msgid "options_applyOptionsRequired"
+msgstr "Pred nadaljevanjem morate uporabiti spremembe možnosti."
+
+msgid "options_applyOptionsConfirm"
+msgstr "Ali želite shraniti in uporabiti možnosti?"
+
+msgid "options_modalHeader_renameProfile"
+msgstr "Preimenuj profil"
+
+msgid "options_renameProfileName"
+msgstr "Novo ime profila"
+
+msgid "options_profileNameConflict"
+msgstr "Profil s tem imenom že obstaja."
+
+msgid "options_profileNameReserved"
+msgstr "Imena profilov, ki se začnejo z dvojnim podčrtajem, so rezervirana."
+
+msgid "options_profileNameHidden"
+msgstr "Profili z imeni, ki se začnejo s podčrtajem, so skriti v pojavnem meniju. Še vedno jih lahko uporabite npr. kot rezultate preklopnega profila."
+
+msgid "options_modalHeader_replaceProfile"
+msgstr "Zamenjaj profil"
+
+msgid "options_replaceProfile"
+msgstr "Zamenjaj profil"
+
+msgid "options_replaceProfileConfirm"
+msgstr "Ali res želite zamenjati $FromProfile$ s $ToProfile$?"
+
+msgid "options_replaceProfileHelp"
+msgstr "Če nadaljujete, se vsa pravila, ki kažejo na $FromProfile$, posodobijo na $ToProfile$. Prilagodijo se tudi druge možnosti, npr. zagonski profil in Hitri preklop. Sama dva profila pa se NE spremenita ali izbrišeta."
+
+msgid "options_replaceProfileSuccess"
+msgstr "Možnosti posodobljene."
+
+msgid "options_modalHeader_deleteProfile"
+msgstr "Izbriši profil"
+
+msgid "options_deleteProfileConfirm"
+msgstr "Ali res želite izbrisati naslednji profil?"
+
+msgid "options_modalHeader_cannotDeleteProfile"
+msgstr "Profila ni mogoče izbrisati"
+
+msgid "options_profileReferredBy"
+msgstr "Tega profila ni mogoče izbrisati, ker se nanj sklicujejo naslednji profili:"
+
+msgid "options_modifyReferringProfiles"
+msgstr "Pred brisanjem morate te profile spremeniti tako, da se ne sklicujejo več nanj."
+
+msgid "options_profileNameEmpty"
+msgstr "Ime profila ne sme biti prazno."
+
+msgid "popup_title"
+msgstr "Pojavno okno SwitchyDelta"
+
+msgid "options_modalHeader_proxyAuth"
+msgstr "Preverjanje pristnosti proksija"
+
+msgid "options_proxyAuthUsername"
+msgstr "Uporabniško ime"
+
+msgid "options_proxyAuthPassword"
+msgstr "Geslo"
+
+msgid "options_proxyAuthShowPassword"
+msgstr "Show password"
+
+msgid "options_proxyAuthHidePassword"
+msgstr "Hide password"
+
+msgid "options_proxyAuthNone"
+msgstr "Brez preverjanja pristnosti"
+
+msgid "options_modalHeader_deleteRule"
+msgstr "Izbriši pravilo"
+
+msgid "options_deleteRuleConfirm"
+msgstr "Ali res želite izbrisati to pravilo?"
+
+msgid "options_deleteRule"
+msgstr "Izbriši"
+
+msgid "options_modalHeader_resetRules"
+msgstr "Ponastavitev pravil"
+
+msgid "options_resetRulesConfirm"
+msgstr "Ali ste prepričani, da želite nastaviti rezultatni profil VSEH pravil na naslednji profil?"
+
+msgid "options_resetRules"
+msgstr "Ponastavitev pravil"
+
+msgid "options_resetRules_help"
+msgstr "Nastavi profil za vsa pravila"
+
+msgid "options_modalHeader_deleteAttached"
+msgstr "Odstrani seznam pravil"
+
+msgid "options_deleteAttachedConfirm"
+msgstr "Ali res želite odstraniti seznam pravil iz trenutnega profila?"
+
+msgid "options_ruleListLineCount"
+msgstr "$COUNT$ vrstic pravil"
+
+msgid "options_deleteAttached"
+msgstr "Odstrani seznam pravil"
+
+msgid "options_modalHeader_newProfile"
+msgstr "Nov profil"
+
+msgid "options_newProfileName"
+msgstr "Ime profila"
+
+msgid "options_profileType"
+msgstr "Izberite vrsto profila:"
+
+msgid "options_profileTypeFixedProfile"
+msgstr "Proksi profil"
+
+msgid "options_profileDescFixedProfile"
+msgstr "Preusmerjanje prometa skozi proksi strežnike."
+
+msgid "options_profileTypePacProfile"
+msgstr "PAC profil"
+
+msgid "options_profileDescPacProfile"
+msgstr "Izbira proksijev s spletnim/lokalnim PAC skriptom."
+
+msgid "options_profileDescMorePacProfile"
+msgstr "To potrebujete le, če imate PAC skript ali URL do njega. Ne ustvarjajte ga, če o PAC ne veste dovolj."
+
+msgid "options_profileTypeSwitchProfile"
+msgstr "Preklopni profil"
+
+msgid "options_profileDescSwitchProfile"
+msgstr ""
+"Samodejna uporaba različnih profilov glede na pogoje, npr. domene ali vzorce.\n"
+" Uvozite lahko tudi pravila, objavljena na spletu, za lažji preklop. (Nadomesti način AutoSwitch + seznam pravil.)"
+
+msgid "options_profileTypeRuleListProfile"
+msgstr "Profil seznama pravil"
+
+msgid "options_profileDescRuleListProfile"
+msgstr "Ponovna uporaba spletne zbirke pogojev, ki so jo objavili drugi."
+
+msgid "options_profileTypeVirtualProfile"
+msgstr "Navidezni profil"
+
+msgid "options_profileDescVirtualProfile"
+msgstr "Navidezni profil lahko po potrebi deluje kot kateri koli drug profil. Dobro deluje s SwitchProfile in omogoča spremembo rezultata več pogojev z enim klikom."
+
+msgid "options_createProfile"
+msgstr "Ustvari"
+
+msgid "options_modalHeader_resetOptions"
+msgstr "Ponastavi možnosti"
+
+msgid "options_resetOptionsConfirm"
+msgstr "Ali res želite ponastaviti možnosti? Vsi profili in nastavitve bodo IZGUBLJENI!"
+
+msgid "options_formInvalid"
+msgstr "Popravite napake na tej strani."
+
+msgid "options_profileNotFound"
+msgstr "Profil $PROFILE$ ne obstaja! Možnosti so morda pokvarjene."
+
+msgid "options_resetSuccess"
+msgstr "Možnosti ponastavljene."
+
+msgid "options_saveSuccess"
+msgstr "Možnosti shranjene."
+
+msgid "options_importSuccess"
+msgstr "Možnosti uvožene."
+
+msgid "options_importFormatError"
+msgstr "Neveljavna varnostna kopija!"
+
+msgid "options_importDownloadError"
+msgstr "Napaka pri prenosu varnostne kopije!"
+
+msgid "options_profileDownloadSuccess"
+msgstr "Profil uspešno posodobljen."
+
+msgid "options_profileDownloadError"
+msgstr "Napaka pri prenosu podatkov profila!"
+
+msgid "options_profileDownloadError_NetworkError"
+msgstr "A network error occurred when updating."
+
+msgid "options_profileDownloadError_HttpError"
+msgstr "An HTTP error ($STATUS$) occurred when updating."
+
+msgid "options_profileDownloadError_HttpNotFoundError"
+msgstr "The Profile URL was not found on the server. Please double-check."
+
+msgid "options_profileDownloadError_HttpServerError"
+msgstr "The remote server responded with error ($STATUS$) when updating."
+
+msgid "options_profileDownloadError_ContentTypeRejectedError"
+msgstr "The downloaded data is invalid! "
+"You may open the Profile URL in your browser to inspect it."
+
+msgid "options_downloadProfileNow"
+msgstr "Prenesi profil zdaj"
+
+msgid "options_guide_fixedProfileStep"
+msgstr "<b>Proksi profil</b> vsebuje nastavitve, kot sta IP strežnika in vrata proksija.<br>Profili so osnovne konfiguracijske enote v SwitchyDelta.<br>Že smo ustvarili primer profila. Poskusite ga odpreti."
+
+msgid "options_guide_fixedServersStep"
+msgstr "Tukaj lahko vnesete proksi strežnik in vrata po želji.<br>SwitchyDelta <b>ne prinaša nobenih proksi strežnikov</b>.<br>Če ne veste, kaj vnesti, se posvetujte s ponudnikom omrežja ali priročnikom proksi programske opreme."
+
+msgid "options_guide_autoSwitchProfileStep"
+msgstr "Z zmogljivim <b>Preklopnim profilom</b> lahko SwitchyDelta samodejno preklaplja med proksiji.<br>Njegovih funkcij ta kratek vodič ne more pokriti.<br>Kasneje lahko profil odprete in odklenete njegove zmožnosti."
+
+msgid "options_guide_addMoreProfilesStep"
+msgstr "Potrebujete več profilov? Vedno lahko dodate več <b>Proksi, preklopnih in drugih profilov</b><br>za vse vaše potrebe po proksiju.<br>Uživajte v proksiju!"
+
+msgid "options_guide_conditionStep"
+msgstr "SwitchyDelta lahko za zahteve uporabi različne profile glede na <b>pogoje</b>.<br> Na primer pogoj <b>Gostitelj (joker)</b> omogoča nastavitev profila za vse URL-je v domeni."
+
+msgid "options_guide_conditionTypeStep"
+msgstr "Za ujemanje gostitelja ali celotnega URL-ja lahko uporabite različne tipe pogojev. <br> Kliknite vprašaj za referenco tipov."
+
+msgid "options_guide_conditionProfileStep"
+msgstr "SwitchyDelta tukaj uporabi izbrani profil za <b>vsako zahtevo, ki se ujema s pogojem.</b> <br> Posebni profil <b>\"[Direct]\"</b> pošlje zahtevo brez proksija."
+
+msgid "options_guide_switchDefaultStep"
+msgstr "Če se noben pogoj ne ujema z zahtevo, se uporabi profil »Default«. <br>Pogoji se vedno obravnavajo <b>od zgoraj navzdol</b>.<br>Vrstni red spremenite z vlečenjem ikone razvrščanja."
+
+msgid "options_guide_applySwitchProfileStep"
+msgstr "Ko končate nastavitev preklopnega profila, ne pozabite nanj <b>preklopiti v pojavnem meniju.</b><br/> Ikona prikaže <b>končni rezultatni</b> profil za trenutni zavihek. <br/> <b>Lebdenje</b> nad ikono prikaže orodni namig s podrobnostmi."
+
+msgid "popup_externalProfile"
+msgstr "(Zunanji profil)"
+
+msgid "popup_externalProfileName"
+msgstr "ime profila"
+
+msgid "popup_proxyNotControllable_app"
+msgstr "Nastavitve proksija upravljajo druge aplikacije ali razširitve. Onemogočite ali odstranite konfliktne aplikacije ali razširitve."
+
+msgid "popup_proxyNotControllable_policy"
+msgstr "Nastavitve proksija preglasijo pravilniki. Obrnite se na skrbnika."
+
+msgid "popup_proxyNotControllable_unknown"
+msgstr "Nastavitev proksija ni mogoče upravljati. Preverite sistemske in brskalniške nastavitve."
+
+msgid "popup_proxyNotControllable_disabled"
+msgstr "Nastavitve proksija so onemogočene na izrecno zahtevo drugih aplikacij ali razširitev."
+
+msgid "popup_proxyNotControllable_upgrade"
+msgstr "Nastavitve proksija zdaj upravlja novejša različica SwitchyDelta."
+
+msgid "popup_proxyNotControllableDetails"
+msgstr "Brez odprave zgornje težave ne morete preklapljati profilov s SwitchyDelta."
+
+msgid "popup_proxyNotControllableDetails_upgrade"
+msgstr "Hkrati ne morete imeti omogočenih dveh (ali več) različic SwitchyDelta. Eno onemogočite."
+
+msgid "popup_proxyNotControllableManage"
+msgstr "Upravljaj razširitve"
+
+msgid "popup_addConditionTo"
+msgstr "Dodaj pogoj v"
+
+msgid "popup_addCondition"
+msgstr "Dodaj pogoj"
+
+msgid "popup_showOptions"
+msgstr "Možnosti"
+
+msgid "popup_reportIssues"
+msgstr "Prijavi težave"
+
+msgid "popup_errorLog"
+msgstr "Shrani dnevnik napak"
+
+msgid "popup_requestErrorCount"
+msgstr "$COUNT$ spodletelih virov"
+
+msgid "popup_requestErrorHeading"
+msgstr "Viri, ki se niso naložili"
+
+msgid "popup_requestErrorWarning"
+msgstr "Nekaj virov se ni naložilo zaradi težav z omrežjem, proksi strežnikom ali spletno stranjo."
+
+msgid "popup_requestErrorWarningHelp"
+msgstr "SwitchyDelta te težave le sporoča, ni njihov vzrok."
+
+msgid "popup_requestErrorAddCondition"
+msgstr "Pregledate lahko naslednje domene in zanje po potrebi uporabite proksi."
+
+msgid "popup_requestErrorCannotAddCondition"
+msgstr "Preklopne pogoje zanje lahko dodate le ob uporabi Preklopnega profila."
+
+msgid "popup_configureMonitorWebRequests"
+msgstr "Nastavi omrežni nadzor"
+
+msgid "options_resultProfileForSelectedDomains"
+msgstr "Uporabi ta profil za vse izbrane domene"
+
+msgid "options_pac_profile_unsupported_moz"
+msgstr "PAC Profiles WILL NOT work in Mozilla Firefox due to technical limitations!"
+
+msgid "popup_issueTemplate"
+msgstr ""
+"\n"
+"\n"
+"\n"
+"<!-- Please write your comment ABOVE this line. -->\n"
+"SwitchyDelta $projectVersion$\n"
+"$userAgent$"
+
+msgid "browserAction_profileDetails_PacProfile"
+msgstr "(PAC skript)"
+
+msgid "browserAction_profileDetails_SystemProfile"
+msgstr "(upravljajo druge razširitve ali okolje)"
+
+msgid "browserAction_profileDetails_DirectProfile"
+msgstr "(brez proksija)"
+
+msgid "browserAction_profileDetails_SwitchProfile"
+msgstr "(preklop glede na pogoje)"
+
+msgid "browserAction_profileDetails_RuleListProfile"
+msgstr "(preklop glede na seznam pravil)"
+
+msgid "browserAction_titleNormal"
+msgstr "SwitchyDelta:: $PROFILE$"
+
+msgid "browserAction_titleWithResult"
+msgstr ""
+"SwitchyDelta:: $1:PROFILE$\n"
+"$3:DETAILS$"
+
+msgid "browserAction_titleNewerOptions"
+msgstr "NAPAKA: Za nalaganje shranjenih možnosti je potrebna novejša različica SwitchyDelta."
+
+msgid "browserAction_titleOptionError"
+msgstr "NAPAKA: Shranjene možnosti so poškodovane. Kliknite tukaj za PONASTAVITEV MOŽNOSTI."
+
+msgid "browserAction_titleDownloadFail"
+msgstr "Opozorilo: Prenos PAC skriptov in/ali seznamov pravil ni uspel."
+
+msgid "browserAction_titleExternalProxy"
+msgstr "Opomba: Nastavitve proksija trenutno upravljajo druge aplikacije."
+
+msgid "browserAction_titleInspect"
+msgstr "[Preglej] $URL$"
+
+msgid "browserAction_defaultRuleDetails"
+msgstr "(privzeto)"
+
+msgid "browserAction_directResult"
+msgstr "DIRECT"
+
+msgid "browserAction_attachedPrefix"
+msgstr "(RL) "
+
+msgid "browserAction_tempRulePrefix"
+msgstr "(TEMP) "
+
+msgid "contextMenu_inspectPage"
+msgstr "Preglej proksi za to stran"
+
+msgid "contextMenu_inspectFrame"
+msgstr "Preglej proksi za ta okvir"
+
+msgid "contextMenu_inspectLink"
+msgstr "Preglej proksi, če se odpre ta povezava"
+
+msgid "contextMenu_inspectElement"
+msgstr "Preglej proksi za ta element"
+
+msgid "contextMenu_enableQuickSwitch"
+msgstr "Omogoči hitri preklop"
+
+msgid "about_title"
+msgstr "About"
+
+msgid "about_app_description"
+msgstr "A proxy configuration tool"
+
+msgid "about_version"
+msgstr "Version $VERSION$"
+
+msgid "about_experimental_warning_moz"
+msgstr "Mozilla Firefox support is highly experimental! If you encounter issues, please report using the buttons below."
+
+msgid "about_disclaimer_networkService"
+msgstr "SwitchyDelta does not provide proxies, VPNs, or other network services."
+
+msgid "about_disclaimer_privacy"
+msgstr "SwitchyDelta does not track you or insert ads into webpages. Please see"
+" our <a href='https://github.com/madeye/SwitchyDelta/wiki/Privacy#english'>privacy policy</a>."
+
+msgid "about_help"
+msgstr "Other questions? Need help with using SwitchyDelta? Please see our "
+"<a href='https://github.com/madeye/SwitchyDelta/wiki/FAQ'>FAQ</a>."
+
+msgid "about_copyright"
+msgstr "Copyright 2026 <a href='https://github.com/madeye'>Max Lv</a>.<br>Copyright 2012-2017 <a href='https://github.com/FelisCatus/SwitchyOmega/blob/master/AUTHORS'>The SwitchyOmega Authors</a>."
+
+msgid "about_credits"
+msgstr "SwitchyDelta is made possible by the <a href='https://github.com/madeye/SwitchyDelta'>SwitchyDelta</a> open source project and other <a href='https://github.com/madeye/SwitchyDelta/blob/master/AUTHORS'>open source software</a>."
+
+msgid "about_license"
+msgstr "SwitchyDelta is <a href='https://www.gnu.org/philosophy/free-sw.en.html'>free software</a> licensed under <a href='https://www.gnu.org/licenses/gpl.html'>GNU General Public License</a> Version 3 or later."
+
+msgid "popup_proxyAuthPermission"
+msgstr "Prijava v overjene proxyje zahteva dostop do vseh spletišč."
+
+msgid "popup_proxyAuthPermissionGrant"
+msgstr "Dodeli dostop"

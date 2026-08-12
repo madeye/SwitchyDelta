@@ -32,11 +32,11 @@ import type { OptionsSync } from './options-sync.js';
 import getDefaultOptions from './default-options.js';
 
 /** The persisted options bag, keyed by `+profileName` and `-settingName`. */
-export type OmegaOptions = OptionsBag;
+export type DeltaOptions = OptionsBag;
 
 /** The platform hook that actually programs the browser's proxy settings. */
 export interface ProxyImpl {
-  applyProfile(profile: Profile, meta: Profile, options: OmegaOptions): Promise<unknown>;
+  applyProfile(profile: Profile, meta: Profile, options: DeltaOptions): Promise<unknown>;
 }
 
 export interface ApplyProfileOptions {
@@ -95,7 +95,7 @@ interface AvailableProfile {
 
 export class Options {
   /** All the options, in a map from key to value. */
-  protected _options: OmegaOptions = {};
+  protected _options: DeltaOptions = {};
   protected _storage: Storage;
   protected _state: Storage;
   protected _currentProfileName: string | null = null;
@@ -125,9 +125,9 @@ export class Options {
   proxyImpl: ProxyImpl;
 
   /** Resolves with the options once the first profile has been applied. */
-  ready!: Promise<OmegaOptions>;
+  ready!: Promise<DeltaOptions>;
   /** Resolves with the options once they have been loaded from storage. */
-  optionsLoaded!: Promise<OmegaOptions>;
+  optionsLoaded!: Promise<DeltaOptions>;
 
   /**
    * Transform options values (especially profiles) for syncing.
@@ -151,7 +151,7 @@ export class Options {
   }
 
   constructor(
-    options: OmegaOptions | null | undefined,
+    options: DeltaOptions | null | undefined,
     storage?: Storage | null,
     state?: Storage | null,
     log?: Logger | null,
@@ -235,7 +235,7 @@ export class Options {
    * On failure this wipes local storage, installs a fallback set of options
    * (from sync storage if it looks usable, otherwise the defaults) and retries.
    */
-  loadOptions(args: { retry?: number } = {}): Promise<OmegaOptions> {
+  loadOptions(args: { retry?: number } = {}): Promise<DeltaOptions> {
     const retry = args.retry ?? 3;
     this._syncWatchStop?.();
     this._syncWatchStop = null;
@@ -270,10 +270,10 @@ export class Options {
         }
         return options;
       })
-      .catch(async (e: unknown): Promise<OmegaOptions> => {
+      .catch(async (e: unknown): Promise<DeltaOptions> => {
         if (!(retry > 0)) throw e;
 
-        let fallbackOptions: OmegaOptions | null | undefined = null;
+        let fallbackOptions: DeltaOptions | null | undefined = null;
         if (e instanceof NoOptionsError) {
           void this._state
             .get({ firstRun: 'new', 'web.switchGuide': 'showOnFirstUse' })
@@ -322,7 +322,7 @@ export class Options {
   }
 
   /** Attempt to initialize (or reinitialize) options. */
-  init(): Promise<OmegaOptions> {
+  init(): Promise<DeltaOptions> {
     this.ready = this.loadOptions()
       .then(async () => {
         const startup = this._get<string>('-startupProfileName');
@@ -380,13 +380,13 @@ export class Options {
    * at the end of their implementation.
    */
   async upgrade(
-    options: OmegaOptions | null | undefined,
+    options: DeltaOptions | null | undefined,
     changes?: StorageItems,
-  ): Promise<[OmegaOptions, StorageItems]> {
+  ): Promise<[DeltaOptions, StorageItems]> {
     const pending: StorageItems = changes ?? {};
     let version = options?.['schemaVersion'];
     if (version === 1) {
-      const opts = options as OmegaOptions;
+      const opts = options as DeltaOptions;
       let autoDetectUsed = false;
       Profiles.each(opts, (_key, profile) => {
         if (!autoDetectUsed) {
@@ -408,13 +408,13 @@ export class Options {
     }
     if (version === 2) {
       // Current schemaVersion.
-      return [options as OmegaOptions, pending];
+      return [options as DeltaOptions, pending];
     }
     throw new Error(`Invalid schemaVerion ${String(version)}!`);
   }
 
   /** Parse options in various formats (including JSON & base64). */
-  parseOptions(options: OmegaOptions | string | null | undefined): OmegaOptions {
+  parseOptions(options: DeltaOptions | string | null | undefined): DeltaOptions {
     let parsed: unknown = options;
     if (typeof options === 'string') {
       let text: string | null = options;
@@ -439,11 +439,11 @@ export class Options {
     if (!parsed) {
       throw new Error('Invalid options!');
     }
-    return parsed as OmegaOptions;
+    return parsed as DeltaOptions;
   }
 
   /** Reset the options to the given options or the initial options. */
-  async reset(options?: OmegaOptions | string | null): Promise<OmegaOptions> {
+  async reset(options?: DeltaOptions | string | null): Promise<DeltaOptions> {
     this.log.method('Options#reset', this, arguments);
     const source = options ?? this.getDefaultOptions();
     const [opt] = await this.upgrade(this.parseOptions(source));
@@ -461,12 +461,12 @@ export class Options {
   }
 
   /** Return the default options used initially and on resets. */
-  getDefaultOptions(): OmegaOptions {
+  getDefaultOptions(): DeltaOptions {
     return getDefaultOptions();
   }
 
   /** Return all options. */
-  getAll(): OmegaOptions {
+  getAll(): DeltaOptions {
     return this._options;
   }
 
@@ -481,11 +481,11 @@ export class Options {
    * The delta format is the wire protocol used by the options UI, so it stays
    * even though nothing else here uses jsondiffpatch.
    */
-  patch(patch: Delta): Promise<OmegaOptions> | undefined {
+  patch(patch: Delta): Promise<DeltaOptions> | undefined {
     if (!patch) return undefined;
     this.log.method('Options#patch', this, arguments);
 
-    this._options = applyJsonPatch(this._options, patch) as OmegaOptions;
+    this._options = applyJsonPatch(this._options, patch) as DeltaOptions;
     // Only set the keys whose values have changed.
     const changes: StorageItems = {};
     for (const [key, delta] of Object.entries(patch as Record<string, unknown>)) {
@@ -507,7 +507,7 @@ export class Options {
   protected _setOptions(
     changes: StorageItems,
     args?: SetOptionsArgs,
-  ): Promise<OmegaOptions> | undefined {
+  ): Promise<DeltaOptions> | undefined {
     const removed: string[] = [];
     const checkRev = args?.checkRevision ?? false;
     let profilesChanged = false;
@@ -995,11 +995,11 @@ export class Options {
   }
 
   /** Replace all references of profile fromName to toName. */
-  replaceRef(fromName: string, toName: string): Promise<OmegaOptions> | undefined {
+  replaceRef(fromName: string, toName: string): Promise<DeltaOptions> | undefined {
     this.log.method('Options#replaceRef', this, arguments);
     const profile = Profiles.byName(fromName, this._options);
     if (!profile) {
-      return Promise.reject(new ProfileNotExistError(fromName)) as Promise<OmegaOptions>;
+      return Promise.reject(new ProfileNotExistError(fromName)) as Promise<DeltaOptions>;
     }
 
     const changes = this._replaceRefChanges(fromName, toName);
@@ -1019,18 +1019,18 @@ export class Options {
   }
 
   /** Rename a profile and update references and options. */
-  renameProfile(fromName: string, toName: string): Promise<OmegaOptions> | undefined {
+  renameProfile(fromName: string, toName: string): Promise<DeltaOptions> | undefined {
     this.log.method('Options#renameProfile', this, arguments);
     if (Profiles.byName(toName, this._options)) {
       // FIX: the message used to interpolate an undeclared `name`, which
       // resolved to the global `name` (an empty string) instead of `toName`.
       return Promise.reject(
         new Error(`Target name ${toName} already taken!`),
-      ) as Promise<OmegaOptions>;
+      ) as Promise<DeltaOptions>;
     }
     const profile = Profiles.byName(fromName, this._options);
     if (!profile) {
-      return Promise.reject(new ProfileNotExistError(fromName)) as Promise<OmegaOptions>;
+      return Promise.reject(new ProfileNotExistError(fromName)) as Promise<DeltaOptions>;
     }
 
     profile.name = toName;
@@ -1139,7 +1139,7 @@ export class Options {
   addCondition(
     condition: Condition | Condition[],
     profileName: string,
-  ): Promise<OmegaOptions> | undefined {
+  ): Promise<DeltaOptions> | undefined {
     this.log.method('Options#addCondition', this, arguments);
     if (!this._currentProfileName) return Promise.resolve(this._options);
     const profile = Profiles.byName(this._currentProfileName, this._options) as
@@ -1155,11 +1155,11 @@ export class Options {
             profile?.profileType,
           )})`,
         ),
-      ) as Promise<OmegaOptions>;
+      ) as Promise<DeltaOptions>;
     }
     const target = Profiles.byName(profileName, this._options);
     if (target == null) {
-      return Promise.reject(new ProfileNotExistError(profileName)) as Promise<OmegaOptions>;
+      return Promise.reject(new ProfileNotExistError(profileName)) as Promise<DeltaOptions>;
     }
     const conditions = Array.isArray(condition) ? condition : [condition];
 
@@ -1190,11 +1190,11 @@ export class Options {
   setDefaultProfile(
     profileName: string,
     defaultProfileName: string,
-  ): Promise<OmegaOptions> | undefined {
+  ): Promise<DeltaOptions> | undefined {
     this.log.method('Options#setDefaultProfile', this, arguments);
     const profile = Profiles.byName(profileName, this._options) as SwitchProfile | undefined;
     if (profile == null) {
-      return Promise.reject(new ProfileNotExistError(profileName)) as Promise<OmegaOptions>;
+      return Promise.reject(new ProfileNotExistError(profileName)) as Promise<DeltaOptions>;
     }
     if (profile.defaultProfileName == null) {
       // FIX: same broken interpolation as in addCondition (`@profile.name` and
@@ -1203,13 +1203,13 @@ export class Options {
         new Error(
           `Profile ${profile.name} (${profile.profileType}) does not have defaultProfileName!`,
         ),
-      ) as Promise<OmegaOptions>;
+      ) as Promise<DeltaOptions>;
     }
     const target = Profiles.byName(defaultProfileName, this._options);
     if (target == null) {
       return Promise.reject(
         new ProfileNotExistError(defaultProfileName),
-      ) as Promise<OmegaOptions>;
+      ) as Promise<DeltaOptions>;
     }
 
     profile.defaultProfileName = defaultProfileName;
@@ -1218,12 +1218,12 @@ export class Options {
   }
 
   /** Add a profile to the options. */
-  addProfile(profile: Profile): Promise<OmegaOptions> | undefined {
+  addProfile(profile: Profile): Promise<DeltaOptions> | undefined {
     this.log.method('Options#addProfile', this, arguments);
     if (Profiles.byName(profile.name, this._options)) {
       return Promise.reject(
         new Error(`Target name ${profile.name} already taken!`),
-      ) as Promise<OmegaOptions>;
+      ) as Promise<DeltaOptions>;
     }
     return this._setOptions({ [Profiles.nameAsKey(profile)]: profile });
   }

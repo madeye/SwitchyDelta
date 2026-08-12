@@ -13,11 +13,11 @@ import type {
   SwitchProfile,
 } from '@switchydelta/pac';
 import { upgradeLegacyOptions } from '../src/upgrade-legacy.js';
-import type { OmegaOptions } from '../src/options.js';
+import type { DeltaOptions } from '../src/options.js';
 
 const i18n = { upgrade_profile_auto: 'Auto Switch' };
 
-function upgrade(oldOptions: Record<string, unknown>): OmegaOptions {
+function upgrade(oldOptions: Record<string, unknown>): DeltaOptions {
   const result = upgradeLegacyOptions(oldOptions, i18n);
   expect(result).not.toBeNull();
   return result!;

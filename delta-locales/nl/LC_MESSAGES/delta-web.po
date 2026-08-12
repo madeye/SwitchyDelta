@@ -1,0 +1,1103 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SwitchyDelta 2.3.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-13 10:29+0000\n"
+"PO-Revision-Date: 2017-02-07 11:48+0000\n"
+"Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
+"Language-Team: Dutch "
+"<https://hosted.weblate.org/projects/switchyomega/main/nl/>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.11\n"
+
+msgid "appNameShort"
+msgstr "SwitchyDelta"
+
+msgid "manifest_app_name"
+msgstr "Proxy SwitchyDelta"
+
+msgid "manifest_app_description"
+msgstr ""
+"Beheer en schakel tussen meerdere proxies tegelijkertijd, gemakkelijk en "
+"snel."
+
+msgid "manifest_icon_default_title"
+msgstr "Bezig met laden…"
+
+msgid "upgrade_profile_auto"
+msgstr "Automatisch schakelen"
+
+msgid "profile_direct"
+msgstr "[Direct]"
+
+msgid "profile_system"
+msgstr "[Systeemproxy]"
+
+msgid "condition_HostWildcardCondition"
+msgstr "Host-jokerteken"
+
+msgid "condition_help_HostWildcardCondition"
+msgstr "Komt overeen met hosts (domeinnamen) via jokerteken.<br><b>Het sterretje <code>*</code></b> komt overeen met nul of meer tekens.<br><b>Het vraagteken <code>?</code></b> komt overeen met precies één teken.<br><br>Let op: regels die beginnen met <code>*.</code> worden alleen bij Host-jokerteken-voorwaarden speciaal behandeld.<br>Voorbeeld: <code>*.example.com</code> komt overeen met www.example.com <b>ÉN ook met example.com.</b><br>Om <b>alleen</b> subdomeinen te matchen, gebruik <b>twee</b> sterretjes zoals <code>**.example.com</code>."
+
+msgid "condition_HostRegexCondition"
+msgstr "Host-regex"
+
+msgid "condition_help_HostRegexCondition"
+msgstr "Net als Host-jokerteken, maar komt overeen met hosts (domeinnamen) via <a href='https://www.google.com/search?q=regular%20expression'>reguliere expressies</a>.<br>Reguliere expressies kunnen lastig te maken (en te lezen) zijn.<br>Het wordt aangeraden om in de meeste gevallen jokertekens te gebruiken en regex alleen als het niet met een ander voorwaardetype kan."
+
+msgid "condition_HostLevelsCondition"
+msgstr "Host-niveaus"
+
+msgid "condition_help_HostLevelsCondition"
+msgstr "Komt overeen met het verzoek als en alleen als het hostniveau binnen het opgegeven bereik ligt.<br>Hostniveau is het <b>aantal door punten gescheiden segmenten</b> van de host (domeinnaam).<br>Voorbeeld: <code>www.example.com</code> heeft hostniveau 3, terwijl <code>internal</code> niveau 1 heeft."
+
+msgid "condition_IpCondition"
+msgstr "IP-letters"
+
+msgid "condition_help_IpCondition"
+msgstr "Komt overeen met het verzoek als en alleen als de host een <b>letteraal</b> IP-adres is en in het subnet volgens <a href='https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_notation'>CIDR-notatie</a> valt.<br>Bijvoorbeeld, de regel <code>127.0.0.1/16</code> komt overeen met alle IP-adressen zoals <code>127.0.*.*</code>.<br>Dus <code>127.0.0.1</code> komt overeen en <code>127.1.0.0</code> niet. Hostnamen zoals <code>localhost</code> komen nooit overeen omdat ze <b>geen</b> IP-literalen zijn."
+
+msgid "condition_UrlWildcardCondition"
+msgstr "URL-jokerteken"
+
+msgid "condition_help_UrlWildcardCondition"
+msgstr "Komt overeen met URL's van het verzoek via jokerteken.<br>Zie de sectie Host-jokerteken hierboven voor een snelle referentie.<br>Let op: URL-jokertekens worden niet speciaal behandeld (geen subdomein-magie zoals bij Host-jokerteken).<br>Dus <code>*://*.example.com/*</code> komt overeen met http://www.example.com/ maar <b>niet</b> met http://example.com/."
+
+msgid "condition_UrlRegexCondition"
+msgstr "URL-regex"
+
+msgid "condition_help_UrlRegexCondition"
+msgstr "Komt overeen met URL via zeer krachtige <a href='https://www.google.com/search?q=regular%20expression'>reguliere expressies</a>.<br>Reguliere expressies kunnen echter lastig te maken (en te lezen) zijn.<br>Het wordt aangeraden om in de meeste gevallen jokertekens te gebruiken en regex alleen als het niet met een ander voorwaardetype kan."
+
+msgid "condition_KeywordCondition"
+msgstr "Trefwoord"
+
+msgid "condition_help_KeywordCondition"
+msgstr "Een trefwoordvoorwaarde komt overeen als het URL-protocol HTTP is en het patroon een exacte substring van de URL is.<br>Het gedraagt zich als het URL-jokerteken <code>http://*<b>pattern</b>*</code>, waarbij <b>pattern</b> het trefwoordpatroon is.<br>Trefwoordvoorwaarden zijn nuttig om een firewall te omzeilen die bepaalde woorden in de URL blokkeert, door zulke URL's via een proxy op te vragen."
+
+msgid "condition_FalseCondition"
+msgstr "(Uitgeschakeld)"
+
+msgid "condition_details_FalseCondition"
+msgstr "(Voorwaarde genegeerd bij matching)"
+
+msgid "condition_help_FalseCondition"
+msgstr "Je kunt een voorwaarde uitschakelen door het type op <code>(Uitgeschakeld)</code> te zetten. Een uitgeschakelde voorwaarde gedraagt zich alsof ze niet bestaat.<br>Dit kan tijdelijk voorwaarden uitschakelen.<br>Uitgeschakelde voorwaarden bewaren eerdere informatie (zoals patronen) en kunnen opnieuw worden ingeschakeld door het vorige type te herstellen."
+
+msgid "condition_TimeCondition"
+msgstr "Huidige tijd"
+
+msgid "condition_help_TimeCondition"
+msgstr "Komt overeen als de huidige lokale tijd in het bereik van <b>startuur</b> tot <b>einduur</b> valt, beide inclusief.<br>Lokale tijd, startuur en einduur zijn in <b>24-uurs</b>formaat (van <b>0 tot 23</b>). <br>De berekening gebeurt ongeveer op het moment dat het verzoek wordt verzonden."
+
+msgid "condition_WeekdayCondition"
+msgstr "Dag van de week"
+
+msgid "condition_help_WeekdayCondition"
+msgstr "Komt overeen als de <b>huidige weekdag</b> is geselecteerd in de voorwaardedetails. De dag wordt berekend volgens de lokale tijdzone.<br>Het verzoek en de URL doen er niet toe. Het resultaat hangt alleen af van de weekdag waarop het verzoek wordt verzonden."
+
+msgid "condition_alert_fullUrlLimitation"
+msgstr "Volledige URL-matching is niet meer mogelijk voor <code>https://</code>-URL's vanaf Chrome 52. <a href='https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation'>Meer informatie…</a>"
+
+msgid "condition_alert_fullUrlLimitationLink"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/Chromium-Full-URL-Limitation"
+
+msgid "condition_group_default"
+msgstr " "
+
+msgid "condition_group_host"
+msgstr "Host"
+
+msgid "condition_group_url"
+msgstr "URL"
+
+msgid "condition_group_special"
+msgstr "Speciaal"
+
+msgid "ruleListFormat_Switchy"
+msgstr "Switchy"
+
+msgid "ruleListFormat_AutoProxy"
+msgstr "AutoProxy"
+
+msgid "ruleList_usageUrl"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/RuleListUsage"
+
+msgid "ruleList_error_resultNotEnabled"
+msgstr "Ontbrekende directive '@with result'!"
+
+msgid "ruleList_error_unknownProfile"
+msgstr "Onbekend profiel: $PROFILE$"
+
+msgid "ruleList_error_missingResultProfile"
+msgstr "Ontbrekende resultaatprofielnaam op regel $LNO$: $SOURCE$"
+
+msgid "ruleList_error_invalidRule"
+msgstr "Ongeldige regel op regel $LNO$: $SOURCE$"
+
+msgid "ruleList_error_noDefaultRule"
+msgstr "Ontbrekende standaardregel met catch-all-voorwaarde '*'!"
+
+msgid "dialog_close"
+msgstr "Sluiten"
+
+msgid "dialog_save"
+msgstr "Wijzigingen opslaan"
+
+msgid "dialog_ok"
+msgstr "OK"
+
+msgid "dialog_cancel"
+msgstr "Annuleren"
+
+msgid "inputClear_clear"
+msgstr "Wissen"
+
+msgid "inputClear_restore"
+msgstr "Herstellen"
+
+msgid "options_title"
+msgstr "SwitchyDelta-opties"
+
+msgid "options_experimental_badge"
+msgstr "α"
+
+msgid "options_navHeader_setting"
+msgstr "Instellingen"
+
+msgid "options_navHeader_profiles"
+msgstr "Profielen"
+
+msgid "options_navHeader_actions"
+msgstr "Acties"
+
+msgid "options_tab_ui"
+msgstr "Interface"
+
+msgid "options_tab_general"
+msgstr "Algemeen"
+
+msgid "options_tab_importExport"
+msgstr "Importeren/Exporteren"
+
+msgid "options_newProfile"
+msgstr "Nieuw profiel…"
+
+msgid "options_apply"
+msgstr "Wijzigingen toepassen"
+
+msgid "options_discard"
+msgstr "Wijzigingen verwerpen"
+
+msgid "options_reset"
+msgstr "Opties resetten"
+
+msgid "options_group_miscOptions"
+msgstr "Overige opties"
+
+msgid "options_confirmDeletion"
+msgstr "Bevestig bij het verwijderen van voorwaarden."
+
+msgid "options_refreshOnProfileChange"
+msgstr "Huidig tabblad vernieuwen bij profielwijziging."
+
+msgid "options_showInspectMenu"
+msgstr "Inspecteren van proxy voor pagina-elementen via contextmenu toestaan."
+
+msgid "options_addConditionsToBottom"
+msgstr "Put new conditions added using the popup to the bottom of the list."
+
+msgid "options_group_keyboardShortcut"
+msgstr "Sneltoets"
+
+msgid "options_menuShortcutHelp"
+msgstr "De sneltoets opent het schakelmenu. (Standaard Alt+Shift+O)."
+
+msgid "options_menuShortcutMore"
+msgstr "Items in het pop-upmenu zijn ook met het toetsenbord te bereiken. Druk op ? (of /) in het menu voor meer informatie."
+
+msgid "options_menuShortcutConfigure"
+msgstr "Sneltoets configureren"
+
+msgid "options_group_switchOptions"
+msgstr "Schakelopties"
+
+msgid "options_startupProfile"
+msgstr "Opstartprofiel"
+
+msgid "options_startupProfile_none"
+msgstr "(Huidig profiel)"
+
+msgid "options_showConditionTypesAdvanced"
+msgstr "Geavanceerde voorwaardetypen tonen"
+
+msgid "options_showConditionTypesAdvancedHelp"
+msgstr "Ontgrendelt geavanceerde maar complexe schakelvoorwaarden. Voor de meeste situaties volstaan de basistypen, dus deze optie wordt niet aangeraden."
+
+msgid "options_quickSwitch"
+msgstr "Snel schakelen"
+
+msgid "options_cycledProfiles"
+msgstr "Doorlopen profielen"
+
+msgid "options_cycledProfilesHelp"
+msgstr "Wanneer je op het pictogram klikt (of de sneltoets hierboven gebruikt), worden de volgende profielen op volgorde toegepast."
+
+msgid "options_cycledProfilesTooFew"
+msgstr "Selecteer minstens 2 profielen om deze functie in te schakelen! Je kunt ze uit het vak hieronder slepen."
+
+msgid "options_notCycledProfiles"
+msgstr "Niet-doorlopen profielen"
+
+msgid "options_group_proxyChanges"
+msgstr "Proxywijzigingen"
+
+msgid "options_revertProxyChanges"
+msgstr "Proxywijzigingen van andere apps ongedaan maken."
+
+msgid "options_group_conflicts"
+msgstr "Conflicts"
+
+msgid "options_conflicts_introduction"
+msgstr ""
+"Sometimes, other apps will also try to control the proxy settings, resulting "
+"in conflicts. Note that ad blockers and other extensions may also use proxy "
+"settings under the hood. Such conflicts cannot be avoided due to how the "
+"browser works."
+
+msgid "options_conflicts_lowerPriority"
+msgstr ""
+"A red badge like this on the SwitchyDelta icon indicates that another app has "
+"higher priority so SwitchyDelta cannot control the settings. Please try to "
+"uninstall SwitchyDelta and reinstall, which should raise SwitchyDelta's "
+"priority. If you still see conflicts after reinstallation, please consider "
+"removing the other app causing the conflict."
+
+msgid "options_conflicts_higherPriority"
+msgstr ""
+"If SwitchyDelta has higher priority, you can give the control back to other "
+"apps or system settings by selecting $SYSTEMPROFILE$ in the popup menu."
+
+msgid "options_showExternalProfile"
+msgstr "Show popup menu item to import proxy settings from other apps."
+
+msgid "options_showExternalProfileHelp"
+msgstr ""
+"When $SYSTEMPROFILE$ is selected, you can import the effective proxy settings "
+"from other apps by selecting $EXTERNALPROFILE$ on the popup menu. "
+"The settings will be imported as a profile using the name you provide. "
+"Please note that the imported profile is a snapshot and will not reflect "
+"any changes from the source app thereafter."
+
+msgid "options_group_networkRequests"
+msgstr "Netwerkverzoeken"
+
+msgid "options_monitorWebRequests"
+msgstr "Toon aantal mislukte webverzoeken voor resources op het huidige tabblad."
+
+msgid "options_monitorWebRequestsHelp"
+msgstr "Een gele badge verschijnt op het pictogram als sommige resources niet laden,<br>en je kunt via het pop-upmenu handig het profiel voor zulke resources instellen."
+
+msgid "options_downloadOptions"
+msgstr "Downloadopties"
+
+msgid "options_downloadOptionsHelp"
+msgstr "Configureer de updatefrequentie van online regellijsten en PAC-scripts."
+
+msgid "options_downloadInterval"
+msgstr "Downloadinterval"
+
+msgid "options_downloadInterval_15"
+msgstr "15 minuten"
+
+msgid "options_downloadInterval_60"
+msgstr "1 uur"
+
+msgid "options_downloadInterval_180"
+msgstr "3 uur"
+
+msgid "options_downloadInterval_360"
+msgstr "6 uur"
+
+msgid "options_downloadInterval_720"
+msgstr "12 uur"
+
+msgid "options_downloadInterval_1440"
+msgstr "Elke dag"
+
+msgid "options_downloadInterval_never"
+msgstr "Nooit"
+
+msgid "options_group_importExportProfile"
+msgstr "Profiel"
+
+msgid "options_exportPacFile"
+msgstr "Exporteren als PAC-bestand"
+
+msgid "options_exportPacFileHelp"
+msgstr "Exporteer het huidige profiel als PAC-bestand om het in andere browsers te gebruiken."
+
+msgid "options_exportProfileHelp"
+msgstr "Om een profiel te exporteren, gebruik de actiebalk rechtsboven op de profielpagina."
+
+msgid "options_exportLegacyRuleList"
+msgstr "Exporteer regellijsten waar mogelijk in Proxy Switchy!/SwitchyPlus/SwitchySharp-compatibel formaat."
+
+msgid "options_exportLegacyRuleListHelp"
+msgstr "Schakel deze optie alleen in als je regellijsten publiceert voor gebruikers van die projecten.<br>Overweeg je publiek te adviseren te upgraden naar SwitchyDelta vanwege de verbeteringen."
+
+msgid "options_group_importExportSettings"
+msgstr "Instellingen"
+
+msgid "options_makeBackup"
+msgstr "Back-up maken"
+
+msgid "options_makeBackupHelp"
+msgstr "Maak een volledige back-up van je opties (inclusief profielen en alle andere opties)."
+
+msgid "options_restoreLocal"
+msgstr "Herstellen vanuit bestand"
+
+msgid "options_restoreLocalHelp"
+msgstr "Herstel je SwitchyDelta-opties vanuit een lokaal bestand."
+
+msgid "options_restoreOnline"
+msgstr "Online herstellen"
+
+msgid "options_restoreOnlinePlaceholder"
+msgstr "URL van optiesbestand (bijv. 'http://example.com/switchy.bak')"
+
+msgid "options_restoreOnlineSubmit"
+msgstr "Herstellen"
+
+msgid "options_group_syncing"
+msgstr "Synchronisatie (experimenteel)"
+
+msgid "options_syncEnable"
+msgstr "Synchronisatie inschakelen"
+
+msgid "options_syncEnableForce"
+msgstr "Downloaden van synchronisatie"
+
+msgid "options_syncDisable"
+msgstr "Synchronisatie uitschakelen"
+
+msgid "options_syncReset"
+msgstr "Externe kopie wissen"
+
+msgid "options_syncPristineHelp"
+msgstr "Je kunt nu instellingen en profielen automatisch synchroniseren op al je desktopapparaten met Chrome."
+
+msgid "options_syncSyncAlert"
+msgstr "Je opties worden automatisch gesynchroniseerd met je andere apparaten."
+
+msgid "options_syncSyncHelp"
+msgstr "Je moet op elk apparaat (inclusief dit) bij Chrome zijn aangemeld om synchronisatie te laten werken. <br> Controleer deze sectie op andere apparaten om te bevestigen dat het werkt."
+
+msgid "options_syncConflictAlert"
+msgstr "Je hebt via synchronisatie een kopie van je opties op een ander apparaat geüpload."
+
+msgid "options_syncConflictHelp"
+msgstr "Je kunt de externe kopie naar dit apparaat downloaden. <br>Dat zou echter je <b>bestaande instellingen en profielen overschrijven</b> op dit apparaat."
+
+msgid "options_syncUnsupportedHelp"
+msgstr "Optiesynchronisatie wordt niet ondersteund op je platform of browser. Momenteel alleen Chrome op desktop."
+
+msgid "options_profileSyncDisabled"
+msgstr "Synchronisatie is uitgeschakeld voor dit profiel."
+
+msgid "options_profileSyncDisabled_quotaPerItem"
+msgstr "Synchronisatie is uitgeschakeld voor dit profiel omdat het te veel opslagruimte gebruikt."
+
+msgid "options_profileTabPrefix"
+msgstr "Profiel :: "
+
+msgid "options_renameProfile"
+msgstr "Hernoemen"
+
+msgid "options_deleteProfile"
+msgstr "Verwijderen"
+
+msgid "options_profileExportRuleList"
+msgstr "Regellijst publiceren"
+
+msgid "options_profileExportRuleListHelp"
+msgstr "Exporteer schakelregels in tekstformaat voor publicatie."
+
+msgid "options_profileExportPac"
+msgstr "PAC exporteren"
+
+msgid "options_profileUnsupported"
+msgstr "Niet-ondersteund profieltype $TYPE$!"
+
+msgid "options_profileUnsupportedHelp"
+msgstr "De opties kunnen beschadigd zijn of van een nieuwere versie van dit programma komen."
+
+msgid "options_profileEditSource"
+msgstr "Broncode bewerken"
+
+msgid "options_profileEditSourceHelp"
+msgstr "Toon hulp over het broncodeformaat"
+
+msgid "options_profileEditSourceHelpUrl"
+msgstr "https://github.com/madeye/SwitchyDelta/wiki/SwitchyDelta-conditions-format#result-profile"
+
+msgid "options_group_proxyServers"
+msgstr "Proxyservers"
+
+msgid "options_proxy_scheme"
+msgstr "Schema"
+
+msgid "options_proxy_protocol"
+msgstr "Protocol"
+
+msgid "options_proxy_server"
+msgstr "Server"
+
+msgid "options_proxy_port"
+msgstr "Poort"
+
+msgid "options_proxy_auth"
+msgstr "Authenticatie"
+
+msgid "options_proxy_authNotSupported"
+msgstr "Your browser DOES NOT support $PROTOCOLDISP$ proxy authentication! "
+"Please do not report this issue to SwitchyDelta. Contact the support for "
+"your browser instead."
+
+msgid "options_proxy_authAllWarningPac"
+msgstr "Waarschuwing: gebruikersnaam/wachtwoord kunnen naar onverwachte servers worden gestuurd die het PAC-script teruggeeft."
+
+msgid "options_proxy_authAllWarningPacUrl"
+msgstr "Zorg dat je het script via de URL hierboven vertrouwt voordat je gevoelige inloggegevens invoert."
+
+msgid "options_proxy_authAllWarningPacScript"
+msgstr "Zorg dat je het script hieronder vertrouwt voordat je gevoelige inloggegevens opgeeft."
+
+msgid "options_proxy_authReferencedWarning"
+msgstr "Bovendien kan het gebruik van dit profiel in andere profielen (bijv. schakelprofiel) ervoor zorgen dat gebruikersnaam/wachtwoord naar proxyservers in andere profielen worden gestuurd."
+
+msgid "options_scheme_default"
+msgstr "(standaard)"
+
+msgid "options_protocol_direct"
+msgstr "DIRECT"
+
+msgid "options_protocol_useDefault"
+msgstr "(standaard gebruiken)"
+
+msgid "options_proxy_single"
+msgstr "Gebruik de proxy hierboven voor alle protocollen."
+
+msgid "options_proxy_expand"
+msgstr "Geavanceerd tonen"
+
+msgid "options_group_bypassList"
+msgstr "Bypasslijst"
+
+msgid "options_bypassListHelp"
+msgstr "Servers waarvoor je geen proxy wilt gebruiken: (één server per regel.)"
+
+msgid "options_bypassListHelpLinkText"
+msgstr "(Jokertekens en meer beschikbaar…)"
+
+msgid "options_group_pacUrl"
+msgstr "PAC-URL"
+
+msgid "options_pacUrlHelp"
+msgstr "Het PAC-script wordt vanaf deze URL bijgewerkt. Als dit leeg blijft, wordt het onderstaande script direct gebruikt."
+
+msgid "options_pacUrlFile"
+msgstr "PAC-profielen met file:-URL's kunnen alleen direct worden toegepast. Ze kunnen niet als resultaatprofielen worden gebruikt omdat lokale bestanden door browserbeperkingen niet toegankelijk zijn."
+
+msgid "options_pacUrlFileDisabled"
+msgstr "Daarom kun je voor dit profiel geen lokaal PAC-bestand gebruiken. Maak desgewenst een nieuw PAC-profiel aan."
+
+msgid "options_group_pacScript"
+msgstr "PAC-script"
+
+msgid "options_pacScriptLastUpdate"
+msgstr "PAC-script gedownload om $TIME$:"
+
+msgid "options_pacScriptObsolete"
+msgstr "PAC-script is verouderd door URL-wijziging. Druk op de downloadknop hierboven om bij te werken."
+
+msgid "options_group_virtualProfile"
+msgstr "Virtueel profiel"
+
+msgid "options_virtualProfileTarget"
+msgstr "Doel"
+
+msgid "options_virtualProfileTargetHelp"
+msgstr "Wanneer dit profiel wordt toegepast, gedraagt het zich precies als het hieronder geselecteerde profiel."
+
+msgid "options_group_virtualProfileReplace"
+msgstr "Migreren naar virtueel profiel"
+
+msgid "options_virtualProfileReplace"
+msgstr "Doelprofiel vervangen"
+
+msgid "options_virtualProfileReplaceHelp"
+msgstr "Je kunt bestaande opties migreren om dit virtuele profiel te gebruiken in plaats van $PROFILE$. Daardoor worden alle bestaande regels over $PROFILE$ bijgewerkt en naar dit virtuele profiel verwezen, zodat hun resultaatprofiel hier kan worden beheerd."
+
+msgid "options_group_ruleListConfig"
+msgstr "Regellijstconfiguratie"
+
+msgid "options_ruleListFormat"
+msgstr "Regellijstformaat"
+
+msgid "options_group_ruleListResult"
+msgstr "Resultaatprofielen van regellijst"
+
+msgid "options_ruleListMatchProfile"
+msgstr "Matchprofiel"
+
+msgid "options_ruleListDefaultProfile"
+msgstr "Standaardprofiel"
+
+msgid "options_group_ruleListUrl"
+msgstr "Regellijst-URL"
+
+msgid "options_ruleListUrlHelp"
+msgstr "De regellijst wordt vanaf deze URL bijgewerkt. Als dit leeg blijft, wordt de onderstaande tekst geparseerd."
+
+msgid "options_group_ruleListText"
+msgstr "Regellijsttekst"
+
+msgid "options_ruleListLastUpdate"
+msgstr "Regellijst gedownload om $TIME$:"
+
+msgid "options_ruleListObsolete"
+msgstr "Regellijst is verouderd door URL-wijziging. Druk op de downloadknop hierboven om bij te werken."
+
+msgid "options_group_switchRules"
+msgstr "Schakelregels"
+
+msgid "options_sort"
+msgstr "Sorteren"
+
+msgid "options_conditionType"
+msgstr "Voorwaardetype"
+
+msgid "options_showConditionTypeHelp"
+msgstr "Hulp tonen"
+
+msgid "options_conditionDetails"
+msgstr "Voorwaardedetails"
+
+msgid "options_resultProfile"
+msgstr "Profiel"
+
+msgid "options_conditionActions"
+msgstr "Acties"
+
+msgid "options_addCondition"
+msgstr "Voorwaarde toevoegen"
+
+msgid "options_cloneRule"
+msgstr "Klonen"
+
+msgid "options_ruleNote"
+msgstr "Note"
+
+msgid "options_switchAttachedProfileInCondition"
+msgstr "Regels van regellijst"
+
+msgid "options_switchAttachedProfileInConditionDetails"
+msgstr "(Elk verzoek dat overeenkomt met de regellijst hieronder)"
+
+msgid "options_switchAttachedProfileInConditionDisabled"
+msgstr "(Regels van regellijst zijn UITGESCHAKELD)"
+
+msgid "options_switchDefaultProfile"
+msgstr "Standaard"
+
+msgid "options_hostLevelsBetween"
+msgstr "≤ hostniveaus ≤"
+
+msgid "options_hourBetween"
+msgstr "≤ huidig uur ≤"
+
+msgid "options_weekDayShort_0"
+msgstr "Zo"
+
+msgid "options_weekDayShort_1"
+msgstr "Ma"
+
+msgid "options_weekDayShort_2"
+msgstr "Di"
+
+msgid "options_weekDayShort_3"
+msgstr "Wo"
+
+msgid "options_weekDayShort_4"
+msgstr "Do"
+
+msgid "options_weekDayShort_5"
+msgstr "Vr"
+
+msgid "options_weekDayShort_6"
+msgstr "Za"
+
+msgid "options_group_conditionHelp"
+msgstr "Over voorwaardetypen"
+
+msgid "options_group_attachProfile"
+msgstr "Online regellijsten importeren"
+
+msgid "options_attachProfile"
+msgstr "Regellijst toevoegen"
+
+msgid "options_attachProfileHelp"
+msgstr "Je kunt een online verzameling voorwaarden van anderen hergebruiken door een regellijst toe te voegen."
+
+msgid "options_modalHeader_welcome"
+msgstr "Welkom bij SwitchyDelta"
+
+msgid "options_welcomeNormal"
+msgstr "Je hebt SwitchyDelta, de ultieme proxyschakelaar, succesvol geïnstalleerd."
+
+msgid "options_welcomeNormalGuide"
+msgstr "Vertel SwitchyDelta over je proxies via de optiespagina. Laten we kijken hoe."
+
+msgid "options_welcomeUpgrade"
+msgstr "Je hebt succesvol geüpgraded naar SwitchyDelta. Geen paniek: je bestaande opties zijn volledig bewaard."
+
+msgid "options_welcomeUpgradeGuide"
+msgstr "Laten we nu een snelle rondleiding door de nieuwe optiespagina doen."
+
+msgid "options_guideNext"
+msgstr "Volgende"
+
+msgid "options_guideDone"
+msgstr "Klaar"
+
+msgid "options_guideSkip"
+msgstr "Gids overslaan"
+
+msgid "options_modalHeader_applyOptions"
+msgstr "Opties toepassen"
+
+msgid "options_optionsNotSaved"
+msgstr "Je wijzigingen aan de opties zijn niet opgeslagen en gaan verloren als je doorgaat!"
+
+msgid "options_applyOptionsRequired"
+msgstr "Je wijzigingen aan de opties moeten worden toegepast voordat je doorgaat."
+
+msgid "options_applyOptionsConfirm"
+msgstr "Wil je de opties opslaan en toepassen?"
+
+msgid "options_modalHeader_renameProfile"
+msgstr "Profiel hernoemen"
+
+msgid "options_renameProfileName"
+msgstr "Nieuwe profielnaam"
+
+msgid "options_profileNameConflict"
+msgstr "Er bestaat al een profiel met deze naam."
+
+msgid "options_profileNameReserved"
+msgstr "Profielnamen die met dubbele underscore beginnen, zijn gereserveerd."
+
+msgid "options_profileNameHidden"
+msgstr "Profielen met namen die met underscore beginnen, worden verborgen in het pop-upmenu. Ze kunnen nog steeds worden gebruikt, bijvoorbeeld als resultaat van schakelprofielen."
+
+msgid "options_modalHeader_replaceProfile"
+msgstr "Profiel vervangen"
+
+msgid "options_replaceProfile"
+msgstr "Profiel vervangen"
+
+msgid "options_replaceProfileConfirm"
+msgstr "Wil je $FromProfile$ echt vervangen door $ToProfile$?"
+
+msgid "options_replaceProfileHelp"
+msgstr "Als je doorgaat, worden alle regels die naar $FromProfile$ wijzen bijgewerkt om $ToProfile$ te gebruiken. Andere opties, zoals opstartprofiel en Snel schakelen, worden ook waar nodig aangepast. De twee profielen zelf worden echter NIET gewijzigd of verwijderd."
+
+msgid "options_replaceProfileSuccess"
+msgstr "Opties bijgewerkt."
+
+msgid "options_modalHeader_deleteProfile"
+msgstr "Profiel verwijderen"
+
+msgid "options_deleteProfileConfirm"
+msgstr "Wil je het volgende profiel echt verwijderen?"
+
+msgid "options_modalHeader_cannotDeleteProfile"
+msgstr "Profiel kan niet worden verwijderd"
+
+msgid "options_profileReferredBy"
+msgstr "Dit profiel kan niet worden verwijderd omdat ernaar wordt verwezen door de volgende profielen:"
+
+msgid "options_modifyReferringProfiles"
+msgstr "Je moet deze profielen aanpassen zodat ze niet meer naar dit profiel verwijzen voordat je het kunt verwijderen."
+
+msgid "options_profileNameEmpty"
+msgstr "De naam van het profiel mag niet leeg zijn."
+
+msgid "popup_title"
+msgstr "SwitchyDelta-popup"
+
+msgid "options_modalHeader_proxyAuth"
+msgstr "Proxyauthenticatie"
+
+msgid "options_proxyAuthUsername"
+msgstr "Gebruikersnaam"
+
+msgid "options_proxyAuthPassword"
+msgstr "Wachtwoord"
+
+msgid "options_proxyAuthShowPassword"
+msgstr "Show password"
+
+msgid "options_proxyAuthHidePassword"
+msgstr "Hide password"
+
+msgid "options_proxyAuthNone"
+msgstr "Geen authenticatie"
+
+msgid "options_modalHeader_deleteRule"
+msgstr "Regel verwijderen"
+
+msgid "options_deleteRuleConfirm"
+msgstr "Wil je de volgende regel echt verwijderen?"
+
+msgid "options_deleteRule"
+msgstr "Verwijderen"
+
+msgid "options_modalHeader_resetRules"
+msgstr "Regels resetten"
+
+msgid "options_resetRulesConfirm"
+msgstr "Weet je zeker dat je het resultaatprofiel van ALLE regels op het volgende profiel wilt zetten?"
+
+msgid "options_resetRules"
+msgstr "Regels resetten"
+
+msgid "options_resetRules_help"
+msgstr "Profiel voor alle regels instellen"
+
+msgid "options_modalHeader_deleteAttached"
+msgstr "Regellijst verwijderen"
+
+msgid "options_deleteAttachedConfirm"
+msgstr "Wil je de regellijst echt uit het huidige profiel verwijderen?"
+
+msgid "options_ruleListLineCount"
+msgstr "$COUNT$ regel(s)"
+
+msgid "options_deleteAttached"
+msgstr "Regellijst verwijderen"
+
+msgid "options_modalHeader_newProfile"
+msgstr "Nieuw profiel"
+
+msgid "options_newProfileName"
+msgstr "Profielnaam"
+
+msgid "options_profileType"
+msgstr "Selecteer het type profiel:"
+
+msgid "options_profileTypeFixedProfile"
+msgstr "Proxyprofiel"
+
+msgid "options_profileDescFixedProfile"
+msgstr "Verkeer tunnelen via proxyservers."
+
+msgid "options_profileTypePacProfile"
+msgstr "PAC-profiel"
+
+msgid "options_profileDescPacProfile"
+msgstr "Proxies kiezen met een online/lokaal PAC-script."
+
+msgid "options_profileDescMorePacProfile"
+msgstr "Je hebt dit alleen nodig als je een PAC-script of een URL ernaartoe hebt. Maak er geen aan tenzij je kennis van PAC hebt."
+
+msgid "options_profileTypeSwitchProfile"
+msgstr "Schakelprofiel"
+
+msgid "options_profileDescSwitchProfile"
+msgstr ""
+"Automatisch verschillende profielen toepassen op basis van voorwaarden zoals domeinen of patronen.\n"
+" Je kunt ook online gepubliceerde regels importeren voor eenvoudiger schakelen. (Vervangt AutoSwitch-modus + regellijst.)"
+
+msgid "options_profileTypeRuleListProfile"
+msgstr "Regellijstprofiel"
+
+msgid "options_profileDescRuleListProfile"
+msgstr "Een online verzameling voorwaarden van anderen hergebruiken."
+
+msgid "options_profileTypeVirtualProfile"
+msgstr "Virtueel profiel"
+
+msgid "options_profileDescVirtualProfile"
+msgstr "Een virtueel profiel kan op verzoek als elk ander profiel fungeren. Het werkt goed met SwitchProfile, zodat je met één klik het resultaat van meerdere voorwaarden kunt wijzigen."
+
+msgid "options_createProfile"
+msgstr "Aanmaken"
+
+msgid "options_modalHeader_resetOptions"
+msgstr "Opties resetten"
+
+msgid "options_resetOptionsConfirm"
+msgstr "Wil je de opties echt resetten? Alle profielen en instellingen gaan VERLOREN!"
+
+msgid "options_formInvalid"
+msgstr "Corrigeer de fouten op deze pagina."
+
+msgid "options_profileNotFound"
+msgstr "Profiel $PROFILE$ bestaat niet! De opties zijn mogelijk beschadigd."
+
+msgid "options_resetSuccess"
+msgstr "Opties gereset."
+
+msgid "options_saveSuccess"
+msgstr "Opties opgeslagen."
+
+msgid "options_importSuccess"
+msgstr "Opties geïmporteerd."
+
+msgid "options_importFormatError"
+msgstr "Ongeldig back-upbestand!"
+
+msgid "options_importDownloadError"
+msgstr "Fout bij downloaden van back-upbestand!"
+
+msgid "options_profileDownloadSuccess"
+msgstr "Profiel succesvol bijgewerkt."
+
+msgid "options_profileDownloadError"
+msgstr "Fout bij downloaden van profielgegevens!"
+
+msgid "options_profileDownloadError_NetworkError"
+msgstr "Er is een netwerkfout opgetreden tijdens het bijwerken."
+
+msgid "options_profileDownloadError_HttpError"
+msgstr "Er is een HTTP-fout ($STATUS$) opgetreden tijdens het bijwerken."
+
+msgid "options_profileDownloadError_HttpNotFoundError"
+msgstr "De profiel-URL is niet gevonden op de server. Controleer deze opnieuw."
+
+msgid "options_profileDownloadError_HttpServerError"
+msgstr "De externe server reageerde met fout ($STATUS$) tijdens het bijwerken."
+
+msgid "options_profileDownloadError_ContentTypeRejectedError"
+msgstr "De gedownloade gegevens zijn ongeldig! Je kunt de profiel-URL in de browser openen om ze te inspecteren."
+
+msgid "options_downloadProfileNow"
+msgstr "Profiel nu downloaden"
+
+msgid "options_guide_fixedProfileStep"
+msgstr "Een <b>proxyprofiel</b> bevat instellingen zoals server-IP en -poort voor de proxy.<br>Profielen zijn de basiseenheden van configuratie in SwitchyDelta.<br>We hebben al een voorbeeldprofiel voor je aangemaakt. Probeer het te openen."
+
+msgid "options_guide_fixedServersStep"
+msgstr "Je kunt hier je proxyserver en poort invullen.<br>SwitchyDelta <b>levert geen proxyservers</b>.<br>Raadpleeg je netwerkprovider of de handleiding van de proxysoftware als je niet weet wat je hier moet invullen."
+
+msgid "options_guide_autoSwitchProfileStep"
+msgstr "Je kunt SwitchyDelta automatisch laten schakelen via het krachtige <b>schakelprofiel</b>.<br>De mogelijkheden passen niet in deze snelle gids.<br>Open dit profiel later om de kracht ervan te ontsluiten."
+
+msgid "options_guide_addMoreProfilesStep"
+msgstr "Meer profielen nodig? Je kunt altijd meer <b>proxy-, schakel- en andere profielen</b> toevoegen<br>voor al je proxybehoeften.<br>Veel plezier!"
+
+msgid "options_guide_conditionStep"
+msgstr "SwitchyDelta kan op basis van <b>voorwaarden</b> verschillende profielen op verzoeken toepassen.<br> De voorwaarde <b>Host-jokerteken</b> laat je bijvoorbeeld het profiel instellen voor alle URL's in een domein."
+
+msgid "options_guide_conditionTypeStep"
+msgstr "Je kunt verschillende voorwaardetypen gebruiken om de host of volledige URL te matchen. <br> Klik op het vraagteken om de typereferentie te openen."
+
+msgid "options_guide_conditionProfileStep"
+msgstr "SwitchyDelta past het hier geselecteerde profiel toe op <b>elk verzoek dat aan de voorwaarde voldoet.</b> <br> Het speciale <b>\"[Direct]\"-profiel</b> stuurt het verzoek zonder proxy."
+
+msgid "options_guide_switchDefaultStep"
+msgstr "Als geen voorwaarde van toepassing is, wordt het profiel \"Standaard\" gebruikt. <br>Voorwaarden worden altijd <b>van boven naar beneden</b> beoordeeld.<br>Je kunt de volgorde wijzigen door het sorteerpictogram te slepen."
+
+msgid "options_guide_applySwitchProfileStep"
+msgstr "Wanneer je klaar bent met het schakelprofiel, vergeet dan niet <b>ernaar te schakelen in het pop-upmenu.</b><br/> Het pictogram toont het <b>eindresultaat</b>-profiel voor het huidige tabblad. <br/> <b>Aanwijzen</b> van het pictogram toont een tooltip met details."
+
+msgid "popup_externalProfile"
+msgstr "(Extern profiel)"
+
+msgid "popup_externalProfileName"
+msgstr "profielnaam"
+
+msgid "popup_proxyNotControllable_app"
+msgstr "De proxy-instellingen worden beheerd door andere app(s) of extensie(s). Schakel conflicterende apps of extensies uit of verwijder ze."
+
+msgid "popup_proxyNotControllable_policy"
+msgstr "De proxy-instellingen worden overschreven door beleidsregels. Neem contact op met je beheerder."
+
+msgid "popup_proxyNotControllable_unknown"
+msgstr "De proxy-instellingen kunnen niet worden beheerd. Controleer je systeem- en browserinstellingen."
+
+msgid "popup_proxyNotControllable_disabled"
+msgstr "De proxy-instellingen zijn uitgeschakeld op expliciet verzoek van andere app(s) of extensie(s)."
+
+msgid "popup_proxyNotControllable_upgrade"
+msgstr "Proxy-instellingen worden nu beheerd door een nieuwere versie van SwitchyDelta."
+
+msgid "popup_proxyNotControllableDetails"
+msgstr "Je kunt niet van profiel wisselen met SwitchyDelta totdat je het bovenstaande probleem oplost."
+
+msgid "popup_proxyNotControllableDetails_upgrade"
+msgstr "Je kunt niet twee (of meer) versies van SwitchyDelta tegelijk inschakelen. Schakel er één uit."
+
+msgid "popup_proxyNotControllableManage"
+msgstr "Extensies beheren"
+
+msgid "popup_addConditionTo"
+msgstr "Voorwaarde toevoegen aan"
+
+msgid "popup_addCondition"
+msgstr "Voorwaarde toevoegen"
+
+msgid "popup_showOptions"
+msgstr "Opties"
+
+msgid "popup_reportIssues"
+msgstr "Problemen melden"
+
+msgid "popup_errorLog"
+msgstr "Foutenlog opslaan"
+
+msgid "popup_requestErrorCount"
+msgstr "$COUNT$ mislukte resources"
+
+msgid "popup_requestErrorHeading"
+msgstr "Resources die niet konden laden"
+
+msgid "popup_requestErrorWarning"
+msgstr "Enkele resources konden niet laden door problemen met je netwerk, proxyserver of de webpagina."
+
+msgid "popup_requestErrorWarningHelp"
+msgstr "SwitchyDelta rapporteert deze problemen alleen; het veroorzaakt ze niet."
+
+msgid "popup_requestErrorAddCondition"
+msgstr "Je kunt de volgende domeinen bekijken en er waar passend een proxy voor gebruiken."
+
+msgid "popup_requestErrorCannotAddCondition"
+msgstr "Je kunt alleen schakelvoorwaarden toevoegen wanneer je een schakelprofiel gebruikt."
+
+msgid "popup_configureMonitorWebRequests"
+msgstr "Netwerkmonitor configureren"
+
+msgid "options_resultProfileForSelectedDomains"
+msgstr "Gebruik dit profiel voor alle geselecteerde domeinen"
+
+msgid "options_pac_profile_unsupported_moz"
+msgstr "PAC Profiles WILL NOT work in Mozilla Firefox due to technical limitations!"
+
+msgid "popup_issueTemplate"
+msgstr ""
+"\n"
+"\n"
+"\n"
+"<!-- Please write your comment ABOVE this line. -->\n"
+"SwitchyDelta $projectVersion$\n"
+"$userAgent$"
+
+msgid "browserAction_profileDetails_PacProfile"
+msgstr "(PAC-script)"
+
+msgid "browserAction_profileDetails_SystemProfile"
+msgstr "(beheerd door andere extensies of de omgeving)"
+
+msgid "browserAction_profileDetails_DirectProfile"
+msgstr "(geen proxy gebruiken)"
+
+msgid "browserAction_profileDetails_SwitchProfile"
+msgstr "(schakelen op basis van voorwaarden)"
+
+msgid "browserAction_profileDetails_RuleListProfile"
+msgstr "(schakelen op basis van regellijst)"
+
+msgid "browserAction_titleNormal"
+msgstr "SwitchyDelta:: $PROFILE$"
+
+msgid "browserAction_titleWithResult"
+msgstr ""
+"SwitchyDelta:: $1:PROFILE$\n"
+"$3:DETAILS$"
+
+msgid "browserAction_titleNewerOptions"
+msgstr "FOUT: Een nieuwere versie van SwitchyDelta is vereist om de opgeslagen opties te laden."
+
+msgid "browserAction_titleOptionError"
+msgstr "FOUT: De opgeslagen opties zijn beschadigd. Klik hier om OPTIES TE RESETTEN."
+
+msgid "browserAction_titleDownloadFail"
+msgstr "Waarschuwing: downloaden van PAC-scripts en/of regellijsten mislukt."
+
+msgid "browserAction_titleExternalProxy"
+msgstr "Let op: de proxy-instellingen worden momenteel beheerd door andere app(s)."
+
+msgid "browserAction_titleInspect"
+msgstr "[Inspecteren] $URL$"
+
+msgid "browserAction_defaultRuleDetails"
+msgstr "(standaard)"
+
+msgid "browserAction_directResult"
+msgstr "DIRECT"
+
+msgid "browserAction_attachedPrefix"
+msgstr "(RL) "
+
+msgid "browserAction_tempRulePrefix"
+msgstr "(TEMP) "
+
+msgid "contextMenu_inspectPage"
+msgstr "Inspecteer proxy voor deze pagina"
+
+msgid "contextMenu_inspectFrame"
+msgstr "Inspecteer proxy voor dit frame"
+
+msgid "contextMenu_inspectLink"
+msgstr "Inspecteer proxy die wordt gebruikt als deze link wordt geopend"
+
+msgid "contextMenu_inspectElement"
+msgstr "Inspecteer proxy voor dit element"
+
+msgid "contextMenu_enableQuickSwitch"
+msgstr "Snel schakelen inschakelen"
+
+msgid "about_title"
+msgstr "About"
+
+msgid "about_app_description"
+msgstr "A proxy configuration tool"
+
+msgid "about_version"
+msgstr "Version $VERSION$"
+
+msgid "about_experimental_warning_moz"
+msgstr "Mozilla Firefox support is highly experimental! If you encounter issues, please report using the buttons below."
+
+msgid "about_disclaimer_networkService"
+msgstr "SwitchyDelta does not provide proxies, VPNs, or other network services."
+
+msgid "about_disclaimer_privacy"
+msgstr "SwitchyDelta does not track you or insert ads into webpages. Please see"
+" our <a href='https://github.com/madeye/SwitchyDelta/wiki/Privacy#english'>privacy policy</a>."
+
+msgid "about_help"
+msgstr "Other questions? Need help with using SwitchyDelta? Please see our "
+"<a href='https://github.com/madeye/SwitchyDelta/wiki/FAQ'>FAQ</a>."
+
+msgid "about_copyright"
+msgstr "Copyright 2026 <a href='https://github.com/madeye'>Max Lv</a>.<br>Copyright 2012-2017 <a href='https://github.com/FelisCatus/SwitchyOmega/blob/master/AUTHORS'>The SwitchyOmega Authors</a>."
+
+msgid "about_credits"
+msgstr "SwitchyDelta is made possible by the <a href='https://github.com/madeye/SwitchyDelta'>SwitchyDelta</a> open source project and other <a href='https://github.com/madeye/SwitchyDelta/blob/master/AUTHORS'>open source software</a>."
+
+msgid "about_license"
+msgstr "SwitchyDelta is <a href='https://www.gnu.org/philosophy/free-sw.en.html'>free software</a> licensed under <a href='https://www.gnu.org/licenses/gpl.html'>GNU General Public License</a> Version 3 or later."
+
+msgid "popup_proxyAuthPermission"
+msgstr "Aanmelden bij geverifieerde proxies vereist toegang tot alle websites."
+
+msgid "popup_proxyAuthPermissionGrant"
+msgstr "Toegang verlenen"

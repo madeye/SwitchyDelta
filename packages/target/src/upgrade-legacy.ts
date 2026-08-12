@@ -24,7 +24,7 @@ import type {
   SwitchProfile,
 } from '@switchydelta/pac';
 
-import type { OmegaOptions } from './options.js';
+import type { DeltaOptions } from './options.js';
 import type { StorageItems } from './storage.js';
 
 export interface LegacyUpgradeI18n {
@@ -81,11 +81,11 @@ function decodeBase64Utf8(text: string): string {
 export function upgradeLegacyOptions(
   oldOptions: StorageItems,
   i18n: LegacyUpgradeI18n,
-): OmegaOptions | null {
+): DeltaOptions | null {
   const config = tryParse(oldOptions['config']) as Record<string, unknown> | undefined;
   if (!config) return null;
 
-  const options: OmegaOptions = {};
+  const options: DeltaOptions = {};
   options['schemaVersion'] = 2;
 
   // New key -> SwitchySharp config key.
