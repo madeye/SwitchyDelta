@@ -25,6 +25,60 @@ export class StorageUnavailableError extends Error {
   override readonly name: string = 'StorageUnavailableError';
 }
 
+const SUSTAINED_PER_MINUTE = 'MAX_SUSTAINED_WRITE_OPERATIONS_PER_MINUTE';
+
+/**
+ * Translate a `chrome.runtime.lastError` (or equivalent) message into one of
+ * the typed storage errors, so callers can react to a quota or rate limit
+ * without matching on English prose.
+ *
+ * Shared by {@link BrowserStorage} and the extension's `ChromeStorage`.
+ */
+export function parseStorageErrors(err: unknown): Promise<never> {
+  const message = (err as { message?: unknown } | null | undefined)?.message;
+  if (typeof message !== 'string') return Promise.reject(err);
+
+  if (message.indexOf('QUOTA_BYTES_PER_ITEM') >= 0) {
+    const error = new QuotaExceededError(message);
+    error.perItem = true;
+    return Promise.reject(error);
+  }
+  if (message.indexOf('QUOTA_BYTES') >= 0) {
+    return Promise.reject(new QuotaExceededError(message));
+  }
+  if (message.indexOf('MAX_ITEMS') >= 0) {
+    const error = new QuotaExceededError(message);
+    error.maxItems = true;
+    return Promise.reject(error);
+  }
+  if (message.indexOf('MAX_WRITE_OPERATIONS_') >= 0) {
+    const error = new RateLimitExceededError(message);
+    // Test the original message, not the freshly constructed error (whose
+    // message would be empty if we had used the no-arg constructor).
+    if (message.indexOf('MAX_WRITE_OPERATIONS_PER_HOUR') >= 0) {
+      error.perHour = true;
+    } else if (message.indexOf('MAX_WRITE_OPERATIONS_PER_MINUTE') >= 0) {
+      error.perMinute = true;
+    }
+    return Promise.reject(error);
+  }
+  if (message.indexOf(SUSTAINED_PER_MINUTE) >= 0) {
+    const error = new RateLimitExceededError(message);
+    error.perMinute = true;
+    error.sustained = true;
+    return Promise.reject(error);
+  }
+  if (message.indexOf('is not available') >= 0) {
+    // Some Chromium-based browsers disable access to the sync storage.
+    return Promise.reject(new StorageUnavailableError(message));
+  }
+  if (message.indexOf('Please set webextensions.storage.sync.enabled to true') >= 0) {
+    // Sync storage disabled in flags.
+    return Promise.reject(new StorageUnavailableError(message));
+  }
+  return Promise.reject(err);
+}
+
 export type StorageItems = Record<string, unknown>;
 
 /** A set of writes to perform against a storage. */
@@ -49,6 +103,7 @@ export class Storage {
   static readonly RateLimitExceededError = RateLimitExceededError;
   static readonly QuotaExceededError = QuotaExceededError;
   static readonly StorageUnavailableError = StorageUnavailableError;
+  static readonly parseStorageErrors = parseStorageErrors;
 
   protected _items: StorageItems | undefined;
 

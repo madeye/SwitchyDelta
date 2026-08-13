@@ -34,6 +34,11 @@ const STORAGE_KEY = 'deltaProxyAuth';
 /** Pre-rename key; still read so an upgrade does not drop saved credentials. */
 const LEGACY_STORAGE_KEY = 'omegaProxyAuth';
 
+/** Drop request-id retry state after this; challenges rarely last this long. */
+export const AUTH_REQUEST_TTL_MS = 60_000;
+/** Bound on in-flight challenge records so a long session cannot grow forever. */
+export const AUTH_REQUEST_CAP = 256;
+
 /** One candidate credential for a challenge. Fallbacks carry no `config`. */
 interface AuthEntry {
   config?: ProxyServer;
@@ -82,8 +87,14 @@ export class ProxyAuth {
   log: Logger | null;
   listening = false;
 
-  /** Per-request state, keyed by requestId; see {@link _credentialsFor}. */
-  private _requests: Record<string, { authTries: number } | undefined> = {};
+  /**
+   * Per-request retry state, keyed by requestId.
+   *
+   * Insertion order is LRU. Entries expire after {@link AUTH_REQUEST_TTL_MS}
+   * so we do not need `onCompleted` / `onErrorOccurred` listeners — those
+   * would observe every request once `<all_urls>` is granted.
+   */
+  private _requests = new Map<string, { authTries: number; seenAt: number }>();
   private _proxies: Record<string, AuthEntry[] | undefined> = {};
   private _fallbacks: AuthEntry[] = [];
   private _hydrated = false;
@@ -129,12 +140,6 @@ export class ProxyAuth {
       ]);
     }
 
-    chrome.webRequest.onCompleted.addListener((details) => this._requestDone(details), {
-      urls: ['<all_urls>'],
-    });
-    chrome.webRequest.onErrorOccurred.addListener((details) => this._requestDone(details), {
-      urls: ['<all_urls>'],
-    });
     this.listening = true;
 
     // Warm the credentials from the last applyProfile so that the common case
@@ -154,24 +159,57 @@ export class ProxyAuth {
   }
 
   /**
-   * Write to both session and local storage.
+   * Persist credentials for the next worker wake-up.
    *
-   * Session storage covers worker restarts within a browser session and is
-   * never written to disk. Local storage covers a full browser restart, where
-   * the first proxied request can easily beat `Options.init` to re-applying the
-   * profile — without it, that request would get no credentials at all.
+   * Session storage is preferred: it survives worker restarts and is never
+   * written to disk. Local is only used when session is missing or the write
+   * fails (cold start before `applyProfile` on hosts without session storage,
+   * leftover from older builds). A successful session write clears local so
+   * passwords do not sit on disk after the profile is re-applied.
+   *
+   * Never written to `chrome.storage.sync`.
    */
   private _persist(): void {
     const payload = { [STORAGE_KEY]: this._payload() };
-    for (const areaName of ['session', 'local'] as const) {
-      const area = storageArea(areaName);
-      if (!area) continue;
+    const session = storageArea('session');
+    if (session) {
       try {
-        void Promise.resolve(area.set(payload)).catch(() => undefined);
+        void Promise.resolve(session.set(payload)).then(
+          () => {
+            this._clearLocal();
+          },
+          () => {
+            this._writeLocal(payload);
+          },
+        );
+        return;
       } catch {
-        // A storage area that throws synchronously is unusable; the in-memory
-        // credentials still work for as long as this worker lives.
+        // Session threw synchronously; fall back to local.
       }
+    }
+    this._writeLocal(payload);
+  }
+
+  private _writeLocal(payload: Record<string, AuthPayload>): void {
+    const local = storageArea('local');
+    if (!local) return;
+    try {
+      void Promise.resolve(local.set(payload)).catch(() => undefined);
+    } catch {
+      // In-memory credentials still work for as long as this worker lives.
+    }
+  }
+
+  private _clearLocal(): void {
+    const local = storageArea('local');
+    if (!local) return;
+    try {
+      void Promise.resolve(local.remove([STORAGE_KEY, LEGACY_STORAGE_KEY])).catch(
+        () => undefined,
+      );
+    } catch {
+      // Leftover local credentials are a disk-exposure issue, not a
+      // functional one; the next successful persist will try again.
     }
   }
 
@@ -327,11 +365,7 @@ export class ProxyAuth {
     details: chrome.webRequest.WebAuthenticationChallengeDetails,
   ): chrome.webRequest.BlockingResponse {
     if (!details.isProxy) return {};
-    let req = this._requests[details.requestId];
-    if (!req) {
-      req = { authTries: 0 };
-      this._requests[details.requestId] = req;
-    }
+    const req = this._stateFor(details.requestId);
 
     let list: AuthEntry[] | undefined;
     let key: string | undefined;
@@ -398,8 +432,27 @@ export class ProxyAuth {
     return respond(this._credentialsFor(details));
   }
 
-  private _requestDone(details: { requestId: string }): void {
-    delete this._requests[details.requestId];
+  /** LRU + TTL bookkeeping for one `requestId`. */
+  private _stateFor(requestId: string): { authTries: number } {
+    const now = Date.now();
+    for (const [id, rec] of this._requests) {
+      if (now - rec.seenAt > AUTH_REQUEST_TTL_MS) this._requests.delete(id);
+    }
+    const existing = this._requests.get(requestId);
+    if (existing) {
+      this._requests.delete(requestId);
+      existing.seenAt = now;
+      this._requests.set(requestId, existing);
+      return existing;
+    }
+    while (this._requests.size >= AUTH_REQUEST_CAP) {
+      const oldest = this._requests.keys().next().value;
+      if (oldest === undefined) break;
+      this._requests.delete(oldest);
+    }
+    const created = { authTries: 0, seenAt: now };
+    this._requests.set(requestId, created);
+    return created;
   }
 }
 

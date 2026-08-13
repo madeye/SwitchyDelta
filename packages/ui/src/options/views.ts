@@ -9,7 +9,16 @@
 import { append, downloadFile, h, must, render } from '../lib/dom.js';
 import { profileDisplayName, t } from '../lib/i18n.js';
 import { api, callBackground, getState, setState } from '../lib/messaging.js';
-import { colorFor, getAttachedName, listProfiles, profileColors } from '../lib/profile-view.js';
+import {
+  colorFor,
+  getAttachedName,
+  isProxyScheme,
+  listProfiles,
+  profileColors,
+  PROXY_SCHEMES,
+  sanitizeFallbackProxySchemes,
+  sanitizeHexColor,
+} from '../lib/profile-view.js';
 import {
   adoptOptionsKey,
   applyChanges,
@@ -309,7 +318,11 @@ export function renderIo(container: HTMLElement): void {
 
   const restore = async (text: string) => {
     try {
-      await api.reset(JSON.parse(text));
+      const parsed: unknown = JSON.parse(text);
+      if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+        sanitizeFallbackProxySchemes(parsed as typeof options);
+      }
+      await api.reset(parsed);
       location.reload();
     } catch (err) {
       status.className = 'om-error';
@@ -449,21 +462,16 @@ export function renderAbout(container: HTMLElement): void {
 
 // --- Profile editing --------------------------------------------------------
 
-const PROXY_SCHEMES = ['http', 'https', 'socks4', 'socks5'];
 const DEFAULT_PORTS: Record<string, number> = { http: 80, https: 443, socks4: 1080, socks5: 1080 };
 
 /** Expand `#rgb` to `#rrggbb` so `<input type="color">` accepts the value. */
 function normalizeHex(color: string): string {
-  const raw = color.trim();
-  const short = /^#([0-9a-fA-F]{3})$/.exec(raw);
-  if (short) {
-    const [r, g, b] = short[1]!;
-    return `#${r}${r}${g}${g}${b}${b}`.toLowerCase();
-  }
-  const full = /^#([0-9a-fA-F]{6})$/.exec(raw);
-  if (full) return `#${full[1]!}`.toLowerCase();
-  // Fall back to a palette colour when the stored value is not a hex string.
-  return profileColors[0]!;
+  return sanitizeHexColor(color) ?? profileColors[0]!;
+}
+
+/** File-safe stem of a profile name; PAC and rule-list exporters share this. */
+function exportBaseName(name: string): string {
+  return name.replace(/\W+/g, '_');
 }
 
 export function renderProfile(
@@ -972,8 +980,6 @@ function renderSwitchProfile(
     Number(options['-showConditionTypes'] ?? 0) > 0 ||
     profile.rules.some((rule) => !BASIC_CONDITION_TYPE_SET.has(rule.condition.conditionType));
 
-  const exportBaseName = () => profile.name.replace(/\W+/g, '_');
-
   const exportRuleList = () => {
     const eol = '\r\n';
     let info = '\n';
@@ -985,7 +991,7 @@ function renderSwitchProfile(
       rules: profile.rules,
       defaultProfileName: effectiveDefault(),
     }).replace('\n', info);
-    downloadFile(`DeltaRules_${exportBaseName()}.sorl`, text, 'text/plain;charset=utf-8');
+    downloadFile(`DeltaRules_${exportBaseName(profile.name)}.sorl`, text, 'text/plain;charset=utf-8');
   };
 
   const exportLegacyRuleList = () => {
@@ -1021,7 +1027,7 @@ function renderSwitchProfile(
       regexpRules,
       '#END',
     ].join('\n');
-    downloadFile(`SwitchyRules_${exportBaseName()}.ssrl`, text, 'text/plain;charset=utf-8');
+    downloadFile(`SwitchyRules_${exportBaseName(profile.name)}.ssrl`, text, 'text/plain;charset=utf-8');
   };
 
   const exportDeltaButton = h('button', {
@@ -1811,6 +1817,7 @@ const eyeSlashIcon = svgIcon(`${eyeShape}<line x1="3" y1="3" x2="21" y2="21"/>`)
 
 function renderFixedProfile(container: HTMLElement, profile: FixedProfile): void {
   const proxy: ProxyServer = profile.fallbackProxy ?? { scheme: 'http', host: '', port: 80 };
+  if (!isProxyScheme(proxy.scheme)) proxy.scheme = 'http';
   profile.fallbackProxy = proxy;
 
   const touch = () => {
@@ -1844,7 +1851,7 @@ function renderFixedProfile(container: HTMLElement, profile: FixedProfile): void
           password.value = '';
           password.disabled = true;
           authWarning.hidden = false;
-          authWarning.innerHTML = t('options_proxy_authNotSupported', [
+          authWarning.textContent = t('options_proxy_authNotSupported', [
             proxy.scheme.toUpperCase(),
           ]);
         } else {
@@ -1932,7 +1939,7 @@ function renderFixedProfile(container: HTMLElement, profile: FixedProfile): void
 
   const authWarning = h('p', {
     class: 'om-help om-auth-warning',
-    html: t('options_proxy_authNotSupported', [proxy.scheme.toUpperCase()]),
+    text: t('options_proxy_authNotSupported', [proxy.scheme.toUpperCase()]),
     hidden: AUTH_SUPPORTED.has(proxy.scheme),
   });
 
@@ -2289,7 +2296,11 @@ function renderPacProfile(container: HTMLElement, profile: PacProfile): void {
 async function exportPac(profile: Profile): Promise<void> {
   try {
     const pac = await callPac(profile.name);
-    downloadFile(`DeltaProfile_${profile.name}.pac`, pac, 'application/x-ns-proxy-autoconfig');
+    downloadFile(
+      `DeltaProfile_${exportBaseName(profile.name)}.pac`,
+      pac,
+      'application/x-ns-proxy-autoconfig',
+    );
   } catch (err) {
     must('#om-status').textContent = err instanceof Error ? err.message : String(err);
   }

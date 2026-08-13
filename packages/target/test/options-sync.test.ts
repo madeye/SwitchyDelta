@@ -7,9 +7,9 @@
  * deliberately changed (the token bucket starting full, `copyTo`'s deletion
  * pass staying dead) during the port, so regressions are caught.
  */
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 import { OptionsSync } from '../src/options-sync.js';
-import { QuotaExceededError, Storage } from '../src/storage.js';
+import { QuotaExceededError, RateLimitExceededError, Storage } from '../src/storage.js';
 import type { StorageItems, Unwatch, WatchCallback } from '../src/storage.js';
 import { TokenBucket } from '../src/token-bucket.js';
 import { BrowserStorage } from '../src/browser-storage.js';
@@ -19,6 +19,11 @@ beforeAll(() => {
   // Silence storage and sync logging.
   vi.spyOn(Log, 'log').mockImplementation(() => undefined);
   vi.spyOn(Log, 'error').mockImplementation(() => undefined);
+});
+
+beforeEach(() => {
+  vi.mocked(Log.log).mockClear();
+  vi.mocked(Log.error).mockClear();
 });
 
 afterAll(() => {
@@ -189,6 +194,39 @@ describe('OptionsSync', () => {
       expect(setSpy).toHaveBeenCalledWith({ a: 1, b: 1 });
     });
 
+    it('should retry after RateLimitExceededError by draining the bucket', async () => {
+      const storage = new Storage();
+      let failNext = true;
+      const setSpy = vi.spyOn(storage, 'set').mockImplementation(async function (
+        this: Storage,
+        items,
+      ) {
+        if (failNext) {
+          failNext = false;
+          const err = new RateLimitExceededError('MAX_WRITE_OPERATIONS_PER_MINUTE');
+          err.perMinute = true;
+          throw err;
+        }
+        return Storage.prototype.set.call(this, items);
+      });
+
+      // Fast refill after clear() so the retry does not wait a full second.
+      const bucket = new TokenBucket(10, 10, 20);
+      const clearSpy = vi.spyOn(bucket, 'clear');
+      const sync = new OptionsSync(storage, bucket);
+      sync.debounce = 0;
+      sync.requestPush({ a: 1 });
+
+      await vi.waitFor(() => {
+        expect(Log.log).toHaveBeenCalledWith('OptionsSync::rateLimitExceeded');
+      });
+      expect(clearSpy).toHaveBeenCalled();
+      await vi.waitFor(() => {
+        expect(setSpy).toHaveBeenCalledTimes(2);
+      });
+      expect(await storage.get('a')).toEqual({ a: 1 });
+    });
+
     it('should write immediately because the token bucket starts full', async () => {
       // Deliberate deviation from the CoffeeScript version (see MIGRATION.md):
       // `limiter`'s bucket started empty, costing 6 s before the first sync
@@ -246,6 +284,37 @@ describe('OptionsSync', () => {
       expect(removeSpy).toHaveBeenCalledWith(['d']);
     });
 
+    it('should drop malformed +profile and -key values before applying', async () => {
+      const remote = new Storage();
+      await remote.set({
+        '+good': {
+          name: 'good',
+          profileType: 'FixedProfile',
+          color: 'blue',
+        },
+        '+bad': 'not-a-profile',
+        '+broken': { name: 'broken' },
+        '+cycleA': {
+          name: 'cycleA',
+          profileType: 'SwitchProfile',
+          defaultProfileName: 'cycleB',
+          rules: 'not-an-array',
+        },
+        '-downloadInterval': 15,
+        '-quickSwitchProfiles': 'not-an-array',
+        '-enableQuickSwitch': 'yes',
+      });
+
+      const local = new Storage();
+      const sync = new OptionsSync(remote);
+      await sync.copyTo(local);
+
+      expect(await local.get(null)).toEqual({
+        '+good': { name: 'good', profileType: 'FixedProfile', color: 'blue' },
+        '-downloadInterval': 15,
+      });
+    });
+
     it('should leave local-only profiles alone', async () => {
       // The CoffeeScript copyTo had a pass meant to delete local profiles that
       // are gone upstream, dead behind an always-false guard
@@ -255,7 +324,9 @@ describe('OptionsSync', () => {
       // install. This pins the no-op; do not "fix" it here without that
       // decision being made.
       const remote = new Storage();
-      await remote.set({ '+synced': { color: 'blue' } });
+      await remote.set({
+        '+synced': { name: 'synced', profileType: 'FixedProfile', color: 'blue' },
+      });
 
       const local = new Storage();
       await local.set({ '+localOnly': { color: 'red' } });
@@ -265,7 +336,7 @@ describe('OptionsSync', () => {
       await sync.copyTo(local);
 
       expect(await local.get(null)).toEqual({
-        '+synced': { color: 'blue' },
+        '+synced': { name: 'synced', profileType: 'FixedProfile', color: 'blue' },
         '+localOnly': { color: 'red' },
       });
       expect(removeSpy).not.toHaveBeenCalledWith(['+localOnly']);
@@ -357,5 +428,52 @@ describe('BrowserStorage#_legacyGet', () => {
     const bare = await storage.get(['good', 'bad']);
     expect(bare['good']).toEqual({ is: 'good' });
     expect('bad' in bare).toBe(false);
+  });
+});
+
+describe('BrowserStorage chrome.storage error translation', () => {
+  afterAll(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it('should hit the rate-limit retry path on MAX_WRITE_OPERATIONS_PER_MINUTE', async () => {
+    const data: Record<string, unknown> = {};
+    let failNext = true;
+    let setCalls = 0;
+    const area = {
+      async get(): Promise<Record<string, unknown>> {
+        return { ...data };
+      },
+      async set(items: Record<string, unknown>): Promise<void> {
+        setCalls += 1;
+        if (failNext) {
+          failNext = false;
+          throw new Error('MAX_WRITE_OPERATIONS_PER_MINUTE');
+        }
+        Object.assign(data, items);
+      },
+      async remove(): Promise<void> {
+        return undefined;
+      },
+    };
+    vi.stubGlobal('chrome', {
+      runtime: { lastError: undefined },
+      storage: { sync: area },
+    });
+
+    const storage = new BrowserStorage('delta.sync.', 'sync');
+    const sync = new OptionsSync(storage, unlimited());
+    sync.debounce = 0;
+    const requestPush = vi.spyOn(sync, 'requestPush');
+    sync.requestPush({ a: 1 });
+
+    await vi.waitFor(() => {
+      expect(Log.log).toHaveBeenCalledWith('OptionsSync::rateLimitExceeded');
+    });
+    expect(requestPush).toHaveBeenCalledWith({});
+    await vi.waitFor(() => {
+      expect(setCalls).toBeGreaterThanOrEqual(2);
+    });
+    expect(data['delta.sync.a']).toBe(1);
   });
 });

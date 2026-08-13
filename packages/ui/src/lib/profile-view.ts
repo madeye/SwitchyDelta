@@ -7,7 +7,34 @@
  * single definition.
  */
 
-import { Profiles, type OptionsBag, type Profile } from '@switchydelta/pac';
+import { Profiles, type FixedProfile, type OptionsBag, type Profile } from '@switchydelta/pac';
+
+/** Proxy protocols the fixed-profile editor (and Chromium) accept. */
+export const PROXY_SCHEMES = ['http', 'https', 'socks4', 'socks5'] as const;
+export type ProxyScheme = (typeof PROXY_SCHEMES)[number];
+
+export function isProxyScheme(value: string): value is ProxyScheme {
+  return (PROXY_SCHEMES as readonly string[]).includes(value);
+}
+
+/**
+ * Clamp stored `fallbackProxy.scheme` values to {@link PROXY_SCHEMES}.
+ *
+ * Imported / synced options can carry an arbitrary string; the editor must
+ * never interpolate one into markup.
+ */
+export function sanitizeFallbackProxySchemes(bag: OptionsBag): void {
+  for (const value of Object.values(bag)) {
+    if (!value || typeof value !== 'object') continue;
+    const profile = value as Profile;
+    if (profile.profileType !== 'FixedProfile') continue;
+    const proxy = (profile as FixedProfile).fallbackProxy;
+    if (!proxy || typeof proxy !== 'object') continue;
+    if (typeof proxy.scheme !== 'string' || !isProxyScheme(proxy.scheme)) {
+      proxy.scheme = 'http';
+    }
+  }
+}
 
 /** Palette offered by the profile colour picker. */
 export const profileColors: readonly string[] = [
@@ -92,9 +119,26 @@ export function iconFor(profile: Profile, options: OptionsBag): string {
   return profileIcons[target.profileType] ?? 'question-sign';
 }
 
+/**
+ * Accept only `#rgb` / `#rrggbb`. A stored `url(...)` (or any other CSS)
+ * must not become `style.background`.
+ */
+export function sanitizeHexColor(color: string | undefined | null): string | undefined {
+  if (!color) return undefined;
+  const raw = color.trim();
+  const short = /^#([0-9a-fA-F]{3})$/.exec(raw);
+  if (short) {
+    const [r, g, b] = short[1]!;
+    return `#${r}${r}${g}${g}${b}${b}`.toLowerCase();
+  }
+  const full = /^#([0-9a-fA-F]{6})$/.exec(raw);
+  if (full) return `#${full[1]!}`.toLowerCase();
+  return undefined;
+}
+
 export function colorFor(profile: Profile, options: OptionsBag): string {
   const target = getVirtualTarget(profile, options);
-  return target.color ?? profile.color ?? '#cccccc';
+  return sanitizeHexColor(target.color) ?? sanitizeHexColor(profile.color) ?? '#cccccc';
 }
 
 /** Order profiles by type then name, the way both old UIs did. */

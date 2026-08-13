@@ -23,7 +23,7 @@ import type {
 import { patch as applyJsonPatch } from 'jsondiffpatch';
 import type { Delta } from 'jsondiffpatch';
 
-import { NoOptionsError, ProfileNotExistError } from './errors.js';
+import { NoOptionsError, ProfileNotExistError, SchemaTooNewError } from './errors.js';
 import { Log } from './log.js';
 import type { Logger } from './log.js';
 import { Storage, StorageUnavailableError } from './storage.js';
@@ -33,6 +33,35 @@ import getDefaultOptions from './default-options.js';
 
 /** The persisted options bag, keyed by `+profileName` and `-settingName`. */
 export type DeltaOptions = OptionsBag;
+
+const CURRENT_SCHEMA_VERSION = 2;
+
+function isUsableProfile(value: unknown): value is Profile {
+  if (value == null || typeof value !== 'object') return false;
+  const profile = value as Partial<Profile>;
+  return typeof profile.name === 'string' && typeof profile.profileType === 'string';
+}
+
+function safeIsIncludable(profile: Profile): boolean {
+  try {
+    return Profiles.isIncludable(profile);
+  } catch {
+    return false;
+  }
+}
+
+function safeIsInclusive(profile: Profile): boolean {
+  try {
+    return Profiles.isInclusive(profile);
+  } catch {
+    return false;
+  }
+}
+
+function isCorruptOptionsError(error: unknown): boolean {
+  if (!(error instanceof Error)) return false;
+  return error.message === 'Invalid options!' || error.message.startsWith('Invalid schemaVerion');
+}
 
 /** The platform hook that actually programs the browser's proxy settings. */
 export interface ProxyImpl {
@@ -136,18 +165,26 @@ export class Options {
    * URL, and they are large enough to blow the per-item sync quota.
    */
   static transformValueForSync(value: unknown, key: string): unknown {
-    if (key[0] === '+') {
-      const profile = value as Profile | undefined;
-      if (profile && Profiles.updateUrl(profile)) {
-        const stripped: Record<string, unknown> = {};
-        for (const [k, v] of Object.entries(profile as unknown as Record<string, unknown>)) {
-          if (k === 'lastUpdate' || k === 'ruleList' || k === 'pacScript') continue;
-          stripped[k] = v;
-        }
-        return stripped;
+    if (key[0] !== '+') return value;
+    if (value == null || typeof value !== 'object') return value;
+    const profile = value as Record<string, unknown>;
+    let stripDownload = false;
+    if (isUsableProfile(value)) {
+      try {
+        stripDownload = !!Profiles.updateUrl(value);
+      } catch {
+        stripDownload = false;
       }
     }
-    return value;
+    const stripAuth = Object.prototype.hasOwnProperty.call(profile, 'auth');
+    if (!stripDownload && !stripAuth) return value;
+    const stripped: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(profile)) {
+      if (k === 'auth') continue;
+      if (stripDownload && (k === 'lastUpdate' || k === 'ruleList' || k === 'pacScript')) continue;
+      stripped[k] = v;
+    }
+    return stripped;
   }
 
   constructor(
@@ -232,8 +269,11 @@ export class Options {
   /**
    * Attempt to load options from local and remote storage.
    *
-   * On failure this wipes local storage, installs a fallback set of options
-   * (from sync storage if it looks usable, otherwise the defaults) and retries.
+   * First-run (`NoOptionsError`) and genuine corruption (unparseable options
+   * or an unrecognised old schemaVersion) still wipe local storage and
+   * install a fallback. Transport errors retry without touching stored
+   * data. A schemaVersion newer than this build is backed up to state and
+   * left in place — it is never overwritten with defaults.
    */
   loadOptions(args: { retry?: number } = {}): Promise<DeltaOptions> {
     const retry = args.retry ?? 3;
@@ -271,6 +311,16 @@ export class Options {
         return options;
       })
       .catch(async (e: unknown): Promise<DeltaOptions> => {
+        if (e instanceof SchemaTooNewError) {
+          this.log.error(e.stack);
+          try {
+            await this._state.set({ optionsSchemaBackup: e.options });
+          } catch (backupError) {
+            this.log.error(backupError);
+          }
+          throw e;
+        }
+
         if (!(retry > 0)) throw e;
 
         let fallbackOptions: DeltaOptions | null | undefined = null;
@@ -298,12 +348,14 @@ export class Options {
               }
             }
           }
-        } else {
+        } else if (isCorruptOptionsError(e)) {
           this.log.error((e as Error | undefined)?.stack);
-          // Some serious error happened when loading options. Disable syncing
-          // and use fallback options.
           void this._state.remove(['syncOptions']);
           fallbackOptions = null;
+        } else {
+          // Storage transport / transient read failure: retry without wiping.
+          this.log.error((e as Error | undefined)?.stack);
+          return this.loadOptions({ retry: retry - 1 });
         }
 
         const options = fallbackOptions ?? this.parseOptions(this.getDefaultOptions());
@@ -406,9 +458,12 @@ export class Options {
       pending['schemaVersion'] = 2;
       opts['schemaVersion'] = 2;
     }
-    if (version === 2) {
+    if (version === CURRENT_SCHEMA_VERSION) {
       // Current schemaVersion.
       return [options as DeltaOptions, pending];
+    }
+    if (typeof version === 'number' && version > CURRENT_SCHEMA_VERSION) {
+      throw new SchemaTooNewError(version, (options ?? {}) as DeltaOptions);
     }
     throw new Error(`Invalid schemaVerion ${String(version)}!`);
   }
@@ -547,7 +602,9 @@ export class Options {
         void this.applyProfile(this.fallbackProfileName);
         break;
       case 'changed':
-        void this.applyProfile(this._currentProfileName, { update: false });
+        if (this._currentProfileName) {
+          void this.applyProfile(this._currentProfileName, { update: false });
+        }
         break;
       default:
         if (profilesChanged) this._setAvailableProfiles();
@@ -707,15 +764,17 @@ export class Options {
 
   /** Publish the profile list (and valid switch targets) to the UI. */
   protected _setAvailableProfiles(): void {
-    const profile = this._currentProfileName ? this.currentProfile() : null;
+    const raw = this._currentProfileName ? this.currentProfile() : null;
+    const profile = isUsableProfile(raw) ? raw : null;
     const profiles: Record<string, AvailableProfile> = {};
-    const currentIncludable = !!profile && Profiles.isIncludable(profile);
+    const currentIncludable = !!profile && safeIsIncludable(profile);
     let allReferenceSet: Record<string, string> | null = null;
     let results: string[] | undefined;
-    if (!profile || !Profiles.isInclusive(profile)) {
+    if (!profile || !safeIsInclusive(profile)) {
       results = [];
     }
     Profiles.each(this._options, (key, p) => {
+      if (!isUsableProfile(p)) return;
       const entry: AvailableProfile = {
         name: p.name,
         profileType: p.profileType,
@@ -732,17 +791,26 @@ export class Options {
             })
           : {};
         if (allReferenceSet[key]) {
-          entry.validResultProfiles = Profiles.validResultProfilesFor(p, this._options).map(
-            (result) => result.name,
-          );
+          try {
+            entry.validResultProfiles = Profiles.validResultProfilesFor(p, this._options).map(
+              (result) => result.name,
+            );
+          } catch {
+            // Malformed virtual profile: skip the derived list rather than
+            // throwing from handlerFor(null) / a missing rules array.
+          }
         }
       }
-      if (currentIncludable && Profiles.isIncludable(p)) {
+      if (currentIncludable && safeIsIncludable(p)) {
         results?.push(p.name);
       }
     });
-    if (profile && Profiles.isInclusive(profile)) {
-      results = Profiles.validResultProfilesFor(profile, this._options).map((p) => p.name);
+    if (profile && safeIsInclusive(profile)) {
+      try {
+        results = Profiles.validResultProfilesFor(profile, this._options).map((p) => p.name);
+      } catch {
+        results = [];
+      }
     }
     void this._state.set({
       availableProfiles: profiles,
@@ -921,12 +989,19 @@ export class Options {
           // by fetchUrl already, so empty data means success without any
           // update (e.g. a 304).
           if (!data) return profile;
-          const current = Profiles.byKey(key, this._options)!;
-          (current as Profile & { lastUpdate?: string }).lastUpdate = new Date().toISOString();
-          if (Profiles.update(current, data)) {
-            Profiles.dropCache(current);
-            await this._setOptions({ [key]: current });
+          const current = Profiles.byKey(key, this._options);
+          if (!current) return profile;
+          // A concurrent edit bumped the revision while we were fetching.
+          if (Revision.compare(current.revision, profile.revision) !== 0) {
             return current;
+          }
+          const next = { ...current } as Profile;
+          (next as Profile & { lastUpdate?: string }).lastUpdate = new Date().toISOString();
+          if (Profiles.update(next, data)) {
+            Profiles.updateRevision(next);
+            Profiles.dropCache(next);
+            await this._setOptions({ [key]: next }, { checkRevision: true });
+            return (Profiles.byKey(key, this._options) as Profile | undefined) ?? next;
           }
           return current;
         })
@@ -1065,8 +1140,11 @@ export class Options {
       return Promise.reject(new ProfileNotExistError(profileName));
     }
     if (this._tempProfile == null) {
+      const currentProfile = this._currentProfileName
+        ? Profiles.byName(this._currentProfileName, this._options)
+        : undefined;
+      if (!currentProfile) return Promise.resolve();
       const created = Profiles.create('', 'SwitchProfile') as SwitchProfile;
-      const currentProfile = this.currentProfile() as Profile;
       created.color = currentProfile.color;
       created.defaultProfileName = currentProfile.name;
       this._tempProfile = created;
@@ -1241,9 +1319,19 @@ export class Options {
       ? (this._tempProfile as SwitchProfile)
       : Profiles.byName(this._currentProfileName, this._options);
     let lastProfile: Profile | undefined;
+    const visited = new Set<string>();
     while (profile) {
+      if (!isUsableProfile(profile)) break;
+      const key = Profiles.nameAsKey(profile);
+      if (visited.has(key)) break;
+      visited.add(key);
       lastProfile = profile;
-      const result = Profiles.match(profile, request);
+      let result: MatchResult;
+      try {
+        result = Profiles.match(profile, request);
+      } catch {
+        break;
+      }
       if (result == null) break;
       results.push(result);
       let next: string | undefined;
@@ -1306,6 +1394,8 @@ export class Options {
       }
     } else {
       this._currentProfileName = null;
+      this._watchingProfiles = {};
+      this._tempProfileActive = false;
       this._externalProfile = profile;
       profile.color ??= '#49afcd';
       void this._state.set({

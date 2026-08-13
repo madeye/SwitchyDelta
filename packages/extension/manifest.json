@@ -38,9 +38,7 @@
   "permissions": [
     "proxy",
     "storage",
-    "unlimitedStorage",
     "alarms",
-    "activeTab",
     "tabs",
     "webRequest",
     "webRequestAuthProvider",
