@@ -1,6 +1,12 @@
-node_modules
+node_modules/
 dist/
 *.tsbuildinfo
 .dev-chrome-profile/
 .env
 .DS_Store
+
+# Local Grok session / workflow files
+.grok/
+
+# Local agent notes (not part of the published tree)
+AGENTS.md
