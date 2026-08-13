@@ -87,7 +87,15 @@ async function boot(): Promise<Options> {
   }
 
   options = new ChromeOptions(null, storage, state, Log, sync, proxySettings);
-  await options.ready;
+  // The popup only needs the profile list, which `uiReady` publishes. `ready`
+  // additionally waits for the startup profile to reach the browser, and
+  // `chrome.proxy.settings.set` is slow (a large rule-list PAC) or outright
+  // stalled (another extension holding the setting) often enough that waiting
+  // on it here is what left the menu blank.
+  await options.uiReady;
+  void options.ready.catch((err: unknown) => {
+    Log.error('Options apply failed', err);
+  });
   return options;
 }
 
@@ -182,6 +190,16 @@ chrome.runtime.onMessage.addListener((request, sender, respond) => {
       await ready;
       const target = options;
       if (!target) throw new Error('Options are not ready');
+
+      // Everything the popup calls must be answerable from `uiReady` alone.
+      // The rest of the RPC surface reads or writes the applied profile, so it
+      // still waits for the boot-time apply to settle. `applyProfile` is safe
+      // to let through early because applies reach the browser in call order,
+      // so the user's pick lands after the startup one it overtakes rather
+      // than being reverted by it (see Options#applyProfile).
+      if (method !== 'getState' && method !== 'setState' && method !== 'applyProfile') {
+        await target.ready;
+      }
 
       let result: unknown = await dispatchRpc(method, { options: target, state }, args);
 

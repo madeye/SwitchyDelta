@@ -155,6 +155,16 @@ export class Options {
 
   /** Resolves with the options once the first profile has been applied. */
   ready!: Promise<DeltaOptions>;
+  /**
+   * Resolves once the profile list has been published to state, before the
+   * proxy is programmed.
+   *
+   * The popup only needs this. {@link ready} additionally waits for the
+   * startup profile to reach the browser — generating a rule-list PAC and
+   * handing it to `chrome.proxy.settings` — and the menu stayed blank for as
+   * long as that took.
+   */
+  uiReady!: Promise<unknown>;
   /** Resolves with the options once they have been loaded from storage. */
   optionsLoaded!: Promise<DeltaOptions>;
 
@@ -209,11 +219,15 @@ export class Options {
       // Bound to a local so the closure does not defeat definite-assignment
       // analysis on the field.
       const storageRef = this._storage;
-      this.ready = (async () => {
+      const prepared = (async () => {
         await storageRef.remove();
         await storageRef.set(options);
-        return this.init();
+        this.init();
       })();
+      // init() overwrites both fields; these wrappers hold the values that
+      // callers captured at construction and chain onto the real promises.
+      this.uiReady = prepared.then(() => this.uiReady);
+      this.ready = prepared.then(() => this.ready);
     }
   }
 
@@ -373,29 +387,46 @@ export class Options {
     return this.optionsLoaded;
   }
 
+  /** Profile to apply on startup: the configured startup profile, else last-used. */
+  private async startupProfileName(): Promise<string> {
+    const startup = this._get<string>('-startupProfileName');
+    if (startup) return startup;
+    const st = await this._state.get({
+      currentProfileName: this.fallbackProfileName,
+      isSystemProfile: false,
+    });
+    if (st['isSystemProfile']) return 'system';
+    return (st['currentProfileName'] as string) || this.fallbackProfileName;
+  }
+
   /** Attempt to initialize (or reinitialize) options. */
   init(): Promise<DeltaOptions> {
-    this.ready = this.loadOptions()
+    // Publish the menu first, then apply the proxy: programming the browser is
+    // the slow half of startup, and the popup has no reason to wait for it.
+    this.uiReady = this.loadOptions()
       .then(async () => {
-        const startup = this._get<string>('-startupProfileName');
-        if (startup) {
-          return this.applyProfile(startup);
-        }
-        const st = await this._state.get({
-          currentProfileName: this.fallbackProfileName,
-          isSystemProfile: false,
-        });
-        if (st['isSystemProfile']) {
-          return this.applyProfile('system');
-        }
-        return this.applyProfile(
-          (st['currentProfileName'] as string) || this.fallbackProfileName,
-        );
+        const name = await this.startupProfileName();
+        return this.applyProfile(name, { proxy: false, update: false });
       })
       .catch((err: unknown) => {
         // FIX: was `if not err instanceof ProfileNotExistError`, which
         // CoffeeScript parsed as `(not err) instanceof ...` — always false, so
         // real errors were silently swallowed instead of logged.
+        if (!(err instanceof ProfileNotExistError)) {
+          this.log.error(err);
+        }
+        return this.applyProfile(this.fallbackProfileName, { proxy: false, update: false });
+      })
+      .catch((err: unknown) => {
+        this.log.error(err);
+      });
+
+    this.ready = this.uiReady
+      .then(() => {
+        const name = this._currentProfileName || this.fallbackProfileName;
+        return this.applyProfile(name);
+      })
+      .catch((err: unknown) => {
         if (!(err instanceof ProfileNotExistError)) {
           this.log.error(err);
         }
@@ -406,8 +437,9 @@ export class Options {
       })
       .then(() => this.getAll());
 
-    // Deliberately not chained into `ready`: these are follow-up side effects,
-    // and callers must not wait on a profile download to consider us ready.
+    // Deliberately not chained into `uiReady`: these are follow-up side
+    // effects, and callers must not wait on a profile download to consider
+    // the popup ready.
     void this.ready.then(() => {
       if (this.sync?.enabled) this.sync.requestPush(this._options);
 
@@ -423,6 +455,14 @@ export class Options {
 
     return this.ready;
   }
+
+  /**
+   * Cancel in-flight rule-list / PAC downloads.
+   *
+   * The Chromium build aborts the underlying `fetch`; the base class is a
+   * no-op so unit tests that stub `fetchUrl` keep working.
+   */
+  abortFetches(): void {}
 
   /**
    * Upgrade options from previous versions.
@@ -829,6 +869,7 @@ export class Options {
       return Promise.reject(new ProfileNotExistError(name as string));
     }
 
+    const previousName = this._currentProfileName;
     this._currentProfileName = profile.name;
     this._isSystem = options?.system || profile.profileType === 'SystemProfile';
     this._watchingProfiles = Profiles.allReferenceSet(profile, this._options, {
@@ -848,6 +889,18 @@ export class Options {
       return Promise.resolve();
     }
 
+    // Drop a hung gfwlist / PAC download, but only when the user actually
+    // switches profiles. Re-applying the *same* profile is what a finished
+    // rule-list download does (via _setOptions), and aborting there would
+    // cancel the siblings still downloading from the same update batch.
+    if (previousName !== profile.name) this.abortFetches();
+
+    // Two applies can be in flight at once now that the boot-time apply behind
+    // `ready` no longer gates the popup's RPC: a profile the user picks while
+    // the worker is still starting arrives mid-apply. That is safe only
+    // because every apply reaches `chrome.proxy.settings` one microtask after
+    // being called, so the browser sees them in call order and the user's pick
+    // is the one that sticks. Do not introduce an await before the proxy call.
     this._tempProfileActive = false;
     let applyProxy: Promise<unknown>;
     if (this._tempProfile != null && Profiles.isIncludable(profile)) {
@@ -896,15 +949,21 @@ export class Options {
 
     if (options && options.update === false) return applyProxy;
 
-    void applyProxy.then(() => {
-      const interval = this._get<number>('-downloadInterval');
-      if (!(interval !== undefined && interval > 0)) return;
-      if (this._currentProfileName !== profile.name) return;
-      const updateProfiles = Object.values(this._watchingProfiles);
-      if (updateProfiles.length > 0) {
-        void this.updateProfile(updateProfiles);
-      }
-    });
+    void applyProxy
+      .then(() => {
+        const interval = this._get<number>('-downloadInterval');
+        if (!(interval !== undefined && interval > 0)) return;
+        if (this._currentProfileName !== profile.name) return;
+        const updateProfiles = Object.values(this._watchingProfiles);
+        if (updateProfiles.length > 0) {
+          void this.updateProfile(updateProfiles);
+        }
+      })
+      // The caller owns `applyProxy`'s rejection; this follow-up branch is a
+      // second consumer, and leaving it unhandled turns a rejected
+      // `settings.set` (another extension holding the proxy) into an
+      // unhandled rejection in the worker.
+      .catch(() => undefined);
     return applyProxy;
   }
 
@@ -970,6 +1029,10 @@ export class Options {
     optBypassCache?: boolean,
   ): Promise<Record<string, Profile | Error>> {
     this.log.method('Options#updateProfile', this, arguments);
+    // Deliberately does not abortFetches(): boot runs two overlapping updates
+    // (the watched profiles after apply, then every profile on the download
+    // interval), and cancelling here would make each report the other's
+    // downloads as timeouts.
     const results: Record<string, Promise<Profile | Error>> = {};
     Profiles.each(this._options, (key, profile) => {
       if (name != null) {

@@ -31,6 +31,26 @@ export const fetchLimits = {
   maxRedirects: 5,
 };
 
+/** Controllers of in-flight {@link fetchUrl} calls, so a profile switch can cancel a hung download. */
+const inFlight = new Set<AbortController>();
+
+/**
+ * Abort every in-flight rule-list / PAC download.
+ *
+ * A hung gfwlist fetch (blocked host, missing permission, dead proxy) otherwise
+ * keeps the worker's `chrome.proxy.settings.set` and the popup RPC behind it.
+ */
+export function abortInFlightFetches(): void {
+  for (const controller of inFlight) {
+    try {
+      controller.abort();
+    } catch {
+      // Already aborted or the host rejected abort().
+    }
+  }
+  inFlight.clear();
+}
+
 /**
  * The media type without its parameters, lowercased.
  *
@@ -310,6 +330,7 @@ async function fetchFollowing(urlString: string, signal: AbortSignal): Promise<R
 
 async function request(url: string): Promise<Response_> {
   const controller = new AbortController();
+  inFlight.add(controller);
   const timer = setTimeout(() => controller.abort(), fetchLimits.timeoutMs);
   try {
     const response = await fetchFollowing(url, controller.signal);
@@ -327,6 +348,7 @@ async function request(url: string): Promise<Response_> {
     };
   } finally {
     clearTimeout(timer);
+    inFlight.delete(controller);
   }
 }
 

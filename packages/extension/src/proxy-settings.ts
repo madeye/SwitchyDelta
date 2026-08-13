@@ -97,10 +97,18 @@ export class ProxySettings {
     } else if (profile.profileType === 'FixedProfile') {
       config = this._fixedProfileConfig(profile);
     } else {
-      config = {
-        mode: 'pac_script',
-        pacScript: { mandatory: true, data: this.getProfilePacScript(profile, opts) },
-      };
+      try {
+        config = {
+          mode: 'pac_script',
+          pacScript: { mandatory: true, data: this.getProfilePacScript(profile, opts) },
+        };
+      } catch (err) {
+        // An empty or broken rule list (gfwlist never downloaded, or a
+        // rejected download left no usable text) must not fail apply and
+        // leave the popup waiting on a rejected ready promise.
+        this.log.error('PAC generation failed; falling back to direct', err);
+        config = { mode: 'direct' };
+      }
       releaseCaches = true;
     }
 

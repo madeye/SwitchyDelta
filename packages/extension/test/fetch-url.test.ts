@@ -7,6 +7,7 @@ import {
 } from '@switchydelta/target';
 
 import {
+  abortInFlightFetches,
   fetchLimits,
   fetchUrl,
   isNonPublicHostname,
@@ -16,6 +17,7 @@ import {
 const defaults = { ...fetchLimits };
 
 afterEach(() => {
+  abortInFlightFetches();
   Object.assign(fetchLimits, defaults);
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
@@ -190,6 +192,26 @@ describe('fetchUrl', () => {
         '*',
       ]),
     ).resolves.toContain('||example.com');
+  });
+
+  it('abortInFlightFetches rejects a pending download', async () => {
+    stubFetch((_url, init) => {
+      return new Promise((_resolve, reject) => {
+        const signal = init?.signal;
+        if (!signal) {
+          reject(new Error('missing AbortSignal'));
+          return;
+        }
+        signal.addEventListener('abort', () => {
+          reject(new DOMException('The operation was aborted.', 'AbortError'));
+        });
+      });
+    });
+    const pending = fetchUrl('https://lists.example/list.txt');
+    abortInFlightFetches();
+    await expect(pending).rejects.toMatchObject({
+      message: 'Request timed out',
+    });
   });
 
   it('maps an aborted fetch to a timeout NetworkError', async () => {
