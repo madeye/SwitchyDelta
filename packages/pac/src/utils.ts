@@ -65,7 +65,7 @@ export class AttachedCache<T extends object, V> {
  * that reach it from a URL.
  */
 export function isIp(domain: string): boolean {
-  if (domain.indexOf(':') > 0) return true; // IPv6
+  if (domain.indexOf(':') >= 0) return true; // IPv6 (including :: and :1)
   const lastCharCode = domain.charCodeAt(domain.length - 1);
   return lastCharCode >= 48 && lastCharCode <= 57; // trailing digit => IPv4
 }

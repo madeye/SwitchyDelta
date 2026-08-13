@@ -11,7 +11,7 @@
 import { must, on, render } from '../lib/dom.js';
 import { localizeDocument, profileDisplayName, t } from '../lib/i18n.js';
 import { api, callBackground, localState, requestHostAccess } from '../lib/messaging.js';
-import { colorFor, listProfiles } from '../lib/profile-view.js';
+import { colorFor, listProfiles, sanitizeFallbackProxySchemes } from '../lib/profile-view.js';
 import { deepEqual } from '../lib/equal.js';
 import {
   renderAbout,
@@ -218,6 +218,7 @@ async function main(): Promise<void> {
     must('#om-view').textContent = err instanceof Error ? err.message : String(err);
     return;
   }
+  sanitizeFallbackProxySchemes(pristine);
   options = snapshot(pristine);
 
   renderProfileNav();

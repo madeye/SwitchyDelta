@@ -13,6 +13,7 @@ export {
   RateLimitExceededError,
   QuotaExceededError,
   StorageUnavailableError,
+  parseStorageErrors,
 } from './storage.js';
 export type {
   StorageItems,
@@ -40,4 +41,5 @@ export {
   ContentTypeRejectedError,
   ProfileNotExistError,
   NoOptionsError,
+  SchemaTooNewError,
 } from './errors.js';

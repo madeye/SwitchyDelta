@@ -5,12 +5,7 @@
  * contents, which is how the options bag is stored.
  */
 
-import {
-  QuotaExceededError,
-  RateLimitExceededError,
-  Storage,
-  StorageUnavailableError,
-} from '@switchydelta/target';
+import { parseStorageErrors, Storage } from '@switchydelta/target';
 import type { StorageItems, Unwatch, WatchCallback } from '@switchydelta/target';
 
 interface Watcher {
@@ -19,8 +14,6 @@ interface Watcher {
   callback: WatchCallback;
 }
 
-const SUSTAINED_PER_MINUTE = 'MAX_SUSTAINED_WRITE_OPERATIONS_PER_MINUTE';
-
 /** Monotonic, so two watchers registered in the same tick cannot collide. */
 let nextWatcherId = 0;
 
@@ -28,56 +21,6 @@ export class ChromeStorage extends Storage {
   /** Watchers by area name, then by id. */
   static readonly watchers: Record<string, Map<number, Watcher> | undefined> = {};
   static onChangedListenerInstalled = false;
-
-  /**
-   * Translate a `chrome.runtime.lastError` message into one of the typed
-   * storage errors, so that callers can react to a quota or rate limit without
-   * matching on English prose.
-   */
-  static parseStorageErrors(err: unknown): Promise<never> {
-    const message = (err as { message?: unknown } | null | undefined)?.message;
-    if (typeof message !== 'string') return Promise.reject(err);
-
-    if (message.indexOf('QUOTA_BYTES_PER_ITEM') >= 0) {
-      const error = new QuotaExceededError(message);
-      error.perItem = true;
-      return Promise.reject(error);
-    }
-    if (message.indexOf('QUOTA_BYTES') >= 0) {
-      return Promise.reject(new QuotaExceededError(message));
-    }
-    if (message.indexOf('MAX_ITEMS') >= 0) {
-      const error = new QuotaExceededError(message);
-      error.maxItems = true;
-      return Promise.reject(error);
-    }
-    if (message.indexOf('MAX_WRITE_OPERATIONS_') >= 0) {
-      const error = new RateLimitExceededError(message);
-      // FIX: the original tested these on the freshly constructed error, whose
-      // message is empty, so neither flag was ever set.
-      if (message.indexOf('MAX_WRITE_OPERATIONS_PER_HOUR') >= 0) {
-        error.perHour = true;
-      } else if (message.indexOf('MAX_WRITE_OPERATIONS_PER_MINUTE') >= 0) {
-        error.perMinute = true;
-      }
-      return Promise.reject(error);
-    }
-    if (message.indexOf(SUSTAINED_PER_MINUTE) >= 0) {
-      const error = new RateLimitExceededError(message);
-      error.perMinute = true;
-      error.sustained = true;
-      return Promise.reject(error);
-    }
-    if (message.indexOf('is not available') >= 0) {
-      // Some Chromium-based browsers disable access to the sync storage.
-      return Promise.reject(new StorageUnavailableError(message));
-    }
-    if (message.indexOf('Please set webextensions.storage.sync.enabled to true') >= 0) {
-      // Sync storage disabled in flags.
-      return Promise.reject(new StorageUnavailableError(message));
-    }
-    return Promise.reject(err);
-  }
 
   /** The single `onChanged` listener, shared by every instance and area. */
   static readonly onChangedListener = (
@@ -130,7 +73,7 @@ export class ChromeStorage extends Storage {
   private async _run<T>(operation: (area: chrome.storage.StorageArea) => Promise<T>): Promise<T> {
     const area = this._area;
     if (!area) {
-      return ChromeStorage.parseStorageErrors(
+      return parseStorageErrors(
         new Error(`Storage area ${this.areaName} is not available`),
       );
     }
@@ -138,10 +81,10 @@ export class ChromeStorage extends Storage {
     try {
       result = await operation(area);
     } catch (e) {
-      return ChromeStorage.parseStorageErrors(e);
+      return parseStorageErrors(e);
     }
     const message = chrome.runtime?.lastError?.message;
-    if (message) return ChromeStorage.parseStorageErrors(new Error(message));
+    if (message) return parseStorageErrors(new Error(message));
     return result;
   }
 

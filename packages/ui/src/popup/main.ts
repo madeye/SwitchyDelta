@@ -10,6 +10,7 @@
 
 import { h, must, on, render } from '../lib/dom.js';
 import { localizeDocument, profileDisplayName, t } from '../lib/i18n.js';
+import { sanitizeHexColor } from '../lib/profile-view.js';
 import { installShortcuts } from './shortcuts.js';
 import {
   api,
@@ -141,7 +142,7 @@ function renderProfiles(): void {
             'span',
             {
               class: 'om-swatch',
-              style: { background: profile.color ?? '#cccccc' },
+              style: { background: sanitizeHexColor(profile.color) ?? '#cccccc' },
               'aria-hidden': 'true',
             },
             TYPE_INITIAL[profile.profileType] ?? '?',

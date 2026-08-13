@@ -101,9 +101,9 @@ export function string(value: string): Expr {
 }
 
 export function num(value: number): Expr {
-  // Negative literals must be parenthesised so that `a-` + `-1` cannot glue
-  // into the decrement operator `--`.
-  return value < 0 ? raw(String(value), Prec.Unary) : raw(String(value));
+  // Negative literals are wrapped so that `a-` + `-1` cannot glue into the
+  // decrement operator `--`. Primary prec keeps the parens in place.
+  return value < 0 ? raw(`(${String(value)})`, Prec.Primary) : raw(String(value));
 }
 
 export const TRUE: Expr = raw('true');

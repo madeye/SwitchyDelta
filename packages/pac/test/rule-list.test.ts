@@ -116,6 +116,35 @@ describe('RuleList', () => {
       });
     });
 
+    it('should decode base64 AutoProxy lists', () => {
+      const plain = '[AutoProxy 0.2.9]\n||example.com\n';
+      const encoded = btoa(plain);
+      expect(encoded.startsWith('W0F1dG9Qcm94')).toBe(true);
+      expect(RuleList.AutoProxy.preprocess!(encoded)).toBe(plain);
+      const result = parse(RuleList.AutoProxy.preprocess!(encoded), 'match', 'notmatch');
+      expect(result).toHaveLength(1);
+      expect(result[0]!.condition).toEqual({
+        conditionType: 'HostWildcardCondition',
+        pattern: '*.example.com',
+      });
+    });
+
+    it('should decode base64 AutoProxy lists that contain whitespace', () => {
+      const plain = '[AutoProxy 0.2.9]\n||example.com\n';
+      const encoded = btoa(plain);
+      const wrapped = encoded.slice(0, 16) + '\n' + encoded.slice(16);
+      expect(wrapped.startsWith('W0F1dG9Qcm94')).toBe(true);
+      expect(RuleList.AutoProxy.preprocess!(wrapped)).toBe(plain);
+    });
+
+    it('should not throw on malformed base64 AutoProxy lists', () => {
+      const malformed = 'W0F1dG9Qcm94!!!';
+      expect(RuleList.AutoProxy.detect!(malformed)).toBe(true);
+      expect(() => RuleList.AutoProxy.preprocess!(malformed)).not.toThrow();
+      expect(RuleList.AutoProxy.preprocess!(malformed)).toBe(malformed);
+      expect(() => parse(RuleList.AutoProxy.preprocess!(malformed), 'match', 'notmatch')).not.toThrow();
+    });
+
     it('should put exclusive rules first', () => {
       const result = parse('example.com\n@@||example.com', 'match', 'notmatch');
       expect(result).toHaveLength(2);

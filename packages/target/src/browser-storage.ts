@@ -9,7 +9,7 @@
  *     new BrowserStorage(localStorage, 'delta.local.')  // legacy pages / tests
  */
 
-import { Storage } from './storage.js';
+import { parseStorageErrors, Storage } from './storage.js';
 import type { StorageItems } from './storage.js';
 
 /** The subset of the `Storage` DOM interface the legacy path relies on. */
@@ -39,10 +39,10 @@ async function chromeCall<T>(operation: () => Promise<T>): Promise<T> {
   try {
     result = await operation();
   } catch (e) {
-    throw e instanceof Error ? e : new Error(String(e));
+    return parseStorageErrors(e instanceof Error ? e : new Error(String(e)));
   }
   const message = lastErrorMessage();
-  if (message) throw new Error(message);
+  if (message) return parseStorageErrors(new Error(message));
   return result;
 }
 

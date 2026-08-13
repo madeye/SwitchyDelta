@@ -51,3 +51,16 @@ export class ProfileNotExistError extends Error {
 export class NoOptionsError extends Error {
   override readonly name: string = 'NoOptionsError';
 }
+
+/** Stored options use a schemaVersion newer than this build understands. */
+export class SchemaTooNewError extends Error {
+  override readonly name: string = 'SchemaTooNewError';
+  readonly schemaVersion: number;
+  readonly options: Record<string, unknown>;
+
+  constructor(schemaVersion: number, options: Record<string, unknown>) {
+    super(`Options schemaVersion ${schemaVersion} is newer than this build supports.`);
+    this.schemaVersion = schemaVersion;
+    this.options = options;
+  }
+}

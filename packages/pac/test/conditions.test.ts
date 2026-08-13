@@ -86,6 +86,22 @@ describe('Conditions', () => {
         false,
       );
     });
+    it('should fallback to not match if the pattern is a nested-quantifier ReDoS', () => {
+      const started = Date.now();
+      testCond(
+        { conditionType: 'UrlRegexCondition', pattern: '^(a+)+$' },
+        'http://' + 'a'.repeat(31) + 'x/',
+        false,
+      );
+      expect(Date.now() - started).toBeLessThan(100);
+    });
+    it('should fallback to not match if the pattern is over-long', () => {
+      testCond(
+        { conditionType: 'UrlRegexCondition', pattern: 'a'.repeat(3000) },
+        'http://www.example.com/',
+        false,
+      );
+    });
   });
 
   describe('UrlWildcardCondition', () => {
@@ -122,6 +138,20 @@ describe('Conditions', () => {
       testCond(multi, 'http://b.example.net/def', true);
       testCond(multi, 'http://c.example.org/ghi', false);
     });
+    it('should match linearized multi-star wildcards without hanging', () => {
+      const cond: Condition = {
+        conditionType: 'UrlWildcardCondition',
+        pattern: '*foo*bar*',
+      };
+      testCond(cond, 'http://foo.example.com/bar', true);
+      const started = Date.now();
+      testCond(
+        { conditionType: 'UrlWildcardCondition', pattern: '*a*a*a*a*a*b' },
+        'http://' + 'a'.repeat(40) + '/',
+        false,
+      );
+      expect(Date.now() - started).toBeLessThan(100);
+    });
   });
 
   describe('HostRegexCondition', () => {
@@ -137,6 +167,15 @@ describe('Conditions', () => {
     });
     it('should not match URL parts other than the host', () => {
       expect(testCond(cond, 'http://example.net/www.example.com', false)).toBe(false);
+    });
+    it('should fallback to not match if the pattern is a nested-quantifier ReDoS', () => {
+      const started = Date.now();
+      testCond(
+        { conditionType: 'HostRegexCondition', pattern: '^(a+)+$' },
+        'http://' + 'a'.repeat(31) + 'x/',
+        false,
+      );
+      expect(Date.now() - started).toBeLessThan(100);
     });
   });
 

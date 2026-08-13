@@ -12,13 +12,13 @@
  */
 
 import { BrowserStorage, OptionsSync, Options, Log } from '@switchydelta/target';
-import type { StorageItems } from '@switchydelta/target';
 
 import { watchActiveTab } from './active-tab-icon.js';
 import { ChromeOptions } from './chrome-options.js';
 import { ChromeStorage } from './chrome-storage.js';
 import { ProxyAuth } from './proxy-auth.js';
 import { ProxySettings } from './proxy-settings.js';
+import { authorizeSender, dispatchRpc, stripAuthFromResult } from './rpc.js';
 
 /**
  * Registered before anything async runs.
@@ -159,9 +159,11 @@ void ready.then(() => chrome.proxy.settings.get({}, handleProxyChange));
 /**
  * RPC dispatcher.
  *
- * The UI sends `{method, args}` and expects `{result}` or `{error}`.
+ * The UI sends `{method, args}` and expects `{result}` or `{error}`. Methods
+ * are dispatched through the allowlist in `rpc.ts`, not by reflecting on
+ * `ChromeOptions`.
  */
-chrome.runtime.onMessage.addListener((request, _sender, respond) => {
+chrome.runtime.onMessage.addListener((request, sender, respond) => {
   const { method, args = [], noReply } = (request ?? {}) as {
     method?: string;
     args?: unknown[];
@@ -169,32 +171,30 @@ chrome.runtime.onMessage.addListener((request, _sender, respond) => {
   };
   if (!method) return false;
 
+  const authz = authorizeSender(sender);
+  if (!authz.allowed) {
+    if (!noReply) respond({ error: encodeError(new Error('Unauthorized')) });
+    return !noReply;
+  }
+
   void (async () => {
     try {
       await ready;
       const target = options;
       if (!target) throw new Error('Options are not ready');
 
-      let result: unknown;
-      if (method === 'getState') {
-        result = await state.get(args[0] as string | string[] | StorageItems);
-      } else if (method === 'setState') {
-        result = await state.set(args[0] as StorageItems);
-      } else {
-        const fn = (target as unknown as Record<string, unknown>)[method];
-        if (typeof fn !== 'function') throw new Error(`No such method: ${method}`);
-        result = await (fn as (...a: unknown[]) => unknown).apply(target, args);
-      }
+      let result: unknown = await dispatchRpc(method, { options: target, state }, args);
 
       if (noReply) return;
       // updateProfile resolves to a map that may contain Errors per profile.
       if (method === 'updateProfile' && result && typeof result === 'object') {
         const encoded: Record<string, unknown> = {};
-        for (const [key, value] of Object.entries(result)) {
+        for (const [key, value] of Object.entries(result as Record<string, unknown>)) {
           encoded[key] = encodeError(value);
         }
         result = encoded;
       }
+      if (!authz.trustedPage) result = stripAuthFromResult(result);
       respond({ result });
     } catch (error) {
       if (!noReply) respond({ error: encodeError(error) });

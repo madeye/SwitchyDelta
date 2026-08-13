@@ -29,6 +29,114 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
 
+const KNOWN_PROFILE_TYPES = new Set([
+  'DirectProfile',
+  'SystemProfile',
+  'FixedProfile',
+  'PacProfile',
+  'AutoDetectProfile',
+  'SwitchProfile',
+  'VirtualProfile',
+  'RuleListProfile',
+  'SwitchyRuleListProfile',
+  'AutoProxyRuleListProfile',
+]);
+
+const BOOLEAN_SETTING_KEYS = new Set([
+  '-enableQuickSwitch',
+  '-refreshOnProfileChange',
+  '-revertProxyChanges',
+  '-confirmDeletion',
+  '-showInspectMenu',
+  '-addConditionsToBottom',
+  '-showExternalProfile',
+  '-monitorWebRequests',
+]);
+
+const NUMBER_SETTING_KEYS = new Set(['-downloadInterval']);
+const STRING_SETTING_KEYS = new Set(['-startupProfileName']);
+const ARRAY_SETTING_KEYS = new Set(['-quickSwitchProfiles']);
+
+function isJsonValue(value: unknown): boolean {
+  if (value === null) return true;
+  const t = typeof value;
+  if (t === 'boolean' || t === 'string') return true;
+  if (t === 'number') return Number.isFinite(value);
+  if (t !== 'object') return false;
+  if (Array.isArray(value)) return value.every(isJsonValue);
+  const proto = Object.getPrototypeOf(value);
+  if (proto !== Object.prototype && proto !== null) return false;
+  return Object.values(value as Record<string, unknown>).every(isJsonValue);
+}
+
+function isValidSyncProfile(value: unknown): boolean {
+  if (value == null || typeof value !== 'object' || Array.isArray(value)) return false;
+  const profile = value as Record<string, unknown>;
+  if (typeof profile['name'] !== 'string' || profile['name'].length === 0) return false;
+  const profileType = profile['profileType'];
+  if (typeof profileType !== 'string' || !KNOWN_PROFILE_TYPES.has(profileType)) return false;
+  if ('rules' in profile && profile['rules'] != null) {
+    if (!Array.isArray(profile['rules'])) return false;
+    for (const rule of profile['rules']) {
+      if (rule == null || typeof rule !== 'object' || Array.isArray(rule)) return false;
+      const condition = (rule as { condition?: unknown }).condition;
+      if (condition != null) {
+        if (typeof condition !== 'object' || Array.isArray(condition)) return false;
+        if (typeof (condition as { conditionType?: unknown }).conditionType !== 'string') {
+          return false;
+        }
+      }
+    }
+  } else if (profileType === 'SwitchProfile' || profileType === 'VirtualProfile') {
+    return false;
+  }
+  if (
+    (profileType === 'SwitchProfile' || profileType === 'VirtualProfile') &&
+    typeof profile['defaultProfileName'] !== 'string'
+  ) {
+    return false;
+  }
+  return true;
+}
+
+function isValidSettingValue(key: string, value: unknown): boolean {
+  if (typeof value === 'undefined') return true;
+  if (BOOLEAN_SETTING_KEYS.has(key)) return typeof value === 'boolean';
+  if (NUMBER_SETTING_KEYS.has(key)) return typeof value === 'number' && Number.isFinite(value);
+  if (STRING_SETTING_KEYS.has(key)) return typeof value === 'string';
+  if (ARRAY_SETTING_KEYS.has(key)) return Array.isArray(value) && value.every(isJsonValue);
+  return isJsonValue(value);
+}
+
+/**
+ * Drop remote values whose `+profile` / `-key` shape would crash the options
+ * controller (primitives under `+`, missing name/profileType, non-array
+ * `rules`, unknown conditionType). Invalid keys are omitted so the local
+ * copy is left as-is rather than deleted.
+ */
+export function sanitizeSyncItems(items: StorageItems): StorageItems {
+  const out: StorageItems = {};
+  for (const [key, value] of Object.entries(items)) {
+    const prefix = key.charCodeAt(0);
+    if (prefix === 43 /* + */) {
+      if (key.length < 2) continue;
+      if (typeof value === 'undefined' || isValidSyncProfile(value)) out[key] = value;
+      continue;
+    }
+    if (prefix === 45 /* - */) {
+      if (key.length < 2) continue;
+      if (isValidSettingValue(key, value)) out[key] = value;
+      continue;
+    }
+    if (key === 'schemaVersion') {
+      if (typeof value === 'number' || typeof value === 'undefined') out[key] = value;
+      continue;
+    }
+    out[key] = value;
+  }
+  return out;
+}
+
 /**
  * Structural equality, used only as an "is this write a no-op?" test.
  *
@@ -269,7 +377,11 @@ export class OptionsSync {
     // always false, so that pass never ran. It is left out rather than
     // "repaired": enabling it now would start deleting local profiles that were
     // simply never uploaded.
-    const operations = await local.apply({ changes, base, merge: this.merge });
+    const operations = await local.apply({
+      changes: sanitizeSyncItems(changes),
+      base,
+      merge: this.merge,
+    });
     this._logOperations('OptionsSync::copyTo', operations);
   }
 
@@ -288,7 +400,10 @@ export class OptionsSync {
       const changes = pull;
       pull = {};
       pullScheduled = null;
-      const operations = Storage.operationsForChanges(changes, { base, merge: this.merge });
+      const operations = Storage.operationsForChanges(sanitizeSyncItems(changes), {
+        base,
+        merge: this.merge,
+      });
       this._logOperations('OptionsSync::pull', operations);
       await local.apply(operations);
     };

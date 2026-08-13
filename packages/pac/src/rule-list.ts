@@ -30,9 +30,13 @@ export interface FormatHandler {
 }
 
 function decodeBase64Utf8(text: string): string {
-  const binary = atob(text);
-  const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
-  return new TextDecoder().decode(bytes);
+  try {
+    const binary = atob(text.replace(/\s+/g, ''));
+    const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+    return new TextDecoder().decode(bytes);
+  } catch {
+    return text;
+  }
 }
 
 // --- AutoProxy --------------------------------------------------------------
