@@ -40,6 +40,11 @@ function bag(extra: DeltaOptions = {}): DeltaOptions {
 
 class HarnessOptions extends Options {
   fetchResult: Promise<string> = Promise.resolve('');
+  aborted = 0;
+
+  override abortFetches(): void {
+    this.aborted += 1;
+  }
 
   dropProfile(name: string): void {
     delete this._options[Profiles.nameAsKey(name)];
@@ -169,6 +174,99 @@ describe('Options#addTempRule', () => {
     await opts.applyProfile('proxy');
     opts.dropProfile('proxy');
     await expect(opts.addTempRule('example.com', 'direct')).resolves.toBeUndefined();
+  });
+});
+
+describe('Options#uiReady', () => {
+  it('resolves before a hung proxy apply so the popup can render', async () => {
+    let release!: () => void;
+    const hung = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    const impl: ProxyImpl = {
+      applyProfile: () => hung,
+    };
+    const opts = new HarnessOptions(bag(), new Storage(), new Storage(), Log, null, impl);
+
+    await opts.uiReady;
+    expect(opts.currentName()).toBeTruthy();
+
+    let readySettled = false;
+    void opts.ready.then(() => {
+      readySettled = true;
+    });
+    await Promise.resolve();
+    expect(readySettled).toBe(false);
+
+    release();
+    await opts.ready;
+    expect(readySettled).toBe(true);
+  });
+
+  it('applyProfile cancels in-flight downloads when switching profiles', async () => {
+    const opts = await createLoaded(bag());
+    opts.aborted = 0;
+    await opts.applyProfile('proxy');
+    expect(opts.aborted).toBeGreaterThan(0);
+  });
+
+  it('does not cancel downloads when only publishing UI state', async () => {
+    const opts = await createLoaded(bag());
+    opts.aborted = 0;
+    await opts.applyProfile('proxy', { proxy: false });
+    expect(opts.aborted).toBe(0);
+  });
+
+  it('does not cancel downloads when re-applying the current profile', async () => {
+    // A finished rule-list download re-applies the current profile; aborting
+    // there would kill the siblings from the same update batch.
+    const opts = await createLoaded(bag());
+    await opts.applyProfile('proxy');
+    opts.aborted = 0;
+    await opts.applyProfile('proxy');
+    expect(opts.aborted).toBe(0);
+  });
+});
+
+describe('Options#applyProfile ordering', () => {
+  it('reaches the proxy in call order when two applies overlap', async () => {
+    // The popup picking a profile while the boot-time apply is still in
+    // flight. Nothing serialises these, so the invariant that keeps the user's
+    // pick from being reverted is that each apply hits the proxy one microtask
+    // after being called — i.e. in call order.
+    const { impl, applied } = recordingProxy();
+    const opts = await createLoaded(bag(), impl);
+    applied.length = 0;
+
+    const first = opts.applyProfile('direct', { update: false });
+    const second = opts.applyProfile('proxy', { update: false });
+    await Promise.all([first, second]);
+
+    expect(applied.map((p) => p.name)).toEqual(['direct', 'proxy']);
+    expect(opts.currentName()).toBe('proxy');
+  });
+
+  it('reports a failed apply to the caller and survives it', async () => {
+    let fail = false;
+    const applied: string[] = [];
+    const impl: ProxyImpl = {
+      applyProfile: async (profile) => {
+        if (fail) {
+          fail = false;
+          throw new Error('settings.set failed');
+        }
+        applied.push(profile.name);
+      },
+    };
+    const opts = await createLoaded(bag(), impl);
+    applied.length = 0;
+
+    fail = true;
+    await expect(opts.applyProfile('direct', { update: false })).rejects.toThrow(
+      'settings.set failed',
+    );
+    await opts.applyProfile('proxy', { update: false });
+    expect(applied).toEqual(['proxy']);
   });
 });
 

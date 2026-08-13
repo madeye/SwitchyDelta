@@ -203,9 +203,21 @@ function wireActions(): void {
 
 async function applyProfile(name: string): Promise<void> {
   try {
-    await api.applyProfile(name);
-    if (state.refreshOnProfileChange !== false) {
-      await refreshActivePage();
+    if (state.refreshOnProfileChange === false) {
+      // Same as the original: no need to wait when we will not reload the tab.
+      api.applyProfileNoReply(name);
+    } else {
+      // A slow apply in the worker used to keep this await — and the menu —
+      // stuck with no feedback. Give it a few seconds; if the worker is still
+      // busy, close anyway. The apply carries on without us, only the reload
+      // of the active tab is skipped.
+      const applied = await Promise.race([
+        api.applyProfile(name).then(() => true),
+        new Promise<false>((resolve) => {
+          setTimeout(() => resolve(false), 4000);
+        }),
+      ]);
+      if (applied) await refreshActivePage();
     }
   } catch (err) {
     showError(err);

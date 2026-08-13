@@ -24,7 +24,7 @@ import {
   type ActionIconPaint,
 } from './action-icon.js';
 import { setActiveTabIconTracking } from './active-tab-icon.js';
-import { fetchUrl } from './fetch-url.js';
+import { abortInFlightFetches, fetchUrl } from './fetch-url.js';
 import { ProxyAuth } from './proxy-auth.js';
 
 export class ChromeOptions extends Options {
@@ -52,6 +52,10 @@ export class ChromeOptions extends Options {
     typeHints?: string[],
   ): Promise<string> {
     return fetchUrl(url, bypassCache, typeHints);
+  }
+
+  override abortFetches(): void {
+    abortInFlightFetches();
   }
 
   /**
