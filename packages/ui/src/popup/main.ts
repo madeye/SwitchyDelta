@@ -4,14 +4,15 @@
  * Replaces both previous popups: the AngularJS `popup.html` app and the
  * hand-rolled `popup/js/*.js` DOM version that had been split out of it.
  *
- * The popup holds no state of its own — it reads a snapshot from the service
- * worker, renders it, and closes as soon as the user picks something.
+ * First paint reads the last snapshot the worker published to
+ * `chrome.storage.local` (`delta.local.*`), so the menu does not wait on
+ * service-worker boot. Worker RPC is the refresh/fallback (first run, and
+ * apply / Options / Add condition still go through it).
  */
 
 import { h, must, on, render } from '../lib/dom.js';
+import { sanitizeHexColor } from '../lib/hex-color.js';
 import { localizeDocument, profileDisplayName, t } from '../lib/i18n.js';
-import { sanitizeHexColor } from '../lib/profile-view.js';
-import { installShortcuts } from './shortcuts.js';
 import {
   api,
   getState,
@@ -20,6 +21,7 @@ import {
   refreshActivePage,
   requestHostAccess,
 } from '../lib/messaging.js';
+import { installShortcuts } from './shortcuts.js';
 
 /** A profile as summarised by the background for display. */
 interface AvailableProfile {
@@ -39,6 +41,22 @@ interface PopupState {
   proxyNotControllable?: string | null;
   refreshOnProfileChange?: boolean;
 }
+
+/** Keys `Options` publishes for the toolbar menu. */
+const POPUP_STATE_KEYS = [
+  'availableProfiles',
+  'currentProfileName',
+  'isSystemProfile',
+  'currentProfileCanAddRule',
+  'proxyNotControllable',
+  'refreshOnProfileChange',
+] as const;
+
+/**
+ * Worker state keys in `chrome.storage.local`. Same prefix as
+ * `BrowserStorage` in the service worker (`packages/extension/src/sw.ts`).
+ */
+const STATE_PREFIX = 'delta.local.';
 
 /** One letter per profile type, shown inside the colour swatch. */
 const TYPE_INITIAL: Record<string, string> = {
@@ -66,38 +84,94 @@ const TYPE_ORDER: Record<string, number> = {
 };
 
 let state: PopupState = {};
+let uiBound = false;
 
-async function main(): Promise<void> {
-  localizeDocument();
-
+/**
+ * Read the last-published menu snapshot without waking or waiting on the
+ * service worker. Returns null when no snapshot has been written yet.
+ */
+export async function readPublishedPopupState(): Promise<PopupState | null> {
+  const area = chrome.storage?.local;
+  if (!area?.get) return null;
   try {
-    state = (await getState([
-      'availableProfiles',
-      'currentProfileName',
-      'isSystemProfile',
-      'currentProfileCanAddRule',
-      'proxyNotControllable',
-      'refreshOnProfileChange',
-    ])) as PopupState;
-  } catch (err) {
-    showError(err);
-    return;
+    const keys = POPUP_STATE_KEYS.map((key) => STATE_PREFIX + key);
+    const items = (await area.get(keys)) as Record<string, unknown>;
+    const snapshot: PopupState = {};
+    for (const key of POPUP_STATE_KEYS) {
+      const full = STATE_PREFIX + key;
+      if (Object.prototype.hasOwnProperty.call(items, full)) {
+        (snapshot as Record<string, unknown>)[key] = items[full];
+      }
+    }
+    if (!snapshot.availableProfiles || typeof snapshot.availableProfiles !== 'object') {
+      return null;
+    }
+    return snapshot;
+  } catch {
+    return null;
   }
+}
+
+function applyState(next: PopupState): void {
+  state = next;
 
   if (state.proxyNotControllable) {
     showNotControllable(state.proxyNotControllable);
+  } else {
+    must('#om-not-controllable').hidden = true;
   }
 
   renderProfiles();
-  wireActions();
-  installShortcuts();
+  updateAddRule();
 
-  // Fire-and-forget so the profile list never waits on the permission check.
-  void maybeOfferHostPermission();
+  if (!uiBound) {
+    uiBound = true;
+    bindListClicks();
+    bindActions();
+    installShortcuts();
+    // Fire-and-forget so the profile list never waits on the permission check.
+    void maybeOfferHostPermission();
+  }
 
-  // Focus the current profile so keyboard use starts from a sensible place.
+  maybeFocus();
+}
+
+function maybeFocus(): void {
+  const active = document.activeElement;
+  // Snapshot then RPC re-render replaces the profile list; the node we
+  // focused on first paint is disconnected. Restore keyboard focus unless
+  // the user has already moved to another still-mounted menu item.
+  if (
+    active instanceof HTMLElement &&
+    active.isConnected &&
+    active.classList.contains('om-item')
+  ) {
+    return;
+  }
   const current = document.querySelector<HTMLElement>('.om-item[aria-current="true"]');
-  (current ?? document.querySelector<HTMLElement>('.om-item'))?.focus();
+  const item = current ?? document.querySelector<HTMLElement>('.om-item');
+  item?.focus();
+}
+
+/**
+ * Page entry used by `popup.html` and by the popup-open vitest suite.
+ *
+ * Paints from storage as soon as a snapshot exists, then refreshes from the
+ * worker. A hung RPC must not undo a successful snapshot paint; a rejected
+ * RPC only shows the error surface when there was no snapshot to fall back on.
+ */
+export async function bootPopup(): Promise<void> {
+  localizeDocument();
+
+  const snapshot = await readPublishedPopupState();
+  if (snapshot) applyState(snapshot);
+
+  try {
+    const fresh = (await getState([...POPUP_STATE_KEYS])) as PopupState;
+    applyState(fresh);
+  } catch (err) {
+    if (!snapshot) showError(err);
+  }
 }
 
 function sortedProfiles(): AvailableProfile[] {
@@ -152,42 +226,49 @@ function renderProfiles(): void {
       );
     }),
   );
+}
 
-  on(list, 'click', '.om-item', (_event, target) => {
+function bindListClicks(): void {
+  on(must('#om-profiles'), 'click', '.om-item', (_event, target) => {
     const name = target.dataset['profile'];
     if (name) void applyProfile(name);
   });
 }
 
-function wireActions(): void {
+function updateAddRule(): void {
+  must<HTMLButtonElement>('#om-add-rule').hidden = !state.currentProfileCanAddRule;
+}
+
+function bindActions(): void {
   const addRule = must<HTMLButtonElement>('#om-add-rule');
-  if (state.currentProfileCanAddRule) {
-    addRule.hidden = false;
-    addRule.addEventListener('click', () => {
-      // The full condition editor lives on the options page; the current
-      // tab's host rides along so the editor pre-fills the new rule with it.
-      // Close only once openOptions has settled: window.close() tears down
-      // this context, and the tab query/create still pending inside
-      // openOptions dies with it.
-      void (async () => {
-        let suffix = '';
-        try {
-          const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-          const url = tab?.url ?? '';
-          // Only schemes a PAC script would see; hostname is '' for the rest.
-          if (/^(https?|ftp|ws|wss):/i.test(url)) {
-            const host = new URL(url).hostname;
-            if (host) suffix = '?addRuleHost=' + encodeURIComponent(host);
-          }
-        } catch {
-          // No readable tab URL: open the editor without a prefill.
+  addRule.addEventListener('click', () => {
+    // Shortcuts still `.click()` this node while it is hidden (`a` / `+` /
+    // `=`). The original only bound this handler when the current profile
+    // could add a rule; keep that guard now that the listener is always on.
+    if (!state.currentProfileCanAddRule) return;
+    // The full condition editor lives on the options page; the current
+    // tab's host rides along so the editor pre-fills the new rule with it.
+    // Close only once openOptions has settled: window.close() tears down
+    // this context, and the tab query/create still pending inside
+    // openOptions dies with it.
+    void (async () => {
+      let suffix = '';
+      try {
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        const url = tab?.url ?? '';
+        // Only schemes a PAC script would see; hostname is '' for the rest.
+        if (/^(https?|ftp|ws|wss):/i.test(url)) {
+          const host = new URL(url).hostname;
+          if (host) suffix = '?addRuleHost=' + encodeURIComponent(host);
         }
-        await openOptions(
-          '#/profile/' + encodeURIComponent(state.currentProfileName ?? '') + suffix,
-        );
-      })().finally(() => window.close());
-    });
-  }
+      } catch {
+        // No readable tab URL: open the editor without a prefill.
+      }
+      await openOptions(
+        '#/profile/' + encodeURIComponent(state.currentProfileName ?? '') + suffix,
+      );
+    })().finally(() => window.close());
+  });
 
   // Settings open in the side panel, falling back to a tab where the panel is
   // unavailable. openSidePanel must run before any await, or the user gesture
@@ -268,4 +349,4 @@ function showError(err: unknown): void {
   el.textContent = err instanceof Error ? err.message : String(err);
 }
 
-void main();
+if (import.meta.env.MODE !== 'test') void bootPopup();
