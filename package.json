@@ -22,9 +22,10 @@
   "devDependencies": {
     "@types/chrome": "^0.0.268",
     "@types/node": "^20.14.0",
+    "esbuild": "^0.23.0",
+    "happy-dom": "^15.11.7",
     "typescript": "^5.5.4",
-    "vitest": "^2.0.5",
-    "esbuild": "^0.23.0"
+    "vitest": "^2.0.5"
   },
   "engines": {
     "node": ">=18"
