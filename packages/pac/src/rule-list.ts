@@ -43,6 +43,34 @@ function decodeBase64Utf8(text: string): string {
 
 const AUTOPROXY_MAGIC_PREFIX = 'W0F1dG9Qcm94'; // base64 of "[AutoProxy"
 
+/** A place to download gfwlist from. */
+export interface GfwlistSource {
+  /** Stable identifier, also the suffix of its `ruleList_gfwlistSource_*` label. */
+  id: string;
+  url: string;
+}
+
+/**
+ * Where gfwlist, the AutoProxy list nearly every user of that format wants,
+ * can be downloaded from. Kept here so the options page can offer a one-click
+ * import instead of making people find and paste a raw URL themselves.
+ *
+ * The order follows the project README: the jsDelivr CDN endpoints first,
+ * because raw GitHub is unreachable from much of mainland China, then GitHub
+ * itself. The README's GitLab and repo.or.cz mirrors are left out — they
+ * send no CORS headers, so the worker cannot fetch them without the optional
+ * `<all_urls>` grant, and the README itself warns they lag behind.
+ */
+export const GFWLIST_SOURCES: readonly GfwlistSource[] = [
+  { id: 'gcore', url: 'https://gcore.jsdelivr.net/gh/gfwlist/gfwlist/gfwlist.txt' },
+  { id: 'testingcf', url: 'https://testingcf.jsdelivr.net/gh/gfwlist/gfwlist/gfwlist.txt' },
+  { id: 'fastly', url: 'https://fastly.jsdelivr.net/gh/gfwlist/gfwlist/gfwlist.txt' },
+  { id: 'github', url: 'https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt' },
+];
+
+/** The recommended gfwlist source. */
+export const GFWLIST_URL: string = GFWLIST_SOURCES[0]!.url;
+
 export const AutoProxy: FormatHandler = {
   detect(text) {
     if (text.startsWith(AUTOPROXY_MAGIC_PREFIX)) return true;

@@ -635,6 +635,24 @@ msgstr "නීති ලැයිස්තුවක් එකතු කරන්
 msgid "options_attachProfileHelp"
 msgstr "නීති ලැයිස්තුවක් එකතු කිරීමෙන් අන් අය විසින් ප්‍රකාශයට පත් කළ මාර්ගගත කොන්දේසි එකතුවක් නැවත භාවිතා කළ හැක."
 
+msgid "options_importGfwlist"
+msgstr "gfwlist ආයාත කරන්න"
+
+msgid "options_importGfwlistHelp"
+msgstr "නැතහොත් ප්‍රජාව විසින් නඩත්තු කරන, චීන මහද්වීපයේ අවහිර කළ අඩවි ලැයිස්තුව වන gfwlist AutoProxy ලැයිස්තුව ආයාත කරන්න. CDN මූලාශ්‍ර නිර්දේශිතයි; GitHub (raw) එහිදී බොහෝ විට ළඟා විය නොහැක."
+
+msgid "ruleList_gfwlistSource_gcore"
+msgstr "jsDelivr CDN (Cloudflare)"
+
+msgid "ruleList_gfwlistSource_testingcf"
+msgstr "jsDelivr CDN (Cloudflare, testingcf)"
+
+msgid "ruleList_gfwlistSource_fastly"
+msgstr "jsDelivr CDN (Fastly)"
+
+msgid "ruleList_gfwlistSource_github"
+msgstr "GitHub (raw)"
+
 msgid "options_modalHeader_welcome"
 msgstr "SwitchyDelta වෙත සාදරයෙන් පිළිගනිමු"
 

@@ -116,6 +116,18 @@ describe('RuleList', () => {
       });
     });
 
+    it('should publish gfwlist sources the worker can fetch', () => {
+      const sources = RuleList.GFWLIST_SOURCES;
+      expect(sources.length).toBeGreaterThan(0);
+      expect(new Set(sources.map((s) => s.id)).size).toBe(sources.length);
+      for (const source of sources) {
+        // Only https, and a plain path: the cache-busting download appends
+        // its own query parameter.
+        expect(source.url).toMatch(/^https:\/\/[^?#]+\.txt$/);
+      }
+      expect(RuleList.GFWLIST_URL).toBe(sources[0]!.url);
+    });
+
     it('should decode base64 AutoProxy lists', () => {
       const plain = '[AutoProxy 0.2.9]\n||example.com\n';
       const encoded = btoa(plain);

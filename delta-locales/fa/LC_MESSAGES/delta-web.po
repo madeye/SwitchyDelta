@@ -785,6 +785,24 @@ msgstr ""
 "شما میتوانید با افزودن لیست قوانین از مجموعه های آنلاین شروطی که توسط دیگران "
 "منتشر شده استفاده نمایید ."
 
+msgid "options_importGfwlist"
+msgstr "درون‌ریزی gfwlist"
+
+msgid "options_importGfwlistHelp"
+msgstr "یا gfwlist را درون‌ریزی کنید؛ فهرست AutoProxy نگهداری‌شده توسط جامعه از سایت‌های مسدودشده در چین. منابع CDN توصیه می‌شوند؛ GitHub خام در آنجا اغلب در دسترس نیست."
+
+msgid "ruleList_gfwlistSource_gcore"
+msgstr "jsDelivr CDN (Cloudflare)"
+
+msgid "ruleList_gfwlistSource_testingcf"
+msgstr "jsDelivr CDN (Cloudflare, testingcf)"
+
+msgid "ruleList_gfwlistSource_fastly"
+msgstr "jsDelivr CDN (Fastly)"
+
+msgid "ruleList_gfwlistSource_github"
+msgstr "GitHub (raw)"
+
 msgid "options_modalHeader_welcome"
 msgstr "به SwitchyDelta خوش آمدید"
 

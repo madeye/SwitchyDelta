@@ -776,6 +776,24 @@ msgstr ""
 "Můžete použít on-line sbírku podmínek vydané ostatními a přidáním do seznamu "
 "pravidel."
 
+msgid "options_importGfwlist"
+msgstr "Importovat gfwlist"
+
+msgid "options_importGfwlistHelp"
+msgstr "Nebo importujte gfwlist, komunitou udržovaný seznam AutoProxy webů blokovaných v pevninské Číně. Doporučujeme zdroje CDN; surový GitHub tam bývá nedostupný."
+
+msgid "ruleList_gfwlistSource_gcore"
+msgstr "jsDelivr CDN (Cloudflare)"
+
+msgid "ruleList_gfwlistSource_testingcf"
+msgstr "jsDelivr CDN (Cloudflare, testingcf)"
+
+msgid "ruleList_gfwlistSource_fastly"
+msgstr "jsDelivr CDN (Fastly)"
+
+msgid "ruleList_gfwlistSource_github"
+msgstr "GitHub (raw)"
+
 msgid "options_modalHeader_welcome"
 msgstr "Vítejte v SwitchyDelta"
 

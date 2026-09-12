@@ -636,6 +636,24 @@ msgstr "Aggiungi un elenco regole"
 msgid "options_attachProfileHelp"
 msgstr "Puoi riutilizzare una raccolta online di condizioni pubblicata da altri aggiungendo un elenco regole."
 
+msgid "options_importGfwlist"
+msgstr "Importa gfwlist"
+
+msgid "options_importGfwlistHelp"
+msgstr "Oppure importa gfwlist, l'elenco AutoProxy mantenuto dalla comunità dei siti bloccati nella Cina continentale. Sono consigliate le sorgenti CDN; GitHub (raw) è spesso irraggiungibile da lì."
+
+msgid "ruleList_gfwlistSource_gcore"
+msgstr "jsDelivr CDN (Cloudflare)"
+
+msgid "ruleList_gfwlistSource_testingcf"
+msgstr "jsDelivr CDN (Cloudflare, testingcf)"
+
+msgid "ruleList_gfwlistSource_fastly"
+msgstr "jsDelivr CDN (Fastly)"
+
+msgid "ruleList_gfwlistSource_github"
+msgstr "GitHub (raw)"
+
 msgid "options_modalHeader_welcome"
 msgstr "Benvenuto in SwitchyDelta"
 

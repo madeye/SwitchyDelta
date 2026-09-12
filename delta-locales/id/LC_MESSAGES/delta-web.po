@@ -667,6 +667,24 @@ msgstr "Tambah daftar aturan"
 msgid "options_attachProfileHelp"
 msgstr "Anda dapat menggunakan kembali kumpulan kondisi daring yang diterbitkan orang lain dengan menambahkan daftar aturan."
 
+msgid "options_importGfwlist"
+msgstr "Impor gfwlist"
+
+msgid "options_importGfwlistHelp"
+msgstr "Atau impor gfwlist, daftar AutoProxy yang dikelola komunitas berisi situs yang diblokir di Tiongkok daratan. Sumber CDN disarankan; GitHub (raw) sering tidak dapat diakses di sana."
+
+msgid "ruleList_gfwlistSource_gcore"
+msgstr "jsDelivr CDN (Cloudflare)"
+
+msgid "ruleList_gfwlistSource_testingcf"
+msgstr "jsDelivr CDN (Cloudflare, testingcf)"
+
+msgid "ruleList_gfwlistSource_fastly"
+msgstr "jsDelivr CDN (Fastly)"
+
+msgid "ruleList_gfwlistSource_github"
+msgstr "GitHub (raw)"
+
 msgid "options_modalHeader_welcome"
 msgstr "Selamat datang di SwitchyDelta"
 

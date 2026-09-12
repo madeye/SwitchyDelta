@@ -760,6 +760,24 @@ msgstr ""
 "You can reuse an online collection of conditions published by others by "
 "adding a rule list."
 
+msgid "options_importGfwlist"
+msgstr "gfwlist をインポート"
+
+msgid "options_importGfwlistHelp"
+msgstr "または、中国本土でブロックされているサイトのコミュニティ管理 AutoProxy リストである gfwlist をインポートします。CDN ソースを推奨します。GitHub (raw) は現地から到達できないことが多いです。"
+
+msgid "ruleList_gfwlistSource_gcore"
+msgstr "jsDelivr CDN (Cloudflare)"
+
+msgid "ruleList_gfwlistSource_testingcf"
+msgstr "jsDelivr CDN (Cloudflare, testingcf)"
+
+msgid "ruleList_gfwlistSource_fastly"
+msgstr "jsDelivr CDN (Fastly)"
+
+msgid "ruleList_gfwlistSource_github"
+msgstr "GitHub (raw)"
+
 msgid "options_modalHeader_welcome"
 msgstr "Welcome to SwitchyDelta"
 

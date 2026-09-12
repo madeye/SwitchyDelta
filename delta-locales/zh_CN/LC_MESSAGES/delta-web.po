@@ -691,6 +691,24 @@ msgstr "添加规则列表"
 msgid "options_attachProfileHelp"
 msgstr "可以添加规则列表，以便引用他人在线发布的一组规则。"
 
+msgid "options_importGfwlist"
+msgstr "导入 gfwlist"
+
+msgid "options_importGfwlistHelp"
+msgstr "也可以直接导入 gfwlist：由社区维护的 AutoProxy 规则列表，收录在中国大陆被屏蔽的网站。推荐使用 CDN 源；GitHub 原始地址在国内常常无法访问。"
+
+msgid "ruleList_gfwlistSource_gcore"
+msgstr "jsDelivr CDN（Cloudflare）"
+
+msgid "ruleList_gfwlistSource_testingcf"
+msgstr "jsDelivr CDN（Cloudflare，testingcf）"
+
+msgid "ruleList_gfwlistSource_fastly"
+msgstr "jsDelivr CDN（Fastly）"
+
+msgid "ruleList_gfwlistSource_github"
+msgstr "GitHub（原始地址）"
+
 msgid "options_modalHeader_welcome"
 msgstr "欢迎使用 SwitchyDelta"
 

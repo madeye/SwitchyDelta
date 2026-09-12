@@ -665,6 +665,24 @@ msgstr "Bæta við reglulista"
 msgid "options_attachProfileHelp"
 msgstr "Þú getur endurnýtt net-safn skilyrða sem aðrir hafa birt með því að bæta við reglulista."
 
+msgid "options_importGfwlist"
+msgstr "Flytja inn gfwlist"
+
+msgid "options_importGfwlistHelp"
+msgstr "Eða flyttu inn gfwlist, AutoProxy-lista sem samfélagið heldur við yfir vefi sem eru lokaðir á meginlandi Kína. Mælt er með CDN-uppsprettunum; GitHub (raw) næst þar oft ekki."
+
+msgid "ruleList_gfwlistSource_gcore"
+msgstr "jsDelivr CDN (Cloudflare)"
+
+msgid "ruleList_gfwlistSource_testingcf"
+msgstr "jsDelivr CDN (Cloudflare, testingcf)"
+
+msgid "ruleList_gfwlistSource_fastly"
+msgstr "jsDelivr CDN (Fastly)"
+
+msgid "ruleList_gfwlistSource_github"
+msgstr "GitHub (raw)"
+
 msgid "options_modalHeader_welcome"
 msgstr "Velkomin í SwitchyDelta"
 
