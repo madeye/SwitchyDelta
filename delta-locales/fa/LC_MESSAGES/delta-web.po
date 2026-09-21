@@ -228,6 +228,9 @@ msgstr "تنظیمات"
 msgid "options_navHeader_profiles"
 msgstr "نمایه‌ها"
 
+msgid "options_activeProfile"
+msgstr "نمایهٔ فعال"
+
 msgid "options_navHeader_actions"
 msgstr "کنش‌ها"
 

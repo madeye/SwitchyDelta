@@ -10,6 +10,13 @@
       <h1 class="om-brand" data-i18n="appNameShort">SwitchyDelta</h1>
 
       <nav aria-label="Sections">
+        <!-- Side-panel profile switcher; hidden in wide/tab layouts via CSS,
+             where the toolbar popup is one click away. -->
+        <label class="om-active" id="om-active">
+          <span class="om-active-label" data-i18n="options_activeProfile">Active profile</span>
+          <span class="om-swatch" id="om-active-swatch" aria-hidden="true"></span>
+          <select id="om-active-select"></select>
+        </label>
         <p class="om-group-label" data-i18n="options_navHeader_setting">Settings</p>
         <ul class="om-list" id="om-nav-settings">
           <li><a class="om-item" href="#/ui" data-i18n="options_tab_ui">Interface</a></li>

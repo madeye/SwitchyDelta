@@ -137,6 +137,44 @@ if (failures) console.log(await op.evalGesture(`(() => {
   }
   return out.slice(0, 12).join('\\n') || '  (none)';
 })()`));
+// --- Switching the active profile from inside the panel --------------------
+console.log('\n=== active profile switcher at panel width ===');
+const proxyMode = () => op.evalGesture(
+  `new Promise((r) => chrome.proxy.settings.get({}, (c) => r(c.value.mode)))`);
+const switcher = JSON.parse(await op.evalGesture(`JSON.stringify({
+  visible: getComputedStyle(document.querySelector('#om-active')).display !== 'none',
+  names: [...document.querySelectorAll('#om-active-select option')].map((o) => o.value),
+  profilesWrap: getComputedStyle(document.querySelector('#om-nav-profiles')).flexWrap,
+  toolbarTop: getComputedStyle(document.querySelector('.om-toolbar')).top,
+  sidebarH: document.querySelector('.om-sidebar').offsetHeight + 'px',
+})`));
+check('switcher is visible', switcher.visible, true);
+check('switcher lists builtins and saved profiles', switcher.names, ['direct', 'system', 'proxy', 'auto switch']);
+check('profile chips wrap instead of hiding off-screen', switcher.profilesWrap, 'wrap');
+check('sticky toolbar sits right under the chip header', switcher.toolbarTop, switcher.sidebarH);
+
+await op.evalGesture(`(() => {
+  const select = document.querySelector('#om-active-select');
+  select.value = 'proxy';
+  select.dispatchEvent(new Event('change', { bubbles: true }));
+})()`);
+await sleep(1500);
+check('picking a profile applies it', await proxyMode(), 'fixed_servers');
+check('switcher shows the applied profile',
+  await op.evalGesture(`document.querySelector('#om-active-select').value`), 'proxy');
+
+// A switch made elsewhere (popup, shortcut) must show up in the panel.
+await op.evalGesture(`chrome.runtime.sendMessage({method:'applyProfile',args:['direct']}).then(() => 'ok')`);
+await sleep(1500);
+check('external switch reaches the proxy', await proxyMode(), 'direct');
+check('switcher follows an external switch',
+  await op.evalGesture(`document.querySelector('#om-active-select').value`), 'direct');
+
+// In a full tab the popup does this job; the switcher stays out of the way.
+await op.send('Emulation.setDeviceMetricsOverride', { width: 1200, height: 800, deviceScaleFactor: 1, mobile: false });
+await sleep(500);
+check('switcher is hidden in the wide layout',
+  await op.evalGesture(`getComputedStyle(document.querySelector('#om-active')).display`), 'none');
 op.close();
 
 console.log(`\n=== RESULT: ${failures === 0 ? 'all checks passed' : failures + ' FAILURES'} ===`);

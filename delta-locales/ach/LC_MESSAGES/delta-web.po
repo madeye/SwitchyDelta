@@ -226,6 +226,9 @@ msgstr "Settings"
 msgid "options_navHeader_profiles"
 msgstr "Profiles"
 
+msgid "options_activeProfile"
+msgstr "Profile ma tye ka tic"
+
 msgid "options_navHeader_actions"
 msgstr "Actions"
 

@@ -238,6 +238,9 @@ msgstr "Налаштування"
 msgid "options_navHeader_profiles"
 msgstr "Профілі"
 
+msgid "options_activeProfile"
+msgstr "Активний профіль"
+
 msgid "options_navHeader_actions"
 msgstr "Дії"
 

@@ -247,6 +247,11 @@ scrollable strip of chips, and an "open in tab" button appears, since the rule
 tables are not usable at ~360px. The page is still registered as
 `options_page`/`options_ui`, so the full-tab route is unchanged.
 
+The chips only open editors, so the narrow layout also carries an "Active
+profile" dropdown that applies a profile without leaving the panel and follows
+switches made from the popup. Profile chips wrap onto up to three rows rather
+than hiding in a sideways strip.
+
 ## Completing the port
 
 An audit of all 138 leftover `.coffee` files classified each as already

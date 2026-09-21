@@ -202,6 +202,9 @@ msgstr "Pengaturan"
 msgid "options_navHeader_profiles"
 msgstr "Profil"
 
+msgid "options_activeProfile"
+msgstr "Profil aktif"
+
 msgid "options_navHeader_actions"
 msgstr "Tindakan"
 

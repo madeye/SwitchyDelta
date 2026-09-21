@@ -172,6 +172,9 @@ msgstr "Instellingen"
 msgid "options_navHeader_profiles"
 msgstr "Profielen"
 
+msgid "options_activeProfile"
+msgstr "Actief profiel"
+
 msgid "options_navHeader_actions"
 msgstr "Acties"
 
