@@ -666,6 +666,24 @@ msgstr "Dodaj seznam pravil"
 msgid "options_attachProfileHelp"
 msgstr "Z dodajanjem seznama pravil lahko znova uporabite spletno zbirko pogojev drugih."
 
+msgid "options_importGfwlist"
+msgstr "Uvozi gfwlist"
+
+msgid "options_importGfwlistHelp"
+msgstr "Ali pa uvozite gfwlist, seznam AutoProxy, ki ga vzdržuje skupnost, s spletišči, blokiranimi v celinski Kitajski. Priporočamo vire CDN; GitHub (raw) je tam pogosto nedosegljiv."
+
+msgid "ruleList_gfwlistSource_gcore"
+msgstr "jsDelivr CDN (Cloudflare)"
+
+msgid "ruleList_gfwlistSource_testingcf"
+msgstr "jsDelivr CDN (Cloudflare, testingcf)"
+
+msgid "ruleList_gfwlistSource_fastly"
+msgstr "jsDelivr CDN (Fastly)"
+
+msgid "ruleList_gfwlistSource_github"
+msgstr "GitHub (raw)"
+
 msgid "options_modalHeader_welcome"
 msgstr "Dobrodošli v SwitchyDelta"
 

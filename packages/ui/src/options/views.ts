@@ -1488,31 +1488,105 @@ function renderSwitchProfile(
       );
   }
 
+  // Set by the configured branch of ruleListSections() so the one-click
+  // gfwlist import can kick off a download right after attaching the list.
+  let downloadAttached: (() => Promise<void>) | null = null;
+
+  const attachList = () => {
+    const created = Profiles.create({
+      name: attachedName,
+      profileType: 'RuleListProfile',
+      color: profile.color,
+      defaultProfileName: profile.defaultProfileName,
+    } as Profile) as RuleListProfile;
+    Profiles.updateRevision(created);
+    options[attachedKey] = created;
+    profile.defaultProfileName = attachedName;
+    touch();
+    return created;
+  };
+
+  /**
+   * Point the attached list at gfwlist. AutoProxy is the only format gfwlist
+   * ships in, so the radio follows the URL; a changed source drops the
+   * previous download the same way a manual URL edit does.
+   */
+  const useGfwlist = (list: RuleListProfile, url: string) => {
+    list.format = 'AutoProxy';
+    list.sourceUrl = url;
+    delete (list as { lastUpdate?: unknown }).lastUpdate;
+    // A freshly attached list sends its matches to `direct`, which makes a
+    // one-click gfwlist import a no-op until the user finds the picker in the
+    // rule table. Suggest the proxy the switch's own rules already use; a
+    // target the user has changed is left alone.
+    if (list.matchProfileName === 'direct') {
+      const used = profile.rules.map((rule) => rule.profileName);
+      const candidates = resultNames().filter((name) => name !== 'direct' && name !== 'system');
+      const suggested =
+        candidates.find((name) => used.includes(name)) ?? candidates[0];
+      if (suggested) list.matchProfileName = suggested;
+    }
+    touchAttached();
+  };
+
+  /**
+   * The gfwlist source picker and its import button. The picker preselects
+   * whichever source the list already downloads from, so re-importing after a
+   * mirror outage is a two-click switch rather than a paste.
+   */
+  const gfwlistControls = (onImport: (url: string) => void) => {
+    const currentUrl = attached()?.sourceUrl;
+    const select = h(
+      'select',
+      { title: t('options_importGfwlistHelp') },
+      ...RuleList.GFWLIST_SOURCES.map((source) =>
+        h('option', {
+          value: source.url,
+          text: t('ruleList_gfwlistSource_' + source.id),
+          selected: source.url === currentUrl,
+        }),
+      ),
+    );
+    return h(
+      'div',
+      { class: 'om-actions-row' },
+      h('button', {
+        type: 'button',
+        class: 'om-btn',
+        text: t('options_importGfwlist'),
+        onclick: () => onImport(select.value),
+      }),
+      select,
+    );
+  };
+
   // The attach button, or the rule list's format/url/text configuration.
   function ruleListSections(): Array<HTMLElement | false> {
     const list = attached();
     if (!list) {
       attachedListTextarea = null;
+      downloadAttached = null;
       return [
         h('h3', { text: t('options_group_attachProfile') }),
         help('options_attachProfileHelp'),
-        h('button', {
-          type: 'button',
-          class: 'om-btn',
-          text: t('options_attachProfile'),
-          onclick: () => {
-            const created = Profiles.create({
-              name: attachedName,
-              profileType: 'RuleListProfile',
-              color: profile.color,
-              defaultProfileName: profile.defaultProfileName,
-            } as Profile) as RuleListProfile;
-            Profiles.updateRevision(created);
-            options[attachedKey] = created;
-            profile.defaultProfileName = attachedName;
-            touch();
-            rerender();
-          },
+        h(
+          'div',
+          { class: 'om-actions-row' },
+          h('button', {
+            type: 'button',
+            class: 'om-btn',
+            text: t('options_attachProfile'),
+            onclick: () => {
+              attachList();
+              rerender();
+            },
+          }),
+        ),
+        help('options_importGfwlistHelp'),
+        gfwlistControls((url) => {
+          useGfwlist(attachList(), url);
+          rerender();
+          void downloadAttached?.();
         }),
       ];
     }
@@ -1584,6 +1658,8 @@ function renderSwitchProfile(
       }
     };
 
+    downloadAttached = download;
+
     const urlInput = h('input', {
       type: 'url',
       value: list.sourceUrl ?? '',
@@ -1597,6 +1673,22 @@ function renderSwitchProfile(
         text.disabled = !!list.sourceUrl;
         renderStatus();
       },
+    });
+
+    const formatRadios = new Map<string, HTMLInputElement>();
+
+    // Fills in the gfwlist URL and AutoProxy format, then downloads straight
+    // away. Updated in place like the URL field, for the same reason.
+    const gfwlistRow = gfwlistControls((url) => {
+      const current = attached();
+      if (!current) return;
+      useGfwlist(current, url);
+      urlInput.value = url;
+      for (const [format, radio] of formatRadios) radio.checked = format === current.format;
+      downloadButton.disabled = false;
+      text.disabled = true;
+      renderStatus();
+      void download();
     });
 
     return [
@@ -1615,6 +1707,7 @@ function renderSwitchProfile(
               touchAttached();
             },
           });
+          formatRadios.set(format, radio);
           return h(
             'label',
             { class: 'om-day' },
@@ -1626,6 +1719,8 @@ function renderSwitchProfile(
       field('options_group_ruleListUrl', urlInput),
       help('options_ruleListUrlHelp'),
       downloadButton,
+      help('options_importGfwlistHelp'),
+      gfwlistRow,
 
       h('h3', { text: t('options_group_ruleListText') }),
       status,

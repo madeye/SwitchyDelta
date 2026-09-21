@@ -440,7 +440,17 @@ body.om-options {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  align-items: center;
   margin: 0 0 14px;
+}
+
+.om-actions-row select {
+  padding: 6px 8px;
+  border: 1px solid var(--om-border);
+  border-radius: 6px;
+  background: var(--om-bg);
+  color: inherit;
+  font: inherit;
 }
 
 .om-inline-form {

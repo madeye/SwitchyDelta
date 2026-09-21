@@ -777,6 +777,24 @@ msgstr ""
 "You can reuse an online collection of conditions published by others by "
 "adding a rule list."
 
+msgid "options_importGfwlist"
+msgstr "Kel gfwlist"
+
+msgid "options_importGfwlistHelp"
+msgstr "Onyo kel gfwlist, list me AutoProxy ma lwak gwoko me kakube ma kigengo i China. CDN aye ber loyo; GitHub raw pol kare pe romo tic kunnu."
+
+msgid "ruleList_gfwlistSource_gcore"
+msgstr "jsDelivr CDN (Cloudflare)"
+
+msgid "ruleList_gfwlistSource_testingcf"
+msgstr "jsDelivr CDN (Cloudflare, testingcf)"
+
+msgid "ruleList_gfwlistSource_fastly"
+msgstr "jsDelivr CDN (Fastly)"
+
+msgid "ruleList_gfwlistSource_github"
+msgstr "GitHub (raw)"
+
 msgid "options_modalHeader_welcome"
 msgstr "Welcome to SwitchyDelta"
 

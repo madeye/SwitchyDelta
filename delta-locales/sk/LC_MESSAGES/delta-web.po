@@ -667,6 +667,24 @@ msgstr "Pridať zoznam pravidiel"
 msgid "options_attachProfileHelp"
 msgstr "Pridaním zoznamu pravidiel môžete znova použiť online zbierku podmienok od iných."
 
+msgid "options_importGfwlist"
+msgstr "Importovať gfwlist"
+
+msgid "options_importGfwlistHelp"
+msgstr "Alebo importujte gfwlist, komunitou udržiavaný zoznam AutoProxy webov blokovaných v pevninskej Číne. Odporúčame zdroje CDN; surový GitHub tam býva nedostupný."
+
+msgid "ruleList_gfwlistSource_gcore"
+msgstr "jsDelivr CDN (Cloudflare)"
+
+msgid "ruleList_gfwlistSource_testingcf"
+msgstr "jsDelivr CDN (Cloudflare, testingcf)"
+
+msgid "ruleList_gfwlistSource_fastly"
+msgstr "jsDelivr CDN (Fastly)"
+
+msgid "ruleList_gfwlistSource_github"
+msgstr "GitHub (raw)"
+
 msgid "options_modalHeader_welcome"
 msgstr "Vitajte v SwitchyDelta"
 

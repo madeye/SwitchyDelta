@@ -655,6 +655,24 @@ msgstr "Regellijst toevoegen"
 msgid "options_attachProfileHelp"
 msgstr "Je kunt een online verzameling voorwaarden van anderen hergebruiken door een regellijst toe te voegen."
 
+msgid "options_importGfwlist"
+msgstr "gfwlist importeren"
+
+msgid "options_importGfwlistHelp"
+msgstr "Of importeer gfwlist, de door de gemeenschap onderhouden AutoProxy-lijst van sites die in het Chinese vasteland geblokkeerd zijn. De CDN-bronnen worden aanbevolen; GitHub (raw) is daar vaak onbereikbaar."
+
+msgid "ruleList_gfwlistSource_gcore"
+msgstr "jsDelivr CDN (Cloudflare)"
+
+msgid "ruleList_gfwlistSource_testingcf"
+msgstr "jsDelivr CDN (Cloudflare, testingcf)"
+
+msgid "ruleList_gfwlistSource_fastly"
+msgstr "jsDelivr CDN (Fastly)"
+
+msgid "ruleList_gfwlistSource_github"
+msgstr "GitHub (raw)"
+
 msgid "options_modalHeader_welcome"
 msgstr "Welkom bij SwitchyDelta"
 

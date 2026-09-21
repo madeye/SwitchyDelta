@@ -662,6 +662,24 @@ msgstr "加規則列表"
 msgid "options_attachProfileHelp"
 msgstr "可加規則列表，以復用他人在線所發之條件集。"
 
+msgid "options_importGfwlist"
+msgstr "納 gfwlist"
+
+msgid "options_importGfwlistHelp"
+msgstr "或納 gfwlist，乃眾人所修之 AutoProxy 表，錄中國大陸所禁之站。宜用 CDN 之源；GitHub (raw) 於彼處常不可達。"
+
+msgid "ruleList_gfwlistSource_gcore"
+msgstr "jsDelivr CDN (Cloudflare)"
+
+msgid "ruleList_gfwlistSource_testingcf"
+msgstr "jsDelivr CDN (Cloudflare, testingcf)"
+
+msgid "ruleList_gfwlistSource_fastly"
+msgstr "jsDelivr CDN (Fastly)"
+
+msgid "ruleList_gfwlistSource_github"
+msgstr "GitHub (raw)"
+
 msgid "options_modalHeader_welcome"
 msgstr "歡迎用SwitchyDelta"
 
