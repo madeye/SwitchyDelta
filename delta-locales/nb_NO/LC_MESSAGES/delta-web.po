@@ -190,6 +190,9 @@ msgstr "Innstillinger"
 msgid "options_navHeader_profiles"
 msgstr "Profiler"
 
+msgid "options_activeProfile"
+msgstr "Aktiv profil"
+
 msgid "options_navHeader_actions"
 msgstr "Handlinger"
 

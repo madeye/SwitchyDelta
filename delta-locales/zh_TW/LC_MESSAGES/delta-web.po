@@ -204,6 +204,9 @@ msgstr "設定"
 msgid "options_navHeader_profiles"
 msgstr "情境模式"
 
+msgid "options_activeProfile"
+msgstr "目前情境模式"
+
 msgid "options_navHeader_actions"
 msgstr "操作"
 

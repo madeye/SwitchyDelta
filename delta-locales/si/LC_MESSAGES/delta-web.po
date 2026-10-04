@@ -170,6 +170,9 @@ msgstr "සැකසුම්"
 msgid "options_navHeader_profiles"
 msgstr "පැතිකඩ"
 
+msgid "options_activeProfile"
+msgstr "සක්‍රිය පැතිකඩ"
+
 msgid "options_navHeader_actions"
 msgstr "ක්‍රියා"
 

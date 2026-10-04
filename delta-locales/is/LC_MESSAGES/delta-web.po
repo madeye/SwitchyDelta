@@ -182,6 +182,9 @@ msgstr "Stillingar"
 msgid "options_navHeader_profiles"
 msgstr "Snið"
 
+msgid "options_activeProfile"
+msgstr "Virkt snið"
+
 msgid "options_navHeader_actions"
 msgstr "Aðgerðir"
 

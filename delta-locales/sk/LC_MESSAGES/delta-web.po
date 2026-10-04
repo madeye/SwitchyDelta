@@ -184,6 +184,9 @@ msgstr "Nastavenia"
 msgid "options_navHeader_profiles"
 msgstr "Profily"
 
+msgid "options_activeProfile"
+msgstr "Aktívny profil"
+
 msgid "options_navHeader_actions"
 msgstr "Akcie"
 

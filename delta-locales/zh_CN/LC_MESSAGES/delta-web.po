@@ -209,6 +209,9 @@ msgstr "设置"
 msgid "options_navHeader_profiles"
 msgstr "情景模式"
 
+msgid "options_activeProfile"
+msgstr "当前情景模式"
+
 msgid "options_navHeader_actions"
 msgstr "操作"
 

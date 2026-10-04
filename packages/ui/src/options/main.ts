@@ -10,7 +10,13 @@
 
 import { must, on, render } from '../lib/dom.js';
 import { localizeDocument, profileDisplayName, t } from '../lib/i18n.js';
-import { api, callBackground, localState, requestHostAccess } from '../lib/messaging.js';
+import {
+  api,
+  callBackground,
+  getState,
+  localState,
+  requestHostAccess,
+} from '../lib/messaging.js';
 import { colorFor, listProfiles, sanitizeFallbackProxySchemes } from '../lib/profile-view.js';
 import { deepEqual } from '../lib/equal.js';
 import {
@@ -88,6 +94,8 @@ export async function applyChanges(): Promise<void> {
     await callBackground('applyChanges', changes);
     pristine = snapshot(options);
     markDirty();
+    // Renames, deletions and new profiles change what can be activated.
+    renderActiveProfile();
     must('#om-status').textContent = t('options_saveSuccess');
     // Settle the permission prompt after the save so a denial does not block it.
     void hostAccess;
@@ -207,6 +215,94 @@ function renderProfileNav(): void {
   nav.append(li);
 }
 
+// --- Active profile switcher (side panel) -----------------------------------
+//
+// At panel width the profile chips only open editors, and the popup that
+// normally switches the proxy is a separate surface the panel covers the need
+// for. This dropdown activates a profile without leaving the panel. It lists
+// the *saved* profiles — an unsaved one does not exist for the worker yet.
+
+const STATE_PREFIX = 'delta.local.';
+const ACTIVE_STATE_KEYS = ['currentProfileName', 'isSystemProfile'];
+let activeProfileName = '';
+
+function renderActiveProfile(): void {
+  const select = must('#om-active-select') as HTMLSelectElement;
+  const names = ['direct', 'system', ...listProfiles(pristine).map((profile) => profile.name)];
+  // A temp-rule or otherwise hidden current profile still has to show up,
+  // or the control would silently claim the first entry is active.
+  if (activeProfileName && !names.includes(activeProfileName)) names.push(activeProfileName);
+
+  render(
+    select,
+    names.map((name) => {
+      const option = document.createElement('option');
+      option.value = name;
+      option.textContent = profileDisplayName(name);
+      option.selected = name === activeProfileName;
+      return option;
+    }),
+  );
+
+  const active = pristine['+' + activeProfileName] as Parameters<typeof colorFor>[0] | undefined;
+  must('#om-active-swatch').style.background = active
+    ? colorFor(active, pristine)
+    : activeProfileName === 'system'
+      ? '#000000'
+      : '#aaaaaa';
+}
+
+async function refreshActiveProfile(): Promise<void> {
+  try {
+    const state = await getState(ACTIVE_STATE_KEYS);
+    activeProfileName = state['isSystemProfile']
+      ? 'system'
+      : String(state['currentProfileName'] ?? '');
+  } catch {
+    // Worker unreachable: keep showing the last known profile.
+  }
+  renderActiveProfile();
+}
+
+function bindActiveProfile(): void {
+  const select = must('#om-active-select') as HTMLSelectElement;
+  select.addEventListener('change', () => {
+    const name = select.value;
+    select.disabled = true;
+    api
+      .applyProfile(name)
+      .catch((err: unknown) => {
+        must('#om-status').textContent = err instanceof Error ? err.message : String(err);
+      })
+      .finally(() => {
+        select.disabled = false;
+        void refreshActiveProfile();
+      });
+  });
+
+  // The popup, a keyboard shortcut or startup can switch profiles behind the
+  // panel's back; the worker publishes that to storage.
+  chrome.storage?.onChanged?.addListener((changes, area) => {
+    if (area !== 'local') return;
+    if (ACTIVE_STATE_KEYS.some((key) => STATE_PREFIX + key in changes)) {
+      void refreshActiveProfile();
+    }
+  });
+}
+
+/**
+ * The narrow layout stacks a sticky toolbar under the sticky chip header,
+ * whose height depends on how many rows the profile chips wrap onto.
+ */
+function trackSidebarHeight(): void {
+  const sidebar = must('.om-sidebar');
+  const apply = () => {
+    document.body.style.setProperty('--om-sidebar-h', sidebar.offsetHeight + 'px');
+  };
+  apply();
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(apply).observe(sidebar);
+}
+
 // --- Boot -------------------------------------------------------------------
 
 async function main(): Promise<void> {
@@ -222,6 +318,9 @@ async function main(): Promise<void> {
   options = snapshot(pristine);
 
   renderProfileNav();
+  bindActiveProfile();
+  void refreshActiveProfile();
+  trackSidebarHeight();
 
   must('#om-apply').addEventListener('click', () => void applyChanges());
   must('#om-revert').addEventListener('click', () => location.reload());

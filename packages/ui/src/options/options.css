@@ -48,6 +48,11 @@ body.om-options {
   flex-shrink: 0;
 }
 
+/* Likewise: in a full tab the toolbar popup switches profiles. */
+.om-active {
+  display: none;
+}
+
 .om-toolbar-start {
   display: flex;
   flex: 1 1 auto;
@@ -589,6 +594,42 @@ body.om-options {
 
   #om-nav-profiles {
     grid-column: 1 / -1;
+
+    /* Wrap instead of one sideways strip with a hidden scrollbar, which hid
+       every profile past the third with no hint that more existed. Capped at
+       about three rows so a long list cannot eat the panel. */
+    flex-wrap: wrap;
+    max-height: 118px;
+    overflow-y: auto;
+  }
+
+  .om-active {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .om-active-label {
+    flex-shrink: 0;
+    color: var(--om-muted);
+    font-size: 12px;
+  }
+
+  .om-active .om-swatch {
+    flex-shrink: 0;
+  }
+
+  .om-active select {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 4px 8px;
+    border: 1px solid var(--om-border);
+    border-radius: 6px;
+    background: var(--om-bg);
+    color: inherit;
+    font: inherit;
   }
 
   #om-open-tab {
@@ -616,7 +657,7 @@ body.om-options {
 
   /* One compact row: [Apply] [Discard] [status]. */
   .om-toolbar {
-    top: 47px;
+    top: var(--om-sidebar-h, 47px);
     padding: 8px 10px;
     gap: 4px;
   }

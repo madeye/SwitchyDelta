@@ -230,6 +230,9 @@ msgstr "Settings"
 msgid "options_navHeader_profiles"
 msgstr "Profiles"
 
+msgid "options_activeProfile"
+msgstr "Aktives Profil"
+
 msgid "options_navHeader_actions"
 msgstr "Actions"
 
